@@ -1,0 +1,26 @@
+<ion-row>
+  <ion-col size="12" class="p-0">
+    <ion-label *ngIf="label">{{ label }}<span class="ion-color-danger" *ngIf="required">*</span></ion-label>
+    <ion-input [disabled]="disabled" *ngIf="platform.is('mobileweb')" [value]="default ? defaultStr : null" [id]="id" mode="ios" [placeholder]="placeholder" readonly="readonly" [class]="(classList || '') + ' select-date-input'"></ion-input>
+    <ion-input [disabled]="disabled" *ngIf="!platform.is('mobileweb')" [value]="default ? defaultStr : null" mode="ios" [placeholder]="placeholder" readonly="readonly" [class]="(classList || '') + ' select-date-input'"
+               (click)="onClickSelectDateTime()"></ion-input>
+    <ion-icon name="close-circle" color="danger" *ngIf="showClearButton && default" class="ion-clear-date {{label?'':'no-label'}}" (click)="onSelectedDatetime(null, null)"></ion-icon>
+  </ion-col>
+</ion-row>
+
+<ng-container *ngIf="platform.is('mobileweb') && !disabled">
+  <ion-modal [keepContentsMounted]="false" [trigger]="id" class="select-date-modal fullscreen" mode="ios" animated="false">
+    <ng-template>
+      <ion-content (click)="onClickOutOfDatetimeGrid($event)">
+        <ion-datetime #popoverDatetime mode="ios" locale="vi-VN" showDefaultButtons="false" size="cover"
+                      [presentation]="presentationType"
+                      [value]="(typeof default !== 'boolean' && default?.length) ? default?.toString() : null"
+                      [min]="minDate?.length ? minDate : minYear"
+                      [max]="maxDate?.length ? maxDate : maxYear"
+                      (ionChange)="onSelectedDatetime(popoverDatetime.value, $event)">
+          <span slot="time-label">Thời gian</span>
+        </ion-datetime>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ng-container>

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ilo-career-advisor-master</string>
+    <string name="title_activity_main">Hướng nghiệp</string>
+    <string name="package_name">ilo.career_advisor_master</string>
+    <string name="custom_url_scheme">ilo.career_advisor_master</string>
+</resources>

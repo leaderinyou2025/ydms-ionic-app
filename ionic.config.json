@@ -1,0 +1,7 @@
+{
+  "name": "ilo-career-advisor-master",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

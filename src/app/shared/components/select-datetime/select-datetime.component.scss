@@ -1,0 +1,40 @@
+ion-label {
+  color: #00a859;
+  font-weight: 400;
+  margin-bottom: 5px;
+  font-size: 12px;
+}
+
+ion-input {
+  --padding-start: 5px;
+
+  &.background-white {
+    background: #FFFFFF;
+    --background: #FFFFFF;
+  }
+}
+
+.ion-clear-date {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  color: #666666;
+  width: 20px;
+  height: 100%;
+  z-index: 2;
+
+  &.no-label {
+    top: 0 !important;
+  }
+}
+
+.border-radius-round {
+  --border-radius: 25px;
+  --padding-bottom: 0;
+  --padding-top: 0;
+  --min-height: 40px;
+  overflow: hidden;
+  border-radius: 25px;
+  min-height: 40px;
+}

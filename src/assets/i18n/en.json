@@ -1,0 +1,7 @@
+{
+  "phone": "Phone",
+  "password": "Password",
+  "login": "Login",
+  "phone_required_msg": "Please input your phone number.",
+  "password_required_msg": "Please input your password."
+}

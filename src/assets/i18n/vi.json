@@ -1,0 +1,7 @@
+{
+  "phone": "Số điện thoại",
+  "password": "Mật khẩu",
+  "login": "Đăng nhập",
+  "phone_required_msg": "Vui lòng nhập vào số điện thoại.",
+  "password_required_msg": "Vui lòng nhập vào mật khẩu."
+}
