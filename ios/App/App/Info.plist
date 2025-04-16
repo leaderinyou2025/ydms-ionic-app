@@ -45,5 +45,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>NSSpeechRecognitionUsageDescription</key>
+  <string>Chúng tôi cần quyền truy cập vào chức năng nhận dạng giọng nói để chuyển giọng nói của bạn thành văn bản.</string>
+  <key>NSMicrophoneUsageDescription</key>
+  <string>Chúng tôi cần quyền truy cập vào micrô của bạn để ghi âm giọng nói nhằm mục đích nhận dạng giọng nói.</string>
 </dict>
 </plist>
