@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
+import { SoundService } from './services/sound/sound.service';
 
 @Component({
   selector: 'app-root',
@@ -6,6 +8,14 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
   standalone: false,
 })
-export class AppComponent {
-  constructor() {}
+export class AppComponent implements OnInit {
+  constructor(
+    private soundService: SoundService
+  ) {
+  }
+
+  ngOnInit() {
+    this.soundService.loadBackgroundSounds();
+    this.soundService.loadUserSounds();
+  }
 }
