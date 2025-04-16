@@ -43,3 +43,9 @@ project(':capacitor-text-zoom').projectDir = new File('../node_modules/@capacito
 
 include ':capawesome-capacitor-live-update'
 project(':capawesome-capacitor-live-update').projectDir = new File('../node_modules/@capawesome/capacitor-live-update/android')
+
+include ':capacitor-native-biometric'
+project(':capacitor-native-biometric').projectDir = new File('../node_modules/capacitor-native-biometric/android')
+
+include ':capacitor-native-settings'
+project(':capacitor-native-settings').projectDir = new File('../node_modules/capacitor-native-settings/android')
