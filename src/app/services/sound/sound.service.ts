@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Howl } from 'howler';
 
 import { OdooService } from '../odoo/odoo.service';
-import { SoundConfig } from '../../shared/interfaces/sound/sound-config';
+import { ISoundConfig } from '../../shared/interfaces/sound/sound-config';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ import { SoundConfig } from '../../shared/interfaces/sound/sound-config';
 export class SoundService {
   private sounds: { [key: string]: Howl } = {};
   private bgMusic?: Howl;
-  private config: { [key: string]: SoundConfig } = {};
+  private config: { [key: string]: ISoundConfig } = {};
 
   constructor(
     private odooService: OdooService,
@@ -75,7 +75,7 @@ export class SoundService {
     return this.config[name]?.volume ?? 1;
   }
 
-  private async loadSoundConfig(): Promise<{ [key: string]: SoundConfig }> {
+  private async loadSoundConfig(): Promise<{ [key: string]: ISoundConfig }> {
     // TODO: Loading sound config of user form server
     return {}
   }

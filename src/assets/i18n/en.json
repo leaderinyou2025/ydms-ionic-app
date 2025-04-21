@@ -1,7 +1,31 @@
 {
-  "phone": "Phone",
-  "password": "Password",
-  "login": "Login",
-  "phone_required_msg": "Please input your phone number.",
-  "password_required_msg": "Please input your password."
+  "COMMON": {
+    "phone": "Phone",
+    "password": "Password",
+    "login": "Login",
+    "access_permission_notification_alert": "Please allow the app to display notifications to receive the latest updates.",
+    "auth_user_title": "Authentication user",
+    "auth_by_password_alert": "Authentication failed. Please login by your password.",
+    "english": "English",
+    "vietnamese": "Tiếng Việt",
+    "remember_me": "Remember me?"
+  },
+  "VALIDATE": {
+    "phone_required": "Please input your phone number.",
+    "password_required": "Please input your password."
+  },
+  "ALERT": {
+    "default_header": "Notification"
+  },
+  "BUTTON_TITLES": {
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "open_setting": "Open setting"
+  },
+  "TOAST": {
+    "error_header": "Error",
+    "success_header": "Success",
+    "info_header": "Information",
+    "warning_header": "Warning"
+  }
 }

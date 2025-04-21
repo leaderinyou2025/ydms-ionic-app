@@ -1,7 +1,31 @@
 {
-  "phone": "Số điện thoại",
-  "password": "Mật khẩu",
-  "login": "Đăng nhập",
-  "phone_required_msg": "Vui lòng nhập vào số điện thoại.",
-  "password_required_msg": "Vui lòng nhập vào mật khẩu."
+  "COMMON": {
+    "phone": "Số điện thoại",
+    "password": "Mật khẩu",
+    "login": "Đăng nhập",
+    "access_permission_notification_alert": "Vui lòng cho phép ứng dụng có quyền hiển thị thông báo để nhận được các thông tin cập nhật mới nhất. Xin cảm ơn!",
+    "auth_user_title": "Xác thực người dùng",
+    "auth_by_password_alert": "Không thể xác thực. Vui lòng đăng nhập bằng mật khẩu.",
+    "english": "English",
+    "vietnamese": "Tiếng Việt",
+    "remember_me": "Ghi nhớ tài khoản đăng nhập?"
+  },
+  "VALIDATE": {
+    "phone_required": "Vui lòng nhập vào số điện thoại.",
+    "password_required": "Vui lòng nhập vào mật khẩu."
+  },
+  "ALERT": {
+    "default_header": "Thông báo"
+  },
+  "BUTTON_TITLES": {
+    "confirm": "Xác nhận",
+    "cancel": "Hủy bỏ",
+    "open_setting": "Mở cài đặt"
+  },
+  "TOAST": {
+    "error_header": "Lỗi",
+    "success_header": "Thành công",
+    "info_header": "Thông tin",
+    "warning_header": "Cảnh báo"
+  }
 }

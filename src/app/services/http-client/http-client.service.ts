@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { AlertController } from '@ionic/angular';
-
 import { catchError, lastValueFrom, Observable, of } from 'rxjs';
+import { timeout } from 'rxjs/operators';
+
 import { IHttpOptions } from '../../shared/interfaces/http/http-options';
+import { DEFAULT_TIMEOUT } from '../../core/services/timeout-interceptor.service';
 
 
 @Injectable({
@@ -14,7 +16,8 @@ export class HttpClientService {
 
   constructor(
     private httpClient: HttpClient,
-    private alertController: AlertController
+    private alertController: AlertController,
+    @Inject(DEFAULT_TIMEOUT) private defaultTimeout: number
   ) {
   }
 
@@ -24,9 +27,13 @@ export class HttpClientService {
    * @param url
    * @param httpOptions
    * @param operation
+   * @param timeoutMs
    */
-  public get(url: string, httpOptions?: IHttpOptions, operation?: string): Promise<any> {
-    const results = this.httpClient.get<any>(url, httpOptions).pipe(catchError(this.handleError<any>(operation)));
+  public get(url: string, httpOptions?: IHttpOptions, operation?: string, timeoutMs: number = 10000): Promise<any> {
+    const results = this.httpClient.get<any>(url, httpOptions).pipe(
+      timeout(timeoutMs || this.defaultTimeout || 10000),
+      catchError(this.handleError<any>(operation))
+    );
     return lastValueFrom<any>(results);
   }
 
@@ -37,9 +44,13 @@ export class HttpClientService {
    * @param data
    * @param httpOptions
    * @param operation
+   * @param timeoutMs
    */
-  public post(url: string, data: any, httpOptions?: IHttpOptions, operation?: string): Promise<any> {
-    const results = this.httpClient.post<any>(url, data, httpOptions).pipe(catchError(this.handleError<any>(operation)));
+  public post(url: string, data: any, httpOptions?: IHttpOptions, operation?: string, timeoutMs: number = 10000): Promise<any> {
+    const results = this.httpClient.post<any>(url, data, httpOptions).pipe(
+      timeout(timeoutMs || this.defaultTimeout || 10000),
+      catchError(this.handleError<any>(operation))
+    );
     return lastValueFrom<any>(results);
   }
 
@@ -50,9 +61,13 @@ export class HttpClientService {
    * @param data
    * @param httpOptions
    * @param operation
+   * @param timeoutMs
    */
-  public put(url: string, data: any, httpOptions?: IHttpOptions, operation?: string): Promise<any> {
-    const results = this.httpClient.put<any>(url, data, httpOptions).pipe(catchError(this.handleError<any>(operation)));
+  public put(url: string, data: any, httpOptions?: IHttpOptions, operation?: string, timeoutMs: number = 10000): Promise<any> {
+    const results = this.httpClient.put<any>(url, data, httpOptions).pipe(
+      timeout(timeoutMs || this.defaultTimeout || 10000),
+      catchError(this.handleError<any>(operation))
+    );
     return lastValueFrom<any>(results);
   }
 
@@ -62,9 +77,13 @@ export class HttpClientService {
    * @param url
    * @param httpOptions
    * @param operation
+   * @param timeoutMs
    */
-  public delete(url: string, httpOptions?: IHttpOptions, operation?: string): Promise<any> {
-    const results = this.httpClient.delete<any>(url, httpOptions).pipe(catchError(this.handleError<any>(operation)));
+  public delete(url: string, httpOptions?: IHttpOptions, operation?: string, timeoutMs: number = 10000): Promise<any> {
+    const results = this.httpClient.delete<any>(url, httpOptions).pipe(
+      timeout(timeoutMs || this.defaultTimeout || 10000),
+      catchError(this.handleError<any>(operation))
+    );
     return lastValueFrom<any>(results);
   }
 

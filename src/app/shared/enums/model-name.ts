@@ -1,3 +1,4 @@
 export enum ModelName {
-  REST_USER = 'rest_user',
+  RES_USERS = 'res.users',
+  APP_VERSIONS = 'app.versions',
 }

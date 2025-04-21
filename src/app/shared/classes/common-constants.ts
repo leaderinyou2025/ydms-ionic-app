@@ -122,4 +122,16 @@ export class CommonConstants {
     return (sign === -1 ? '-' : '') + formattedValue;
   }
 
+  public static getKeys<T extends object>(): (keyof T)[] {
+    return Object.keys({} as T) as (keyof T)[];
+  }
+
+  public static randomString(length: number) {
+    const randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+    }
+    return result;
+  }
 }

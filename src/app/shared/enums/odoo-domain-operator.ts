@@ -1,0 +1,16 @@
+export enum OdooDomainOperator {
+  EQUAL = '=',
+  NOT_EQUAL = '!=',
+  IN = 'in',
+  NOT_IN = 'not in',
+  ILIKE = 'ilike',
+  NOT_ILIKE = 'not ilike',
+  GREATER_THAN = '>',
+  GREATER_EQUAL = '>=',
+  LESS_THAN = '<',
+  LESS_EQUAL = '<=',
+  OR = '|',
+  AND = '&',
+  CHILD_OF = 'child_of',
+  PARENT_OF = 'parent_of',
+}
