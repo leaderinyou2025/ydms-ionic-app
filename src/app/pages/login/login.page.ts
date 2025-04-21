@@ -24,6 +24,7 @@ import { BtnRoles } from '../../shared/enums/btn-roles';
 import { IonicColors } from '../../shared/enums/ionic-colors';
 import { CommonConstants } from '../../shared/classes/common-constants';
 import { environment } from '../../../environments/environment';
+import { PageRoutes } from '../../shared/enums/page-routes';
 
 @Component({
   selector: 'app-login',
@@ -78,7 +79,7 @@ export class LoginPage implements OnInit {
     // Get live update app version
     this.liveUpdateService.getAppVersionString().then(appVersionString => this.appVersion = appVersionString);
     // Initial app
-    setTimeout(() => this.initApp(), 1000);
+    setTimeout(() => this.initApp(), 500);
   }
 
   /**
@@ -86,7 +87,7 @@ export class LoginPage implements OnInit {
    * @private
    */
   private async initApp(): Promise<void> {
-    const loading = await this.loadingController.create({mode: 'md', message: 'Đang cập nhật dữ liệu...'});
+    const loading = await this.loadingController.create({mode: 'ios', message: 'Đang cập nhật dữ liệu...'});
     await loading.present();
 
     // Live update checking
@@ -131,17 +132,7 @@ export class LoginPage implements OnInit {
       return;
     }
 
-    if (this.loginForm.value.remember) {
-      const accountHistory: IAccountHistory = {
-        username: this.loginForm.value.phone,
-        password: this.loginForm.value.password,
-      }
-      await this.accountHistoryService.addAccount(accountHistory);
-    } else {
-      await this.accountHistoryService.removeAccount(this.loginForm.value.phone);
-    }
-
-    console.log('Form hợp lệ:', this.loginForm.value);
+    await this.handleLogin();
   }
 
   /**
@@ -164,6 +155,76 @@ export class LoginPage implements OnInit {
   public hasError(controlName: string, errorType: string): boolean {
     const control = this.loginForm.get(controlName);
     return !!(control?.hasError(errorType) && (control?.dirty || control?.touched));
+  }
+
+  /**
+   * Handle call api to auth user
+   * @private
+   */
+  private async handleLogin(): Promise<void> {
+    // Show loading
+    const loading = await this.loadingController.create({mode: 'ios'});
+    await loading.present();
+
+    // TODO: Call API login and get user profile
+    const loginResult = await this.authService.login(
+      this.loginForm.value.phone,
+      this.loginForm.value.password
+    );
+
+    // Close loading
+    await loading.dismiss();
+
+    // Login error show error toast
+    if (!loginResult) {
+      this.toastErrorLogin();
+      return;
+    }
+
+    // Remember account handle
+    if (this.loginForm.value.remember) {
+      const accountHistory: IAccountHistory = {
+        username: this.loginForm.value.phone,
+        password: this.loginForm.value.password,
+      }
+      await this.accountHistoryService.addAccount(accountHistory);
+    }
+
+    // TODO: Login success check role to redirect home page
+    await this.router.navigateByUrl(PageRoutes.HOME);
+  }
+
+  /**
+   * Open toast error login
+   * @private
+   */
+  private toastErrorLogin(): void {
+    this.toastController.getTop().then(popover => {
+      const closeBtn: ToastButton = {
+        icon: IonicIcons.CLOSE_CIRCLE_OUTLINE,
+        side: Position.END,
+        role: BtnRoles.CANCEL,
+      }
+      const toastOption: ToastOptions = {
+        header: this.translate.instant(TranslateKeys.TOAST_WARNING_HEADER),
+        message: this.translate.instant(TranslateKeys.COMMON_AUTH_FAILED),
+        duration: 5000,
+        buttons: [closeBtn],
+        mode: NativePlatform.IOS,
+        cssClass: `${StyleClass.TOAST_ITEM} ${StyleClass.TOAST_ERROR}`,
+        position: Position.TOP,
+        icon: IonicIcons.WARNING_OUTLINE,
+        color: IonicColors.WARNING,
+        keyboardClose: false
+      }
+
+      if (!popover) {
+        this.toastController.create(toastOption).then(toast => toast.present());
+      } else {
+        // Close current toast before show new toast
+        this.toastController.dismiss().then(() => this.toastController.create(toastOption).then(toast => toast.present()))
+      }
+    });
   }
 
 
@@ -321,7 +382,7 @@ export class LoginPage implements OnInit {
    * Login with biometric
    * @public
    */
-  public onClickLoginBiometric() {
+  public async onClickLoginBiometric() {
     if (!this.biometricAvailable) return;
 
     const username: string = this.loginForm.get('phone')?.value;
@@ -336,7 +397,7 @@ export class LoginPage implements OnInit {
         if (certificate?.username && certificate?.password) {
           this.loginForm.get('phone')?.setValue(certificate.username);
           this.loginForm.get('password')?.setValue(certificate.password);
-          // TODO: Handle login function
+          this.handleLogin();
         }
       }).catch(() => {
         console.error('Can not get Credentials.');

@@ -9,6 +9,7 @@ export enum TranslateKeys {
   COMMON_ENGLISH = 'COMMON.english',
   COMMON_VIETNAMESE = 'COMMON.vietnamese',
   COMMON_REMEMBER_ME = 'COMMON.remember_me',
+  COMMON_AUTH_FAILED = 'COMMON.auth_failed',
 
 
   // VALIDATE

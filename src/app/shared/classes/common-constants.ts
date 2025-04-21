@@ -5,16 +5,27 @@ import { IBase } from '../interfaces/base/base';
 
 export class CommonConstants {
 
+  /**
+   * Return random hex code color
+   */
   public static randomHexColor(): string {
     const randomColor = Math.floor(Math.random() * 16777215).toString(16);
     return '#' + randomColor;
   }
 
+  /**
+   * Convert Vietnamese char to English char
+   * @param str
+   */
   public static normalize(str: string) {
     if (!str) return;
     return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
   }
 
+  /**
+   * Validate a string is url
+   * @param str
+   */
   public static validURL(str: string): boolean {
     let pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
       '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
@@ -25,6 +36,11 @@ export class CommonConstants {
     return pattern.test(str);
   }
 
+  /**
+   * Merge 2 arrays object by id
+   * @param oldArrObj
+   * @param newArrObj
+   */
   public static mergeArrayObjectById<T extends IBase>(oldArrObj: Array<T>, newArrObj: Array<T>): Array<T> | undefined {
     if (!oldArrObj || oldArrObj?.length == 0) return newArrObj;
 
@@ -39,6 +55,11 @@ export class CommonConstants {
     return newArrObj.concat(objsFiltered || []);
   }
 
+  /**
+   * Convert related field form array to object
+   * member_id: [1, 'Member 1'] --> member_id: {id: 1, name: 'Member 1'}
+   * @param data
+   */
   public static convertArr2ListItem(data: Array<any>): Array<any> {
     const result = data?.length ? [...data] : [];
     let datePipe = new DatePipe('vi-VN');
@@ -55,6 +76,7 @@ export class CommonConstants {
           continue;
         }
 
+        // Format create_date and write_date, make create_time and write_time
         if (key == 'create_date' || key == 'write_date') {
           let time = datePipe.transform(((item[key].replace(' ', 'T')) + '.000Z'), 'HH:mm');
           item[key] = datePipe.transform(((item[key].replace(' ', 'T')) + '.000Z'), 'yyyy-MM-dd');
@@ -65,17 +87,26 @@ export class CommonConstants {
     return result;
   }
 
+  /**
+   * Convert related field form object to id (number)
+   * member_id: {id: 1, name: 'Member 1'} -> member_id: 1
+   * @param data
+   */
   public static convertListItem2Number<T>(data: any): T {
     const result = {...data};
 
     for (let key in result) {
       if (typeof result[key] == 'object' && result[key]?.id && result[key]?.name) result[key] = +result[key]?.id;
       if (typeof result[key] == 'object' && result[key]?.id === null && result[key]?.name === null) result[key] = null;
+      // Clean timestamp
       if (key == 'create_date' || key == 'create_time' || key == 'write_date' || key == 'write_time') delete result[key];
     }
     return result;
   }
 
+  /**
+   * Return the default request headers
+   */
   public static getRequestHeader(): HttpHeaders {
     return new HttpHeaders({
       'Accept': 'application/json',
@@ -83,6 +114,12 @@ export class CommonConstants {
     });
   };
 
+  /**
+   * Custom format number
+   * @param value
+   * @param decimalSeparator
+   * @param thousandsSeparator
+   */
   public static formatNumber(value: string, decimalSeparator: string = '.', thousandsSeparator: string = ' '): string | undefined {
 
     let sign: -1 | 1;
@@ -122,10 +159,17 @@ export class CommonConstants {
     return (sign === -1 ? '-' : '') + formattedValue;
   }
 
+  /**
+   * Get keys of Interface
+   */
   public static getKeys<T extends object>(): (keyof T)[] {
     return Object.keys({} as T) as (keyof T)[];
   }
 
+  /**
+   * Return the random string with dynamic length
+   * @param length
+   */
   public static randomString(length: number) {
     const randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_0123456789';
     let result = '';

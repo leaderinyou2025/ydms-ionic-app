@@ -8,7 +8,8 @@
     "auth_by_password_alert": "Authentication failed. Please login by your password.",
     "english": "English",
     "vietnamese": "Tiếng Việt",
-    "remember_me": "Remember me?"
+    "remember_me": "Remember me?",
+    "auth_failed": "Authentication failed."
   },
   "VALIDATE": {
     "phone_required": "Please input your phone number.",

@@ -96,10 +96,11 @@ export class OdooService {
   }
 
   async call_kw(model: ModelName, method: string, paramsArgs: Array<any> = [], kwArgs: IKwArgs = {}): Promise<any> {
-    const authInfo = this.authService.getAuthData();
+    const authData = this.authService.getAuthData();
+    if (!authData) return false;
 
     const dataRequest = new RequestPayload();
-    dataRequest.params.args = [environment.database, authInfo.id, authInfo.password, model, method, paramsArgs, kwArgs];
+    dataRequest.params.args = [environment.database, authData.id, authData.password, model, method, paramsArgs, kwArgs];
 
     const result = await this.httpClientService.post(environment.serverUrl, dataRequest, {headers: CommonConstants.getRequestHeader()}, 'call_kw');
 

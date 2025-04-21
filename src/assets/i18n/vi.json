@@ -8,7 +8,8 @@
     "auth_by_password_alert": "Không thể xác thực. Vui lòng đăng nhập bằng mật khẩu.",
     "english": "English",
     "vietnamese": "Tiếng Việt",
-    "remember_me": "Ghi nhớ tài khoản đăng nhập?"
+    "remember_me": "Ghi nhớ tài khoản đăng nhập?",
+    "auth_failed": "Đăng nhập không thành công. Vui lòng kiểu tra lại tài khoản và mật khẩu của bạn."
   },
   "VALIDATE": {
     "phone_required": "Vui lòng nhập vào số điện thoại.",

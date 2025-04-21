@@ -1,6 +1,6 @@
 <ion-content [fullscreen]="true">
   <div class="w-full flex items-center" [style.height]="platform.height() + 'px'">
-    <ng-container *ngIf="loginForm">
+    <ng-container *ngIf="loginForm && isReady">
       <form class="w-full" [formGroup]="loginForm" (submit)="onClickLogin()">
         <ion-grid>
           <ion-row>
