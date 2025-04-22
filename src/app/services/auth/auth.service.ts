@@ -90,7 +90,7 @@ export class AuthService {
    * @private
    */
   private async getUserProfile(userId: number): Promise<IAuthData | undefined> {
-    const resUserFields = CommonConstants.getKeys<IResUser>() as string[];
+    const resUserFields = CommonConstants.getKeys<IAuthData>() as string[];
     let results = await this.odooService.read(ModelName.RES_USERS, [userId], resUserFields);
     if (!results || results?.length == 0) return;
     results = CommonConstants.convertArr2ListItem(results);
