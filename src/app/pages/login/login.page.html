@@ -1,61 +1,94 @@
 <ion-content [fullscreen]="true">
-  <div class="w-full flex items-center" [style.height]="platform.height() + 'px'">
+  <div class="flex relative w-full bg-[url(assets/images/login-background.png)] bg-bottom bg-no-repeat bg-cover"
+       [style.height]="platform.height() + 'px'">
+
+    <!-- Chuyển đổi ngôn ngữ -->
+    <div class="absolute top-3 right-3 px-2 py-0 bg-gray-200 rounded-full">
+      <ion-select interface="action-sheet" mode="ios" (ionChange)="switchLanguage($event.detail.value)"
+                  [value]="defaultLang" cancelText="{{ TranslateKeys.BUTTON_CANCEL | translate }}">
+        <ion-select-option value="en">{{ TranslateKeys.COMMON_ENGLISH | translate }}</ion-select-option>
+        <ion-select-option value="vi">{{ TranslateKeys.COMMON_VIETNAMESE | translate }}</ion-select-option>
+      </ion-select>
+    </div>
+
+    <!-- Form đăng nhập -->
     <ng-container *ngIf="loginForm && isReady">
-      <form class="w-full" [formGroup]="loginForm" (submit)="onClickLogin()">
+      <form class="w-full mt-6" [formGroup]="loginForm" (submit)="onClickLogin()">
         <ion-grid>
           <ion-row>
-            <ion-col size="12" class="pb-5">
-              <ion-label>{{ TranslateKeys.COMMON_PHONE | translate }}<span class="text-red-600 ps-1">*</span></ion-label>
-              <ion-input formControlName="phone" type="tel" inputmode="tel" required="required" (ionInput)="onUsernameInput($event)" [clearInput]="true"></ion-input>
-              <div *ngIf="hasError('phone', 'required')" class="error-text text-red-600 text-sm py-2 ps-1">
-                {{ TranslateKeys.VALIDATE_PHONE_REQUIRED | translate }}
-              </div>
-
-              <!-- Gợi ý username -->
-              <div *ngIf="filteredAccounts.length && showSuggestions && !hasError('phone', 'required')" class="suggestions">
-                <ion-list lines="full">
-                  <ion-item button *ngFor="let acc of filteredAccounts" (click)="selectUsername(acc)">
-                    {{ acc.username }}
-                  </ion-item>
-                </ion-list>
-              </div>
+            <!-- App logo -->
+            <ion-col size="12" class="ion-text-center">
+              <ion-img class="w-[40%] mx-auto px-3" src="assets/images/app-logo.png"></ion-img>
+              <h1 class="pt-3 pb-8 text-lg text-sky-900 font-bold">{{ TranslateKeys.COMMON_APP_NAME | translate }}</h1>
             </ion-col>
 
-            <ion-col size="12" class="pb-5">
-              <ion-label>{{ TranslateKeys.COMMON_PASSWORD | translate }}<span class="text-red-600 ps-1">*</span></ion-label>
-              <ion-input formControlName="password" type="password" inputmode="text"
-                         class="input-password border border-solid border-[#6b7280] rounded">
-                <ion-input-password-toggle slot="end" color="medium"></ion-input-password-toggle>
-              </ion-input>
-              <div *ngIf="hasError('password', 'required')" class="error-text text-red-600 text-sm py-2 ps-1">
-                {{ TranslateKeys.VALIDATE_PASS_REQUIRED | translate }}
-              </div>
-            </ion-col>
-
-            <ion-col size="12" class="pb-5">
-              <ion-checkbox mode="md" formControlName="remember" labelPlacement="end">
-                {{ TranslateKeys.COMMON_REMEMBER_ME | translate }}
-              </ion-checkbox>
-            </ion-col>
-
-            <ion-col size="12" class="pt-3">
-              <div class="w-full flex items-center justify-between">
-                <ion-button color="primary" type="submit" class="w-full">
-                  {{ TranslateKeys.COMMON_LOGIN | translate }}
-                </ion-button>
-              </div>
-            </ion-col>
-
+            <!-- Login form content -->
             <ion-col size="12">
-              <ion-select interface="action-sheet" (ionChange)="switchLanguage($event.detail.value)"
-                          [value]="defaultLang" cancelText="{{ TranslateKeys.BUTTON_CANCEL | translate }}">
-                <ion-select-option value="en">{{ TranslateKeys.COMMON_ENGLISH | translate }}</ion-select-option>
-                <ion-select-option value="vi">{{ TranslateKeys.COMMON_VIETNAMESE | translate }}</ion-select-option>
-              </ion-select>
+              <div class="w-full px-5 py-6 bg-gray-100/20 border border-solid border-gray-400 rounded-[20px]">
+                <ion-row>
+                  <!-- Nhập số điện thoại -->
+                  <ion-col size="12" class="pb-5">
+                    <ion-label>{{ TranslateKeys.COMMON_PHONE | translate }}<span class="text-red-600 ps-1">*</span></ion-label>
+                    <ion-input formControlName="phone" type="tel" inputmode="tel" required="required" (ionInput)="onUsernameInput($event)" [clearInput]="true"></ion-input>
+                    <div *ngIf="hasError('phone', 'required')" class="error-text text-red-600 text-sm pt-2 ps-1">
+                      {{ TranslateKeys.VALIDATE_PHONE_REQUIRED | translate }}
+                    </div>
+
+                    <!-- Gợi ý chọn tài khoản (số điện thoại) -->
+                    <div *ngIf="filteredAccounts.length && showSuggestions && !hasError('phone', 'required')" class="suggestions">
+                      <ion-list lines="full">
+                        <ion-item button *ngFor="let acc of filteredAccounts" (click)="selectUsername(acc)">
+                          {{ acc.username }}
+                        </ion-item>
+                      </ion-list>
+                    </div>
+                  </ion-col>
+
+                  <!-- Nhập mật khẩu -->
+                  <ion-col size="12" class="pb-5" *ngIf="!(isEnableBiometric && biometricAvailable?.isAvailable && hasCredentials)">
+                    <ion-label>{{ TranslateKeys.COMMON_PASSWORD | translate }}<span class="text-red-600 ps-1">*</span></ion-label>
+                    <ion-input formControlName="password" type="password" inputmode="text"
+                               class="input-password border border-solid border-[#6b7280] rounded">
+                      <ion-input-password-toggle slot="end" color="medium"></ion-input-password-toggle>
+                    </ion-input>
+                    <div *ngIf="hasError('password', 'required')" class="error-text text-red-600 text-sm pt-2 ps-1">
+                      {{ TranslateKeys.VALIDATE_PASS_REQUIRED | translate }}
+                    </div>
+                  </ion-col>
+
+                  <!-- Chọn ghi nhớ đăng nhập -->
+                  <ion-col size="12" class="pb-4" *ngIf="!(isEnableBiometric && biometricAvailable?.isAvailable && hasCredentials)">
+                    <ion-checkbox mode="md" formControlName="remember" labelPlacement="end">
+                      {{ TranslateKeys.COMMON_REMEMBER_ME | translate }}
+                    </ion-checkbox>
+                  </ion-col>
+
+                  <!-- Nút submit form đăng nhập -->
+                  <ion-col size="12">
+                    <div class="flex items-center justify-between w-full">
+                      <ion-button color="primary" type="submit" class="w-full" *ngIf="!(isEnableBiometric && biometricAvailable?.isAvailable && hasCredentials)">
+                        {{ TranslateKeys.COMMON_LOGIN | translate }}
+                      </ion-button>
+
+                      <!-- Đăng nhập bằng sinh trắc học-->
+                      <ion-button color="primary" type="button" class="w-full" *ngIf="isEnableBiometric && biometricAvailable?.isAvailable && hasCredentials" (click)="onClickLoginBiometric()">
+                        <ion-img *ngIf="isFaceID" src="assets/icons/svg/face-id-svgrepo-com.svg" class="w-8 h-8"></ion-img>
+                        <ion-img *ngIf="!isFaceID" src="assets/icons/svg/fingerprint-scan-svgrepo-com.svg" class="w-8 h-8"></ion-img>
+                        <span class="pl-4">{{ TranslateKeys.COMMON_LOGIN | translate }}</span>
+                      </ion-button>
+                    </div>
+                  </ion-col>
+                </ion-row>
+              </div>
             </ion-col>
           </ion-row>
         </ion-grid>
       </form>
     </ng-container>
+
+    <!--  Phiên bản live update  -->
+    <p class="absolute bottom-3 w-full text-center text-sm text-gray-500 font-normal italic">
+      {{ TranslateKeys.COMMON_COPYRIGHT | translate }}. {{ TranslateKeys.COMMON_VERSION | translate }}: {{ appVersion }}<br>
+    </p>
   </div>
 </ion-content>

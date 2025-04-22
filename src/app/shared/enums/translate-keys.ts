@@ -1,5 +1,6 @@
 export enum TranslateKeys {
   // COMMON
+  COMMON_APP_NAME = 'COMMON.app_name',
   COMMON_PHONE = 'COMMON.phone',
   COMMON_PASSWORD = 'COMMON.password',
   COMMON_LOGIN = 'COMMON.login',
@@ -10,6 +11,8 @@ export enum TranslateKeys {
   COMMON_VIETNAMESE = 'COMMON.vietnamese',
   COMMON_REMEMBER_ME = 'COMMON.remember_me',
   COMMON_AUTH_FAILED = 'COMMON.auth_failed',
+  COMMON_VERSION = 'COMMON.version',
+  COMMON_COPYRIGHT = 'COMMON.copyright',
 
 
   // VALIDATE

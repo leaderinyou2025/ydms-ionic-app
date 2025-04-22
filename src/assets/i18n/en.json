@@ -1,5 +1,7 @@
 {
   "COMMON": {
+    "app_name": "Youth Development Monitoring System",
+    "copyright": "© 2025 LeaderInYou",
     "phone": "Phone",
     "password": "Password",
     "login": "Login",
@@ -9,7 +11,8 @@
     "english": "English",
     "vietnamese": "Tiếng Việt",
     "remember_me": "Remember me?",
-    "auth_failed": "Authentication failed."
+    "auth_failed": "Authentication failed.",
+    "version": "Version"
   },
   "VALIDATE": {
     "phone_required": "Please input your phone number.",

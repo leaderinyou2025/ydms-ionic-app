@@ -20,11 +20,13 @@ export class AccountHistoryService {
 
   async addAccount(account: IAccountHistory): Promise<void> {
     const accounts = await this.getAccountHistory();
-    const existAccount = accounts.find((item) => item.username === account.username);
-    if (!existAccount) {
+    const existAccountIndex = accounts.findIndex((item) => item.username === account.username);
+    if (existAccountIndex === -1) {
       accounts.unshift(account);
-      await this.storageService.set(StorageKey.ACCOUNT_HISTORY, accounts);
+    } else {
+      accounts[existAccountIndex].updated_at = Date.now();
     }
+    await this.storageService.set(StorageKey.ACCOUNT_HISTORY, accounts);
   }
 
   async removeAccount(username: string): Promise<void> {

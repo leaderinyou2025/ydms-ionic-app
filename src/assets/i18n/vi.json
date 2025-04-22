@@ -1,5 +1,7 @@
 {
   "COMMON": {
+    "app_name": "Youth Development Monitoring System",
+    "copyright": "© 2025 LeaderInYou",
     "phone": "Số điện thoại",
     "password": "Mật khẩu",
     "login": "Đăng nhập",
@@ -9,7 +11,8 @@
     "english": "English",
     "vietnamese": "Tiếng Việt",
     "remember_me": "Ghi nhớ tài khoản đăng nhập?",
-    "auth_failed": "Đăng nhập không thành công. Vui lòng kiểu tra lại tài khoản và mật khẩu của bạn."
+    "auth_failed": "Đăng nhập không thành công. Vui lòng kiểu tra lại tài khoản và mật khẩu của bạn.",
+    "version": "Phiên bản"
   },
   "VALIDATE": {
     "phone_required": "Vui lòng nhập vào số điện thoại.",

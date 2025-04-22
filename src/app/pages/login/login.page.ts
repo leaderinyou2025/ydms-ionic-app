@@ -50,6 +50,7 @@ export class LoginPage implements OnInit {
   biometricAvailable!: AvailableResult | undefined;
   hasCredentials!: boolean;
   isFaceID!: boolean;
+  isEnableBiometric!: boolean | undefined;
 
 
   constructor(
@@ -70,8 +71,6 @@ export class LoginPage implements OnInit {
   ngOnInit() {
     this.isReady = false;
     this.initializeTranslation();
-    this.initLoginForm();
-    this.handleAccountAutocomplete();
   }
 
   ionViewDidEnter() {
@@ -97,8 +96,6 @@ export class LoginPage implements OnInit {
 
     if (!this.platform.is('mobileweb') &&
       (this.platform.is('ios') || this.platform.is('android'))) {
-      // Init biometric
-      this.checkBiometricAvailable();
       // Firebase init
       await this.firebaseAddListener();
       await this.registerNotifications();
@@ -108,13 +105,17 @@ export class LoginPage implements OnInit {
 
     await loading.dismiss();
 
-    // Check auth to redirect home page by user role
+    // Check user is authenticated to redirect home page
     if (this.authService.isAuthenticated()) {
       this.isReady = false;
       // TODO: Check user role and redirect to home page
       // await this.router.navigateByUrl();
       return;
     }
+
+    // Init login form and handle autocomplete input account
+    this.initLoginForm();
+    await this.handleAccountAutocomplete();
 
     this.isReady = true;
   }
@@ -136,6 +137,16 @@ export class LoginPage implements OnInit {
   }
 
   /**
+   * Check has error of control
+   * @param controlName
+   * @param errorType
+   */
+  public hasError(controlName: string, errorType: string): boolean {
+    const control = this.loginForm.get(controlName);
+    return !!(control?.hasError(errorType) && (control?.dirty || control?.touched));
+  }
+
+  /**
    * Initialize login form
    * @private
    */
@@ -148,16 +159,6 @@ export class LoginPage implements OnInit {
   }
 
   /**
-   * Check has error of control
-   * @param controlName
-   * @param errorType
-   */
-  public hasError(controlName: string, errorType: string): boolean {
-    const control = this.loginForm.get(controlName);
-    return !!(control?.hasError(errorType) && (control?.dirty || control?.touched));
-  }
-
-  /**
    * Handle call api to auth user
    * @private
    */
@@ -166,7 +167,7 @@ export class LoginPage implements OnInit {
     const loading = await this.loadingController.create({mode: 'ios'});
     await loading.present();
 
-    // TODO: Call API login and get user profile
+    // Call API login and get user profile
     const loginResult = await this.authService.login(
       this.loginForm.value.phone,
       this.loginForm.value.password
@@ -175,17 +176,28 @@ export class LoginPage implements OnInit {
     // Close loading
     await loading.dismiss();
 
-    // Login error show error toast
+    // Login error, show error toast and end process
     if (!loginResult) {
       this.toastErrorLogin();
+
+      // Clear biometric credentials
+      if (this.hasCredentials) {
+        this.hasCredentials = false;
+        this.deleteUserCredentials(`${environment.serverUrl}/${this.loginForm.value.phone}`);
+      }
+
+      // End process
       return;
     }
+
+    /*----------- Login success ------------------*/
 
     // Remember account handle
     if (this.loginForm.value.remember) {
       const accountHistory: IAccountHistory = {
         username: this.loginForm.value.phone,
-        password: this.loginForm.value.password,
+        created_at: Date.now(),
+        updated_at: Date.now()
       }
       await this.accountHistoryService.addAccount(accountHistory);
     }
@@ -313,9 +325,7 @@ export class LoginPage implements OnInit {
    */
   public onUsernameInput(event: any): void {
     const value = event.detail.value;
-    if (!value?.length) {
-      this.loginForm.get('password')?.setValue('')
-    }
+    this.hasCredentials = false;
     this.inputSubject.next(value);
   }
 
@@ -326,9 +336,10 @@ export class LoginPage implements OnInit {
    */
   public selectUsername(acc: IAccountHistory): void {
     this.loginForm.get('phone')?.setValue(acc?.username || '');
-    this.loginForm.get('password')?.setValue(acc?.password || '');
     this.filteredAccounts = [];
     this.showSuggestions = false;
+    this.hasCredentials = false;
+    if (acc?.username) this.checkBiometricAvailable();
   }
 
   /**
@@ -337,7 +348,12 @@ export class LoginPage implements OnInit {
    */
   private async handleAccountAutocomplete(): Promise<void> {
     // Load saved account list
-    this.accountList = await this.accountHistoryService.getAccountHistory();
+    const accountList = await this.accountHistoryService.getAccountHistory();
+    this.accountList = accountList.sort((a, b) => b.updated_at - a.updated_at);
+    if (this.accountList.length > 0) {
+      this.loginForm.get('phone')?.setValue(this.accountList[0].username);
+      this.checkBiometricAvailable();
+    }
 
     // Handle subject change input username
     this.inputSubject.pipe(debounceTime(500)).subscribe((input) => {
@@ -415,21 +431,23 @@ export class LoginPage implements OnInit {
    * Check available biometric
    * @private
    */
-  private checkBiometricAvailable() {
+  private checkBiometricAvailable(): void {
+    this.isEnableBiometric = this.localStorageService.get(StorageKey.ENABLE_BIOMETRIC) || true;
+    if (this.platform.is('mobileweb') || (!this.platform.is('ios') && !this.platform.is('android'))) return;
+
     NativeBiometric.isAvailable().then(result => {
       this.biometricAvailable = result;
       this.isFaceID = (this.biometricAvailable.biometryType == BiometryType.FACE_ID);
+      this.hasCredentials = false;
 
       if (this.biometricAvailable?.isAvailable) {
         const username: string = this.loginForm.get('phone')?.value;
         const serverUser = `${environment.serverUrl}/${username}`;
 
         NativeBiometric.getCredentials({server: serverUser}).then(certificate => {
-          if (certificate?.username != username) {
-            this.hasCredentials = false;
+          this.hasCredentials = (certificate?.username != null && certificate?.username === username && certificate?.password != null);
+          if (certificate?.username && !certificate?.password) {
             this.deleteUserCredentials(serverUser);
-          } else {
-            this.hasCredentials = (certificate?.username != null && certificate?.password != null);
           }
         });
       }
