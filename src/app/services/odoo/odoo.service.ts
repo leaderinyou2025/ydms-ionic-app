@@ -11,6 +11,7 @@ import { OdooMethodName } from '../../shared/enums/odoo-method-name';
 import { RequestPayload } from '../../shared/classes/request-payload';
 import { environment } from '../../../environments/environment';
 import { CommonConstants } from '../../shared/classes/common-constants';
+import { OrderBy } from '../../shared/enums/order-by';
 
 
 export type SearchDomain = Array<any>;
@@ -59,7 +60,7 @@ export class OdooService {
     args: SearchDomain = [],
     offset: number = 0,
     limit: number = 0,
-    order?: string
+    order?: OrderBy
   ): Promise<Array<any>> {
     if (!model) return [];
 
@@ -77,7 +78,7 @@ export class OdooService {
     fields: Array<string> = [],
     offset: number = 0,
     limit: number = 0,
-    order?: string
+    order?: OrderBy
   ): Promise<Array<any>> {
     if (!model) return [];
 
@@ -95,10 +96,11 @@ export class OdooService {
   }
 
   async call_kw(model: ModelName, method: string, paramsArgs: Array<any> = [], kwArgs: IKwArgs = {}): Promise<any> {
-    const authInfo = this.authService.getAuthData();
+    const authData = this.authService.getAuthData();
+    if (!authData) return false;
 
     const dataRequest = new RequestPayload();
-    dataRequest.params.args = [environment.database, authInfo.id, authInfo.password, model, method, paramsArgs, kwArgs];
+    dataRequest.params.args = [environment.database, authData.id, authData.password, model, method, paramsArgs, kwArgs];
 
     const result = await this.httpClientService.post(environment.serverUrl, dataRequest, {headers: CommonConstants.getRequestHeader()}, 'call_kw');
 

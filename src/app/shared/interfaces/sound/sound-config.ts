@@ -1,4 +1,4 @@
-export interface SoundConfig {
+export interface ISoundConfig {
   url: string;
   volume: number;
 }

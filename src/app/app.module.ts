@@ -46,7 +46,7 @@ export function createTranslateLoader(http: HttpClient) {
     provideHttpClient(withInterceptorsFromDi()),
     {provide: LOCALE_ID, useValue: 'vi-VN'},
     [{provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptorService, multi: true}],
-    [{provide: DEFAULT_TIMEOUT, useValue: 60000}]
+    [{provide: DEFAULT_TIMEOUT, useValue: 10000}]
   ],
   bootstrap: [AppComponent],
 })
