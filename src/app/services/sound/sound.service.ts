@@ -77,6 +77,9 @@ export class SoundService {
 
   private async loadSoundConfig(): Promise<{ [key: string]: ISoundConfig }> {
     // TODO: Loading sound config of user form server
-    return {}
+    return {
+      'click': {url: '/assets/sounds/cork-85200.mp3', volume: 0.5},
+      'reload': {url: '/assets/sounds/reload-124467.mp3', volume: 0.5},
+    };
   }
 }

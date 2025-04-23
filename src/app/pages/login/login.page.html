@@ -1,13 +1,12 @@
-<ion-content [fullscreen]="true">
-  <div class="flex relative w-full bg-[url(assets/images/login-background.png)] bg-bottom bg-no-repeat bg-cover"
-       [style.height]="platform.height() + 'px'">
-
+<ion-content>
+  <div *ngIf="deviceHeight" [style.min-height]="deviceHeight"
+       class="flex relative w-full bg-[url(assets/images/login-background.png)] bg-bottom bg-no-repeat bg-cover">
     <!-- Chuyển đổi ngôn ngữ -->
-    <div class="absolute top-3 right-3 px-2 py-0 bg-gray-200 rounded-full">
-      <ion-select interface="action-sheet" mode="ios" (ionChange)="switchLanguage($event.detail.value)"
+    <div class="switch-lang-container absolute top-3 right-3 p-0 bg-gray-200 rounded-full">
+      <ion-select interface="action-sheet" class="switch-lang" mode="ios" (ionChange)="switchLanguage($event.detail.value)"
                   [value]="defaultLang" cancelText="{{ TranslateKeys.BUTTON_CANCEL | translate }}">
-        <ion-select-option value="en">{{ TranslateKeys.COMMON_ENGLISH | translate }}</ion-select-option>
-        <ion-select-option value="vi">{{ TranslateKeys.COMMON_VIETNAMESE | translate }}</ion-select-option>
+        <ion-select-option [value]="LanguageKeys.EN">{{ TranslateKeys.COMMON_ENGLISH | translate }}</ion-select-option>
+        <ion-select-option [value]="LanguageKeys.VN">{{ TranslateKeys.COMMON_VIETNAMESE | translate }}</ion-select-option>
       </ion-select>
     </div>
 

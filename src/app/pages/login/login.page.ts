@@ -13,6 +13,7 @@ import { LiveUpdateService } from '../../services/live-update/live-update.servic
 import { LocalStorageService } from '../../services/local-storage/local-storage.service';
 import { AccountHistoryService } from '../../services/account-history/account-history.service';
 import { StorageService } from '../../services/storage/storage.service';
+import { SoundService } from '../../services/sound/sound.service';
 import { StorageKey } from '../../shared/enums/storage-key';
 import { TranslateKeys } from '../../shared/enums/translate-keys';
 import { StyleClass } from '../../shared/enums/style-class';
@@ -25,6 +26,8 @@ import { IonicColors } from '../../shared/enums/ionic-colors';
 import { CommonConstants } from '../../shared/classes/common-constants';
 import { environment } from '../../../environments/environment';
 import { PageRoutes } from '../../shared/enums/page-routes';
+import { LanguageKeys } from '../../shared/enums/language-keys';
+import { SoundKeys } from '../../shared/enums/sound-keys';
 
 @Component({
   selector: 'app-login',
@@ -39,6 +42,8 @@ export class LoginPage implements OnInit {
   defaultLang!: string;
   appVersion!: string;
   protected readonly TranslateKeys = TranslateKeys;
+  protected readonly LanguageKeys = LanguageKeys;
+  deviceHeight!: string;
 
   // Auto complete account
   accountList: Array<IAccountHistory> = [];
@@ -65,11 +70,13 @@ export class LoginPage implements OnInit {
     private toastController: ToastController,
     private accountHistoryService: AccountHistoryService,
     private storageService: StorageService,
+    private soundService: SoundService,
   ) {
   }
 
   ngOnInit() {
     this.isReady = false;
+    this.platform.ready().then(() => this.deviceHeight = `${this.platform.height()}px`);
     this.initializeTranslation();
   }
 
@@ -128,6 +135,8 @@ export class LoginPage implements OnInit {
    * @public
    */
   public async onClickLogin(): Promise<void> {
+    this.soundService.playEffect(SoundKeys.CLICK);
+
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
@@ -377,6 +386,12 @@ export class LoginPage implements OnInit {
    */
   public switchLanguage(lang: string): void {
     this.translate.use(lang);
+    const selectElement = document.querySelector('.switch-lang-container');
+    if (selectElement instanceof HTMLElement) {
+      const flagUrl = lang === LanguageKeys.VN ? CommonConstants.languageFlagImageUrls.vn : CommonConstants.languageFlagImageUrls.en;
+      selectElement.style.backgroundImage = `url(${flagUrl})`;
+    }
+    this.soundService.playEffect(SoundKeys.RELOAD);
     this.localStorageService.set(StorageKey.LANGUAGE, lang);
   }
 
