@@ -14,4 +14,21 @@ ion-content {
     border-radius: 0 0 10px 10px;
     box-shadow: 2px 2px 10px #bababa;
   }
+
+  ion-select.switch-lang {
+    min-height: 30px;
+    width: 30px;
+  }
+
+  ion-select.switch-lang::part(text),
+  ion-select.switch-lang::part(icon) {
+    display: none;
+  }
+
+  .switch-lang-container {
+    background-image: url('/assets/icons/flags/vn-flag.png');
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: cover;
+  }
 }

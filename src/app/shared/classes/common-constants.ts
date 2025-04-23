@@ -6,6 +6,14 @@ import { IBase } from '../interfaces/base/base';
 export class CommonConstants {
 
   /**
+   * Url of language flag images
+   */
+  public static languageFlagImageUrls = {
+    vn: '/assets/icons/flags/vn-flag.png',
+    en: '/assets/icons/flags/en-flag.png'
+  };
+
+  /**
    * Return random hex code color
    */
   public static randomHexColor(): string {
