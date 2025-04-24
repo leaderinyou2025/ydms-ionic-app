@@ -1,9 +1,16 @@
 import { DatePipe } from '@angular/common';
 import { HttpHeaders } from '@angular/common/http';
+import * as CryptoJS from 'crypto-js';
 
 import { IBase } from '../interfaces/base/base';
+import { environment } from '../../../environments/environment';
 
 export class CommonConstants {
+
+  /**
+   * Device ID
+   */
+  public static deviceId: string = '';
 
   /**
    * Url of language flag images
@@ -185,5 +192,60 @@ export class CommonConstants {
       result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
     }
     return result;
+  }
+
+  /**
+   * generateKey for encrypt
+   * @param secret
+   * @param salt
+   * @private
+   */
+  private static generateKey(secret: string, salt: string) {
+    return CryptoJS.PBKDF2(secret, salt, {
+      keySize: 256 / 32,
+      iterations: 1000,
+    });
+  }
+
+  /**
+   * Encrypt by AES
+   * @param text
+   */
+  public static encrypt(text: string): string {
+    const salt = CryptoJS.lib.WordArray.random(128 / 8);
+    const iv = CryptoJS.lib.WordArray.random(128 / 8);
+    const key = CommonConstants.generateKey(`${environment.salt}${CommonConstants.deviceId}`, salt.toString());
+
+    const encrypted = CryptoJS.AES.encrypt(text, key, {iv});
+
+    return CryptoJS.enc.Base64.stringify(
+      CryptoJS.enc.Utf8.parse(JSON.stringify({
+        ct: encrypted.ciphertext.toString(CryptoJS.enc.Base64),
+        iv: iv.toString(CryptoJS.enc.Hex),
+        s: salt.toString(CryptoJS.enc.Hex),
+      }))
+    );
+  }
+
+  /**
+   * Decrypt
+   * @param cipherTextBase64
+   */
+  public static decrypt(cipherTextBase64: string): string {
+    const jsonStr = CryptoJS.enc.Base64.parse(cipherTextBase64).toString(CryptoJS.enc.Utf8);
+    const json = JSON.parse(jsonStr);
+
+    const iv = CryptoJS.enc.Hex.parse(json.iv);
+    const key = CommonConstants.generateKey(`${environment.salt}${CommonConstants.deviceId}`, json.s);
+
+    const encrypted = CryptoJS.enc.Base64.parse(json.ct);
+
+    const decrypted = CryptoJS.AES.decrypt(
+      {ciphertext: encrypted} as any,
+      key,
+      {iv}
+    );
+
+    return decrypted.toString(CryptoJS.enc.Utf8);
   }
 }

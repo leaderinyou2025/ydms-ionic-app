@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AlertButton, AlertController, AlertOptions, LoadingController, Platform, ToastButton, ToastController, ToastOptions } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { AlertButton, AlertController, AlertOptions, LoadingController, NavController, Platform, ToastButton, ToastController, ToastOptions } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { PushNotifications } from '@capacitor/push-notifications';
 import { AndroidSettings, IOSSettings, NativeSettings } from 'capacitor-native-settings';
@@ -13,7 +12,6 @@ import { LiveUpdateService } from '../../services/live-update/live-update.servic
 import { LocalStorageService } from '../../services/local-storage/local-storage.service';
 import { AccountHistoryService } from '../../services/account-history/account-history.service';
 import { StorageService } from '../../services/storage/storage.service';
-import { SoundService } from '../../services/sound/sound.service';
 import { StorageKey } from '../../shared/enums/storage-key';
 import { TranslateKeys } from '../../shared/enums/translate-keys';
 import { StyleClass } from '../../shared/enums/style-class';
@@ -27,7 +25,6 @@ import { CommonConstants } from '../../shared/classes/common-constants';
 import { environment } from '../../../environments/environment';
 import { PageRoutes } from '../../shared/enums/page-routes';
 import { LanguageKeys } from '../../shared/enums/language-keys';
-import { SoundKeys } from '../../shared/enums/sound-keys';
 
 @Component({
   selector: 'app-login',
@@ -39,7 +36,7 @@ export class LoginPage implements OnInit {
 
   isReady!: boolean;
   loginForm!: FormGroup;
-  defaultLang!: string;
+  defaultLang!: string | undefined;
   appVersion!: string;
   protected readonly TranslateKeys = TranslateKeys;
   protected readonly LanguageKeys = LanguageKeys;
@@ -60,7 +57,6 @@ export class LoginPage implements OnInit {
 
   constructor(
     public platform: Platform,
-    private router: Router,
     private authService: AuthService,
     private translate: TranslateService,
     private localStorageService: LocalStorageService,
@@ -70,7 +66,7 @@ export class LoginPage implements OnInit {
     private toastController: ToastController,
     private accountHistoryService: AccountHistoryService,
     private storageService: StorageService,
-    private soundService: SoundService,
+    private navCtrl: NavController
   ) {
   }
 
@@ -93,7 +89,10 @@ export class LoginPage implements OnInit {
    * @private
    */
   private async initApp(): Promise<void> {
-    const loading = await this.loadingController.create({mode: 'ios', message: 'Đang cập nhật dữ liệu...'});
+    const loading = await this.loadingController.create({
+      mode: NativePlatform.IOS,
+      message: this.translate.instant(TranslateKeys.COMMON_DATA_UPDATING)
+    });
     await loading.present();
 
     // Live update checking
@@ -101,8 +100,8 @@ export class LoginPage implements OnInit {
       await this.liveUpdateService.checkUpdateApp();
     }
 
-    if (!this.platform.is('mobileweb') &&
-      (this.platform.is('ios') || this.platform.is('android'))) {
+    if (!this.platform.is(NativePlatform.MOBILEWEB) &&
+      (this.platform.is(NativePlatform.IOS) || this.platform.is(NativePlatform.ANDROID))) {
       // Firebase init
       await this.firebaseAddListener();
       await this.registerNotifications();
@@ -117,6 +116,7 @@ export class LoginPage implements OnInit {
       this.isReady = false;
       // TODO: Check user role and redirect to home page
       // await this.router.navigateByUrl();
+      await this.navCtrl.navigateRoot(`/${PageRoutes.HOME}`, {replaceUrl: true});
       return;
     }
 
@@ -135,8 +135,6 @@ export class LoginPage implements OnInit {
    * @public
    */
   public async onClickLogin(): Promise<void> {
-    this.soundService.playEffect(SoundKeys.CLICK);
-
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
@@ -201,6 +199,21 @@ export class LoginPage implements OnInit {
 
     /*----------- Login success ------------------*/
 
+    // TEST: Test login by biometric
+    this.localStorageService.set(StorageKey.ENABLE_BIOMETRIC, true);
+    if (this.platform.is(NativePlatform.MOBILEWEB)) {
+      await NativeBiometric.setCredentials({server: `${environment.serverUrl}/0964164434`, username: '0964164434', password: '12345678'});
+      this.localStorageService.set<AvailableResult>(StorageKey.BIOMETRIC_AVAILABLE_RESULT, {
+        isAvailable: true,
+        biometryType: BiometryType.TOUCH_ID,
+      });
+    }
+    // TEST: Test unlock app
+    this.localStorageService.set(StorageKey.APP_LOCK_ENABLE, true);
+    this.localStorageService.set(StorageKey.APP_LOCK_TIMEOUT, 0);
+    this.localStorageService.set(StorageKey.APP_UNLOCK_BIOMETRIC_ENABLE, true);
+    await this.storageService.set(StorageKey.APP_LOCK_PIN, '0000');
+
     // Remember account handle
     if (this.loginForm.value.remember) {
       const accountHistory: IAccountHistory = {
@@ -212,7 +225,7 @@ export class LoginPage implements OnInit {
     }
 
     // TODO: Login success check role to redirect home page
-    await this.router.navigateByUrl(PageRoutes.HOME);
+    await this.navCtrl.navigateRoot(`/${PageRoutes.HOME}`, {replaceUrl: true});
   }
 
   /**
@@ -385,13 +398,10 @@ export class LoginPage implements OnInit {
    * @param lang
    */
   public switchLanguage(lang: string): void {
+    if (lang === this.defaultLang) return;
+    this.defaultLang = lang;
     this.translate.use(lang);
-    const selectElement = document.querySelector('.switch-lang-container');
-    if (selectElement instanceof HTMLElement) {
-      const flagUrl = lang === LanguageKeys.VN ? CommonConstants.languageFlagImageUrls.vn : CommonConstants.languageFlagImageUrls.en;
-      selectElement.style.backgroundImage = `url(${flagUrl})`;
-    }
-    this.soundService.playEffect(SoundKeys.RELOAD);
+    this.updateLanguageFlag();
     this.localStorageService.set(StorageKey.LANGUAGE, lang);
   }
 
@@ -400,10 +410,20 @@ export class LoginPage implements OnInit {
    * @private
    */
   private initializeTranslation(): void {
-    this.translate.addLangs(['en', 'vi']);
-    this.defaultLang = this.localStorageService.get<string>(StorageKey.LANGUAGE) || 'vi';
-    this.translate.resetLang(this.defaultLang);
-    this.translate.use(this.defaultLang);
+    this.defaultLang = this.localStorageService.get<string>(StorageKey.LANGUAGE);
+    if (this.defaultLang !== LanguageKeys.VN) setTimeout(() => this.updateLanguageFlag(), 100);
+  }
+
+  /**
+   * Update flag image icon
+   * @private
+   */
+  private updateLanguageFlag(): void {
+    const selectElement = document.querySelector('.switch-lang-container');
+    if (selectElement instanceof HTMLElement) {
+      const flagUrl = this.defaultLang === LanguageKeys.VN ? CommonConstants.languageFlagImageUrls.vn : CommonConstants.languageFlagImageUrls.en;
+      selectElement.style.backgroundImage = `url(${flagUrl})`;
+    }
   }
 
 
@@ -431,12 +451,12 @@ export class LoginPage implements OnInit {
           this.handleLogin();
         }
       }).catch(() => {
-        console.error('Can not get Credentials.');
+        console.error('Can not get biometric credentials.');
         this.toastErrorBiometric();
         this.deleteUserCredentials(serverUser);
       });
     }).catch(() => {
-      console.error('Permission denied.');
+      console.error('Biometric permission denied.');
       this.toastErrorBiometric();
       this.deleteUserCredentials(serverUser);
     });
@@ -447,12 +467,13 @@ export class LoginPage implements OnInit {
    * @private
    */
   private checkBiometricAvailable(): void {
-    this.isEnableBiometric = this.localStorageService.get(StorageKey.ENABLE_BIOMETRIC) || true;
+    this.isEnableBiometric = this.localStorageService.get<boolean>(StorageKey.ENABLE_BIOMETRIC);
     if (this.platform.is('mobileweb') || (!this.platform.is('ios') && !this.platform.is('android'))) return;
 
     NativeBiometric.isAvailable().then(result => {
       this.biometricAvailable = result;
       this.isFaceID = (this.biometricAvailable.biometryType == BiometryType.FACE_ID);
+      this.localStorageService.set(StorageKey.BIOMETRIC_AVAILABLE_RESULT, result);
       this.hasCredentials = false;
 
       if (this.biometricAvailable?.isAvailable) {

@@ -8,4 +8,5 @@ export enum StyleClass {
   TOAST_SUCCESS = 'toast-success',
   TOAST_WARNING = 'toast-warning',
   TOAST_INFO = 'toast-info',
+  TEXT_JUSTIFY = 'text-justify'
 }

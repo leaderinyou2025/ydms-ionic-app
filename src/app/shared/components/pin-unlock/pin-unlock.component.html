@@ -1,0 +1,47 @@
+<ion-content [fullscreen]="true" class="ion-padding h-dvh flex flex-col items-center justify-center bg-black text-center z-50">
+
+  <div class="text-5xl mt-3 mb-6">
+    <ion-icon name="lock-closed-outline" color="light"></ion-icon>
+  </div>
+
+  <div class="text-lg mb-6 text-white">{{ TranslateKeys.COMMON_INPUT_PIN | translate }}</div>
+
+  <!-- Chấm tròn hiển thị số lượng số đã nhập -->
+  <div class="flex gap-3 mb-14 justify-center justify-items-center" [ngClass]="{ 'shake': isError }">
+    <div *ngFor="let dot of dots; let i = index"
+         class="w-4 h-4 rounded-full border-2"
+         [ngClass]="{'border-blue-500 bg-blue-500': i < pin.length, 'border-blue-500': i >= pin.length}">
+    </div>
+  </div>
+
+  <!-- Bàn phím số -->
+  <div class="grid grid-cols-3 gap-4 justify-center justify-items-center text-xl font-semibold">
+    <ng-container *ngFor="let num of numberPad">
+      <ion-button (pointerdown)="inputDigit(num)" [appSoundClick]="true" fill="clear" class="rounded-full w-[74.4px] bg-gray-700 text-white">
+        {{ num }}
+      </ion-button>
+    </ng-container>
+
+    <!-- Nút ẩn -->
+    <ion-button (pointerdown)="false" fill="clear" class="rounded-full w-[74.4px] bg-gray-700 text-white opacity-0">
+      &nbsp;
+    </ion-button>
+
+    <!-- Nút 0 -->
+    <ion-button (pointerdown)="inputDigit('0')" [appSoundClick]="true" fill="clear" class="rounded-full w-[74.4px] bg-gray-700 text-white">
+      0
+    </ion-button>
+
+    <!-- Nút xoá -->
+    <ion-button (pointerdown)="removeDigit()" [appSoundClick]="true" fill="clear" class="rounded-full w-[74.4px] bg-gray-700 text-white">
+      <ion-icon name="backspace-outline"></ion-icon>
+    </ion-button>
+  </div>
+
+  <!-- Nút xác thực sinh trắc học -->
+  <ion-button fill="clear" type="button" class="w-full mt-8" [appSoundClick]="true"
+              *ngIf="biometricAvailable?.isAvailable" (click)="useBiometric()">
+    <ion-img *ngIf="isFaceID" src="assets/icons/svg/face-id-svgrepo-com.svg" class="w-12 h-12"></ion-img>
+    <ion-img *ngIf="!isFaceID" src="assets/icons/svg/fingerprint-scan-svgrepo-com.svg" class="w-12 h-12"></ion-img>
+  </ion-button>
+</ion-content>

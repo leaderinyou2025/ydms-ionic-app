@@ -5,6 +5,7 @@
     "phone": "Số điện thoại",
     "password": "Mật khẩu",
     "login": "Đăng nhập",
+    "logout": "Đăng xuất",
     "access_permission_notification_alert": "Vui lòng cho phép ứng dụng có quyền hiển thị thông báo để nhận được các thông tin cập nhật mới nhất. Xin cảm ơn!",
     "auth_user_title": "Xác thực người dùng",
     "auth_by_password_alert": "Không thể xác thực. Vui lòng đăng nhập bằng mật khẩu.",
@@ -12,19 +13,27 @@
     "vietnamese": "Tiếng Việt",
     "remember_me": "Ghi nhớ tài khoản đăng nhập?",
     "auth_failed": "Đăng nhập không thành công. Vui lòng kiểu tra lại tài khoản và mật khẩu của bạn.",
-    "version": "Phiên bản"
+    "version": "Phiên bản",
+    "data_updating": "Đang cập nhật dữ liệu...",
+    "confirm_logout_alert": "Bạn có chắc chắn muốn đăng xuất?",
+    "auth_biometric_unlock_app": "Xác thực để mở khóa ứng dụng",
+    "input_pin": "Nhập mã khóa"
   },
   "VALIDATE": {
     "phone_required": "Vui lòng nhập vào số điện thoại.",
     "password_required": "Vui lòng nhập vào mật khẩu."
   },
   "ALERT": {
-    "default_header": "Thông báo"
+    "default_header": "Thông báo",
+    "error_header": "Lỗi",
+    "error_system_header": "Lỗi hệ thống"
   },
   "BUTTON_TITLES": {
     "confirm": "Xác nhận",
     "cancel": "Hủy bỏ",
-    "open_setting": "Mở cài đặt"
+    "open_setting": "Mở cài đặt",
+    "ok": "OK",
+    "close": "Đóng"
   },
   "TOAST": {
     "error_header": "Lỗi",

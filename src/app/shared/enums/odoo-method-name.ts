@@ -7,4 +7,7 @@ export enum OdooMethodName {
   SEARCH_READ = 'search_read',
   SEARCH_COUNT = 'search_count',
   CALL_KW = 'call_kw',
+  EXECUTE_KW = 'execute_kw',
+  LOGIN = 'login',
+  CALL = 'call',
 }

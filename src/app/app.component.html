@@ -1,3 +1,4 @@
 <ion-app>
+  <app-pin-unlock *ngIf="showLockScreen" (unlocked)="onUnlockSuccess()"></app-pin-unlock>
   <ion-router-outlet></ion-router-outlet>
 </ion-app>

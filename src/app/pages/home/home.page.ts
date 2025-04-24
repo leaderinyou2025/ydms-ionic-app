@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 
+import { AuthService } from '../../services/auth/auth.service';
+import { TranslateKeys } from '../../shared/enums/translate-keys';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -7,7 +10,14 @@ import { Component } from '@angular/core';
   standalone: false,
 })
 export class HomePage {
+  protected readonly TranslateKeys = TranslateKeys;
 
-  constructor() {}
+  constructor(
+    private authService: AuthService,
+  ) {
+  }
 
+  public onClickLogout(): void {
+    this.authService.logout();
+  }
 }

@@ -16,6 +16,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DEFAULT_TIMEOUT, TimeoutInterceptorService } from './core/services/timeout-interceptor.service';
 import { defaultAnimation } from './core/animations/default.animaton';
+import { SharedModule } from './shared/shared.module';
 
 registerLocaleData(localeVi);
 enableProdMode();
@@ -40,6 +41,7 @@ export function createTranslateLoader(http: HttpClient) {
         deps: [HttpClient],
       },
     }),
+    SharedModule
   ],
   providers: [
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},

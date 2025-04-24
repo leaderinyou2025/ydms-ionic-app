@@ -1,12 +1,13 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
 import { AlertController } from '@ionic/angular';
 import { catchError, lastValueFrom, Observable, of } from 'rxjs';
 import { timeout } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 import { IHttpOptions } from '../../shared/interfaces/http/http-options';
 import { DEFAULT_TIMEOUT } from '../../core/services/timeout-interceptor.service';
+import { TranslateKeys } from '../../shared/enums/translate-keys';
 
 
 @Injectable({
@@ -17,6 +18,7 @@ export class HttpClientService {
   constructor(
     private httpClient: HttpClient,
     private alertController: AlertController,
+    private translate: TranslateService,
     @Inject(DEFAULT_TIMEOUT) private defaultTimeout: number
   ) {
   }
@@ -99,8 +101,9 @@ export class HttpClientService {
       let errorMsg = error.error ? error.error.message : error.message;
       if (errorMsg && errorMsg.length > 0) {
         this.alertController.create({
-          header: 'Thông báo',
-          message: errorMsg
+          header: this.translate.instant(TranslateKeys.ALERT_ERROR_SYSTEM_HEADER),
+          message: errorMsg,
+          buttons: this.translate.instant(TranslateKeys.BUTTON_CLOSE),
         }).then(alert => alert.present());
       }
       return of(result as T);
