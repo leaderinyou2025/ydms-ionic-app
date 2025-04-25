@@ -8,6 +8,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { LoginPageRoutingModule } from './login-routing.module';
 
 import { LoginPage } from './login.page';
+import { SoundClickDirective } from '../../core/directive/sound-click.directive';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { LoginPage } from './login.page';
     IonicModule,
     LoginPageRoutingModule,
     ReactiveFormsModule,
-    TranslatePipe
+    TranslatePipe,
+    SoundClickDirective
   ],
   declarations: [LoginPage]
 })

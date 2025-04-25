@@ -5,6 +5,7 @@
     "phone": "Phone",
     "password": "Password",
     "login": "Login",
+    "logout": "Logout",
     "access_permission_notification_alert": "Please allow the app to display notifications to receive the latest updates.",
     "auth_user_title": "Authentication user",
     "auth_by_password_alert": "Authentication failed. Please login by your password.",
@@ -12,19 +13,27 @@
     "vietnamese": "Tiếng Việt",
     "remember_me": "Remember me?",
     "auth_failed": "Authentication failed.",
-    "version": "Version"
+    "version": "Version",
+    "data_updating": "Updating...",
+    "confirm_logout_alert": "Are you sure to logout?",
+    "auth_biometric_unlock_app": "Authentication to unlock app",
+    "input_pin": "Input PIN to unlock"
   },
   "VALIDATE": {
     "phone_required": "Please input your phone number.",
     "password_required": "Please input your password."
   },
   "ALERT": {
-    "default_header": "Notification"
+    "default_header": "Notification",
+    "error_header": "Error",
+    "error_system_header": "System error"
   },
   "BUTTON_TITLES": {
     "confirm": "Confirm",
     "cancel": "Cancel",
-    "open_setting": "Open setting"
+    "open_setting": "Open setting",
+    "ok": "OK",
+    "close": "Close"
   },
   "TOAST": {
     "error_header": "Error",

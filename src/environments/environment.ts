@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  serverUrl: 'https://example.com/jsonrpc',
-  liveUpdateServerUrl: 'https://example.com/app/live-updates',
-  database: '',
+  serverUrl: 'https://ydms-dev.leaderinyou.vn/jsonrpc',
+  database: 'liy_ydms_dev',
+  salt: '5xgc9QHlMHsWbaYLlSFhKABnZWwVkwVC'
 };
 
 /*

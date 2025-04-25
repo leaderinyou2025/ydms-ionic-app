@@ -5,7 +5,6 @@ import { IUserRoles } from '../../enums/user-roles';
 export interface IAuthData extends IResUser {
   nickname?: string;
   role: IUserRoles;
-  password?: string;
   school_id?: RelatedField;
   classroom_id?: RelatedField;
   student_id?: RelatedField;

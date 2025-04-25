@@ -38,7 +38,8 @@
             "scripts": [],
             "allowedCommonJsDependencies": [
               "localforage",
-              "howler"
+              "howler",
+              "crypto-js"
             ]
           },
           "configurations": {

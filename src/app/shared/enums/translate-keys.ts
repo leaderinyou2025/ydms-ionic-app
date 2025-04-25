@@ -4,7 +4,9 @@ export enum TranslateKeys {
   COMMON_PHONE = 'COMMON.phone',
   COMMON_PASSWORD = 'COMMON.password',
   COMMON_LOGIN = 'COMMON.login',
+  COMMON_LOGOUT = 'COMMON.logout',
   COMMON_ACCESS_PERMISSION_NOTIFICATION_ALERT = 'COMMON.access_permission_notification_alert',
+  COMMON_CONFIRM_LOGOUT_ALERT = 'COMMON.confirm_logout_alert',
   COMMON_AUTHENTICATION_TITLE = 'COMMON.auth_user_title',
   COMMON_AUTHENTICATION_BY_PASS_ALERT = 'COMMON.auth_by_password_alert',
   COMMON_ENGLISH = 'COMMON.english',
@@ -13,6 +15,9 @@ export enum TranslateKeys {
   COMMON_AUTH_FAILED = 'COMMON.auth_failed',
   COMMON_VERSION = 'COMMON.version',
   COMMON_COPYRIGHT = 'COMMON.copyright',
+  COMMON_DATA_UPDATING = 'COMMON.data_updating',
+  COMMON_AUTH_BIOMETRIC_UNLOCK_APP = 'COMMON.auth_biometric_unlock_app',
+  COMMON_INPUT_PIN = 'COMMON.input_pin',
 
 
   // VALIDATE
@@ -23,10 +28,13 @@ export enum TranslateKeys {
   BUTTON_CONFIRM = 'BUTTON_TITLES.confirm',
   BUTTON_CANCEL = 'BUTTON_TITLES.cancel',
   BUTTON_OPEN_SETTING = 'BUTTON_TITLES.open_setting',
+  BUTTON_OK = 'BUTTON_TITLES.ok',
+  BUTTON_CLOSE = 'BUTTON_TITLES.close',
 
   // ALERT
   ALERT_DEFAULT_HEADER = 'ALERT.default_header',
-  ALERT_DEFAULT_BTN = 'ALERT.default_btn',
+  ALERT_ERROR_HEADER = 'ALERT.error_header',
+  ALERT_ERROR_SYSTEM_HEADER = 'ALERT.error_system_header',
 
   // TOAST
   TOAST_ERROR_HEADER = 'TOAST.error_header',
