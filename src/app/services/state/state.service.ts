@@ -8,6 +8,9 @@ export class StateService {
   private _showLockScreen = new Subject<boolean>();
   public readonly showLockScreen$: Observable<boolean> = this._showLockScreen.asObservable();
 
+  private _verifyByBiometric = new Subject<void>();
+  public readonly verifyByBiometric$: Observable<void> = this._verifyByBiometric.asObservable();
+
   constructor() {
   }
 
@@ -17,6 +20,13 @@ export class StateService {
    */
   public setShowLockScreen(isShow: boolean): void {
     this._showLockScreen.next(isShow);
+  }
+
+  /**
+   * Thông báo sự kiện app sau khi xác thực biometric
+   */
+  public verifyByBiometric(): void {
+    this._verifyByBiometric.next();
   }
 
 }

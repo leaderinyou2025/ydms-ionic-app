@@ -5,6 +5,7 @@ import { Haptics, ImpactStyle } from '@capacitor/haptics';
 
 import { AppLockService } from '../../../services/app-lock/app-lock.service';
 import { LocalStorageService } from '../../../services/local-storage/local-storage.service';
+import { StateService } from '../../../services/state/state.service';
 import { PageRoutes } from '../../enums/page-routes';
 import { StorageKey } from '../../enums/storage-key';
 import { TranslateKeys } from '../../enums/translate-keys';
@@ -23,13 +24,13 @@ export class PinUnlockComponent {
   biometricAvailable!: AvailableResult | undefined;
   isFaceID!: boolean;
   isError = false;
-  @Output() unlocked = new EventEmitter<void>();
   protected readonly TranslateKeys = TranslateKeys;
 
   constructor(
     private navCtrl: NavController,
     private appLockService: AppLockService,
     private localStorageService: LocalStorageService,
+    private stateService: StateService,
   ) {
     this.biometricAvailable = this.localStorageService.get<AvailableResult>(StorageKey.BIOMETRIC_AVAILABLE_RESULT);
     this.isFaceID = this.biometricAvailable?.biometryType === BiometryType.FACE_ID;
@@ -47,13 +48,13 @@ export class PinUnlockComponent {
 
     const valid = await this.appLockService.verifyPin(this.pin);
     if (valid) {
-      this.unlocked.emit();
+      this.stateService.setShowLockScreen(false);
       await this.navCtrl.navigateRoot(`/${PageRoutes.HOME}`, {replaceUrl: true});
       return;
     }
 
     this.isError = true;
-    Haptics.impact({style: ImpactStyle.Medium});
+    Haptics.impact({style: ImpactStyle.Heavy});
     setTimeout(() => {
       this.isError = false;
       this.pin = '';
@@ -73,10 +74,7 @@ export class PinUnlockComponent {
    * Handle unlock by biometric button
    */
   public async useBiometric() {
-    const unlocked = await this.appLockService.unlockApp();
-    if (unlocked) {
-      this.unlocked.emit();
-      await this.navCtrl.navigateRoot(`/${PageRoutes.HOME}`, {replaceUrl: true});
-    }
+    const unlocked = await this.appLockService.unlockAppByBiometric();
+    if (unlocked) this.stateService.setShowLockScreen(false);
   }
 }

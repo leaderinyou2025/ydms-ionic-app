@@ -45,13 +45,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * On unlock success
-   */
-  public onUnlockSuccess() {
-    this.showLockScreen = false;
-  }
-
-  /**
    * Check lock app
    */
   private checkLock() {
@@ -60,7 +53,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     // On lock screen state change from monitorAppState function of AppLockService
     this.showLockScreenSubscribe = this.stateService.showLockScreen$.subscribe((showLockScreen) => {
-      if (showLockScreen != undefined) this.showLockScreen = showLockScreen;
+      this.showLockScreen = showLockScreen;
     });
   }
 

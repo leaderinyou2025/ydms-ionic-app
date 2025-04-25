@@ -17,6 +17,7 @@ import { NativePlatform } from '../../shared/enums/native-platform';
 export class AppLockService {
   private locked = false;
   private backgroundTime: number | null = null;
+  private skipNextAppResume = false;
 
 
   constructor(
@@ -26,6 +27,7 @@ export class AppLockService {
     private platform: Platform,
     private stateService: StateService,
   ) {
+    this.stateService.verifyByBiometric$.subscribe(() => this.skipNextAppResume = true);
   }
 
   /**
@@ -42,27 +44,25 @@ export class AppLockService {
   /**
    * Mở khóa ứng dụng: ưu tiên biometric, fallback là PIN
    */
-  public async unlockApp(): Promise<boolean> {
+  public async unlockAppByBiometric(): Promise<boolean> {
     const allowBiometric = this.localStorageService.get<boolean>(StorageKey.APP_UNLOCK_BIOMETRIC_ENABLE);
     if (!allowBiometric) {
       return false;
     }
 
-    try {
-      // Kiểm tra biometric
-      await NativeBiometric.verifyIdentity({
-        title: this.translate.instant(TranslateKeys.COMMON_AUTH_BIOMETRIC_UNLOCK_APP),
-        negativeButtonText: this.translate.instant(TranslateKeys.BUTTON_CANCEL),
-        maxAttempts: 5
-      });
-
-      // Mở khóa ứng dụng
+    // Kiểm tra biometric
+    this.skipNextAppResume = true;
+    return NativeBiometric.verifyIdentity({
+      title: this.translate.instant(TranslateKeys.COMMON_AUTH_BIOMETRIC_UNLOCK_APP),
+      negativeButtonText: this.translate.instant(TranslateKeys.BUTTON_CANCEL),
+      maxAttempts: 5
+    }).then(() => {
       this.locked = false;
       return true;
-    } catch (e: any) {
+    }).catch((e) => {
       console.error(e?.message);
       return false;
-    }
+    });
   }
 
   /**
@@ -105,7 +105,10 @@ export class AppLockService {
         // Khi quay lại foreground → kiểm tra xem có cần khóa không
         const enabled = this.localStorageService.get<boolean>(StorageKey.APP_LOCK_ENABLE);
 
-        if (!enabled) return;
+        if (!enabled || this.skipNextAppResume) {
+          this.skipNextAppResume = false;
+          return;
+        }
 
         const timeout = this.localStorageService.get<number>(StorageKey.APP_LOCK_TIMEOUT) || 0;
         if (timeout === 0) {

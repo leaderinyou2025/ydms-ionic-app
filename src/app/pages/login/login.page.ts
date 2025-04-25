@@ -12,6 +12,7 @@ import { LiveUpdateService } from '../../services/live-update/live-update.servic
 import { LocalStorageService } from '../../services/local-storage/local-storage.service';
 import { AccountHistoryService } from '../../services/account-history/account-history.service';
 import { StorageService } from '../../services/storage/storage.service';
+import { StateService } from '../../services/state/state.service';
 import { StorageKey } from '../../shared/enums/storage-key';
 import { TranslateKeys } from '../../shared/enums/translate-keys';
 import { StyleClass } from '../../shared/enums/style-class';
@@ -66,7 +67,8 @@ export class LoginPage implements OnInit {
     private toastController: ToastController,
     private accountHistoryService: AccountHistoryService,
     private storageService: StorageService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private stateService: StateService,
   ) {
   }
 
@@ -201,8 +203,9 @@ export class LoginPage implements OnInit {
 
     // TEST: Test login by biometric
     this.localStorageService.set(StorageKey.ENABLE_BIOMETRIC, true);
-    if (this.platform.is(NativePlatform.MOBILEWEB)) {
+    if (!this.platform.is(NativePlatform.MOBILEWEB)) {
       await NativeBiometric.setCredentials({server: `${environment.serverUrl}/0964164434`, username: '0964164434', password: '12345678'});
+    } else {
       this.localStorageService.set<AvailableResult>(StorageKey.BIOMETRIC_AVAILABLE_RESULT, {
         isAvailable: true,
         biometryType: BiometryType.TOUCH_ID,
@@ -459,7 +462,7 @@ export class LoginPage implements OnInit {
       console.error('Biometric permission denied.');
       this.toastErrorBiometric();
       this.deleteUserCredentials(serverUser);
-    });
+    }).finally(() => this.stateService.verifyByBiometric());
   }
 
   /**
@@ -472,7 +475,7 @@ export class LoginPage implements OnInit {
 
     NativeBiometric.isAvailable().then(result => {
       this.biometricAvailable = result;
-      this.isFaceID = (this.biometricAvailable.biometryType == BiometryType.FACE_ID);
+      this.isFaceID = (this.biometricAvailable.biometryType === BiometryType.FACE_ID);
       this.localStorageService.set(StorageKey.BIOMETRIC_AVAILABLE_RESULT, result);
       this.hasCredentials = false;
 

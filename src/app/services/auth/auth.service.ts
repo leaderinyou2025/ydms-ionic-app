@@ -157,6 +157,7 @@ export class AuthService {
   private async clearStorageUserData(): Promise<void> {
     this.authData = undefined;
     this.localStorageService.remove(StorageKey.AUTH_TOKEN_SESSION);
+    this.localStorageService.remove(StorageKey.APP_LOCK_ENABLE);
     // this.localStorageService.remove(StorageKey.ENABLE_BIOMETRIC);
     await this.storageService.clear([StorageKey.ACCOUNT_HISTORY]);
   }
