@@ -87,7 +87,7 @@ export class LiveUpdateService {
       [bundleIdKey, OdooDomainOperator.EQUAL, appInfo.id],
       [activeKey, OdooDomainOperator.EQUAL, true]
     ];
-    const appVersions: Array<IAppVersion> = await this.odooService.search_read(
+    const appVersions: Array<IAppVersion> = await this.odooService.searchRead(
       ModelName.APP_VERSIONS, args, this.liveUpdateFields, 0, 1, OrderBy.CREATE_AT_DESC
     );
 

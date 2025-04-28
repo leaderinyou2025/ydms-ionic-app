@@ -122,6 +122,10 @@ export class LoginPage implements OnInit, OnDestroy {
       // Check user is authenticated to redirect home page
       if (this.authService.isAuthenticated()) {
         this.isReady = false;
+
+        // Sync user firebase device token to server
+        await this.pushNotificationService.updateUserFirebaseToken();
+
         // TODO: Check user role and redirect to home page
         // await this.router.navigateByUrl();
         await this.navCtrl.navigateRoot(`/${PageRoutes.HOME}`, {replaceUrl: true});
@@ -211,22 +215,6 @@ export class LoginPage implements OnInit, OnDestroy {
 
     /*----------- Login success ------------------*/
 
-    // TEST: Test login by biometric
-    this.localStorageService.set(StorageKey.ENABLE_BIOMETRIC, true);
-    if (!this.platform.is(NativePlatform.MOBILEWEB)) {
-      await NativeBiometric.setCredentials({server: `${environment.serverUrl}/0964164434`, username: '0964164434', password: '12345678'});
-    } else {
-      this.localStorageService.set<AvailableResult>(StorageKey.BIOMETRIC_AVAILABLE_RESULT, {
-        isAvailable: true,
-        biometryType: BiometryType.TOUCH_ID,
-      });
-    }
-    // TEST: Test unlock app
-    this.localStorageService.set(StorageKey.APP_LOCK_ENABLE, true);
-    this.localStorageService.set(StorageKey.APP_LOCK_TIMEOUT, 0);
-    this.localStorageService.set(StorageKey.APP_UNLOCK_BIOMETRIC_ENABLE, true);
-    await this.storageService.set(StorageKey.APP_LOCK_PIN, '0000');
-
     // Remember account handle
     if (this.loginForm.value.remember) {
       const accountHistory: IAccountHistory = {
@@ -236,6 +224,9 @@ export class LoginPage implements OnInit, OnDestroy {
       }
       await this.accountHistoryService.addAccount(accountHistory);
     }
+
+    // Sync user firebase device token to server
+    await this.pushNotificationService.updateUserFirebaseToken();
 
     // TODO: Login success check role to redirect home page
     await this.navCtrl.navigateRoot(`/${PageRoutes.HOME}`, {replaceUrl: true});

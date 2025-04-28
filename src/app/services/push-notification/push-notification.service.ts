@@ -4,19 +4,21 @@ import { TranslateService } from '@ngx-translate/core';
 import { PushNotifications, Token } from '@capacitor/push-notifications';
 import { AndroidSettings, IOSSettings, NativeSettings } from 'capacitor-native-settings';
 import { initializeApp } from 'firebase/app';
-import { getMessaging, getToken, onMessage } from 'firebase/messaging';
+import { getMessaging, getToken, NotificationPayload, onMessage } from 'firebase/messaging';
 
+import { AuthService } from '../auth/auth.service';
 import { SoundService } from '../sound/sound.service';
+import { LocalStorageService } from '../local-storage/local-storage.service';
 import { TranslateKeys } from '../../shared/enums/translate-keys';
 import { NativePlatform } from '../../shared/enums/native-platform';
 import { StyleClass } from '../../shared/enums/style-class';
 import { environment } from '../../../environments/environment';
-import { NotificationPayload } from '@firebase/messaging';
 import { IonicIcons } from '../../shared/enums/ionic-icons';
 import { Position } from '../../shared/enums/position';
 import { BtnRoles } from '../../shared/enums/btn-roles';
 import { IonicColors } from '../../shared/enums/ionic-colors';
 import { SoundKeys } from '../../shared/enums/sound-keys';
+import { StorageKey } from '../../shared/enums/storage-key';
 
 
 @Injectable({
@@ -28,11 +30,13 @@ export class PushNotificationService {
   private messaging: any;
 
   constructor(
+    private authService: AuthService,
     private alertController: AlertController,
     private translate: TranslateService,
     private platform: Platform,
     private toastController: ToastController,
     private soundService: SoundService,
+    private localStorageService: LocalStorageService,
   ) {
   }
 
@@ -46,6 +50,18 @@ export class PushNotificationService {
     } else {
       this.initFirebaseWebPush();
     }
+  }
+
+  /**
+   * Get token on localStorage and call API to update for user
+   */
+  public async updateUserFirebaseToken(): Promise<void> {
+    if (!this.authService.isAuthenticated()) return;
+    const firebaseToken = this.localStorageService.get<string>(StorageKey.FIREBASE_DEVICE_TOKEN);
+    if (!firebaseToken) return;
+    const authData = await this.authService.getAuthData();
+    if (!authData) return;
+    // TODO: Call API to register user firebase device token
   }
 
   /**
@@ -170,8 +186,11 @@ export class PushNotificationService {
    * @param token
    * @private
    */
-  private registerDeviceTokenToServer(token: string) {
-    // TODO: Call API to register FCM device token to server
+  private registerDeviceTokenToServer(token: string): void {
+    // Save firebase to localStorage
+    this.localStorageService.set(StorageKey.FIREBASE_DEVICE_TOKEN, token);
+    // Update user firebase token
+    setTimeout(() => this.updateUserFirebaseToken(), 50);
   }
 
   /**
