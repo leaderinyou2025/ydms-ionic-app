@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "167920992408",
+    "project_id": "ydms-80659",
+    "storage_bucket": "ydms-80659.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:167920992408:android:01777be6790a163bab90ed",
+        "android_client_info": {
+          "package_name": "ydms.leaderinyou.vn"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTB2RISpcvUTF_VRz6BjmMyn8DnwYxbAA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

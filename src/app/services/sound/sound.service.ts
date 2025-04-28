@@ -80,6 +80,7 @@ export class SoundService {
     return {
       'click': {url: '/assets/sounds/cork-85200.mp3', volume: 0.5},
       'reload': {url: '/assets/sounds/reload-124467.mp3', volume: 0.5},
+      'notification': {url: '/assets/sounds/alert-234711.mp3', volume: 1},
     };
   }
 }

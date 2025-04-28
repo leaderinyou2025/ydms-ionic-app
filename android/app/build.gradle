@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace "ilo.career_advisor_master"
+    namespace "ydms.leaderinyou.vn"
     compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "ilo.career_advisor_master"
+        applicationId "ydms.leaderinyou.vn"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

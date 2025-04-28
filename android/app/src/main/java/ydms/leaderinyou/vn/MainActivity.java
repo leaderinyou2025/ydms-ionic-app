@@ -1,4 +1,4 @@
-package ilo.career_advisor_master;
+package ydms.leaderinyou.vn;
 
 import com.getcapacitor.BridgeActivity;
 

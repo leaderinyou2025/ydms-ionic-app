@@ -1,6 +1,6 @@
-<ion-content>
+<ion-content [fullscreen]="true">
   <div *ngIf="deviceHeight" [style.min-height]="deviceHeight"
-       class="flex relative w-full bg-[url(assets/images/login-background.png)] bg-bottom bg-no-repeat bg-cover">
+       class="flex relative w-full bg-[url(assets/images/login-background.png)] native-padding-content bg-bottom bg-no-repeat bg-cover">
     <!-- Chuyển đổi ngôn ngữ -->
     <div class="switch-lang-container absolute top-3 right-3 p-0 bg-gray-200 rounded-full" *ngIf="defaultLang">
       <ion-select interface="action-sheet" class="switch-lang" mode="ios" (ionChange)="switchLanguage($event.detail.value)"
@@ -71,7 +71,7 @@
                       </ion-button>
 
                       <!-- Đăng nhập bằng sinh trắc học-->
-                      <ion-button color="primary" type="button" class="w-full"  [appSoundClick]="true"
+                      <ion-button color="primary" type="button" class="w-full" [appSoundClick]="true"
                                   *ngIf="isEnableBiometric && biometricAvailable?.isAvailable && hasCredentials" (click)="onClickLoginBiometric()">
                         <ion-img *ngIf="isFaceID" src="assets/icons/svg/face-id-svgrepo-com.svg" class="w-8 h-8"></ion-img>
                         <ion-img *ngIf="!isFaceID" src="assets/icons/svg/fingerprint-scan-svgrepo-com.svg" class="w-8 h-8"></ion-img>
