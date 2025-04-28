@@ -41,15 +41,18 @@
     "info_header": "Thông tin",
     "warning_header": "Cảnh báo",
     "auth_failed": "Đăng nhập không thành công. Vui lòng kiểm tra lại tài khoản và mật khẩu của bạn.",
-    "auth_by_password": "Không thể xác thực. Vui lòng đăng nhập bằng mật khẩu."
+    "auth_by_password": "Không thể xác thực. Vui lòng đăng nhập bằng mật khẩu.",
+    "network_online": "Đã có kết nối mạng trở lại.",
+    "network_offline": "Mất kết nối. Vui lòng kiểm tra lại kết nối mạng của bạn."
   },
   "ERROR": {
-    "network": "Lỗi mạng. Vui lòng kiểm tra kết nối Internet của bạn.",
+    "network": "Lỗi mạng. Vui lòng kiểm tra kết nối mạng của bạn và thử lại.",
     "bad_request": "Yêu cầu không hợp lệ. Vui lòng kiểm tra lại dữ liệu.",
     "unauthorized": "Chưa xác thực. Vui lòng đăng nhập lại.",
     "forbidden": "Từ chối truy cập. Bạn không có quyền thực hiện thao tác này.",
     "not_found": "Không tìm thấy tài nguyên. Vui lòng kiểm tra lại đường dẫn.",
     "server": "Lỗi máy chủ. Vui lòng thử lại sau.",
-    "unknown": "Đã xảy ra lỗi không xác định. Vui lòng thử lại."
+    "unknown": "Đã xảy ra lỗi không xác định. Vui lòng thử lại.",
+    "server_connection": "Không thể kết nối tới máy chủ. Vui lòng thử lại sau."
   }
 }

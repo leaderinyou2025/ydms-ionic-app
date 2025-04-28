@@ -41,7 +41,9 @@ export enum TranslateKeys {
   TOAST_INFO_HEADER = 'TOAST.info_header',
   TOAST_WARNING_HEADER = 'TOAST.warning_header',
   TOAST_AUTH_FAILED = 'TOAST.auth_failed',
-  TOAST_AUTH_BY_PASSWORD = 'ALERT.auth_by_password',
+  TOAST_AUTH_BY_PASSWORD = 'TOAST.auth_by_password',
+  TOAST_NETWORK_ONLINE = 'TOAST.network_online',
+  TOAST_NETWORK_OFFLINE = 'TOAST.network_offline',
 
   // ERROR
   ERROR_NETWORK = 'ERROR.network',
@@ -51,4 +53,5 @@ export enum TranslateKeys {
   ERROR_NOT_FOUND = 'ERROR.not_found',
   ERROR_SERVER = 'ERROR.server',
   ERROR_UNKNOWN = 'ERROR.unknown',
+  ERROR_SERVER_CONNECTION = 'ERROR.server_connection',
 }

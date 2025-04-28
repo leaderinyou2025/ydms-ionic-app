@@ -4,8 +4,9 @@ import { App } from '@capacitor/app';
 import { LiveUpdate } from '@capawesome/capacitor-live-update';
 
 import { OdooService, SearchDomain } from '../odoo/odoo.service';
-import { StorageKey } from '../../shared/enums/storage-key';
 import { StorageService } from '../storage/storage.service';
+import { NetworkService } from '../network/network.service';
+import { StorageKey } from '../../shared/enums/storage-key';
 import { IAppVersion } from '../../shared/interfaces/models/app-version';
 import { CommonConstants } from '../../shared/classes/common-constants';
 import { ModelName } from '../../shared/enums/model-name';
@@ -23,6 +24,7 @@ export class LiveUpdateService {
     private platform: Platform,
     private odooService: OdooService,
     private storageService: StorageService,
+    private networkService: NetworkService
   ) {
     // Load live update model fields from AppVersion interface
     this.liveUpdateFields = CommonConstants.getKeys<IAppVersion>() as string[];
@@ -73,7 +75,7 @@ export class LiveUpdateService {
    * @return Promise<IAppVersion | undefined>
    */
   async getLatestAppVersion(): Promise<IAppVersion | undefined> {
-    if (!navigator.onLine) return;
+    if (!this.networkService.isOnline()) return;
 
     const appInfo = await App.getInfo();
     const platformKey: keyof IAppVersion = 'platform';

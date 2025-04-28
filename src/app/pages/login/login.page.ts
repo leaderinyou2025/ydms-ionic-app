@@ -9,9 +9,10 @@ import { AuthService } from '../../services/auth/auth.service';
 import { LiveUpdateService } from '../../services/live-update/live-update.service';
 import { LocalStorageService } from '../../services/local-storage/local-storage.service';
 import { AccountHistoryService } from '../../services/account-history/account-history.service';
-import { StorageService } from '../../services/storage/storage.service';
 import { StateService } from '../../services/state/state.service';
 import { KeyboardService } from '../../services/keyboard/keyboard.service';
+import { NetworkService } from '../../services/network/network.service';
+import { PushNotificationService } from '../../services/push-notification/push-notification.service';
 import { StorageKey } from '../../shared/enums/storage-key';
 import { TranslateKeys } from '../../shared/enums/translate-keys';
 import { StyleClass } from '../../shared/enums/style-class';
@@ -25,7 +26,6 @@ import { CommonConstants } from '../../shared/classes/common-constants';
 import { environment } from '../../../environments/environment';
 import { PageRoutes } from '../../shared/enums/page-routes';
 import { LanguageKeys } from '../../shared/enums/language-keys';
-import { PushNotificationService } from '../../services/push-notification/push-notification.service';
 
 @Component({
   selector: 'app-login',
@@ -69,11 +69,11 @@ export class LoginPage implements OnInit, OnDestroy {
     private loadingController: LoadingController,
     private toastController: ToastController,
     private accountHistoryService: AccountHistoryService,
-    private storageService: StorageService,
     private navCtrl: NavController,
     private stateService: StateService,
     private keyboardService: KeyboardService,
-    private pushNotificationService: PushNotificationService
+    private pushNotificationService: PushNotificationService,
+    private networkService: NetworkService,
   ) {
   }
 
@@ -110,27 +110,28 @@ export class LoginPage implements OnInit, OnDestroy {
 
     try {
       // Check network is online
-      if (navigator.onLine) {
+      const isOnline = await this.networkService.isReallyOnline();
+      if (isOnline) {
         // Live update checking
         await this.liveUpdateService.checkUpdateApp();
         // Init firebase
         await this.pushNotificationService.init();
+
+        // Check user is authenticated to redirect home page
+        if (this.authService.isAuthenticated()) {
+          this.isReady = false;
+
+          // Sync user firebase device token to server
+          await this.pushNotificationService.updateUserFirebaseToken();
+
+          // TODO: Check user role and redirect to home page
+          // await this.router.navigateByUrl();
+          await this.navCtrl.navigateRoot(`/${PageRoutes.HOME}`, {replaceUrl: true});
+          return;
+        }
       }
 
       await loading.dismiss();
-
-      // Check user is authenticated to redirect home page
-      if (this.authService.isAuthenticated()) {
-        this.isReady = false;
-
-        // Sync user firebase device token to server
-        await this.pushNotificationService.updateUserFirebaseToken();
-
-        // TODO: Check user role and redirect to home page
-        // await this.router.navigateByUrl();
-        await this.navCtrl.navigateRoot(`/${PageRoutes.HOME}`, {replaceUrl: true});
-        return;
-      }
 
       // Init login form and handle autocomplete input account
       this.initLoginForm();
@@ -189,47 +190,51 @@ export class LoginPage implements OnInit, OnDestroy {
     // Show loading
     const loading = await this.loadingController.create({mode: 'ios'});
     await loading.present();
+    try {
+      // Call API login and get user profile
+      const loginResult = await this.authService.login(
+        this.loginForm.value.phone,
+        this.loginForm.value.password
+      );
 
-    // Call API login and get user profile
-    const loginResult = await this.authService.login(
-      this.loginForm.value.phone,
-      this.loginForm.value.password
-    );
+      // Close loading
+      await loading.dismiss();
 
-    // Close loading
-    await loading.dismiss();
+      // Login error, show error toast and end process
+      if (!loginResult) {
+        this.toastErrorLogin();
 
-    // Login error, show error toast and end process
-    if (!loginResult) {
-      this.toastErrorLogin();
+        // Clear biometric credentials
+        if (this.hasCredentials) {
+          this.hasCredentials = false;
+          this.deleteUserCredentials(`${environment.serverUrl}/${this.loginForm.value.phone}`);
+        }
 
-      // Clear biometric credentials
-      if (this.hasCredentials) {
-        this.hasCredentials = false;
-        this.deleteUserCredentials(`${environment.serverUrl}/${this.loginForm.value.phone}`);
+        // End process
+        return;
       }
 
-      // End process
-      return;
-    }
+      /*----------- Login success ------------------*/
 
-    /*----------- Login success ------------------*/
-
-    // Remember account handle
-    if (this.loginForm.value.remember) {
-      const accountHistory: IAccountHistory = {
-        username: this.loginForm.value.phone,
-        created_at: Date.now(),
-        updated_at: Date.now()
+      // Remember account handle
+      if (this.loginForm.value.remember) {
+        const accountHistory: IAccountHistory = {
+          username: this.loginForm.value.phone,
+          created_at: Date.now(),
+          updated_at: Date.now()
+        }
+        await this.accountHistoryService.addAccount(accountHistory);
       }
-      await this.accountHistoryService.addAccount(accountHistory);
+
+      // Sync user firebase device token to server
+      await this.pushNotificationService.updateUserFirebaseToken();
+
+      // TODO: Login success check role to redirect home page
+      await this.navCtrl.navigateRoot(`/${PageRoutes.HOME}`, {replaceUrl: true});
+    } catch (e: any) {
+      console.error(e?.message);
+      this.loadingController.getTop().then(loading => loading?.dismiss());
     }
-
-    // Sync user firebase device token to server
-    await this.pushNotificationService.updateUserFirebaseToken();
-
-    // TODO: Login success check role to redirect home page
-    await this.navCtrl.navigateRoot(`/${PageRoutes.HOME}`, {replaceUrl: true});
   }
 
   /**

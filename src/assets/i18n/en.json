@@ -41,7 +41,9 @@
     "info_header": "Information",
     "warning_header": "Warning",
     "auth_failed": "Authentication failed.",
-    "auth_by_password": "Authentication failed. Please log in using your password."
+    "auth_by_password": "Authentication failed. Please log in using your password.",
+    "network_online": "You are back online.",
+    "network_offline": "You are offline. Please check your connection."
   },
   "ERROR": {
     "network": "Network error. Please check your internet connection.",
@@ -50,6 +52,7 @@
     "forbidden": "Access denied. You do not have permission to perform this action.",
     "not_found": "Resource not found. Please check the requested link.",
     "server": "Server error. Please try again later.",
-    "unknown": "An unknown error occurred. Please try again."
+    "unknown": "An unknown error occurred. Please try again.",
+    "server_connection": "Unable to connect to server. Please try again later."
   }
 }

@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { IHttpOptions } from '../../shared/interfaces/http/http-options';
 import { DEFAULT_TIMEOUT } from '../../core/services/timeout-interceptor.service';
+import { NetworkService } from '../network/network.service';
 import { TranslateKeys } from '../../shared/enums/translate-keys';
 import { HttpClientMethods } from '../../shared/enums/http-client-methods';
 
@@ -17,7 +18,8 @@ export class HttpClientService {
     private httpClient: HttpClient,
     private alertController: AlertController,
     private translate: TranslateService,
-    @Inject(DEFAULT_TIMEOUT) private defaultTimeout: number
+    private networkService: NetworkService,
+    @Inject(DEFAULT_TIMEOUT) private defaultTimeout: number,
   ) {
   }
 
@@ -155,7 +157,11 @@ export class HttpClientService {
         // Server-side error
         switch (error.status) {
           case 0:
-            errorMessage = this.translate.instant(TranslateKeys.ERROR_NETWORK);
+            if (!this.networkService.isOnline()) {
+              errorMessage = this.translate.instant(TranslateKeys.ERROR_NETWORK);
+            } else {
+              errorMessage = this.translate.instant(TranslateKeys.ERROR_SERVER_CONNECTION);
+            }
             break;
           case 400:
             errorMessage = this.translate.instant(TranslateKeys.ERROR_BAD_REQUEST);

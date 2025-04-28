@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
   serverUrl: 'https://ydms.leaderinyou.vn/jsonrpc',
+  checkInternetConnectionUrl: 'https://www.cloudflare.com/cdn-cgi/trace',
   database: 'liy_ydms',
   salt: '5xgc9QHlMHsWbaYLlSFhKABnZWwVkwVC',
   webPushPublicKey: 'BEifqADxDf2KwsImWoSGavULRJbZGqGBdC76UmvuTsG2C62G1MrzMmm5TYwM2TLTjfKQ9vQ08yD7dU190DpiIB4',

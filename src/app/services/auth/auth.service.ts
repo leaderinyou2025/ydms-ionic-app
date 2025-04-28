@@ -98,17 +98,13 @@ export class AuthService {
     dataRequest.params.args = [environment.database, username, password];
 
     // Login function api
-    // const loginResult = await this.httpClientService.post(environment.serverUrl, dataRequest, {headers: CommonConstants.getRequestHeader()}, 'login');
-    // TEST: force login
-    const loginResult = {result: 1};
+    const loginResult = await this.httpClientService.post(environment.serverUrl, dataRequest, {headers: CommonConstants.getRequestHeader()}, {operation: 'login'});
     if (!loginResult || !loginResult?.result) {
       return false;
     }
 
     // Get user profile
-    // const userProfile = await this.getUserProfile(+loginResult.result);
-    // TEST: force user profile
-    const userProfile: IAuthData = {id: 1, name: 'Test1', login: username, role: IUserRoles.STUDENT};
+    const userProfile = await this.getUserProfile(+loginResult.result);
 
     if (!userProfile) {
       return false;
@@ -156,9 +152,13 @@ export class AuthService {
    */
   private async clearStorageUserData(): Promise<void> {
     this.authData = undefined;
-    this.localStorageService.remove(StorageKey.AUTH_TOKEN_SESSION);
-    this.localStorageService.remove(StorageKey.APP_LOCK_ENABLE);
-    // this.localStorageService.remove(StorageKey.ENABLE_BIOMETRIC);
+    // Xóa sạch localStorage chỉ giữ lại những common config
+    this.localStorageService.clear([
+      StorageKey.LANGUAGE,
+      StorageKey.FIREBASE_DEVICE_TOKEN,
+      StorageKey.ENABLE_BIOMETRIC
+    ]);
+    // Xóa sạch storage chỉ giữ lại lịch sử tài khoản đăng nhập
     await this.storageService.clear([StorageKey.ACCOUNT_HISTORY]);
   }
 
