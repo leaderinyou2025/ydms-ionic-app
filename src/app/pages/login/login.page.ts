@@ -1,20 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AlertButton, AlertController, AlertOptions, LoadingController, NavController, Platform, ToastButton, ToastController, ToastOptions } from '@ionic/angular';
+import { IonContent, LoadingController, NavController, Platform, ToastButton, ToastController, ToastOptions } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { PushNotifications } from '@capacitor/push-notifications';
-import { AndroidSettings, IOSSettings, NativeSettings } from 'capacitor-native-settings';
 import { AvailableResult, BiometryType, NativeBiometric } from 'capacitor-native-biometric';
-import { debounceTime, Subject } from 'rxjs';
+import { debounceTime, Subject, Subscription } from 'rxjs';
 
 import { AuthService } from '../../services/auth/auth.service';
 import { LiveUpdateService } from '../../services/live-update/live-update.service';
 import { LocalStorageService } from '../../services/local-storage/local-storage.service';
 import { AccountHistoryService } from '../../services/account-history/account-history.service';
-import { StorageService } from '../../services/storage/storage.service';
 import { StateService } from '../../services/state/state.service';
+import { KeyboardService } from '../../services/keyboard/keyboard.service';
+import { NetworkService } from '../../services/network/network.service';
+import { PushNotificationService } from '../../services/push-notification/push-notification.service';
 import { StorageKey } from '../../shared/enums/storage-key';
 import { TranslateKeys } from '../../shared/enums/translate-keys';
+import { SoundService } from '../../services/sound/sound.service';
 import { StyleClass } from '../../shared/enums/style-class';
 import { NativePlatform } from '../../shared/enums/native-platform';
 import { IAccountHistory } from '../../shared/interfaces/function-data/account-history';
@@ -33,8 +34,9 @@ import { LanguageKeys } from '../../shared/enums/language-keys';
   styleUrls: ['./login.page.scss'],
   standalone: false
 })
-export class LoginPage implements OnInit {
+export class LoginPage implements OnInit, OnDestroy {
 
+  @ViewChild(IonContent, {static: true}) content!: IonContent;
   isReady!: boolean;
   loginForm!: FormGroup;
   defaultLang!: string | undefined;
@@ -55,6 +57,9 @@ export class LoginPage implements OnInit {
   isFaceID!: boolean;
   isEnableBiometric!: boolean | undefined;
 
+  // Keyboard
+  keyboardSub!: Subscription;
+
 
   constructor(
     public platform: Platform,
@@ -63,12 +68,14 @@ export class LoginPage implements OnInit {
     private localStorageService: LocalStorageService,
     private liveUpdateService: LiveUpdateService,
     private loadingController: LoadingController,
-    private alertController: AlertController,
     private toastController: ToastController,
     private accountHistoryService: AccountHistoryService,
-    private storageService: StorageService,
     private navCtrl: NavController,
     private stateService: StateService,
+    private keyboardService: KeyboardService,
+    private pushNotificationService: PushNotificationService,
+    private networkService: NetworkService,
+    private soundService: SoundService,
   ) {
   }
 
@@ -76,6 +83,7 @@ export class LoginPage implements OnInit {
     this.isReady = false;
     this.platform.ready().then(() => this.deviceHeight = `${this.platform.height()}px`);
     this.initializeTranslation();
+    this.onKeyboardChangeState();
   }
 
   ionViewDidEnter() {
@@ -86,47 +94,57 @@ export class LoginPage implements OnInit {
     setTimeout(() => this.initApp(), 500);
   }
 
+  ngOnDestroy() {
+    this.keyboardSub?.unsubscribe();
+  }
+
   /**
    * Initial app
    * @private
    */
   private async initApp(): Promise<void> {
+    // Create loading
     const loading = await this.loadingController.create({
       mode: NativePlatform.IOS,
-      message: this.translate.instant(TranslateKeys.COMMON_DATA_UPDATING)
+      message: this.translate.instant(TranslateKeys.TITLE_DATA_UPDATING)
     });
     await loading.present();
 
-    // Live update checking
-    if (navigator.onLine) {
-      await this.liveUpdateService.checkUpdateApp();
+    try {
+      this.soundService.playBackground();
+      // Check network is online
+      const isOnline = await this.networkService.isReallyOnline();
+      if (isOnline) {
+        // Live update checking
+        await this.liveUpdateService.checkUpdateApp();
+        // Init firebase
+        await this.pushNotificationService.init();
+
+        // Check user is authenticated to redirect home page
+        if (this.authService.isAuthenticated()) {
+          this.isReady = false;
+
+          // Sync user firebase device token to server
+          await this.pushNotificationService.updateUserFirebaseToken();
+
+          // TODO: Check user role and redirect to home page
+          // await this.router.navigateByUrl();
+          await this.navCtrl.navigateRoot(`/${PageRoutes.HOME}`, {replaceUrl: true});
+          return;
+        }
+      }
+
+      await loading.dismiss();
+
+      // Init login form and handle autocomplete input account
+      this.initLoginForm();
+      await this.handleAccountAutocomplete();
+
+      this.isReady = true;
+    } catch (e: any) {
+      await loading.dismiss();
+      this.isReady = true;
     }
-
-    if (!this.platform.is(NativePlatform.MOBILEWEB) &&
-      (this.platform.is(NativePlatform.IOS) || this.platform.is(NativePlatform.ANDROID))) {
-      // Firebase init
-      await this.firebaseAddListener();
-      await this.registerNotifications();
-    } else {
-      await this.storageService.set(StorageKey.FIREBASE_DEVICE_TOKEN, CommonConstants.randomString(256));
-    }
-
-    await loading.dismiss();
-
-    // Check user is authenticated to redirect home page
-    if (this.authService.isAuthenticated()) {
-      this.isReady = false;
-      // TODO: Check user role and redirect to home page
-      // await this.router.navigateByUrl();
-      await this.navCtrl.navigateRoot(`/${PageRoutes.HOME}`, {replaceUrl: true});
-      return;
-    }
-
-    // Init login form and handle autocomplete input account
-    this.initLoginForm();
-    await this.handleAccountAutocomplete();
-
-    this.isReady = true;
   }
 
 
@@ -175,60 +193,51 @@ export class LoginPage implements OnInit {
     // Show loading
     const loading = await this.loadingController.create({mode: 'ios'});
     await loading.present();
+    try {
+      // Call API login and get user profile
+      const loginResult = await this.authService.login(
+        this.loginForm.value.phone,
+        this.loginForm.value.password
+      );
 
-    // Call API login and get user profile
-    const loginResult = await this.authService.login(
-      this.loginForm.value.phone,
-      this.loginForm.value.password
-    );
+      // Close loading
+      await loading.dismiss();
 
-    // Close loading
-    await loading.dismiss();
+      // Login error, show error toast and end process
+      if (!loginResult) {
+        this.toastErrorLogin();
 
-    // Login error, show error toast and end process
-    if (!loginResult) {
-      this.toastErrorLogin();
+        // Clear biometric credentials
+        if (this.hasCredentials) {
+          this.hasCredentials = false;
+          this.deleteUserCredentials(`${environment.serverUrl}/${this.loginForm.value.phone}`);
+        }
 
-      // Clear biometric credentials
-      if (this.hasCredentials) {
-        this.hasCredentials = false;
-        this.deleteUserCredentials(`${environment.serverUrl}/${this.loginForm.value.phone}`);
+        // End process
+        return;
       }
 
-      // End process
-      return;
-    }
+      /*----------- Login success ------------------*/
 
-    /*----------- Login success ------------------*/
-
-    // TEST: Test login by biometric
-    this.localStorageService.set(StorageKey.ENABLE_BIOMETRIC, true);
-    if (!this.platform.is(NativePlatform.MOBILEWEB)) {
-      await NativeBiometric.setCredentials({server: `${environment.serverUrl}/0964164434`, username: '0964164434', password: '12345678'});
-    } else {
-      this.localStorageService.set<AvailableResult>(StorageKey.BIOMETRIC_AVAILABLE_RESULT, {
-        isAvailable: true,
-        biometryType: BiometryType.TOUCH_ID,
-      });
-    }
-    // TEST: Test unlock app
-    this.localStorageService.set(StorageKey.APP_LOCK_ENABLE, true);
-    this.localStorageService.set(StorageKey.APP_LOCK_TIMEOUT, 0);
-    this.localStorageService.set(StorageKey.APP_UNLOCK_BIOMETRIC_ENABLE, true);
-    await this.storageService.set(StorageKey.APP_LOCK_PIN, '0000');
-
-    // Remember account handle
-    if (this.loginForm.value.remember) {
-      const accountHistory: IAccountHistory = {
-        username: this.loginForm.value.phone,
-        created_at: Date.now(),
-        updated_at: Date.now()
+      // Remember account handle
+      if (this.loginForm.value.remember) {
+        const accountHistory: IAccountHistory = {
+          username: this.loginForm.value.phone,
+          created_at: Date.now(),
+          updated_at: Date.now()
+        }
+        await this.accountHistoryService.addAccount(accountHistory);
       }
-      await this.accountHistoryService.addAccount(accountHistory);
-    }
 
-    // TODO: Login success check role to redirect home page
-    await this.navCtrl.navigateRoot(`/${PageRoutes.HOME}`, {replaceUrl: true});
+      // Sync user firebase device token to server
+      await this.pushNotificationService.updateUserFirebaseToken();
+
+      // TODO: Login success check role to redirect home page
+      await this.navCtrl.navigateRoot(`/${PageRoutes.HOME}`, {replaceUrl: true});
+    } catch (e: any) {
+      console.error(e?.message);
+      this.loadingController.getTop().then(loading => loading?.dismiss());
+    }
   }
 
   /**
@@ -244,7 +253,7 @@ export class LoginPage implements OnInit {
       }
       const toastOption: ToastOptions = {
         header: this.translate.instant(TranslateKeys.TOAST_WARNING_HEADER),
-        message: this.translate.instant(TranslateKeys.COMMON_AUTH_FAILED),
+        message: this.translate.instant(TranslateKeys.TOAST_AUTH_FAILED),
         duration: 5000,
         buttons: [closeBtn],
         mode: NativePlatform.IOS,
@@ -264,79 +273,31 @@ export class LoginPage implements OnInit {
     });
   }
 
-
-  /**-------------------- Firebase notification config ------------------------*/
-
   /**
-   * Add listener push notification
+   * On keyboard change state
    * @private
    */
-  private async firebaseAddListener() {
-    await PushNotifications.addListener('registration', token => {
-      console.info('Registration token: ', token.value);
-      // TODO: register FCM device token to server
-    });
-
-    await PushNotifications.addListener('registrationError', err => {
-      console.error('Registration error: ', err.error);
-    });
-
-    await PushNotifications.addListener('pushNotificationReceived', notification => {
-      console.log('Push notification received: ', JSON.stringify(notification));
-    });
-
-    await PushNotifications.addListener('pushNotificationActionPerformed', notification => {
-      console.log('Push notification action performed', JSON.stringify(notification));
+  private onKeyboardChangeState() {
+    this.keyboardSub = this.keyboardService.isKeyboardOpen$.subscribe(isOpen => {
+      setTimeout(() => {
+        this.toggleScroll(isOpen);
+      }, 50);
     });
   }
 
   /**
-   * Register notification native
+   * toggleScroll
+   * @param allowScroll
    * @private
    */
-  private async registerNotifications() {
-    // Get permission status
-    let permStatus = await PushNotifications.checkPermissions();
-
-    // Request permission
-    if (permStatus.receive === 'prompt') {
-      permStatus = await PushNotifications.requestPermissions();
-    }
-
-    // Register push notification
-    if (permStatus.receive === 'granted') {
-      await PushNotifications.register();
-      return;
-    }
-
-    // Show alert to open setting
-    const buttons: Array<AlertButton> = [
-      {
-        text: this.translate.instant(TranslateKeys.BUTTON_OPEN_SETTING),
-        handler: () => this.openNativeSettings()
-      },
-      {text: this.translate.instant(TranslateKeys.BUTTON_CANCEL)}
-    ];
-    const alertOption: AlertOptions = {
-      header: this.translate.instant(TranslateKeys.ALERT_DEFAULT_HEADER),
-      buttons: buttons,
-      message: this.translate.instant(TranslateKeys.COMMON_ACCESS_PERMISSION_NOTIFICATION_ALERT),
-      animated: true,
-      cssClass: StyleClass.INFO_ALERT,
-      mode: NativePlatform.IOS
-    };
-    const alert = await this.alertController.create(alertOption);
-    await alert.present();
-  }
-
-  /**
-   * Open native setting
-   * @private
-   */
-  private async openNativeSettings() {
-    await NativeSettings.open({
-      optionAndroid: AndroidSettings.ApplicationDetails,
-      optionIOS: IOSSettings.App
+  private toggleScroll(allowScroll: boolean) {
+    const scrollElement = this.content.getScrollElement();
+    scrollElement.then((el) => {
+      if (allowScroll) {
+        el.style.overflowY = 'auto';
+      } else {
+        el.style.overflowY = 'hidden';
+      }
     });
   }
 
@@ -443,7 +404,7 @@ export class LoginPage implements OnInit {
     const serverUser = `${environment.serverUrl}/${username}`;
 
     NativeBiometric.verifyIdentity({
-      title: this.translate.instant(TranslateKeys.COMMON_AUTHENTICATION_TITLE),
+      title: this.translate.instant(TranslateKeys.TITLE_AUTH_USER_TITLE),
       negativeButtonText: this.translate.instant(TranslateKeys.BUTTON_CANCEL),
       maxAttempts: 5
     }).then(() => {
@@ -513,7 +474,7 @@ export class LoginPage implements OnInit {
     }
     const toastOption: ToastOptions = {
       header: this.translate.instant(TranslateKeys.TOAST_ERROR_HEADER),
-      message: this.translate.instant(TranslateKeys.COMMON_AUTHENTICATION_BY_PASS_ALERT),
+      message: this.translate.instant(TranslateKeys.TOAST_AUTH_BY_PASSWORD),
       duration: 5000,
       buttons: [closeBtn],
       mode: NativePlatform.IOS,

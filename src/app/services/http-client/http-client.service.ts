@@ -1,112 +1,200 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { AlertController } from '@ionic/angular';
-import { catchError, lastValueFrom, Observable, of } from 'rxjs';
-import { timeout } from 'rxjs/operators';
+import { catchError, lastValueFrom, Observable, retry, throwError, timeout, timer } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 import { IHttpOptions } from '../../shared/interfaces/http/http-options';
 import { DEFAULT_TIMEOUT } from '../../core/services/timeout-interceptor.service';
+import { NetworkService } from '../network/network.service';
 import { TranslateKeys } from '../../shared/enums/translate-keys';
-
+import { HttpClientMethods } from '../../shared/enums/http-client-methods';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpClientService {
-
   constructor(
     private httpClient: HttpClient,
     private alertController: AlertController,
     private translate: TranslateService,
-    @Inject(DEFAULT_TIMEOUT) private defaultTimeout: number
+    private networkService: NetworkService,
+    @Inject(DEFAULT_TIMEOUT) private defaultTimeout: number,
   ) {
   }
 
   /**
-   * CALL API BY GET METHOD
-   *
+   * get
    * @param url
    * @param httpOptions
-   * @param operation
-   * @param timeoutMs
+   * @param options
    */
-  public get(url: string, httpOptions?: IHttpOptions, operation?: string, timeoutMs: number = 10000): Promise<any> {
-    const results = this.httpClient.get<any>(url, httpOptions).pipe(
-      timeout(timeoutMs || this.defaultTimeout || 10000),
-      catchError(this.handleError<any>(operation))
-    );
-    return lastValueFrom<any>(results);
+  public async get<T = any>(
+    url: string,
+    httpOptions?: IHttpOptions,
+    options?: { operation?: string; showAlert?: boolean; timeoutMs?: number; retryTimes?: number }
+  ): Promise<T> {
+    return this.handleRequest<T>(HttpClientMethods.GET, url, null, httpOptions, options);
   }
 
   /**
-   * CALL API BY POST METHOD
-   *
+   * post
    * @param url
    * @param data
    * @param httpOptions
-   * @param operation
-   * @param timeoutMs
+   * @param options
    */
-  public post(url: string, data: any, httpOptions?: IHttpOptions, operation?: string, timeoutMs: number = 10000): Promise<any> {
-    const results = this.httpClient.post<any>(url, data, httpOptions).pipe(
-      timeout(timeoutMs || this.defaultTimeout || 10000),
-      catchError(this.handleError<any>(operation))
-    );
-    return lastValueFrom<any>(results);
+  public async post<T = any>(
+    url: string,
+    data: any,
+    httpOptions?: IHttpOptions,
+    options?: { operation?: string; showAlert?: boolean; timeoutMs?: number; retryTimes?: number }
+  ): Promise<T> {
+    return this.handleRequest<T>(HttpClientMethods.POST, url, data, httpOptions, options);
   }
 
   /**
-   * CALL API BY PUT METHOD
-   *
+   * put
    * @param url
    * @param data
    * @param httpOptions
-   * @param operation
-   * @param timeoutMs
+   * @param options
    */
-  public put(url: string, data: any, httpOptions?: IHttpOptions, operation?: string, timeoutMs: number = 10000): Promise<any> {
-    const results = this.httpClient.put<any>(url, data, httpOptions).pipe(
-      timeout(timeoutMs || this.defaultTimeout || 10000),
-      catchError(this.handleError<any>(operation))
-    );
-    return lastValueFrom<any>(results);
+  public async put<T = any>(
+    url: string,
+    data: any,
+    httpOptions?: IHttpOptions,
+    options?: { operation?: string; showAlert?: boolean; timeoutMs?: number; retryTimes?: number }
+  ): Promise<T> {
+    return this.handleRequest<T>(HttpClientMethods.PUT, url, data, httpOptions, options);
   }
 
   /**
-   * CALL API BY DELETE METHOD
-   *
+   * delete
    * @param url
    * @param httpOptions
-   * @param operation
-   * @param timeoutMs
+   * @param options
    */
-  public delete(url: string, httpOptions?: IHttpOptions, operation?: string, timeoutMs: number = 10000): Promise<any> {
-    const results = this.httpClient.delete<any>(url, httpOptions).pipe(
-      timeout(timeoutMs || this.defaultTimeout || 10000),
-      catchError(this.handleError<any>(operation))
-    );
-    return lastValueFrom<any>(results);
+  public async delete<T = any>(
+    url: string,
+    httpOptions?: IHttpOptions,
+    options?: { operation?: string; showAlert?: boolean; timeoutMs?: number; retryTimes?: number }
+  ): Promise<T> {
+    return this.handleRequest<T>(HttpClientMethods.DELETE, url, null, httpOptions, options);
   }
 
+
   /**
-   * handleError
-   *
-   * @param operation
-   * @param result
+   * Core handler method
+   * @param method
+   * @param url
+   * @param data
+   * @param httpOptions
+   * @param options
    * @private
    */
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      let errorMsg = error.error ? error.error.message : error.message;
-      if (errorMsg && errorMsg.length > 0) {
+  private async handleRequest<T>(
+    method: HttpClientMethods,
+    url: string,
+    data?: any,
+    httpOptions?: IHttpOptions,
+    options?: { operation?: string; showAlert?: boolean; timeoutMs?: number; retryTimes?: number }
+  ): Promise<T> {
+    const {operation = method, showAlert = true, timeoutMs = 10000, retryTimes = 0} = options || {};
+
+    let request$: Observable<any>;
+
+    switch (method) {
+      case HttpClientMethods.GET:
+        request$ = this.httpClient.get<T>(url, httpOptions);
+        break;
+      case HttpClientMethods.POST:
+        request$ = this.httpClient.post<T>(url, data, httpOptions);
+        break;
+      case HttpClientMethods.PUT:
+        request$ = this.httpClient.put<T>(url, data, httpOptions);
+        break;
+      case HttpClientMethods.PATCH:
+        request$ = this.httpClient.patch<T>(url, data, httpOptions);
+        break;
+      case HttpClientMethods.DELETE:
+        request$ = this.httpClient.delete<T>(url, httpOptions);
+        break;
+      default:
+        throw new Error(`Unsupported HTTP method: ${method}`);
+    }
+
+    request$ = request$.pipe(
+      timeout(timeoutMs || this.defaultTimeout),
+      retry({
+        count: retryTimes,
+        delay: (_error, retryCount) => {
+          const delayMs = Math.pow(2, retryCount) * 1000;
+          console.log(`Retrying attempt ${retryCount}, waiting ${delayMs}ms`);
+          return timer(delayMs);
+        }
+      }),
+      catchError(err => this.handleError<T>(operation, showAlert)(err))
+    );
+
+    return lastValueFrom(request$);
+  }
+
+  /**
+   * Error handler
+   * @param operation
+   * @param showAlert
+   * @private
+   */
+  private handleError<T>(operation = 'operation', showAlert = true) {
+    return (error: HttpErrorResponse): Observable<T> => {
+      let errorMessage = '';
+
+      if (error.error instanceof ErrorEvent) {
+        // Client-side error
+        errorMessage = error?.error?.message || error?.message;
+      } else {
+        // Server-side error
+        switch (error.status) {
+          case 0:
+            if (!this.networkService.isOnline()) {
+              errorMessage = this.translate.instant(TranslateKeys.ERROR_NETWORK);
+            } else {
+              errorMessage = this.translate.instant(TranslateKeys.ERROR_SERVER_CONNECTION);
+            }
+            break;
+          case 400:
+            errorMessage = this.translate.instant(TranslateKeys.ERROR_BAD_REQUEST);
+            break;
+          case 401:
+            errorMessage = this.translate.instant(TranslateKeys.ERROR_UNAUTHORIZED);
+            break;
+          case 403:
+            errorMessage = this.translate.instant(TranslateKeys.ERROR_FORBIDDEN);
+            break;
+          case 404:
+            errorMessage = this.translate.instant(TranslateKeys.ERROR_NOT_FOUND);
+            break;
+          case 500:
+            errorMessage = this.translate.instant(TranslateKeys.ERROR_SERVER);
+            break;
+          default:
+            errorMessage = error.message || this.translate.instant(TranslateKeys.ERROR_UNKNOWN);
+            break;
+        }
+      }
+
+      console.error(`[${operation}] failed:`, errorMessage, error);
+
+      if (showAlert) {
         this.alertController.create({
           header: this.translate.instant(TranslateKeys.ALERT_ERROR_SYSTEM_HEADER),
-          message: errorMsg,
-          buttons: this.translate.instant(TranslateKeys.BUTTON_CLOSE),
+          message: errorMessage,
+          buttons: [this.translate.instant(TranslateKeys.BUTTON_CLOSE)],
         }).then(alert => alert.present());
       }
-      return of(result as T);
+
+      return throwError(() => error);
     };
   }
 }

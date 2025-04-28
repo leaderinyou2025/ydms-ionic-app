@@ -2,22 +2,20 @@
   "COMMON": {
     "app_name": "Youth Development Monitoring System",
     "copyright": "© 2025 LeaderInYou",
+    "english": "English",
+    "vietnamese": "Tiếng Việt"
+  },
+  "TITLE": {
     "phone": "Phone",
     "password": "Password",
     "login": "Login",
     "logout": "Logout",
-    "access_permission_notification_alert": "Please allow the app to display notifications to receive the latest updates.",
-    "auth_user_title": "Authentication user",
-    "auth_by_password_alert": "Authentication failed. Please login by your password.",
-    "english": "English",
-    "vietnamese": "Tiếng Việt",
     "remember_me": "Remember me?",
-    "auth_failed": "Authentication failed.",
-    "version": "Version",
     "data_updating": "Updating...",
-    "confirm_logout_alert": "Are you sure to logout?",
-    "auth_biometric_unlock_app": "Authentication to unlock app",
-    "input_pin": "Input PIN to unlock"
+    "input_pin": "Input PIN to unlock",
+    "auth_user_title": "User authentication",
+    "auth_biometric_unlock_app": "Authenticate to unlock the app",
+    "version": "Version"
   },
   "VALIDATE": {
     "phone_required": "Please input your phone number.",
@@ -26,12 +24,14 @@
   "ALERT": {
     "default_header": "Notification",
     "error_header": "Error",
-    "error_system_header": "System error"
+    "error_system_header": "System error",
+    "access_permission_notification_alert": "Please allow the app to display notifications to receive the latest updates.",
+    "confirm_logout_alert": "Are you sure you want to log out?"
   },
   "BUTTON_TITLES": {
     "confirm": "Confirm",
     "cancel": "Cancel",
-    "open_setting": "Open setting",
+    "open_settings": "Open settings",
     "ok": "OK",
     "close": "Close"
   },
@@ -39,6 +39,20 @@
     "error_header": "Error",
     "success_header": "Success",
     "info_header": "Information",
-    "warning_header": "Warning"
+    "warning_header": "Warning",
+    "auth_failed": "Authentication failed.",
+    "auth_by_password": "Authentication failed. Please log in using your password.",
+    "network_online": "You are back online.",
+    "network_offline": "You are offline. Please check your connection."
+  },
+  "ERROR": {
+    "network": "Network error. Please check your internet connection.",
+    "bad_request": "Invalid request. Please verify your data.",
+    "unauthorized": "Unauthorized. Please login again.",
+    "forbidden": "Access denied. You do not have permission to perform this action.",
+    "not_found": "Resource not found. Please check the requested link.",
+    "server": "Server error. Please try again later.",
+    "unknown": "An unknown error occurred. Please try again.",
+    "server_connection": "Unable to connect to server. Please try again later."
   }
 }

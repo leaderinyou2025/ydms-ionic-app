@@ -18,7 +18,7 @@ import { TranslateKeys } from '../../shared/enums/translate-keys';
 import { StyleClass } from '../../shared/enums/style-class';
 
 
-export type SearchDomain = Array<any>;
+export type SearchDomain = Array<string | Array<string | number | boolean | Array<string | number>>>;
 
 @Injectable({
   providedIn: 'root'
@@ -48,7 +48,7 @@ export class OdooService {
     const kwArgs: IKwArgs = {context: context};
     if (fields) kwArgs.fields = fields;
 
-    let results: Array<any> = await this.call_kw<T>(model, OdooMethodName.READ, [ids], kwArgs);
+    let results: Array<any> = await this.callKw<T>(model, OdooMethodName.READ, [ids], kwArgs);
     return results?.length ? results : [];
   }
 
@@ -57,9 +57,9 @@ export class OdooService {
    * @param model
    * @param values
    */
-  async create<T>(model: ModelName, values: IDictionary<T>): Promise<number | undefined> {
+  async create<T>(model: ModelName, values: Partial<T>): Promise<number | undefined> {
     if (!model || !values) return;
-    return this.call_kw<T>(model, OdooMethodName.CREATE, [values]);
+    return this.callKw<T>(model, OdooMethodName.CREATE, [values]);
   }
 
   /**
@@ -68,9 +68,9 @@ export class OdooService {
    * @param ids
    * @param values
    */
-  async write<T>(model: ModelName, ids: Array<number>, values: IDictionary<T>): Promise<number | boolean> {
+  async write<T>(model: ModelName, ids: Array<number>, values: Partial<T>): Promise<number | boolean> {
     if (!model || !ids?.length || !values) return false;
-    return this.call_kw<T>(model, OdooMethodName.WRITE, [ids, values]);
+    return this.callKw<T>(model, OdooMethodName.WRITE, [ids, values]);
   }
 
   /**
@@ -80,7 +80,7 @@ export class OdooService {
    */
   async unlink(model: ModelName, ids: Array<number>): Promise<boolean> {
     if (!model || !ids?.length) return true;
-    return this.call_kw(model, OdooMethodName.UNLINK, [ids]);
+    return this.callKw(model, OdooMethodName.UNLINK, [ids]);
   }
 
   /**
@@ -91,7 +91,7 @@ export class OdooService {
    * @param limit
    * @param order
    */
-  async search(
+  async search<T>(
     model: ModelName,
     args: SearchDomain = [],
     offset: number = 0,
@@ -100,11 +100,11 @@ export class OdooService {
   ): Promise<Array<RelatedField>> {
     if (!model) return [];
 
-    const kwArgs: IKwArgs = {limit: limit || 999999};
+    const kwArgs: IKwArgs = {limit: limit || this.maximumLimitRecords};
     if (offset > 0) kwArgs.offset = offset;
     if (order) kwArgs.order = order;
 
-    let results: Array<RelatedField> = await this.call_kw(model, OdooMethodName.SEARCH, [args], kwArgs);
+    let results: Array<RelatedField> = await this.callKw(model, OdooMethodName.SEARCH, [args], kwArgs);
     return results?.length ? results : [];
   }
 
@@ -117,7 +117,7 @@ export class OdooService {
    * @param limit
    * @param order
    */
-  async search_read<T>(
+  async searchRead<T>(
     model: ModelName,
     args: SearchDomain = [],
     fields: Array<string> = [],
@@ -131,7 +131,7 @@ export class OdooService {
     if (offset > 0) kwArgs.offset = offset;
     if (order) kwArgs.order = order;
 
-    let results: Array<T> = await this.call_kw<T>(model, OdooMethodName.SEARCH_READ, [args], kwArgs);
+    let results: Array<T> = await this.callKw<T>(model, OdooMethodName.SEARCH_READ, [args], kwArgs);
     return results?.length ? results : [];
   }
 
@@ -140,9 +140,9 @@ export class OdooService {
    * @param model
    * @param args
    */
-  async search_count(model: ModelName, args: SearchDomain = []): Promise<number> {
+  async searchCount<T>(model: ModelName, args: SearchDomain = []): Promise<number> {
     if (!model) return 0;
-    return this.call_kw(model, OdooMethodName.SEARCH_COUNT, [args]);
+    return this.callKw(model, OdooMethodName.SEARCH_COUNT, [args]);
   }
 
   /**
@@ -152,10 +152,10 @@ export class OdooService {
    * @param paramsArgs
    * @param kwArgs
    */
-  async call_kw<T>(
+  async callKw<T>(
     model: ModelName,
     method: string,
-    paramsArgs: Array<string | Array<string | number> | IDictionary<T>> = [],
+    paramsArgs: Array<Array<number> | Partial<T> | SearchDomain> = [],
     kwArgs: IKwArgs = {}
   ): Promise<any> {
     const authData = await this.authService.getAuthData();
@@ -165,7 +165,12 @@ export class OdooService {
     const dataRequest = new RequestPayload();
     dataRequest.params.args = [environment.database, authData.id, authToken, model, method, paramsArgs, kwArgs];
 
-    const result = await this.httpClientService.post(environment.serverUrl, dataRequest, {headers: CommonConstants.getRequestHeader()}, OdooMethodName.CALL_KW);
+    const result = await this.httpClientService.post(
+      environment.serverUrl,
+      dataRequest,
+      {headers: CommonConstants.getRequestHeader()},
+      {operation: OdooMethodName.CALL_KW}
+    );
 
     if (result?.error?.data?.message) {
       this.alertController.create({

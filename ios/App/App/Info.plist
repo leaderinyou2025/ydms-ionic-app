@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>vi</string>
 	<key>CFBundleDisplayName</key>
-  <string>Hướng&#x2007;nghiệp</string>
+	<string>YDMS</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -22,6 +22,17 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Cho phép truy cập nhận dạng sinh trắc học để xác thực người dùng</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Chúng tôi cần quyền truy cập vào micrô của bạn để ghi nhận âm thanh nhằm mục đích nhận dạng giọng nói.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Chúng tôi cần quyền truy cập vào chức năng nhận dạng giọng nói để chuyển giọng nói của bạn thành văn bản.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+		<string>fetch</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -43,16 +54,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
-	<key>NSSpeechRecognitionUsageDescription</key>
-  <string>Chúng tôi cần quyền truy cập vào chức năng nhận dạng giọng nói để chuyển giọng nói của bạn thành văn bản.</string>
-  <key>NSMicrophoneUsageDescription</key>
-  <string>Chúng tôi cần quyền truy cập vào micrô của bạn để ghi âm giọng nói nhằm mục đích nhận dạng giọng nói.</string>
-  <key>NSFaceIDUsageDescription</key>
-  <string>Cho phép truy cập nhận dạng sinh trắc học để xác thực người dùng</string>
-  <key>UIBackgroundModes</key>
-  <array>
-  	<string>remote-notification</string>
-  	<string>fetch</string>
-  </array>
 </dict>
 </plist>

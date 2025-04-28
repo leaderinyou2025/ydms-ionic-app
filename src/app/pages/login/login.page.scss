@@ -30,5 +30,6 @@ ion-content {
     background-repeat: no-repeat;
     background-position: left center;
     background-size: cover;
+    top: calc(env(safe-area-inset-top) + 12px);
   }
 }
