@@ -208,7 +208,7 @@ export class PushNotificationService {
 
     const alertOption: AlertOptions = {
       header: this.translate.instant(TranslateKeys.ALERT_DEFAULT_HEADER),
-      message: this.translate.instant(TranslateKeys.COMMON_ACCESS_PERMISSION_NOTIFICATION_ALERT),
+      message: this.translate.instant(TranslateKeys.ALERT_ACCESS_PERMISSION_NOTIFICATION),
       buttons,
       animated: true,
       cssClass: StyleClass.INFO_ALERT,

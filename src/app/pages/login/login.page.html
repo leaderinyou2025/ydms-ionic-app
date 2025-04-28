@@ -27,7 +27,7 @@
                 <ion-row>
                   <!-- Nhập số điện thoại -->
                   <ion-col size="12" class="pb-5">
-                    <ion-label>{{ TranslateKeys.COMMON_PHONE | translate }}<span class="text-red-600 ps-1">*</span></ion-label>
+                    <ion-label>{{ TranslateKeys.TITLE_PHONE | translate }}<span class="text-red-600 ps-1">*</span></ion-label>
                     <ion-input formControlName="phone" type="tel" inputmode="tel" required="required" (ionInput)="onUsernameInput($event)" [clearInput]="true"></ion-input>
                     <div *ngIf="hasError('phone', 'required')" class="error-text text-red-600 text-sm pt-2 ps-1">
                       {{ TranslateKeys.VALIDATE_PHONE_REQUIRED | translate }}
@@ -45,7 +45,7 @@
 
                   <!-- Nhập mật khẩu -->
                   <ion-col size="12" class="pb-5" *ngIf="!(isEnableBiometric && biometricAvailable?.isAvailable && hasCredentials)">
-                    <ion-label>{{ TranslateKeys.COMMON_PASSWORD | translate }}<span class="text-red-600 ps-1">*</span></ion-label>
+                    <ion-label>{{ TranslateKeys.TITLE_PASSWORD | translate }}<span class="text-red-600 ps-1">*</span></ion-label>
                     <ion-input formControlName="password" type="password" inputmode="text"
                                class="input-password border border-solid border-[#6b7280] rounded">
                       <ion-input-password-toggle slot="end" color="medium"></ion-input-password-toggle>
@@ -58,7 +58,7 @@
                   <!-- Chọn ghi nhớ đăng nhập -->
                   <ion-col size="12" class="pb-4" *ngIf="!(isEnableBiometric && biometricAvailable?.isAvailable && hasCredentials)">
                     <ion-checkbox mode="md" formControlName="remember" labelPlacement="end">
-                      {{ TranslateKeys.COMMON_REMEMBER_ME | translate }}
+                      {{ TranslateKeys.TITLE_REMEMBER_ME | translate }}
                     </ion-checkbox>
                   </ion-col>
 
@@ -67,7 +67,7 @@
                     <div class="flex items-center justify-between w-full">
                       <ion-button color="primary" type="submit" class="w-full" [appSoundClick]="true"
                                   *ngIf="!(isEnableBiometric && biometricAvailable?.isAvailable && hasCredentials)">
-                        {{ TranslateKeys.COMMON_LOGIN | translate }}
+                        {{ TranslateKeys.TITLE_LOGIN | translate }}
                       </ion-button>
 
                       <!-- Đăng nhập bằng sinh trắc học-->
@@ -75,7 +75,7 @@
                                   *ngIf="isEnableBiometric && biometricAvailable?.isAvailable && hasCredentials" (click)="onClickLoginBiometric()">
                         <ion-img *ngIf="isFaceID" src="assets/icons/svg/face-id-svgrepo-com.svg" class="w-8 h-8"></ion-img>
                         <ion-img *ngIf="!isFaceID" src="assets/icons/svg/fingerprint-scan-svgrepo-com.svg" class="w-8 h-8"></ion-img>
-                        <span class="pl-4">{{ TranslateKeys.COMMON_LOGIN | translate }}</span>
+                        <span class="pl-4">{{ TranslateKeys.TITLE_LOGIN | translate }}</span>
                       </ion-button>
                     </div>
                   </ion-col>
@@ -89,7 +89,7 @@
 
     <!--  Phiên bản live update  -->
     <p class="absolute bottom-3 w-full text-center text-sm text-gray-500 font-normal italic">
-      {{ TranslateKeys.COMMON_COPYRIGHT | translate }}. {{ TranslateKeys.COMMON_VERSION | translate }}: {{ appVersion }}<br>
+      {{ TranslateKeys.COMMON_COPYRIGHT | translate }}. {{ TranslateKeys.TITLE_VERSION | translate }}: {{ appVersion }}<br>
     </p>
   </div>
 </ion-content>

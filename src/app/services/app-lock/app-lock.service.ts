@@ -53,7 +53,7 @@ export class AppLockService {
     // Kiểm tra biometric
     this.skipNextAppResume = true;
     return NativeBiometric.verifyIdentity({
-      title: this.translate.instant(TranslateKeys.COMMON_AUTH_BIOMETRIC_UNLOCK_APP),
+      title: this.translate.instant(TranslateKeys.TITLE_AUTH_BIOMETRIC_UNLOCK_APP),
       negativeButtonText: this.translate.instant(TranslateKeys.BUTTON_CANCEL),
       maxAttempts: 5
     }).then(() => {

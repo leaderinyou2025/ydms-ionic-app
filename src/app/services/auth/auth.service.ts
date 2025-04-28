@@ -127,7 +127,7 @@ export class AuthService {
   public logout(): void {
     const alertOption: AlertOptions = {
       header: this.translate.instant(TranslateKeys.ALERT_DEFAULT_HEADER),
-      message: this.translate.instant(TranslateKeys.COMMON_CONFIRM_LOGOUT_ALERT),
+      message: this.translate.instant(TranslateKeys.ALERT_CONFIRM_LOGOUT),
       buttons: [
         {text: this.translate.instant(TranslateKeys.BUTTON_CANCEL), role: BtnRoles.CANCEL},
         {text: this.translate.instant(TranslateKeys.BUTTON_CONFIRM), handler: () => this.handleLogout()}

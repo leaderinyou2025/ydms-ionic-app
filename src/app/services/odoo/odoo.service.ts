@@ -165,7 +165,12 @@ export class OdooService {
     const dataRequest = new RequestPayload();
     dataRequest.params.args = [environment.database, authData.id, authToken, model, method, paramsArgs, kwArgs];
 
-    const result = await this.httpClientService.post(environment.serverUrl, dataRequest, {headers: CommonConstants.getRequestHeader()}, OdooMethodName.CALL_KW);
+    const result = await this.httpClientService.post(
+      environment.serverUrl,
+      dataRequest,
+      {headers: CommonConstants.getRequestHeader()},
+      {operation: OdooMethodName.CALL_KW}
+    );
 
     if (result?.error?.data?.message) {
       this.alertController.create({

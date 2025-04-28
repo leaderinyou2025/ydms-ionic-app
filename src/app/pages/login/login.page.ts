@@ -104,7 +104,7 @@ export class LoginPage implements OnInit, OnDestroy {
     // Create loading
     const loading = await this.loadingController.create({
       mode: NativePlatform.IOS,
-      message: this.translate.instant(TranslateKeys.COMMON_DATA_UPDATING)
+      message: this.translate.instant(TranslateKeys.TITLE_DATA_UPDATING)
     });
     await loading.present();
 
@@ -245,7 +245,7 @@ export class LoginPage implements OnInit, OnDestroy {
       }
       const toastOption: ToastOptions = {
         header: this.translate.instant(TranslateKeys.TOAST_WARNING_HEADER),
-        message: this.translate.instant(TranslateKeys.COMMON_AUTH_FAILED),
+        message: this.translate.instant(TranslateKeys.TOAST_AUTH_FAILED),
         duration: 5000,
         buttons: [closeBtn],
         mode: NativePlatform.IOS,
@@ -396,7 +396,7 @@ export class LoginPage implements OnInit, OnDestroy {
     const serverUser = `${environment.serverUrl}/${username}`;
 
     NativeBiometric.verifyIdentity({
-      title: this.translate.instant(TranslateKeys.COMMON_AUTHENTICATION_TITLE),
+      title: this.translate.instant(TranslateKeys.TITLE_AUTH_USER_TITLE),
       negativeButtonText: this.translate.instant(TranslateKeys.BUTTON_CANCEL),
       maxAttempts: 5
     }).then(() => {
@@ -466,7 +466,7 @@ export class LoginPage implements OnInit, OnDestroy {
     }
     const toastOption: ToastOptions = {
       header: this.translate.instant(TranslateKeys.TOAST_ERROR_HEADER),
-      message: this.translate.instant(TranslateKeys.COMMON_AUTHENTICATION_BY_PASS_ALERT),
+      message: this.translate.instant(TranslateKeys.TOAST_AUTH_BY_PASSWORD),
       duration: 5000,
       buttons: [closeBtn],
       mode: NativePlatform.IOS,
