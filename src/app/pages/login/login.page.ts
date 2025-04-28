@@ -15,6 +15,7 @@ import { NetworkService } from '../../services/network/network.service';
 import { PushNotificationService } from '../../services/push-notification/push-notification.service';
 import { StorageKey } from '../../shared/enums/storage-key';
 import { TranslateKeys } from '../../shared/enums/translate-keys';
+import { SoundService } from '../../services/sound/sound.service';
 import { StyleClass } from '../../shared/enums/style-class';
 import { NativePlatform } from '../../shared/enums/native-platform';
 import { IAccountHistory } from '../../shared/interfaces/function-data/account-history';
@@ -74,6 +75,7 @@ export class LoginPage implements OnInit, OnDestroy {
     private keyboardService: KeyboardService,
     private pushNotificationService: PushNotificationService,
     private networkService: NetworkService,
+    private soundService: SoundService,
   ) {
   }
 
@@ -109,6 +111,7 @@ export class LoginPage implements OnInit, OnDestroy {
     await loading.present();
 
     try {
+      this.soundService.playBackground();
       // Check network is online
       const isOnline = await this.networkService.isReallyOnline();
       if (isOnline) {
