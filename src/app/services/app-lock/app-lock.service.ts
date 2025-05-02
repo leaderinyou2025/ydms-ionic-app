@@ -15,6 +15,8 @@ import { NativePlatform } from '../../shared/enums/native-platform';
   providedIn: 'root'
 })
 export class AppLockService {
+
+  private readonly enabledLock!: boolean;
   private locked = false;
   private backgroundTime: number | null = null;
   private skipNextAppResume = false;
@@ -27,6 +29,8 @@ export class AppLockService {
     private platform: Platform,
     private stateService: StateService,
   ) {
+    const enabledLock = this.localStorageService.get<boolean>(StorageKey.APP_LOCK_ENABLE);
+    this.enabledLock = enabledLock != undefined ? enabledLock : false;
     this.stateService.verifyByBiometric$.subscribe(() => this.skipNextAppResume = true);
   }
 
@@ -99,13 +103,23 @@ export class AppLockService {
 
     App.addListener('appStateChange', async ({isActive}) => {
       if (!isActive) {
+        // App vào background
+        if (!this.enabledLock) {
+          return;
+        }
+
         // Ghi nhận thời gian khi app vào background
         this.backgroundTime = Date.now();
-      } else {
-        // Khi quay lại foreground → kiểm tra xem có cần khóa không
-        const enabled = this.localStorageService.get<boolean>(StorageKey.APP_LOCK_ENABLE);
 
-        if (!enabled || this.skipNextAppResume) {
+        // Kiểm tra timeout có cần đóng ngay không
+        const timeout = this.localStorageService.get<number>(StorageKey.APP_LOCK_TIMEOUT) || 0;
+        if (timeout === 0) {
+          this.locked = true;
+          this.stateService.setShowLockScreen(this.locked);
+        }
+      } else {
+        // App trở lại foreground
+        if (!this.enabledLock || this.skipNextAppResume) {
           this.skipNextAppResume = false;
           return;
         }

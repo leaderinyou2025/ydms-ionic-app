@@ -1,0 +1,15 @@
+<ion-footer *ngIf="!isKeyboardShowing">
+  <ion-toolbar class="flex items-center h-16 bg-white border-t border-gray-200">
+    <div class="flex justify-around items-center h-full">
+      <a [routerLink]="'/' + PageRoutes.HOME" routerLinkActive="active" class="flex flex-col items-center justify-center text-gray-500 text-xs">
+        <ion-icon name="home" class="text-2xl mb-1" [color]="isActive('/' + PageRoutes.HOME) ? 'primary' : ''"></ion-icon>
+        <span [class.text-blue-500]="isActive('/' + PageRoutes.HOME)">{{ TranslateKeys.TITLE_HOME | translate }}</span>
+      </a>
+
+      <a [routerLink]="'/' + PageRoutes.PROFILE" routerLinkActive="active" class="flex flex-col items-center justify-center text-gray-500 text-xs">
+        <ion-icon name="person" class="text-2xl mb-1" [color]="isActive('/' + PageRoutes.PROFILE) ? 'primary' : ''"></ion-icon>
+        <span [class.text-blue-500]="isActive('/' + PageRoutes.PROFILE)">{{ TranslateKeys.TITLE_PROFILE | translate }}</span>
+      </a>
+    </div>
+  </ion-toolbar>
+</ion-footer>

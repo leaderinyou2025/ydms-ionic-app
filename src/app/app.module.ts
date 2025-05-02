@@ -1,10 +1,9 @@
-import { NgModule, enableProdMode, LOCALE_ID } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, enableProdMode, LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { registerLocaleData } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import localeVi from '@angular/common/locales/vi';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -51,6 +50,7 @@ export function createTranslateLoader(http: HttpClient) {
     [{provide: DEFAULT_TIMEOUT, useValue: 10000}]
   ],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {
 }

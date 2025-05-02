@@ -1,0 +1,46 @@
+/* Disabled global style for input focus event */
+[type='text']:focus,
+input:where(:not([type])):focus,
+[type='email']:focus,
+[type='url']:focus,
+[type='password']:focus,
+[type='number']:focus,
+[type='date']:focus,
+[type='datetime-local']:focus,
+[type='month']:focus,
+[type='search']:focus,
+[type='tel']:focus,
+[type='time']:focus,
+[type='week']:focus,
+[multiple]:focus,
+textarea:focus,
+select:focus {
+  box-shadow: none;
+}
+
+[type='text'],
+input:where(:not([type])),
+[type='email'],
+[type='url'],
+[type='password'],
+[type='number'],
+[type='date'],
+[type='datetime-local'],
+[type='month'],
+[type='search'],
+[type='tel'],
+[type='time'],
+[type='week'],
+[multiple],
+textarea,
+select {
+  --padding-start: 0.85rem;
+  --padding-end: 0.3rem;
+  --padding-top: 0.5rem;
+  --padding-bottom: 0.5rem;
+  border-radius: 0.3rem;
+}
+
+.ion-touched.ion-invalid {
+  border-color: var(--ion-color-danger);
+}

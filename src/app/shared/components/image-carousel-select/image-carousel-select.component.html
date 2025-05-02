@@ -1,0 +1,18 @@
+<div class="swiper-container relative pt-8 pb-16 bg-gray-400 rounded-2xl overflow-hidden dark:bg-gray-800">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide flex flex-wrap items-center justify-center pb-5" *ngFor="let img of wallpapers">
+      <div class="w-[90%] text-center mb-10">
+        <ion-button shape="round" size="small"
+                    [fill]="img.id === selectedValue?.id ? 'solid' : 'outline'"
+                    [color]="IonicColors.PRIMARY" (click)="selectWallpaper(img)">
+          <label *ngIf="img.id === selectedValue?.id">{{ TranslateKeys.BUTTON_CURRENT | translate }}</label>
+          <label *ngIf="img.id !== selectedValue?.id">{{ TranslateKeys.BUTTON_SET_AS_CURRENT | translate }}</label>
+        </ion-button>
+      </div>
+      <ion-img alt="" class="w-[90%] rounded-xl overflow-hidden"
+               [src]="img.resource_url" (click)="selectWallpaper(img)">
+      </ion-img>
+    </div>
+  </div>
+  <div class="swiper-pagination pb-4"></div>
+</div>

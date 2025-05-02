@@ -1,5 +1,5 @@
 export enum BtnRoles {
-  CANCEL = 'CANCEL',
-  DETAILS = 'DETAILS',
+  CANCEL = 'cancel',
+  DETAILS = 'detail',
   DESTRUCTIVE = 'destructive',
 }

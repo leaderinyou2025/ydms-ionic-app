@@ -7,16 +7,18 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
+import { SharedModule } from '../../shared/shared.module';
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    HomePageRoutingModule,
-    TranslatePipe,
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        HomePageRoutingModule,
+        TranslatePipe,
+        SharedModule,
+    ],
   declarations: [HomePage]
 })
 export class HomePageModule {

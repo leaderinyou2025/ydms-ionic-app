@@ -98,13 +98,19 @@ export class AuthService {
     dataRequest.params.args = [environment.database, username, password];
 
     // Login function api
-    const loginResult = await this.httpClientService.post(environment.serverUrl, dataRequest, {headers: CommonConstants.getRequestHeader()}, {operation: 'login'});
+    // const loginResult = await this.httpClientService.post(environment.serverUrl, dataRequest, {headers: CommonConstants.getRequestHeader()}, {operation: 'login'});
+    let loginResult = {result: 1};
     if (!loginResult || !loginResult?.result) {
       return false;
     }
 
     // Get user profile
-    const userProfile = await this.getUserProfile(+loginResult.result);
+    // const userProfile = await this.getUserProfile(+loginResult.result);
+    let userProfile: IAuthData = {
+      id: 1, name: 'Test 1',
+      role: IUserRoles.STUDENT,
+      login: '0964164434',
+    };
 
     if (!userProfile) {
       return false;

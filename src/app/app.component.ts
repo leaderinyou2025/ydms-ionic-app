@@ -1,14 +1,18 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Device } from '@capacitor/device';
+import { TextZoom } from '@capacitor/text-zoom';
 import { TranslateService } from '@ngx-translate/core';
 
 import { SoundService } from './services/sound/sound.service';
 import { LocalStorageService } from './services/local-storage/local-storage.service';
 import { AppLockService } from './services/app-lock/app-lock.service';
 import { StateService } from './services/state/state.service';
+import { ThemeService } from './services/theme/theme.service';
+import { TextZoomService } from './services/text-zoom/text-zoom.service';
 import { CommonConstants } from './shared/classes/common-constants';
 import { StorageKey } from './shared/enums/storage-key';
 import { LanguageKeys } from './shared/enums/language-keys';
+import { TextZoomSize } from './shared/enums/text-zoom-size';
 
 @Component({
   selector: 'app-root',
@@ -26,10 +30,14 @@ export class AppComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private appLockService: AppLockService,
     private stateService: StateService,
+    private themeService: ThemeService,
+    private textZoomService: TextZoomService
   ) {
   }
 
   ngOnInit() {
+    // Set text zoom
+    this.textZoomService.initZoom();
     // Load device ID
     Device.getId().then(deviceId => CommonConstants.deviceId = deviceId.identifier);
     // Init checking app lock
@@ -38,6 +46,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this.initializeTranslation();
     // Preload sounds
     this.loadingSounds();
+    // Load theme
+    this.themeService.loadTheme();
   }
 
   ngOnDestroy() {
