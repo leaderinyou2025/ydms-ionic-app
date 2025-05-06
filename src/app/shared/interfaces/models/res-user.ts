@@ -13,5 +13,5 @@ export interface IResUser extends IBase {
   precint_id?: RelatedField;
   district_id?: RelatedField;
   state_id?: RelatedField;
-  avatar?: string;
+  image?: string;
 }

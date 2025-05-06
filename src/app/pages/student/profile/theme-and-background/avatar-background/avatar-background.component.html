@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" color="primary" defaultHref="/{{PageRoutes.PROFILE}}/{{PageRoutes.THEME_AND_BACKGROUND}}"></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="isBackground">{{ TranslateKeys.TITLE_BACKGROUND | translate }}</ion-title>
+    <ion-title *ngIf="!isBackground">{{ TranslateKeys.TITLE_AVATAR | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ng-container *ngIf="wallpapers?.length">
+    <app-image-carousel-select [wallpapers]="wallpapers" [selectedValue]="selectedValue"
+                               (selectedWallpaper)="selectWallpaper($event)">
+    </app-image-carousel-select>
+  </ng-container>
+</ion-content>
+

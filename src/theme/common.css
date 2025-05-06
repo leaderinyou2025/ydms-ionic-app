@@ -1,0 +1,15 @@
+.native-padding-content {
+  --padding-top: env(safe-area-inset-top) !important;
+  --padding-bottom: env(safe-area-inset-bottom) !important;
+  --padding-left: env(safe-area-inset-left) !important;
+  --padding-right: env(safe-area-inset-right) !important;
+  padding-top: env(safe-area-inset-top) !important;
+  padding-bottom: env(safe-area-inset-bottom) !important;
+  padding-left: env(safe-area-inset-left) !important;
+  padding-right: env(safe-area-inset-right) !important;
+}
+
+.selected-button {
+  font-weight: bold;
+  color: var(--ion-color-primary);
+}

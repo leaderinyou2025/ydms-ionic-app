@@ -17,6 +17,6 @@ export class SoundClickDirective {
   @HostListener('pointerdown')
   handleClick() {
     if (!this.isOnSound) return;
-    this.soundService.playEffect(SoundKeys.CLICK);
+    this.soundService.playEffect(SoundKeys.TOUCH);
   }
 }

@@ -15,9 +15,49 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule),
+    loadChildren: () => import('./pages/student/home/home.module').then(m => m.HomePageModule),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'profile',
+    loadChildren: () => import('./pages/student/profile/profile.module').then(m => m.ProfilePageModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'parent-dashboard',
+    loadChildren: () => import('./pages/parent/parent-dashboard/parent-dashboard.module').then(m => m.ParentDashboardPageModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'teacher-dashboard',
+    loadChildren: () => import('./pages/teacher/teacher-dashboard/teacher-dashboard.module').then(m => m.TeacherDashboardPageModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'school-dashboard',
+    loadChildren: () => import('./pages/school/school-dashboard/school-dashboard.module').then(m => m.SchoolDashboardPageModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'badge-collection',
+    loadChildren: () => import('./pages/student/badge-collection/badge-collection.module').then( m => m.BadgeCollectionPageModule)
+  },
+  {
+    path: 'family-group',
+    loadChildren: () => import('./pages/social-network/family-group/family-group.module').then(m => m.FamilyGroupPageModule)
+  },
+  {
+    path: 'class-group',
+    loadChildren: () => import('./pages/social-network/class-group/class-group.module').then(m => m.ClassGroupPageModule)
+  },  {
+    path: 'school-group',
+    loadChildren: () => import('./pages/social-network/school-group/school-group.module').then( m => m.SchoolGroupPageModule)
+  },
+  {
+    path: 'personal-diary',
+    loadChildren: () => import('./pages/student/personal-diary/personal-diary.module').then( m => m.PersonalDiaryPageModule)
+  }
+
 
 ];
 

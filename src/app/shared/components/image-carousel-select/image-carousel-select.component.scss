@@ -1,0 +1,7 @@
+.swiper-slide ion-img {
+  transition: transform 300ms;
+}
+
+.swiper-slide.swiper-slide-active ion-img {
+  transform: scale(1.1);
+}

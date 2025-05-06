@@ -11,7 +11,6 @@ export class StorageService {
   private _storage!: Storage;
 
   constructor(private storage: Storage) {
-    this.init();
   }
 
   /**
@@ -28,22 +27,15 @@ export class StorageService {
    */
   public async set(key: string, value: any) {
     if (!this._storage) await this.init();
-    if (!this._storage) return;
+    if (!this._storage || !key || value == undefined) return;
 
-    if (!key || !value) {
-      return;
-    }
-
-    // stringify and encrypt data
-    const valueString = JSON.stringify(value);
-    const encryptedValue = CommonConstants.encrypt(valueString);
-
-    const keys = await this._storage.keys();
-    if (keys.indexOf(key) > -1) {
-      await this._storage.remove(key);
+    try {
+      // stringify and encrypt data
+      const valueString = JSON.stringify(value);
+      const encryptedValue = CommonConstants.encrypt(valueString);
       await this._storage.set(key, encryptedValue);
-    } else {
-      await this._storage?.set(key, encryptedValue);
+    } catch (e: any) {
+      console.error('[StorageService:set] Failed to save', key, e?.message);
     }
   }
 
@@ -53,21 +45,16 @@ export class StorageService {
    */
   public async get<T>(key: string): Promise<T | undefined> {
     if (!this._storage) await this.init();
-
-    if (!key) {
-      return undefined;
-    }
-
-    const dataStr = await this._storage.get(key);
-    if (!dataStr) {
-      return undefined;
-    }
+    if (!key) return undefined;
 
     try {
+      const dataStr = await this._storage.get(key);
+      if (!dataStr) return undefined;
+
       const decryptedData = CommonConstants.decrypt(dataStr);
       return JSON.parse(decryptedData);
     } catch (e: any) {
-      console.error(e?.message);
+      console.error(key, e?.message);
       return undefined;
     }
   }

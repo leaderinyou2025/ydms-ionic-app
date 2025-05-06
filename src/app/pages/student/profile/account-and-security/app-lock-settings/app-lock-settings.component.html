@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" color="primary" defaultHref="{{PageRoutes.PROFILE}}/{{PageRoutes.ACCOUNT_AND_SECURITY}}"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ TranslateKeys.TITLE_LOCK_APP | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="custom-page-bg-light" [fullscreen]="true">
+  <ion-list class="my-2">
+    <!--  Bật/tắt khóa ứng dụng  -->
+    <ion-item detail="false">
+      <ion-label class="py-2">
+        {{ TranslateKeys.TITLE_SETUP_LOCK_APP_PIN | translate }}<br>
+        <span class="text-sm text-gray-500 italic dark:text-gray-400"> {{ TranslateKeys.TITLE_ON | translate }}</span>
+      </ion-label>
+      <ion-toggle mode="ios" slot="end" [enableOnOffLabels]="true" [checked]="true"></ion-toggle>
+    </ion-item>
+
+    <!--  Đổi mã khóa  -->
+    <ion-item detail="false">
+      <ion-label class="py-2">
+        {{ TranslateKeys.TITLE_CHANGE_LOCK_APP_PIN | translate }}
+      </ion-label>
+      <ion-icon name="chevron-forward" slot="end" class="text-base"></ion-icon>
+    </ion-item>
+
+    <!--  Tự động khóa  -->
+    <ion-item detail="false">
+      <ion-label class="py-2">
+        {{ TranslateKeys.TITLE_AUTO_LOCK_APP | translate }}
+      </ion-label>
+      <ion-icon name="chevron-forward" slot="end" class="text-base"></ion-icon>
+    </ion-item>
+
+    <!--  Mở khóa bằng sinh trắc học  -->
+    <ion-item detail="false">
+      <ion-label class="py-2">
+        {{ TranslateKeys.TITLE_UNLOCK_APP_BIOMETRIC | translate }}<br>
+        <span class="text-sm text-gray-500 italic dark:text-gray-400"> {{ TranslateKeys.TITLE_ON | translate }}</span>
+      </ion-label>
+      <ion-toggle mode="ios" slot="end" [enableOnOffLabels]="true" [checked]="true"></ion-toggle>
+    </ion-item>
+
+    <ion-item detail="false" lines="none">
+      <ion-label class="pt-3 pb-2 italic">
+        {{ TranslateKeys.WARNING_APP_LOCK | translate }}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
