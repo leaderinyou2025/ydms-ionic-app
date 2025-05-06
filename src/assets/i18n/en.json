@@ -7,6 +7,7 @@
   },
   "TITLE": {
     "phone": "Phone",
+    "email": "Email",
     "password": "Password",
     "login": "Login",
     "logout": "Logout",
@@ -41,7 +42,32 @@
     "text_size_big_size": "Big size",
     "avatar": "Avatar",
     "background": "Background",
-    "default": "Default"
+    "default": "Default",
+    "background_sound": "Background music sound",
+    "music": "Music",
+    "notification": "Notification",
+    "on": "On",
+    "off": "Off",
+    "show": "Show",
+    "hide": "Hide",
+    "touch_sound": "Touch sound",
+    "notification_sound": "Notification sound",
+    "reload_sound": "Reload sound",
+    "loading_sound": "Loading sound",
+    "message_sound": "Message sound",
+    "success_sound": "Success sound",
+    "failed_sound": "Failed sound",
+    "birthday": "Birthday",
+    "birthday_notification": "Birthday notification",
+    "lock_app": "Lock APP",
+    "change_password": "Change password",
+    "personal_info": "Personal info",
+    "setup_lock_app_pin": "Setup lock app PIN",
+    "change_lock_app_pin": "Change lock app PIN",
+    "auto_lock_app": "Auto lock app",
+    "unlock_app_biometric": "Unlock app by biometric",
+    "enable_view_and_comment": "Enable view and comment",
+    "block_and_hidden": "Block and hidden"
   },
   "VALIDATE": {
     "phone_required": "Please input your phone number.",
@@ -82,5 +108,8 @@
     "server": "Server error. Please try again later.",
     "unknown": "An unknown error occurred. Please try again.",
     "server_connection": "Unable to connect to server. Please try again later."
+  },
+  "WARNING": {
+    "app_lock": "If you forget the encryption app, you must uninstall and reinstall the app to remove the old passcode."
   }
 }

@@ -7,6 +7,7 @@ export enum TranslateKeys {
 
   // TITLE
   TITLE_PHONE = 'TITLE.phone',
+  TITLE_EMAIL = 'TITLE.email',
   TITLE_PASSWORD = 'TITLE.password',
   TITLE_LOGIN = 'TITLE.login',
   TITLE_LOGOUT = 'TITLE.logout',
@@ -18,6 +19,7 @@ export enum TranslateKeys {
   TITLE_VERSION = 'TITLE.version',
   TITLE_HOME = 'TITLE.home',
   TITLE_PROFILE = 'TITLE.profile',
+  TITLE_DASHBOARD = 'TITLE.dashboard',
   TITLE_VIEW_PROFILE_PAGE = 'TITLE.view_profile_page',
   TITLE_BADGE_COLLECTION = 'TITLE.badge_collection',
   TITLE_FAMILY_PAGE = 'TITLE.family_page',
@@ -43,6 +45,31 @@ export enum TranslateKeys {
   TITLE_AVATAR = 'TITLE.avatar',
   TITLE_BACKGROUND = 'TITLE.background',
   TITLE_DEFAULT = 'TITLE.default',
+  TITLE_BACKGROUND_SOUND = 'TITLE.background_sound',
+  TITLE_TOUCH_SOUND = 'TITLE.touch_sound',
+  TITLE_NOTIFICATION_SOUND = 'TITLE.notification_sound',
+  TITLE_RELOAD_SOUND = 'TITLE.reload_sound',
+  TITLE_LOADING_SOUND = 'TITLE.loading_sound',
+  TITLE_MESSAGE_SOUND = 'TITLE.message_sound',
+  TITLE_SUCCESS_SOUND = 'TITLE.success_sound',
+  TITLE_FAILED_SOUND = 'TITLE.failed_sound',
+  TITLE_MUSIC = 'TITLE.music',
+  TITLE_NOTIFICATION = 'TITLE.notification',
+  TITLE_ON = 'TITLE.on',
+  TITLE_OFF = 'TITLE.off',
+  TITLE_SHOW = 'TITLE.show',
+  TITLE_HIDE = 'TITLE.hide',
+  TITLE_BIRTHDAY = 'TITLE.birthday',
+  TITLE_BIRTHDAY_NOTIFICATION = 'TITLE.birthday_notification',
+  TITLE_LOCK_APP = 'TITLE.lock_app',
+  TITLE_CHANGE_PASSWORD = 'TITLE.change_password',
+  TITLE_PERSONAL_INFO = 'TITLE.personal_info',
+  TITLE_SETUP_LOCK_APP_PIN = 'TITLE.setup_lock_app_pin',
+  TITLE_CHANGE_LOCK_APP_PIN = 'TITLE.change_lock_app_pin',
+  TITLE_AUTO_LOCK_APP = 'TITLE.auto_lock_app',
+  TITLE_UNLOCK_APP_BIOMETRIC = 'TITLE.unlock_app_biometric',
+  TITLE_ENABLE_VIEW_AND_COMMENT = 'TITLE.enable_view_and_comment',
+  TITLE_BLOCK_AND_HIDDEN = 'TITLE.block_and_hidden',
 
   // VALIDATE
   VALIDATE_PHONE_REQUIRED = 'VALIDATE.phone_required',
@@ -83,4 +110,7 @@ export enum TranslateKeys {
   ERROR_SERVER = 'ERROR.server',
   ERROR_UNKNOWN = 'ERROR.unknown',
   ERROR_SERVER_CONNECTION = 'ERROR.server_connection',
+
+  // WARNING
+  WARNING_APP_LOCK = 'WARNING.app_lock',
 }

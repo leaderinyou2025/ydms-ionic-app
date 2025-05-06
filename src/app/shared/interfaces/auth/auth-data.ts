@@ -1,6 +1,7 @@
 import { IResUser } from '../models/res-user';
 import { RelatedField } from '../base/related-field';
 import { IUserRoles } from '../../enums/user-roles';
+import { IUserSettings } from '../settings/user-settings';
 
 export interface IAuthData extends IResUser {
   nickname?: string;
@@ -10,12 +11,6 @@ export interface IAuthData extends IResUser {
   student_id?: RelatedField;
   teacher_id?: RelatedField;
   parent_id?: RelatedField;
-  background_image?: string;
-  background_sound_url?: string;
-  click_button_sound_url?: string;
-  check_sound_url?: string;
-  uncheck_sound_url?: string;
-  reload_sound_url?: string;
-  correct_sound_url?: string;
-  failure_sound_url?: string;
+  user_settings?: IUserSettings;
+  avatar?: string;
 }

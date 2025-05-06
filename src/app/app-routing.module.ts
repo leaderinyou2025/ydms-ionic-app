@@ -15,14 +15,29 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule),
+    loadChildren: () => import('./pages/student/home/home.module').then(m => m.HomePageModule),
     canActivate: [AuthGuard],
-  },  {
-    path: 'profile',
-    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
   },
-
-
+  {
+    path: 'profile',
+    loadChildren: () => import('./pages/student/profile/profile.module').then(m => m.ProfilePageModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'parent-dashboard',
+    loadChildren: () => import('./pages/parent/parent-dashboard/parent-dashboard.module').then(m => m.ParentDashboardPageModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'teacher-dashboard',
+    loadChildren: () => import('./pages/teacher/teacher-dashboard/teacher-dashboard.module').then(m => m.TeacherDashboardPageModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'school-dashboard',
+    loadChildren: () => import('./pages/school/school-dashboard/school-dashboard.module').then(m => m.SchoolDashboardPageModule),
+    canActivate: [AuthGuard],
+  }
 ];
 
 @NgModule({

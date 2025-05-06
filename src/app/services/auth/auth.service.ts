@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
+import { HttpHeaders } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
 
 import { HttpClientService } from '../http-client/http-client.service';
 import { LocalStorageService } from '../local-storage/local-storage.service';
@@ -13,7 +14,6 @@ import { environment } from '../../../environments/environment';
 import { CommonConstants } from '../../shared/classes/common-constants';
 import { StorageKey } from '../../shared/enums/storage-key';
 import { ModelName } from '../../shared/enums/model-name';
-import { IUserRoles } from '../../shared/enums/user-roles';
 import { AlertController, AlertOptions, LoadingController, NavController } from '@ionic/angular';
 import { BtnRoles } from '../../shared/enums/btn-roles';
 import { NativePlatform } from '../../shared/enums/native-platform';
@@ -21,6 +21,13 @@ import { PageRoutes } from '../../shared/enums/page-routes';
 import { TranslateKeys } from '../../shared/enums/translate-keys';
 import { OdooJsonrpcServiceNames } from '../../shared/enums/odoo-jsonrpc-service-names';
 import { OdooMethodName } from '../../shared/enums/odoo-method-name';
+import { ForceTestData } from '../../shared/classes/force-test-data';
+import { IUserSettings } from '../../shared/interfaces/settings/user-settings';
+import { IAccountSecuritySettings } from '../../shared/interfaces/settings/account-security-settings';
+import { INotificationSettings } from '../../shared/interfaces/settings/notification-settings';
+import { ISoundSettings } from '../../shared/interfaces/settings/sound-settings';
+import { IThemeSettings } from '../../shared/interfaces/settings/theme-settings';
+import { IPrivacyRightsSettings } from '../../shared/interfaces/settings/privacy-rights-settings';
 
 @Injectable({
   providedIn: 'root'
@@ -49,22 +56,6 @@ export class AuthService {
   }
 
   /**
-   * Get auth data from cache or localStorage
-   */
-  public async getAuthData(): Promise<IAuthData | undefined> {
-    if (!this.authData) this.authData = await this.storageService.get(StorageKey.AUTH_DATA);
-    return this.authData;
-  }
-
-  /**
-   * Set auth data to cache and localStorage
-   * @param authData
-   */
-  public async setAuthData(authData: IAuthData): Promise<void> {
-    await this.storageService.set(StorageKey.AUTH_DATA, authData);
-  }
-
-  /**
    * Encrypt password and save to session
    * @param password
    */
@@ -87,6 +78,151 @@ export class AuthService {
   }
 
   /**
+   * Get auth data from cache or localStorage
+   */
+  public async getAuthData(): Promise<IAuthData | undefined> {
+    if (!this.authData) this.authData = await this.storageService.get(StorageKey.AUTH_DATA);
+    return this.authData;
+  }
+
+  /**
+   * Set auth data to cache and localStorage
+   * @param authData
+   * @param isSyncServer
+   */
+  public async setAuthData(authData: IAuthData, isSyncServer: boolean = true): Promise<void> {
+    await this.storageService.set(StorageKey.AUTH_DATA, authData);
+    if (isSyncServer) await this.saveUserProfile();
+  }
+
+  /**
+   * getUserSettings
+   * @Promise<IUserSettings | undefined>
+   */
+  public async getUserSettings(): Promise<IUserSettings | undefined> {
+    const authData = await this.getAuthData();
+    if (!authData) return;
+    return authData.user_settings;
+  }
+
+  /**
+   * setUserSettings
+   * @param userSettings
+   * @Promise<void>
+   */
+  public async setUserSettings(userSettings: IUserSettings): Promise<void> {
+    const authData = await this.getAuthData();
+    if (!authData) return;
+    authData.user_settings = userSettings;
+    await this.setAuthData(authData);
+  }
+
+  /**
+   * getAccountSecuritySettings
+   * @Promise<IAccountSecuritySettings | undefined>
+   */
+  public async getAccountSecuritySettings(): Promise<IAccountSecuritySettings | undefined> {
+    const userSettings = await this.getUserSettings();
+    if (!userSettings) return;
+    return userSettings.account_security;
+  }
+
+  /**
+   * setAccountSecuritySettings
+   * @Promise<void>
+   */
+  public async setAccountSecuritySettings(accountSecuritySettings: IAccountSecuritySettings): Promise<void> {
+    const userSettings = await this.getUserSettings();
+    if (!userSettings) return;
+    userSettings.account_security = accountSecuritySettings;
+    await this.setUserSettings(userSettings);
+  }
+
+  /**
+   * getThemeSettings
+   * @Promise<IThemeSettings | undefined>
+   */
+  public async getThemeSettings(): Promise<IThemeSettings | undefined> {
+    const userSettings = await this.getUserSettings();
+    if (!userSettings) return;
+    return userSettings.theme;
+  }
+
+  /**
+   * setThemeSettings
+   * @Promise<void>
+   */
+  public async setThemeSettings(themeSettings: IThemeSettings): Promise<void> {
+    const userSettings = await this.getUserSettings();
+    if (!userSettings) return;
+    userSettings.theme = themeSettings;
+    await this.setUserSettings(userSettings);
+  }
+
+  /**
+   * getSoundSettings
+   * @Promise<ISoundSettings | undefined>
+   */
+  public async getSoundSettings(): Promise<ISoundSettings | undefined> {
+    const userSettings = await this.getUserSettings();
+    if (!userSettings) return;
+    return userSettings.sound;
+  }
+
+  /**
+   * setSoundSettings
+   * @Promise<void>
+   */
+  public async setSoundSettings(soundSettings: ISoundSettings): Promise<void> {
+    const userSettings = await this.getUserSettings();
+    if (!userSettings) return;
+    userSettings.sound = soundSettings;
+    await this.setUserSettings(userSettings);
+  }
+
+  /**
+   * getNotificationSettings
+   * @Promise<INotificationSettings | undefined>
+   */
+  public async getNotificationSettings(): Promise<INotificationSettings | undefined> {
+    const userSettings = await this.getUserSettings();
+    if (!userSettings) return;
+    return userSettings.notification;
+  }
+
+  /**
+   * setNotificationSettings
+   * @Promise<void>
+   */
+  public async setNotificationSettings(notificationSettings: INotificationSettings): Promise<void> {
+    const userSettings = await this.getUserSettings();
+    if (!userSettings) return;
+    userSettings.notification = notificationSettings;
+    await this.setUserSettings(userSettings);
+  }
+
+  /**
+   * getPrivacyRightSettings
+   * @Promise<IPrivacyRightsSettings | undefined>
+   */
+  public async getPrivacyRightSettings(): Promise<IPrivacyRightsSettings | undefined> {
+    const userSettings = await this.getUserSettings();
+    if (!userSettings) return;
+    return userSettings.notification;
+  }
+
+  /**
+   * setPrivacyRightSettings
+   * @Promise<void>
+   */
+  public async setPrivacyRightSettings(privacyRightsSettings: IPrivacyRightsSettings): Promise<void> {
+    const userSettings = await this.getUserSettings();
+    if (!userSettings) return;
+    userSettings.privacy_rights = privacyRightsSettings;
+    await this.setUserSettings(userSettings);
+  }
+
+  /**
    * Authentication user with server
    * @param username
    * @param password
@@ -98,27 +234,28 @@ export class AuthService {
     dataRequest.params.args = [environment.database, username, password];
 
     // Login function api
-    // const loginResult = await this.httpClientService.post(environment.serverUrl, dataRequest, {headers: CommonConstants.getRequestHeader()}, {operation: 'login'});
-    let loginResult = {result: 1};
+    // let loginResult = await this.httpClientService.post(
+    //   environment.serverUrl, dataRequest,
+    //   {headers: CommonConstants.getRequestHeader()},
+    //   {operation: 'login'}
+    // );
+    // TEST: Force login
+    const loginResult = ForceTestData.loginResult;
     if (!loginResult || !loginResult?.result) {
       return false;
     }
 
     // Get user profile
     // const userProfile = await this.getUserProfile(+loginResult.result);
-    let userProfile: IAuthData = {
-      id: 1, name: 'Test 1',
-      role: IUserRoles.STUDENT,
-      login: '0964164434',
-    };
-
+    // TEST: Force user profile
+    const userProfile = ForceTestData.authData;
     if (!userProfile) {
       return false;
     }
 
-    // Saved user profile to localStorage
+    // Saved user profile to localStorage not sync back to server
     this.saveAuthToken(password);
-    await this.setAuthData(userProfile);
+    await this.setAuthData(userProfile, false);
 
     return true;
   }
@@ -136,6 +273,18 @@ export class AuthService {
       ]
     }
     this.alertCtrl.create(alertOption).then(alert => alert.present());
+  }
+
+  /**
+   * getBasicAuthHeader
+   */
+  public async getBasicAuthHeader(): Promise<HttpHeaders | undefined> {
+    const authData = await this.getAuthData();
+    const password = this.getAuthToken();
+    if (!authData || !password) return;
+    return new HttpHeaders({
+      Authorization: 'Basic ' + btoa(`${authData.login}:${password}`)
+    });
   }
 
   /**
@@ -180,5 +329,15 @@ export class AuthService {
     results = CommonConstants.convertArr2ListItem(results);
     if (!results?.length) return;
     return results?.[0];
+  }
+
+  /**
+   * Save user profile to res.users
+   * @private
+   */
+  private async saveUserProfile(): Promise<boolean | number> {
+    const authData = await this.getAuthData();
+    if (!authData) return false;
+    return await this.odooService.write<IAuthData>(ModelName.RES_USERS, [authData.id], authData);
   }
 }

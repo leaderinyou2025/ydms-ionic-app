@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import Swiper from 'swiper';
 
-import { IImageResource } from '../../interfaces/models/image-resource';
 import { TranslateKeys } from '../../enums/translate-keys';
 import { IonicColors } from '../../enums/ionic-colors';
+import { ILiyYdmsAssetsResource } from '../../interfaces/models/liy-ydms-assets-resource';
 
 @Component({
   selector: 'app-image-carousel-select',
@@ -13,9 +13,9 @@ import { IonicColors } from '../../enums/ionic-colors';
 })
 export class ImageCarouselSelectComponent implements OnInit {
 
-  @Input() wallpapers: IImageResource[] = [];
-  @Input() selectedValue!: IImageResource | undefined;
-  @Output() selectedWallpaper = new EventEmitter<IImageResource>();
+  @Input() wallpapers: ILiyYdmsAssetsResource[] = [];
+  @Input() selectedValue!: ILiyYdmsAssetsResource | undefined;
+  @Output() selectedWallpaper = new EventEmitter<ILiyYdmsAssetsResource>();
 
   constructor() {
   }
@@ -37,7 +37,7 @@ export class ImageCarouselSelectComponent implements OnInit {
    * selectWallpaper
    * @param wallpaper
    */
-  public selectWallpaper(wallpaper: IImageResource): void {
+  public selectWallpaper(wallpaper: ILiyYdmsAssetsResource): void {
     if (this.selectedValue?.id === wallpaper.id) return;
     this.selectedWallpaper.emit(wallpaper)
   }

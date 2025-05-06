@@ -111,7 +111,6 @@ export class LoginPage implements OnInit, OnDestroy {
     await loading.present();
 
     try {
-      this.soundService.playBackground();
       // Check network is online
       const isOnline = await this.networkService.isReallyOnline();
       if (isOnline) {
@@ -123,6 +122,9 @@ export class LoginPage implements OnInit, OnDestroy {
         // Check user is authenticated to redirect home page
         if (this.authService.isAuthenticated()) {
           this.isReady = false;
+
+          // Preload music
+          await this.soundService.loadUserSounds();
 
           // Sync user firebase device token to server
           await this.pushNotificationService.updateUserFirebaseToken();
@@ -139,11 +141,10 @@ export class LoginPage implements OnInit, OnDestroy {
       // Init login form and handle autocomplete input account
       this.initLoginForm();
       await this.handleAccountAutocomplete();
-
       this.isReady = true;
-    } catch (e: any) {
+    } finally {
+      this.isReady = true;
       await loading.dismiss();
-      this.isReady = true;
     }
   }
 
@@ -218,6 +219,9 @@ export class LoginPage implements OnInit, OnDestroy {
       }
 
       /*----------- Login success ------------------*/
+
+      // Preload user music
+      await this.soundService.loadUserSounds();
 
       // Remember account handle
       if (this.loginForm.value.remember) {

@@ -5,4 +5,5 @@ export interface IBase extends IDictionary<any> {
   name?: string;
   create_date?: string;
   write_date?: string;
+  active?: boolean;
 }

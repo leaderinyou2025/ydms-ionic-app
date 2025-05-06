@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { LocalStorageService } from '../local-storage/local-storage.service';
-import { StorageKey } from '../../shared/enums/storage-key';
+import { AuthService } from '../auth/auth.service';
 import { Theme } from '../../shared/enums/theme';
 
 @Injectable({
@@ -13,53 +12,71 @@ export class ThemeService {
   private prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
   constructor(
-    private localStorageService: LocalStorageService,
+    private authService: AuthService
   ) {
   }
 
   /**
    * Load and set theme
    */
-  loadTheme() {
-    const theme = this.localStorageService.get<string>(StorageKey.THEME);
-    if (theme === Theme.DARK) {
-      this.enableDark();
-    } else if (theme === Theme.LIGHT) {
-      this.enableLight();
-    } else {
-      this.useSystemTheme();
-    }
+  public loadTheme() {
+    this.getTheme().then(theme => {
+      if (theme === Theme.DARK) {
+        this.enableDark(false);
+      } else if (theme === Theme.LIGHT) {
+        this.enableLight(false);
+      } else {
+        this.useSystemTheme(false);
+      }
+    });
   }
 
   /**
    * Enable dark mode
+   * @param isSyncServer
    */
-  enableDark() {
+  public enableDark(isSyncServer: boolean = true) {
     document.documentElement.classList.add(Theme.DARK);
-    this.localStorageService.set<string>(StorageKey.THEME, Theme.DARK);
+    if (isSyncServer) this.saveUserThemeSettings(Theme.DARK);
   }
 
   /**
    * Enable light mode
+   * @param isSyncServer
    */
-  enableLight() {
+  public enableLight(isSyncServer: boolean = true) {
     document.documentElement.classList.remove(Theme.DARK);
-    this.localStorageService.set<string>(StorageKey.THEME, Theme.LIGHT);
+    if (isSyncServer) this.saveUserThemeSettings(Theme.LIGHT);
   }
 
   /**
    * Use system theme
+   * @param isSyncServer
    */
-  useSystemTheme() {
+  public useSystemTheme(isSyncServer: boolean = true) {
     this.prefersDark.matches ? this.enableDark() : this.enableLight();
-    this.localStorageService.remove(StorageKey.THEME);
+    if (isSyncServer) this.saveUserThemeSettings(Theme.SYSTEM);
   }
 
   /**
    * Return theme setting
    */
-  getTheme(): Theme {
-    const theme = this.localStorageService.get<Theme>(StorageKey.THEME);
-    return theme || Theme.SYSTEM;
+  public async getTheme(): Promise<Theme> {
+    const themeSettings = await this.authService.getThemeSettings();
+    return themeSettings?.theme_model || Theme.SYSTEM;
+  }
+
+  /**
+   * saveUserThemeSettings
+   * @param theme
+   * @private
+   */
+  private saveUserThemeSettings(theme: Theme): void {
+    this.authService.getThemeSettings().then(themeSettings => {
+      if (themeSettings) {
+        themeSettings.theme_model = theme;
+        this.authService.setThemeSettings(themeSettings);
+      }
+    });
   }
 }

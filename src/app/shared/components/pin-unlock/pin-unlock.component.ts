@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { AvailableResult, BiometryType } from 'capacitor-native-biometric';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
@@ -16,7 +16,7 @@ import { TranslateKeys } from '../../enums/translate-keys';
   styleUrls: ['./pin-unlock.component.scss'],
   standalone: false
 })
-export class PinUnlockComponent {
+export class PinUnlockComponent implements OnInit {
   pin: string = '';
   maxLength = 4;
   dots = new Array(this.maxLength);
@@ -34,6 +34,9 @@ export class PinUnlockComponent {
   ) {
     this.biometricAvailable = this.localStorageService.get<AvailableResult>(StorageKey.BIOMETRIC_AVAILABLE_RESULT);
     this.isFaceID = this.biometricAvailable?.biometryType === BiometryType.FACE_ID;
+  }
+
+  ngOnInit(): void {
   }
 
   /**

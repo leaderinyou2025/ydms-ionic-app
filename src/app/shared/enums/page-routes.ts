@@ -10,4 +10,7 @@ export enum PageRoutes {
   REPORT_PROBLEMS = 'report-problems',
   CONTACT_AND_SUPPORT = 'contact-and-support',
   TERMS_AND_POLICIES = 'terms-and-policies',
+  PERSONAL_INFO = 'personal-info',
+  APP_LOCK_SETTINGS = 'app-lock-settings',
+  CHANGE_PASSWORD = 'change-password',
 }

@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 
 import { AuthService } from '../auth/auth.service';
 import { HttpClientService } from '../http-client/http-client.service';
+import { LocalStorageService } from '../local-storage/local-storage.service';
 
 import { IDictionary } from '../../shared/interfaces/base/dictionary';
 import { IKwArgs } from '../../shared/interfaces/http/kw-args';
@@ -16,6 +17,7 @@ import { OrderBy } from '../../shared/enums/order-by';
 import { RelatedField } from '../../shared/interfaces/base/related-field';
 import { TranslateKeys } from '../../shared/enums/translate-keys';
 import { StyleClass } from '../../shared/enums/style-class';
+import { StorageKey } from '../../shared/enums/storage-key';
 
 
 export type SearchDomain = Array<string | Array<string | number | boolean | Array<string | number>>>;
@@ -26,12 +28,14 @@ export type SearchDomain = Array<string | Array<string | number | boolean | Arra
 export class OdooService {
   public maximumLimitRecords = 999999;
   private lang: string = 'vi_VN';
+  private auth!: AuthService;
 
   constructor(
+    private injector: Injector,
     private httpClientService: HttpClientService,
-    private authService: AuthService,
     private alertController: AlertController,
     private translate: TranslateService,
+    private localStorageService: LocalStorageService,
   ) {
   }
 
@@ -41,7 +45,7 @@ export class OdooService {
    * @param ids
    * @param fields
    */
-  async read<T>(model: ModelName, ids: Array<number>, fields?: Array<string>): Promise<Array<T>> {
+  public async read<T>(model: ModelName, ids: Array<number>, fields?: Array<string>): Promise<Array<T>> {
     if (!model || !ids?.length) return [];
 
     const context: IDictionary<string> = {lang: this.lang};
@@ -57,7 +61,7 @@ export class OdooService {
    * @param model
    * @param values
    */
-  async create<T>(model: ModelName, values: Partial<T>): Promise<number | undefined> {
+  public async create<T>(model: ModelName, values: Partial<T>): Promise<number | undefined> {
     if (!model || !values) return;
     return this.callKw<T>(model, OdooMethodName.CREATE, [values]);
   }
@@ -68,7 +72,7 @@ export class OdooService {
    * @param ids
    * @param values
    */
-  async write<T>(model: ModelName, ids: Array<number>, values: Partial<T>): Promise<number | boolean> {
+  public async write<T>(model: ModelName, ids: Array<number>, values: Partial<T>): Promise<number | boolean> {
     if (!model || !ids?.length || !values) return false;
     return this.callKw<T>(model, OdooMethodName.WRITE, [ids, values]);
   }
@@ -78,7 +82,7 @@ export class OdooService {
    * @param model
    * @param ids
    */
-  async unlink(model: ModelName, ids: Array<number>): Promise<boolean> {
+  public async unlink(model: ModelName, ids: Array<number>): Promise<boolean> {
     if (!model || !ids?.length) return true;
     return this.callKw(model, OdooMethodName.UNLINK, [ids]);
   }
@@ -91,7 +95,7 @@ export class OdooService {
    * @param limit
    * @param order
    */
-  async search<T>(
+  public async search<T>(
     model: ModelName,
     args: SearchDomain = [],
     offset: number = 0,
@@ -117,7 +121,7 @@ export class OdooService {
    * @param limit
    * @param order
    */
-  async searchRead<T>(
+  public async searchRead<T>(
     model: ModelName,
     args: SearchDomain = [],
     fields: Array<string> = [],
@@ -140,7 +144,7 @@ export class OdooService {
    * @param model
    * @param args
    */
-  async searchCount<T>(model: ModelName, args: SearchDomain = []): Promise<number> {
+  public async searchCount<T>(model: ModelName, args: SearchDomain = []): Promise<number> {
     if (!model) return 0;
     return this.callKw(model, OdooMethodName.SEARCH_COUNT, [args]);
   }
@@ -152,7 +156,7 @@ export class OdooService {
    * @param paramsArgs
    * @param kwArgs
    */
-  async callKw<T>(
+  public async callKw<T>(
     model: ModelName,
     method: string,
     paramsArgs: Array<Array<number> | Partial<T> | SearchDomain> = [],
@@ -182,5 +186,17 @@ export class OdooService {
     }
 
     return result?.error ? false : (result?.result != null ? result?.result : true);
+  }
+
+
+  /**
+   * Get injector AuthService
+   * @private
+   */
+  private get authService(): AuthService {
+    if (!this.auth) {
+      this.auth = this.injector.get(AuthService);
+    }
+    return this.auth;
   }
 }

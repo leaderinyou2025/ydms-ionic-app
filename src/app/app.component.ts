@@ -1,18 +1,19 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Device } from '@capacitor/device';
-import { TextZoom } from '@capacitor/text-zoom';
 import { TranslateService } from '@ngx-translate/core';
 
-import { SoundService } from './services/sound/sound.service';
 import { LocalStorageService } from './services/local-storage/local-storage.service';
 import { AppLockService } from './services/app-lock/app-lock.service';
 import { StateService } from './services/state/state.service';
 import { ThemeService } from './services/theme/theme.service';
+import { AuthService } from './services/auth/auth.service';
+import { SoundService } from './services/sound/sound.service';
 import { TextZoomService } from './services/text-zoom/text-zoom.service';
+import { StorageService } from './services/storage/storage.service';
 import { CommonConstants } from './shared/classes/common-constants';
 import { StorageKey } from './shared/enums/storage-key';
 import { LanguageKeys } from './shared/enums/language-keys';
-import { TextZoomSize } from './shared/enums/text-zoom-size';
 
 @Component({
   selector: 'app-root',
@@ -25,13 +26,16 @@ export class AppComponent implements OnInit, OnDestroy {
   private showLockScreenSubscribe: any;
 
   constructor(
-    private soundService: SoundService,
     private localStorageService: LocalStorageService,
     private translate: TranslateService,
     private appLockService: AppLockService,
     private stateService: StateService,
     private themeService: ThemeService,
-    private textZoomService: TextZoomService
+    private textZoomService: TextZoomService,
+    private router: Router,
+    private authService: AuthService,
+    private soundService: SoundService,
+    private storageService: StorageService,
   ) {
   }
 
@@ -44,10 +48,11 @@ export class AppComponent implements OnInit, OnDestroy {
     this.checkLock();
     // Initial translation
     this.initializeTranslation();
-    // Preload sounds
-    this.loadingSounds();
-    // Load theme
+    // Initial storage
+    this.storageService.init();
+    // Redirect app to login page
     this.themeService.loadTheme();
+    //this.router.navigateByUrl(PageRoutes.LOGIN).then(() => this.themeService.loadTheme());
   }
 
   ngOnDestroy() {
@@ -78,14 +83,5 @@ export class AppComponent implements OnInit, OnDestroy {
     this.translate.addLangs([LanguageKeys.EN, LanguageKeys.VN]);
     this.translate.resetLang(defaultLanguage);
     this.translate.use(defaultLanguage);
-  }
-
-  /**
-   * Loading sound
-   * @private
-   */
-  private loadingSounds(): void {
-    this.soundService.loadBackgroundSounds();
-    this.soundService.loadUserSounds();
   }
 }

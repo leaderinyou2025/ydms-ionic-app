@@ -7,6 +7,7 @@
   },
   "TITLE": {
     "phone": "Số điện thoại",
+    "email": "Email",
     "password": "Mật khẩu",
     "login": "Đăng nhập",
     "logout": "Đăng xuất",
@@ -42,7 +43,32 @@
     "text_size_big_size": "Lớn nhất",
     "avatar": "Avatar",
     "background": "Hình nền",
-    "default": "Mặc định"
+    "default": "Mặc định",
+    "background_sound": "Âm thanh nhạc nền",
+    "music": "Âm nhạc",
+    "notification": "Thông báo",
+    "on": "Bật",
+    "off": "Tắt",
+    "show": "Hiển thị",
+    "hide": "Ẩn",
+    "touch_sound": "Âm thanh ấn nút",
+    "notification_sound": "Âm thanh thông báo",
+    "reload_sound": "Âm thanh tải lại",
+    "loading_sound": "Âm thanh đang tải",
+    "message_sound": "Âm thanh tin nhắn",
+    "success_sound": "Âm  thanh thành công",
+    "failed_sound": "Âm thanh thất bại",
+    "birthday": "Sinh nhật",
+    "birthday_notification": "Thông báo sinh nhật",
+    "lock_app": "Khóa ứng dụng",
+    "change_password": "Đổi mật khẩu",
+    "personal_info": "Thông tin cá nhân",
+    "setup_lock_app_pin": "Đặt mã khóa ứng dụng",
+    "change_lock_app_pin": "Đổi mã khóa ứng dụng",
+    "auto_lock_app": "Tự động khóa ứng dụng",
+    "unlock_app_biometric": "Mở khóa nhận diện sinh trắc học",
+    "enable_view_and_comment": "Cho phép xem và bình luận",
+    "block_and_hidden": "Chặn và ẩn"
   },
   "VALIDATE": {
     "phone_required": "Vui lòng nhập vào số điện thoại.",
@@ -83,5 +109,8 @@
     "server": "Lỗi máy chủ. Vui lòng thử lại sau.",
     "unknown": "Đã xảy ra lỗi không xác định. Vui lòng thử lại.",
     "server_connection": "Không thể kết nối tới máy chủ. Vui lòng thử lại sau."
+  },
+  "WARNING": {
+    "app_lock": "Trong trường hợp bạn quên mã khóa ứng dụng, bạn phải gỡ cài đặt và cài đặt lại ứng dụng từ cửa hàng để xóa mã khóa cũ."
   }
 }

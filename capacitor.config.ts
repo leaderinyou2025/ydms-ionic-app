@@ -6,6 +6,11 @@ const config: CapacitorConfig = {
   webDir: 'www',
   ios: {
     preferredContentMode: 'mobile'
+  },
+  plugins: {
+    CapacitorHttp: {
+      enabled: true
+    }
   }
 };
 

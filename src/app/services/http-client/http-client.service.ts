@@ -187,11 +187,11 @@ export class HttpClientService {
       console.error(`[${operation}] failed:`, errorMessage, error);
 
       if (showAlert) {
-        this.alertController.create({
-          header: this.translate.instant(TranslateKeys.ALERT_ERROR_SYSTEM_HEADER),
-          message: errorMessage,
-          buttons: [this.translate.instant(TranslateKeys.BUTTON_CLOSE)],
-        }).then(alert => alert.present());
+        // this.alertController.create({
+        //   header: this.translate.instant(TranslateKeys.ALERT_ERROR_SYSTEM_HEADER),
+        //   message: errorMessage,
+        //   buttons: [this.translate.instant(TranslateKeys.BUTTON_CLOSE)],
+        // }).then(alert => alert.present());
       }
 
       return throwError(() => error);

@@ -7,11 +7,12 @@ import { OdooService, SearchDomain } from '../odoo/odoo.service';
 import { StorageService } from '../storage/storage.service';
 import { NetworkService } from '../network/network.service';
 import { StorageKey } from '../../shared/enums/storage-key';
-import { IAppVersion } from '../../shared/interfaces/models/app-version';
+import { ILiyYdmsAppVersion } from '../../shared/interfaces/models/liy-ydms-app-version';
 import { CommonConstants } from '../../shared/classes/common-constants';
 import { ModelName } from '../../shared/enums/model-name';
 import { OrderBy } from '../../shared/enums/order-by';
 import { OdooDomainOperator } from '../../shared/enums/odoo-domain-operator';
+import { NativePlatform } from '../../shared/enums/native-platform';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,7 @@ export class LiveUpdateService {
     private networkService: NetworkService
   ) {
     // Load live update model fields from AppVersion interface
-    this.liveUpdateFields = CommonConstants.getKeys<IAppVersion>() as string[];
+    this.liveUpdateFields = CommonConstants.getKeys<ILiyYdmsAppVersion>() as string[];
   }
 
   /**
@@ -38,7 +39,7 @@ export class LiveUpdateService {
       return;
     }
 
-    let localAppVersion = await this.storageService.get<IAppVersion>(StorageKey.CURRENT_APP_VERSION);
+    let localAppVersion = await this.storageService.get<ILiyYdmsAppVersion>(StorageKey.CURRENT_APP_VERSION);
     if (!localAppVersion) {
       const appInfo = await App.getInfo();
       const currentAppVersion = await this.getAppVersionString();
@@ -46,7 +47,7 @@ export class LiveUpdateService {
         id: Math.random(),
         name: appInfo.name,
         bundle_id: appInfo.id,
-        platform: this.platform.is('android') ? 'android' : 'ios',
+        platform: this.platform.is('android') ? NativePlatform.ANDROID : NativePlatform.IOS,
         version_build: currentAppVersion || appInfo.version,
         version_code: appInfo.build,
         bundle_file: '',
@@ -72,15 +73,15 @@ export class LiveUpdateService {
 
   /**
    * Get latest app version from server
-   * @return Promise<IAppVersion | undefined>
+   * @return Promise<ILiyYdmsAppVersion | undefined>
    */
-  async getLatestAppVersion(): Promise<IAppVersion | undefined> {
+  async getLatestAppVersion(): Promise<ILiyYdmsAppVersion | undefined> {
     if (!this.networkService.isOnline()) return;
 
     const appInfo = await App.getInfo();
-    const platformKey: keyof IAppVersion = 'platform';
-    const bundleIdKey: keyof IAppVersion = 'bundle_id';
-    const activeKey: keyof IAppVersion = 'active';
+    const platformKey: keyof ILiyYdmsAppVersion = 'platform';
+    const bundleIdKey: keyof ILiyYdmsAppVersion = 'bundle_id';
+    const activeKey: keyof ILiyYdmsAppVersion = 'active';
     const platform = this.platform.is('android') ? 'android' : 'ios';
 
     // TODO: Call api to get latest app version
@@ -89,7 +90,7 @@ export class LiveUpdateService {
       [bundleIdKey, OdooDomainOperator.EQUAL, appInfo.id],
       [activeKey, OdooDomainOperator.EQUAL, true]
     ];
-    const appVersions: Array<IAppVersion> = await this.odooService.searchRead(
+    const appVersions: Array<ILiyYdmsAppVersion> = await this.odooService.searchRead(
       ModelName.APP_VERSIONS, args, this.liveUpdateFields, 0, 1, OrderBy.CREATE_AT_DESC
     );
 
@@ -106,7 +107,7 @@ export class LiveUpdateService {
       return '1.0.0';
     }
 
-    let localVersion = await this.storageService.get<IAppVersion>(StorageKey.CURRENT_APP_VERSION);
+    let localVersion = await this.storageService.get<ILiyYdmsAppVersion>(StorageKey.CURRENT_APP_VERSION);
     if (localVersion?.version_build) {
       return localVersion.version_build;
     }

@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 import { OdooService } from '../odoo/odoo.service';
-import { StorageService } from '../storage/storage.service';
+import { AuthService } from '../auth/auth.service';
 import { StorageKey } from '../../shared/enums/storage-key';
-import { IImageResource } from '../../shared/interfaces/models/image-resource';
+import { ForceTestData } from '../../shared/classes/force-test-data';
+import { ILiyYdmsAssetsResource } from '../../shared/interfaces/models/liy-ydms-assets-resource';
 
 @Injectable({
   providedIn: 'root'
@@ -13,66 +14,65 @@ export class WallpaperService {
 
   constructor(
     private odooService: OdooService,
-    private storageService: StorageService,
+    private authService: AuthService,
   ) {
   }
 
   /**
-   * Load background image from server
+   * Load background images from server
    */
-  public getBackgroundWallpapers(): Observable<IImageResource[]> {
+  public getBackgroundWallpapers(): Observable<ILiyYdmsAssetsResource[]> {
     // TODO: Call API to load background images wallpapers
-    const images: Array<IImageResource> = [
-      {id: 1, resource_url: 'assets/images/background/bananas-7840213_1920.jpg', name: 'Chuối vườn nhà'},
-      {id: 2, resource_url: 'assets/images/background/beach-5234306_1920.jpg', name: 'Biển Đông'},
-      {id: 3, resource_url: 'assets/images/background/city-7629244_1920.jpg', name: 'Thành phố phồn hoa'},
-      {id: 4, resource_url: 'assets/images/background/santa-claus-6845491_1920.jpg', name: 'Ông già Noel'},
-    ];
+    const images = ForceTestData.background_images;
     return of(images);
   }
 
   /**
-   * Load avatar image from server
+   * Load avatar images from server
    */
-  public getAvatarWallpapers(): Observable<IImageResource[]> {
+  public getAvatarWallpapers(): Observable<ILiyYdmsAssetsResource[]> {
     // TODO: Call API to load background images wallpapers
-    const images: Array<IImageResource> = [
-      {id: 1, resource_url: 'assets/images/avatar/Shiba-Inu-Dog.png', name: 'Shiba-Inu-Dog'},
-      {id: 2, resource_url: 'assets/images/avatar/Shiba-Inu-Dog-1.png', name: 'Shiba-Inu-Dog-1'},
-      {id: 3, resource_url: 'assets/images/avatar/Shiba-Inu-Dog-2.png', name: 'Shiba-Inu-Dog-2'},
-      {id: 4, resource_url: 'assets/images/avatar/Shiba-Inu-Dog-3.png', name: 'Shiba-Inu-Dog-3'},
-      {id: 5, resource_url: 'assets/images/avatar/Shiba-Inu-Dog-Showing-Muscles.png', name: 'Shiba-Inu-Dog-Showing-Muscles'},
-    ];
+    const images = ForceTestData.avatar_images;
     return of(images);
   }
 
   /**
    * Get selected background image from storage
    */
-  public getSelectedHomeImage(): Promise<IImageResource | undefined> {
-    return this.storageService.get<IImageResource>(StorageKey.HOME_BACKGROUND_IMAGE);
+  public async getSelectedBackgroundImage(): Promise<ILiyYdmsAssetsResource | undefined> {
+    const themeSetting = await this.authService.getThemeSettings();
+    if (!themeSetting) return;
+    return themeSetting.background;
   }
 
   /**
    * Save selected background image to storage
    * @param image
    */
-  public setSelectedHomeImage(image: IImageResource): Promise<void> {
-    return this.storageService.set(StorageKey.HOME_BACKGROUND_IMAGE, image);
+  public async setSelectedBackgroundImage(image: ILiyYdmsAssetsResource): Promise<void> {
+    const themeSetting = await this.authService.getThemeSettings();
+    if (!themeSetting) return;
+    themeSetting.background = image;
+    await this.authService.setThemeSettings(themeSetting);
   }
 
   /**
    * Get selected avatar image from storage
    */
-  public getSelectedAvatar(): Promise<IImageResource | undefined> {
-    return this.storageService.get<IImageResource>(StorageKey.HOME_AVATAR_IMAGE);
+  public async getSelectedAvatar(): Promise<ILiyYdmsAssetsResource | undefined> {
+    const themeSetting = await this.authService.getThemeSettings();
+    if (!themeSetting) return;
+    return themeSetting.avatar;
   }
 
   /**
    * Save selected avatar image to storage
    * @param avatar
    */
-  public setSelectedAvatar(avatar: IImageResource): Promise<void> {
-    return this.storageService.set(StorageKey.HOME_AVATAR_IMAGE, avatar);
+  public async setSelectedAvatar(avatar: ILiyYdmsAssetsResource): Promise<void> {
+    const themeSetting = await this.authService.getThemeSettings();
+    if (!themeSetting) return;
+    themeSetting.avatar = avatar;
+    await this.authService.setThemeSettings(themeSetting);
   }
 }

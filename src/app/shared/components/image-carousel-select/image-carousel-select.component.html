@@ -10,7 +10,7 @@
         </ion-button>
       </div>
       <ion-img alt="" class="w-[90%] rounded-xl overflow-hidden"
-               [src]="img.resource_url" (click)="selectWallpaper(img)">
+               [src]="img.resource_url || img.resource_string" (click)="selectWallpaper(img)">
       </ion-img>
     </div>
   </div>
