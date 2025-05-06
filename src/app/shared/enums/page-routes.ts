@@ -13,4 +13,9 @@ export enum PageRoutes {
   PERSONAL_INFO = 'personal-info',
   APP_LOCK_SETTINGS = 'app-lock-settings',
   CHANGE_PASSWORD = 'change-password',
+  BADGE_COLLECTION = 'badge-collection',
+  PERSONAL_DIARY = 'personal-diary',
+  CLASS_GROUP = 'class-group',
+  FAMILY_GROUP = 'family-group',
+  SCHOOL_GROUP = 'school-group',
 }

@@ -2,7 +2,7 @@
   <ng-container *ngIf="authData">
     <!--  Avatar, tên, trang cá nhân  -->
     <ion-list class="mb-2">
-      <ion-item lines="none" detail="false">
+      <ion-item lines="none" detail="false" routerLink="/{{PageRoutes.PERSONAL_DIARY}}">
         <ion-avatar aria-hidden="true" slot="start">
           <img alt="Silhouette of a person's head" [src]="authData.avatar" *ngIf="authData.avatar"/>
           <img alt="Silhouette of a person's head" src="../../../../assets/icons/svg/avatar.svg" *ngIf="!authData.avatar"/>
@@ -17,22 +17,22 @@
 
     <!--  Bộ sưu tập huy chương, trang gia đình, nhóm lớp  -->
     <ion-list class="mb-2">
-      <ion-item detail="false">
+      <ion-item detail="false" routerLink="/{{PageRoutes.BADGE_COLLECTION}}">
         <ion-icon name="ribbon" slot="start" color="primary" class="text-xl"></ion-icon>
         <ion-label class="py-2 text-gray-500">{{ TranslateKeys.TITLE_BADGE_COLLECTION | translate }}</ion-label>
         <ion-icon name="chevron-forward" slot="end" class="text-base"></ion-icon>
       </ion-item>
-      <ion-item detail="false">
+      <ion-item detail="false" routerLink="/{{PageRoutes.FAMILY_GROUP}}">
         <ion-icon name="heart" slot="start" color="primary" class="text-xl"></ion-icon>
         <ion-label class="py-2 text-gray-500">{{ TranslateKeys.TITLE_FAMILY_PAGE | translate }}</ion-label>
         <ion-icon name="chevron-forward" slot="end" class="text-base"></ion-icon>
       </ion-item>
-      <ion-item detail="false">
+      <ion-item detail="false" routerLink="/{{PageRoutes.CLASS_GROUP}}">
         <ion-icon name="easel" slot="start" color="primary" class="text-xl"></ion-icon>
         <ion-label class="py-2 text-gray-500">{{ TranslateKeys.TITLE_CLASS_GROUP | translate }} 7A3</ion-label>
         <ion-icon name="chevron-forward" slot="end" class="text-base"></ion-icon>
       </ion-item>
-      <ion-item lines="none" detail="false">
+      <ion-item lines="none" detail="false" routerLink="/{{PageRoutes.SCHOOL_GROUP}}">
         <ion-icon name="business" slot="start" color="primary" class="text-xl"></ion-icon>
         <ion-label class="py-2 text-gray-500"> {{ TranslateKeys.TITLE_SCHOOL_GROUP | translate }}</ion-label>
         <ion-icon name="chevron-forward" slot="end" class="text-base"></ion-icon>
