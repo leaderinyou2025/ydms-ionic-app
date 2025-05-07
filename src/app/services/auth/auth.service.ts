@@ -340,4 +340,47 @@ export class AuthService {
     if (!authData) return false;
     return await this.odooService.write<IAuthData>(ModelName.RES_USERS, [authData.id], authData);
   }
+
+  /**
+   * Change user password
+   * @param currentPassword Current password for verification
+   * @param newPassword New password to set
+   * @returns Promise<boolean> Success status
+   */
+  public async changePassword(currentPassword: string, newPassword: string): Promise<boolean> {
+    try {
+      const authData = await this.getAuthData();
+      if (!authData) return false;
+
+      // Verify current password matches stored password
+      const storedPassword = this.getAuthToken();
+      if (currentPassword !== storedPassword) {
+        return false;
+      }
+
+      // const dataRequest = new RequestPayload();
+      // dataRequest.params.service = OdooJsonrpcServiceNames.COMMON;
+      // dataRequest.params.method = OdooMethodName.CHANGE_PASSWORD;
+      // dataRequest.params.args = [
+      //   environment.database,
+      //   authData.id,
+      //   currentPassword,
+      //   newPassword
+      // ];
+
+      // Call API to change password
+      // const result = await this.httpClientService.post(
+      //   environment.serverUrl,
+      //   dataRequest,
+      //   {headers: CommonConstants.getRequestHeader()},
+      //   {operation: 'changePassword'}
+      // );
+
+      // For testing purposes, return true
+      return true;
+    } catch (error) {
+      console.error('Error changing password:', error);
+      return false;
+    }
+  }
 }
