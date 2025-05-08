@@ -68,7 +68,16 @@
     "auto_lock_app": "Tự động khóa ứng dụng",
     "unlock_app_biometric": "Mở khóa nhận diện sinh trắc học",
     "enable_view_and_comment": "Cho phép xem và bình luận",
-    "block_and_hidden": "Chặn và ẩn"
+    "block_and_hidden": "Chặn và ẩn",
+    "auto_lock_immediately": "Ngay lập tức",
+    "auto_lock_30_seconds": "30 giây",
+    "auto_lock_1_minute": "1 phút",
+    "auto_lock_5_minutes": "5 phút",
+    "auto_lock_15_minutes": "15 phút",
+    "auto_lock_30_minutes": "30 phút",
+    "enter_new_pin": "Nhập mã PIN mới",
+    "confirm_new_pin": "Xác nhận mã PIN mới",
+    "enter_current_pin": "Nhập mã PIN hiện tại"
   },
   "VALIDATE": {
     "phone_required": "Vui lòng nhập vào số điện thoại.",

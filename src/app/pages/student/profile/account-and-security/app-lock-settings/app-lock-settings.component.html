@@ -13,34 +13,54 @@
     <ion-item detail="false">
       <ion-label class="py-2">
         {{ TranslateKeys.TITLE_SETUP_LOCK_APP_PIN | translate }}<br>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400"> {{ TranslateKeys.TITLE_ON | translate }}</span>
+        <span class="text-sm text-gray-500 italic dark:text-gray-400">
+          {{ (isAppLockEnabled ? TranslateKeys.TITLE_ON : TranslateKeys.TITLE_OFF) | translate }}
+        </span>
       </ion-label>
-      <ion-toggle mode="ios" slot="end" [enableOnOffLabels]="true" [checked]="true"></ion-toggle>
+      <ion-toggle
+        mode="ios"
+        slot="end"
+        [enableOnOffLabels]="true"
+        [checked]="isAppLockEnabled"
+        (ionChange)="toggleAppLock($event)">
+      </ion-toggle>
     </ion-item>
 
     <!--  Đổi mã khóa  -->
-    <ion-item detail="false">
-      <ion-label class="py-2">
+    <ion-item detail="false" [disabled]="!isAppLockEnabled" (click)="openChangePIN()">
+      <ion-label class="py-2" [class.text-gray-400]="!isAppLockEnabled">
         {{ TranslateKeys.TITLE_CHANGE_LOCK_APP_PIN | translate }}
       </ion-label>
-      <ion-icon name="chevron-forward" slot="end" class="text-base"></ion-icon>
+      <ion-icon name="chevron-forward" slot="end" class="text-base" [class.text-gray-400]="!isAppLockEnabled"></ion-icon>
     </ion-item>
 
     <!--  Tự động khóa  -->
-    <ion-item detail="false">
-      <ion-label class="py-2">
-        {{ TranslateKeys.TITLE_AUTO_LOCK_APP | translate }}
+    <ion-item detail="false" [disabled]="!isAppLockEnabled" (click)="openAutoLockSettings()">
+      <ion-label class="py-2" [class.text-gray-400]="!isAppLockEnabled">
+        {{ TranslateKeys.TITLE_AUTO_LOCK_APP | translate }}<br>
+        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="isAppLockEnabled">
+          {{ autoLockLabel }}
+        </span>
       </ion-label>
-      <ion-icon name="chevron-forward" slot="end" class="text-base"></ion-icon>
+      <ion-icon name="chevron-forward" slot="end" class="text-base" [class.text-gray-400]="!isAppLockEnabled"></ion-icon>
     </ion-item>
 
     <!--  Mở khóa bằng sinh trắc học  -->
-    <ion-item detail="false">
-      <ion-label class="py-2">
+    <ion-item detail="false" [disabled]="!isAppLockEnabled">
+      <ion-label class="py-2" [class.text-gray-400]="!isAppLockEnabled">
         {{ TranslateKeys.TITLE_UNLOCK_APP_BIOMETRIC | translate }}<br>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400"> {{ TranslateKeys.TITLE_ON | translate }}</span>
+        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="isAppLockEnabled">
+          {{ (isBiometricEnabled ? TranslateKeys.TITLE_ON : TranslateKeys.TITLE_OFF) | translate }}
+        </span>
       </ion-label>
-      <ion-toggle mode="ios" slot="end" [enableOnOffLabels]="true" [checked]="true"></ion-toggle>
+      <ion-toggle
+        mode="ios"
+        slot="end"
+        [enableOnOffLabels]="true"
+        [checked]="isBiometricEnabled"
+        [disabled]="!isAppLockEnabled"
+        (ionChange)="toggleBiometricUnlock($event)">
+      </ion-toggle>
     </ion-item>
 
     <ion-item detail="false" lines="none">

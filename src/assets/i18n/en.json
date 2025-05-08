@@ -67,7 +67,16 @@
     "auto_lock_app": "Auto lock app",
     "unlock_app_biometric": "Unlock app by biometric",
     "enable_view_and_comment": "Enable view and comment",
-    "block_and_hidden": "Block and hidden"
+    "block_and_hidden": "Block and hidden",
+    "auto_lock_immediately": "Immediately",
+    "auto_lock_30_seconds": "30 seconds",
+    "auto_lock_1_minute": "1 minute",
+    "auto_lock_5_minutes": "5 minutes",
+    "auto_lock_15_minutes": "15 minutes",
+    "auto_lock_30_minutes": "30 minutes",
+    "enter_new_pin": "Enter new PIN",
+    "confirm_new_pin": "Confirm new PIN",
+    "enter_current_pin": "Enter current PIN"
   },
   "VALIDATE": {
     "phone_required": "Please input your phone number.",

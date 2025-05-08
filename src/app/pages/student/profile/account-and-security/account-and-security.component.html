@@ -58,7 +58,9 @@
       <ion-icon name="lock-closed" slot="start" color="primary" class="text-xl"></ion-icon>
       <ion-label class="py-2">
         {{ TranslateKeys.TITLE_LOCK_APP | translate }}<br>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400"> {{ TranslateKeys.TITLE_ON | translate }}</span>
+        <span class="text-sm text-gray-500 italic dark:text-gray-400">
+          {{ (isAppLockEnabled ? TranslateKeys.TITLE_ON : TranslateKeys.TITLE_OFF) | translate }}
+        </span>
       </ion-label>
       <ion-icon name="chevron-forward" slot="end" class="text-base"></ion-icon>
     </ion-item>
