@@ -62,6 +62,8 @@
     "birthday_notification": "Thông báo sinh nhật",
     "lock_app": "Khóa ứng dụng",
     "change_password": "Đổi mật khẩu",
+    "new_password": "Mật khẩu mới",
+    "confirm_password": "Xác nhận mật khẩu",
     "personal_info": "Thông tin cá nhân",
     "setup_lock_app_pin": "Đặt mã khóa ứng dụng",
     "change_lock_app_pin": "Đổi mã khóa ứng dụng",
@@ -82,7 +84,11 @@
   },
   "VALIDATE": {
     "phone_required": "Vui lòng nhập vào số điện thoại.",
-    "password_required": "Vui lòng nhập vào mật khẩu."
+    "password_required": "Vui lòng nhập vào mật khẩu.",
+    "new_password_required": "Vui lòng nhập vào mật khẩu mới.",
+    "confirm_password_required": "Vui lòng xác nhận mật khẩu mới.",
+    "password_min_length": "Mật khẩu phải có ít nhất 8 ký tự.",
+    "passwords_not_match": "Mật khẩu xác nhận không khớp."
   },
   "ALERT": {
     "default_header": "Thông báo",
@@ -98,7 +104,9 @@
     "ok": "OK",
     "close": "Đóng",
     "set_as_current": "Đặt làm hiện tại",
-    "current": "Hiện tại"
+    "current": "Hiện tại",
+    "save_changes": "Lưu thay đổi",
+    "update": "Cập nhật"
   },
   "TOAST": {
     "error_header": "Lỗi",
@@ -108,7 +116,8 @@
     "auth_failed": "Đăng nhập không thành công. Vui lòng kiểm tra lại tài khoản và mật khẩu của bạn.",
     "auth_by_password": "Không thể xác thực. Vui lòng đăng nhập bằng mật khẩu.",
     "network_online": "Đã có kết nối mạng trở lại.",
-    "network_offline": "Mất kết nối. Vui lòng kiểm tra lại kết nối mạng của bạn."
+    "network_offline": "Mất kết nối. Vui lòng kiểm tra lại kết nối mạng của bạn.",
+    "password_changed_success": "Đổi mật khẩu thành công."
   },
   "ERROR": {
     "network": "Lỗi mạng. Vui lòng kiểm tra kết nối mạng của bạn và thử lại.",
@@ -118,7 +127,8 @@
     "not_found": "Không tìm thấy tài nguyên. Vui lòng kiểm tra lại đường dẫn.",
     "server": "Lỗi máy chủ. Vui lòng thử lại sau.",
     "unknown": "Đã xảy ra lỗi không xác định. Vui lòng thử lại.",
-    "server_connection": "Không thể kết nối tới máy chủ. Vui lòng thử lại sau."
+    "server_connection": "Không thể kết nối tới máy chủ. Vui lòng thử lại sau.",
+    "invalid_current_password": "Mật khẩu hiện tại không chính xác."
   },
   "WARNING": {
     "app_lock": "Trong trường hợp bạn quên mã khóa ứng dụng, bạn phải gỡ cài đặt và cài đặt lại ứng dụng từ cửa hàng để xóa mã khóa cũ."

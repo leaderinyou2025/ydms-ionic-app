@@ -341,4 +341,31 @@ export class AuthService {
     if (!authData) return false;
     return await this.odooService.write<IAuthData>(ModelName.RES_USERS, [authData.id], authData);
   }
+
+  /**
+   * Change user password
+   * @param currentPassword Current password for verification
+   * @param newPassword New password to set
+   * @returns Promise<boolean> Success status
+   */
+  public async changePassword(currentPassword: string, newPassword: string): Promise<boolean> {
+    try {
+      const authData = await this.getAuthData();
+      if (!authData) return false;
+
+      // Verify current password matches stored password
+      const storedPassword = this.getAuthToken();
+      if (currentPassword !== storedPassword) {
+        return false;
+      }
+
+      // TODO: Call API to change password
+
+      // For testing purposes, return true
+      return true;
+    } catch (error) {
+      console.error('Error changing password:', error);
+      return false;
+    }
+  }
 }

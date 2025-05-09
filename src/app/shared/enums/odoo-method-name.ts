@@ -10,4 +10,5 @@ export enum OdooMethodName {
   EXECUTE_KW = 'execute_kw',
   LOGIN = 'login',
   CALL = 'call',
+  CHANGE_PASSWORD = 'change_password',
 }

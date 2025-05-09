@@ -9,6 +9,8 @@ export enum TranslateKeys {
   TITLE_PHONE = 'TITLE.phone',
   TITLE_EMAIL = 'TITLE.email',
   TITLE_PASSWORD = 'TITLE.password',
+  TITLE_NEW_PASSWORD = 'TITLE.new_password',
+  TITLE_CONFIRM_PASSWORD = 'TITLE.confirm_password',
   TITLE_LOGIN = 'TITLE.login',
   TITLE_LOGOUT = 'TITLE.logout',
   TITLE_REMEMBER_ME = 'TITLE.remember_me',
@@ -84,6 +86,10 @@ export enum TranslateKeys {
   // VALIDATE
   VALIDATE_PHONE_REQUIRED = 'VALIDATE.phone_required',
   VALIDATE_PASS_REQUIRED = 'VALIDATE.password_required',
+  VALIDATE_NEW_PASS_REQUIRED = 'VALIDATE.new_password_required',
+  VALIDATE_CONFIRM_PASS_REQUIRED = 'VALIDATE.confirm_password_required',
+  VALIDATE_PASS_MIN_LENGTH = 'VALIDATE.password_min_length',
+  VALIDATE_PASS_MATCH = 'VALIDATE.passwords_not_match',
 
   // ALERT
   ALERT_DEFAULT_HEADER = 'ALERT.default_header',
@@ -100,6 +106,7 @@ export enum TranslateKeys {
   BUTTON_CLOSE = 'BUTTON_TITLES.close',
   BUTTON_CURRENT = 'BUTTON_TITLES.current',
   BUTTON_SET_AS_CURRENT = 'BUTTON_TITLES.set_as_current',
+  BUTTON_UPDATE = 'BUTTON_TITLES.update',
 
   // TOAST
   TOAST_ERROR_HEADER = 'TOAST.error_header',
@@ -110,6 +117,7 @@ export enum TranslateKeys {
   TOAST_AUTH_BY_PASSWORD = 'TOAST.auth_by_password',
   TOAST_NETWORK_ONLINE = 'TOAST.network_online',
   TOAST_NETWORK_OFFLINE = 'TOAST.network_offline',
+  TOAST_CHANGE_PASS_SUCCESS = 'TOAST.password_changed_success',
 
   // ERROR
   ERROR_NETWORK = 'ERROR.network',
@@ -120,6 +128,7 @@ export enum TranslateKeys {
   ERROR_SERVER = 'ERROR.server',
   ERROR_UNKNOWN = 'ERROR.unknown',
   ERROR_SERVER_CONNECTION = 'ERROR.server_connection',
+  ERROR_INVALID_CURRENT_PASS = 'ERROR.invalid_current_password',
 
   // WARNING
   WARNING_APP_LOCK = 'WARNING.app_lock',
