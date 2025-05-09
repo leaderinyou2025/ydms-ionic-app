@@ -61,6 +61,8 @@
     "birthday_notification": "Birthday notification",
     "lock_app": "Lock APP",
     "change_password": "Change password",
+    "new_password": "New password",
+    "confirm_password": "Confirm password",
     "personal_info": "Personal info",
     "setup_lock_app_pin": "Setup lock app PIN",
     "change_lock_app_pin": "Change lock app PIN",
@@ -71,7 +73,11 @@
   },
   "VALIDATE": {
     "phone_required": "Please input your phone number.",
-    "password_required": "Please input your password."
+    "password_required": "Please input your password.",
+    "new_password_required": "Please input your new password.",
+    "confirm_password_required": "Please confirm your new password.",
+    "password_min_length": "Password must be at least 8 characters long.",
+    "passwords_not_match": "Passwords do not match."
   },
   "ALERT": {
     "default_header": "Notification",
@@ -87,7 +93,9 @@
     "ok": "OK",
     "close": "Close",
     "set_as_current": "Set as current",
-    "current": "Current"
+    "current": "Current",
+    "save_changes": "Save Changes",
+    "update": "Update"
   },
   "TOAST": {
     "error_header": "Error",
@@ -97,7 +105,8 @@
     "auth_failed": "Authentication failed.",
     "auth_by_password": "Authentication failed. Please log in using your password.",
     "network_online": "You are back online.",
-    "network_offline": "You are offline. Please check your connection."
+    "network_offline": "You are offline. Please check your connection.",
+    "password_changed_success": "Password changed successfully."
   },
   "ERROR": {
     "network": "Network error. Please check your internet connection.",
@@ -107,7 +116,8 @@
     "not_found": "Resource not found. Please check the requested link.",
     "server": "Server error. Please try again later.",
     "unknown": "An unknown error occurred. Please try again.",
-    "server_connection": "Unable to connect to server. Please try again later."
+    "server_connection": "Unable to connect to server. Please try again later.",
+    "invalid_current_password": "Current password is incorrect."
   },
   "WARNING": {
     "app_lock": "If you forget the encryption app, you must uninstall and reinstall the app to remove the old passcode."
