@@ -59,6 +59,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/student/personal-diary/personal-diary.module').then(m => m.PersonalDiaryPageModule)
   },
   {
+    path: 'friends',
+    loadChildren: () => import('./pages/student/friends/friends.module').then( m => m.FriendsPageModule)
+  },
+  {
     path: 'chatbot',
     loadChildren: () => import('./pages/chatbot/chatbot.module').then(m => m.ChatbotPageModule)
   },

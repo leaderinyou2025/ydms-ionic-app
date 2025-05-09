@@ -6,6 +6,7 @@ import { TextZoomSize } from '../enums/text-zoom-size';
 import { AssetResourceCategory } from '../enums/asset-resource-category';
 import { StatusItemType } from '../enums/home/status-item-type.enum';
 import { IStatusItem, ITask, ICharacter } from '../interfaces/home/home.interfaces';
+import { IFriend } from '../interfaces/friend/friend';
 import { IRankItem } from '../interfaces/rank/rank.interfaces';
 import { IAchievementCategory } from '../interfaces/rank/achievement.interfaces';
 
@@ -87,6 +88,16 @@ export class ForceTestData {
   ];
 
   static loginResult = {result: 1};
+  static friends: Array<IFriend> = [
+    { id: 1, name: 'Zoro Đầu rêu', avatar: 'assets/images/avatar/Shiba-Inu-Dog-1.png', likeCount: 100 },
+    { id: 2, name: 'Bé thân thiện', avatar: 'assets/images/avatar/Shiba-Inu-Dog-1.png', likeCount: 80 },
+    { id: 3, name: 'Hoa tiêu Nami', avatar: 'assets/images/avatar/Shiba-Inu-Dog-1.png', likeCount: 102 },
+    { id: 4, name: 'Tứ hoàng Luffy', avatar: 'assets/images/avatar/Shiba-Inu-Dog-1.png', likeCount: 186 },
+    { id: 5, name: 'Mèo Tom', avatar: 'assets/images/avatar/Shiba-Inu-Dog-1.png', likeCount: 90 },
+    { id: 6, name: 'Vịt Donald', avatar: 'assets/images/avatar/Shiba-Inu-Dog-1.png', likeCount: 50 },
+    { id: 7, name: 'Chuột Micky', avatar: 'assets/images/avatar/Shiba-Inu-Dog-1.png', likeCount: 70 },
+  ];
+
   static authData: IAuthData = {
     id: 1,
     login: '0964164434',
