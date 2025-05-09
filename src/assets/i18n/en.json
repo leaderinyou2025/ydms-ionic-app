@@ -5,6 +5,9 @@
     "english": "English",
     "vietnamese": "Tiếng Việt"
   },
+  "TASK": {
+    "subtitle": "Complete tasks to earn rewards!"
+  },
   "TITLE": {
     "phone": "Phone",
     "email": "Email",
@@ -106,7 +109,10 @@
     "auth_by_password": "Authentication failed. Please log in using your password.",
     "network_online": "You are back online.",
     "network_offline": "You are offline. Please check your connection.",
-    "password_changed_success": "Password changed successfully."
+    "password_changed_success": "Password changed successfully.",
+    "task_complete_success": "Task completed successfully!",
+    "task_complete_error": "Could not complete the task. Please try again.",
+    "answer_all_questions": "Please answer all questions before submitting."
   },
   "ERROR": {
     "network": "Network error. Please check your internet connection.",
