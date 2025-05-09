@@ -4,6 +4,8 @@ import { Theme } from '../enums/theme';
 import { ILiyYdmsAssetsResource } from '../interfaces/models/liy-ydms-assets-resource';
 import { TextZoomSize } from '../enums/text-zoom-size';
 import { AssetResourceCategory } from '../enums/asset-resource-category';
+import { StatusItemType } from '../enums/home/status-item-type.enum';
+import { IStatusItem, ITask, ICharacter } from '../interfaces/home/home.interfaces';
 
 export class ForceTestData {
 
@@ -26,6 +28,61 @@ export class ForceTestData {
     {id: 3, resource_url: '/assets/sounds/alert-234711.mp3', name: 'alert-234711', category: AssetResourceCategory.EFFECT},
     {id: 4, resource_url: '/assets/sounds/background.mp3', name: 'Pikachu', category: AssetResourceCategory.BACKGROUND},
   ]
+
+  /**
+   * Status bar items data
+   */
+  static statusItems: IStatusItem[] = [
+    {
+      type: StatusItemType.BADGE,
+      value: 38,
+      label: 'Huy hiệu',
+    },
+    {
+      type: StatusItemType.RANK,
+      value: 3,
+      label: 'Xếp hạng',
+    },
+    {
+      type: StatusItemType.MISSION,
+      value: 15,
+      label: 'Nhiệm vụ',
+    },
+    {
+      type: StatusItemType.FRIENDLY,
+      value: 186,
+      label: 'Thân thiện',
+    }
+  ];
+
+  /**
+   * Character information
+   */
+  static character: ICharacter = {
+    name: 'Nhóc Conan',
+    imagePath: 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSF10h3GYPGAgmRRGUuxqwMCc42yX8WLiw_UnxYIkHmxHYveDoa',
+  };
+
+  /**
+   * Tasks data
+   */
+  static tasks: ITask[] = [
+    {
+      id: 1,
+      description: 'Nếu cảm xúc của con là thời tiết, thì hôm nay là nắng, mưa hay nhiều mây?',
+      points: 5
+    },
+    {
+      id: 2,
+      description: 'Tuần lễ cảm xúc tích cực',
+      points: 15
+    },
+    {
+      id: 3,
+      description: 'Bạn thích sáng tạo? Hãy thử khóa học vẽ tranh sơ dành cho người mới bắt đầu.',
+      points: 10
+    },
+  ];
 
   static loginResult = {result: 1};
   static authData: IAuthData = {
