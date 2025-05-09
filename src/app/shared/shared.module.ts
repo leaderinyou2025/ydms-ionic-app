@@ -7,6 +7,8 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 import { SelectDatetimeComponent } from './components/select-datetime/select-datetime.component';
 import { PinUnlockComponent } from './components/pin-unlock/pin-unlock.component';
+import { PinSetupModalComponent } from './components/pin-setup-modal/pin-setup-modal.component';
+import { PinVerifyModalComponent } from './components/pin-verify-modal/pin-verify-modal.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ImageCarouselSelectComponent } from './components/image-carousel-select/image-carousel-select.component';
 import { SoundClickDirective } from '../core/directive/sound-click.directive';
@@ -15,6 +17,8 @@ import { SoundClickDirective } from '../core/directive/sound-click.directive';
   declarations: [
     SelectDatetimeComponent,
     PinUnlockComponent,
+    PinSetupModalComponent,
+    PinVerifyModalComponent,
     FooterComponent,
     ImageCarouselSelectComponent
   ],
@@ -30,6 +34,8 @@ import { SoundClickDirective } from '../core/directive/sound-click.directive';
   exports: [
     SelectDatetimeComponent,
     PinUnlockComponent,
+    PinSetupModalComponent,
+    PinVerifyModalComponent,
     FooterComponent,
     ImageCarouselSelectComponent
   ]

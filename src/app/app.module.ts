@@ -16,6 +16,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { DEFAULT_TIMEOUT, TimeoutInterceptorService } from './core/services/timeout-interceptor.service';
 import { defaultAnimation } from './core/animations/default.animaton';
 import { SharedModule } from './shared/shared.module';
+import { NativePlatform } from './shared/enums/native-platform';
 
 registerLocaleData(localeVi);
 enableProdMode();
@@ -30,7 +31,7 @@ export function createTranslateLoader(http: HttpClient) {
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    IonicModule.forRoot({navAnimation: defaultAnimation, innerHTMLTemplatesEnabled: true, mode: 'ios'}),
+    IonicModule.forRoot({navAnimation: defaultAnimation, innerHTMLTemplatesEnabled: true, mode: NativePlatform.IOS}),
     IonicStorageModule.forRoot(),
     AppRoutingModule,
     TranslateModule.forRoot({

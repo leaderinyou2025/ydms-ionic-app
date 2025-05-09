@@ -1,0 +1,38 @@
+<div class="ios-lock-screen h-full flex flex-col items-center justify-center text-center">
+  <!-- Title -->
+  <div class="text-2xl font-light mb-8">
+    {{ title }}
+  </div>
+
+  <!-- PIN dots -->
+  <div class="flex gap-4 mb-14 justify-center" [ngClass]="{ 'shake': isError }">
+    <div *ngFor="let dot of dots; let i = index"
+         class="w-4 h-4 rounded-full border-2"
+         [ngClass]="{'border-none bg-blue-500': i < pin.length, 'border-blue-500': i >= pin.length}">
+    </div>
+  </div>
+
+  <!-- Number pad -->
+  <div class="grid grid-cols-3 gap-5 justify-center text-2xl font-light">
+    <ng-container *ngFor="let num of numberPad">
+      <div class="ios-button" (pointerdown)="inputDigit(num)" [appSoundClick]="true">
+        {{ num }}
+      </div>
+    </ng-container>
+
+    <!-- Cancel button -->
+    <div class="ios-button" (pointerdown)="cancel()" [appSoundClick]="true">
+      <ion-icon name="arrow-undo"></ion-icon>
+    </div>
+
+    <!-- 0 button -->
+    <div class="ios-button" (pointerdown)="inputDigit('0')" [appSoundClick]="true">
+      0
+    </div>
+
+    <!-- Backspace button -->
+    <div class="ios-button" (pointerdown)="removeDigit()" [appSoundClick]="true">
+      <ion-icon name="backspace-outline"></ion-icon>
+    </div>
+  </div>
+</div>

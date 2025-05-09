@@ -26,13 +26,13 @@ export class AccountHistoryService {
     } else {
       accounts[existAccountIndex].updated_at = Date.now();
     }
-    await this.storageService.set(StorageKey.ACCOUNT_HISTORY, accounts);
+    await this.storageService.set<Array<IAccountHistory>>(StorageKey.ACCOUNT_HISTORY, accounts);
   }
 
   async removeAccount(username: string): Promise<void> {
     const accounts = await this.getAccountHistory();
     const updated = accounts.filter(acc => acc.username !== username);
-    await this.storageService.set(StorageKey.ACCOUNT_HISTORY, updated);
+    await this.storageService.set<Array<IAccountHistory>>(StorageKey.ACCOUNT_HISTORY, updated);
   }
 
   async clearAll(): Promise<void> {

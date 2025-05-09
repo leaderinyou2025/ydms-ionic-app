@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 import { App } from '@capacitor/app';
 import { Platform } from '@ionic/angular';
-import { NativeBiometric } from 'capacitor-native-biometric';
-import { TranslateService } from '@ngx-translate/core';
 
 import { StorageService } from '../storage/storage.service';
 import { LocalStorageService } from '../local-storage/local-storage.service';
 import { StateService } from '../state/state.service';
+import { BiometricService } from '../biometric/biometric.service';
 import { StorageKey } from '../../shared/enums/storage-key';
-import { TranslateKeys } from '../../shared/enums/translate-keys';
 import { NativePlatform } from '../../shared/enums/native-platform';
 
 @Injectable({
@@ -16,7 +14,6 @@ import { NativePlatform } from '../../shared/enums/native-platform';
 })
 export class AppLockService {
 
-  private readonly enabledLock!: boolean;
   private locked = false;
   private backgroundTime: number | null = null;
   private skipNextAppResume = false;
@@ -25,48 +22,61 @@ export class AppLockService {
   constructor(
     private storageService: StorageService,
     private localStorageService: LocalStorageService,
-    private translate: TranslateService,
     private platform: Platform,
     private stateService: StateService,
+    private biometricService: BiometricService
   ) {
-    const enabledLock = this.localStorageService.get<boolean>(StorageKey.APP_LOCK_ENABLE);
-    this.enabledLock = enabledLock != undefined ? enabledLock : false;
     this.stateService.verifyByBiometric$.subscribe(() => this.skipNextAppResume = true);
   }
 
   /**
-   * Kiểm tra khi app khởi động có cần khóa không
+   * Return app lock status on localStorage
    */
-  public async shouldLockAtStartup(): Promise<boolean> {
-    const enabled = this.localStorageService.get<boolean>(StorageKey.APP_LOCK_ENABLE);
-    if (!enabled) return false;
+  public getSettingAppLockStatus(): boolean {
+    return this.localStorageService.get<boolean>(StorageKey.APP_LOCK_ENABLE) || false;
+  }
 
-    this.locked = true;
-    return true;
+  /**
+   * Return app unlock by biometric status on localStorage
+   */
+  public getSettingAppUnlockBiometricStatus(): boolean {
+    return this.localStorageService.get<boolean>(StorageKey.APP_UNLOCK_BIOMETRIC_ENABLE) || false;
+  }
+
+  /**
+   * Return setting delay time (seconds) to app lock
+   */
+  public getSettingAppLockTime(): number {
+    return this.localStorageService.get<number>(StorageKey.APP_LOCK_TIMEOUT) || 0;
+  }
+
+  /**
+   * Save app lock status
+   * @param status
+   */
+  public setSettingAppLockStatus(status: boolean): void {
+    this.localStorageService.set<boolean>(StorageKey.APP_LOCK_ENABLE, status);
+  }
+
+  /**
+   * Save app unlock by biometric status
+   * @param status
+   */
+  public setSettingAppUnlockBiometricStatus(status: boolean): void {
+    this.localStorageService.set<boolean>(StorageKey.APP_UNLOCK_BIOMETRIC_ENABLE, status);
   }
 
   /**
    * Mở khóa ứng dụng: ưu tiên biometric, fallback là PIN
    */
   public async unlockAppByBiometric(): Promise<boolean> {
-    const allowBiometric = this.localStorageService.get<boolean>(StorageKey.APP_UNLOCK_BIOMETRIC_ENABLE);
+    const allowBiometric = this.getSettingAppUnlockBiometricStatus();
     if (!allowBiometric) {
       return false;
     }
 
-    // Kiểm tra biometric
     this.skipNextAppResume = true;
-    return NativeBiometric.verifyIdentity({
-      title: this.translate.instant(TranslateKeys.TITLE_AUTH_BIOMETRIC_UNLOCK_APP),
-      negativeButtonText: this.translate.instant(TranslateKeys.BUTTON_CANCEL),
-      maxAttempts: 5
-    }).then(() => {
-      this.locked = false;
-      return true;
-    }).catch((e) => {
-      console.error(e?.message);
-      return false;
-    });
+    return this.biometricService.verifyIdentity();
   }
 
   /**
@@ -90,54 +100,67 @@ export class AppLockService {
    * @param pin
    */
   public async setPin(pin: string) {
-    await this.storageService.set(StorageKey.APP_LOCK_PIN, pin);
+    await this.storageService.set<string>(StorageKey.APP_LOCK_PIN, pin);
   }
 
   /**
    * Theo dõi trạng thái app (foreground/background)
    */
   public monitorAppState() {
-    if (this.platform.is(NativePlatform.MOBILEWEB)) {
+    if (!this.platform.is(NativePlatform.MOBILEWEB) &&
+      (this.platform.is(NativePlatform.ANDROID) || this.platform.is(NativePlatform.IOS))) {
+      App.addListener('pause', () => this.handleAppPause());
+      App.addListener('resume', () => this.handleAppResume());
+    } else {
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          this.handleAppPause();
+        } else {
+          this.handleAppResume();
+        }
+      });
+    }
+  }
+
+  /**
+   * Save delay time to app auto lock
+   * @param timeSeconds
+   */
+  public setSettingAppLockTime(timeSeconds: number): void {
+    this.localStorageService.set<number>(StorageKey.APP_LOCK_TIMEOUT, timeSeconds);
+  }
+
+  /**
+   * handleAppPause
+   * @private
+   */
+  private handleAppPause() {
+    if (!this.getSettingAppLockStatus()) return;
+    this.backgroundTime = Date.now();
+  }
+
+  /**
+   * handleAppResume
+   * @private
+   */
+  private handleAppResume() {
+    if (!this.getSettingAppLockStatus() || this.skipNextAppResume) {
+      this.skipNextAppResume = false;
       return;
     }
 
-    App.addListener('appStateChange', async ({isActive}) => {
-      if (!isActive) {
-        // App vào background
-        if (!this.enabledLock) {
-          return;
-        }
+    const timeout = this.localStorageService.get<number>(StorageKey.APP_LOCK_TIMEOUT) || 0;
+    if (timeout === 0) {
+      this.locked = true;
+      this.stateService.setShowLockScreen(true);
+      return;
+    }
 
-        // Ghi nhận thời gian khi app vào background
-        this.backgroundTime = Date.now();
-
-        // Kiểm tra timeout có cần đóng ngay không
-        const timeout = this.localStorageService.get<number>(StorageKey.APP_LOCK_TIMEOUT) || 0;
-        if (timeout === 0) {
-          this.locked = true;
-          this.stateService.setShowLockScreen(this.locked);
-        }
-      } else {
-        // App trở lại foreground
-        if (!this.enabledLock || this.skipNextAppResume) {
-          this.skipNextAppResume = false;
-          return;
-        }
-
-        const timeout = this.localStorageService.get<number>(StorageKey.APP_LOCK_TIMEOUT) || 0;
-        if (timeout === 0) {
-          this.locked = true;
-          this.stateService.setShowLockScreen(this.locked);
-          return;
-        }
-
-        const now = Date.now();
-        const elapsed = (now - (this.backgroundTime || 0)) / 1000;
-        if (elapsed >= timeout) {
-          this.locked = true;
-          this.stateService.setShowLockScreen(this.locked);
-        }
-      }
-    });
+    const now = Date.now();
+    const elapsed = (now - (this.backgroundTime || 0)) / 1000;
+    if (elapsed >= timeout) {
+      this.locked = true;
+      this.stateService.setShowLockScreen(true);
+    }
   }
 }

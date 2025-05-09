@@ -13,3 +13,60 @@
   font-weight: bold;
   color: var(--ion-color-primary);
 }
+
+/*---------------------- Lock screen ---------------------*/
+.ios-lock-screen {
+  background: white;
+  padding: 20px;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+
+.dark .ios-lock-screen {
+  background: var(--ion-backdrop-color);
+}
+
+.ios-button {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background-color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-weight: 500;
+  color: white;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-8px);
+  }
+  40% {
+    transform: translateX(8px);
+  }
+  60% {
+    transform: translateX(-8px);
+  }
+  80% {
+    transform: translateX(8px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.shake {
+  animation: shake 0.4s ease-in-out;
+}

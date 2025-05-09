@@ -4,6 +4,7 @@ import { TextZoom } from '@capacitor/text-zoom';
 
 import { AuthService } from '../auth/auth.service';
 import { TextZoomSize } from '../../shared/enums/text-zoom-size';
+import { NativePlatform } from '../../shared/enums/native-platform';
 
 @Injectable({
   providedIn: 'root',
@@ -37,10 +38,10 @@ export class TextZoomService {
     this.currentZoom = size;
     if (isSyncServer) this.saveTextZoomUserThemeSettings(size);
 
-    if (this.platform.is('mobileweb')) {
+    if (this.platform.is(NativePlatform.MOBILEWEB)) {
       // PWA platform
       document.documentElement.style.setProperty('--text-zoom', size.toString());
-    } else if (this.platform.is('ios') || this.platform.is('android')) {
+    } else if (this.platform.is(NativePlatform.IOS) || this.platform.is(NativePlatform.ANDROID)) {
       // Native platform
       try {
         await TextZoom.set({value: size});

@@ -2,6 +2,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { Keyboard } from '@capacitor/keyboard';
 import { BehaviorSubject } from 'rxjs';
+import { NativePlatform } from '../../shared/enums/native-platform';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class KeyboardService {
     private ngZone: NgZone,
     private platform: Platform
   ) {
-    if (!this.platform.is('mobileweb') && (this.platform.is('android') || this.platform.is('ios'))) this.initKeyboardListeners();
+    if (!this.platform.is(NativePlatform.MOBILEWEB) && (this.platform.is(NativePlatform.ANDROID) || this.platform.is(NativePlatform.IOS))) this.initKeyboardListeners();
   }
 
   /**

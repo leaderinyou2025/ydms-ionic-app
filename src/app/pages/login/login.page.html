@@ -28,7 +28,8 @@
                   <!-- Nhập số điện thoại -->
                   <ion-col size="12" class="pb-5">
                     <ion-label>{{ TranslateKeys.TITLE_PHONE | translate }}<span class="text-red-600 ps-1">*</span></ion-label>
-                    <ion-input formControlName="phone" type="tel" inputmode="tel" required="required" (ionInput)="onUsernameInput($event)" [clearInput]="true"></ion-input>
+                    <ion-input formControlName="phone" type="tel" inputmode="tel" required="required" (ionInput)="onUsernameInput($event)"
+                               (ionBlur)="onBlurUsernameInput()" [clearInput]="true"></ion-input>
                     <div *ngIf="hasError('phone', 'required')" class="error-text text-red-600 text-sm pt-2 ps-1">
                       {{ TranslateKeys.VALIDATE_PHONE_REQUIRED | translate }}
                     </div>

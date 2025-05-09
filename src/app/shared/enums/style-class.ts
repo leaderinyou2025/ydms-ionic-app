@@ -9,5 +9,6 @@ export enum StyleClass {
   TOAST_WARNING = 'toast-warning',
   TOAST_INFO = 'toast-info',
   TEXT_JUSTIFY = 'text-justify',
-  SELECTED_BUTTON = 'selected-button'
+  SELECTED_BUTTON = 'selected-button',
+  FULLSCREEN_MODAL = 'fullscreen-modal'
 }

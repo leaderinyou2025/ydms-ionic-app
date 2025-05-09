@@ -35,7 +35,7 @@ export class LiveUpdateService {
    * Check and live update app
    */
   async checkUpdateApp(): Promise<void> {
-    if (this.platform.is('mobileweb') || (!this.platform.is('ios') && !this.platform.is('android'))) {
+    if (this.platform.is(NativePlatform.MOBILEWEB) || (!this.platform.is(NativePlatform.IOS) && !this.platform.is(NativePlatform.ANDROID))) {
       return;
     }
 
@@ -47,7 +47,7 @@ export class LiveUpdateService {
         id: Math.random(),
         name: appInfo.name,
         bundle_id: appInfo.id,
-        platform: this.platform.is('android') ? NativePlatform.ANDROID : NativePlatform.IOS,
+        platform: this.platform.is(NativePlatform.ANDROID) ? NativePlatform.ANDROID : NativePlatform.IOS,
         version_build: currentAppVersion || appInfo.version,
         version_code: appInfo.build,
         bundle_file: '',
@@ -67,7 +67,7 @@ export class LiveUpdateService {
 
     await LiveUpdate.downloadBundle({url: latestVersion.bundle_file, bundleId: latestVersion.version_build,});
     // await LiveUpdate.setBundle({bundleId: latestVersion.version_build});
-    await this.storageService.set(StorageKey.CURRENT_APP_VERSION, latestVersion);
+    await this.storageService.set<ILiyYdmsAppVersion>(StorageKey.CURRENT_APP_VERSION, latestVersion);
     await LiveUpdate.reload();
   }
 
@@ -82,7 +82,7 @@ export class LiveUpdateService {
     const platformKey: keyof ILiyYdmsAppVersion = 'platform';
     const bundleIdKey: keyof ILiyYdmsAppVersion = 'bundle_id';
     const activeKey: keyof ILiyYdmsAppVersion = 'active';
-    const platform = this.platform.is('android') ? 'android' : 'ios';
+    const platform = this.platform.is(NativePlatform.ANDROID) ? NativePlatform.ANDROID : NativePlatform.IOS;
 
     // TODO: Call api to get latest app version
     const args: SearchDomain = [
@@ -103,7 +103,7 @@ export class LiveUpdateService {
    * @return string
    */
   async getAppVersionString(): Promise<string> {
-    if (this.platform.is('mobileweb') || (!this.platform.is('ios') && !this.platform.is('android'))) {
+    if (this.platform.is(NativePlatform.MOBILEWEB) || (!this.platform.is(NativePlatform.IOS) && !this.platform.is(NativePlatform.ANDROID))) {
       return '1.0.0';
     }
 

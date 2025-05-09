@@ -58,9 +58,25 @@
       <ion-icon name="lock-closed" slot="start" color="primary" class="text-xl"></ion-icon>
       <ion-label class="py-2">
         {{ TranslateKeys.TITLE_LOCK_APP | translate }}<br>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400"> {{ TranslateKeys.TITLE_ON | translate }}</span>
+        <span class="text-sm text-gray-500 italic dark:text-gray-400">
+          {{ (isAppLockEnabled ? TranslateKeys.TITLE_ON : TranslateKeys.TITLE_OFF) | translate }}
+        </span>
       </ion-label>
       <ion-icon name="chevron-forward" slot="end" class="text-base"></ion-icon>
+    </ion-item>
+
+    <!--  Cho phép đăng nhập bằng biometric  -->
+    <ion-item detail="false" *ngIf="biometricAvailable?.isAvailable">
+      <ion-icon name="finger-print" slot="start" color="primary" class="text-xl"></ion-icon>
+      <ion-label class="py-2">
+        {{ TranslateKeys.TITLE_LOGIN_BY_BIOMETRIC | translate }}<br>
+        <span class="text-sm text-gray-500 italic dark:text-gray-400">
+          {{ (enableBiometric ? TranslateKeys.TITLE_ON : TranslateKeys.TITLE_OFF) | translate }}
+        </span>
+      </ion-label>
+      <ion-toggle mode="ios" slot="end" [enableOnOffLabels]="true"
+                  [checked]="enableBiometric" (ionChange)="toggleBiometric($event)">
+      </ion-toggle>
     </ion-item>
 
     <!--  Đổi mật khẩu  -->

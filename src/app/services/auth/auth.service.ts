@@ -91,7 +91,7 @@ export class AuthService {
    * @param isSyncServer
    */
   public async setAuthData(authData: IAuthData, isSyncServer: boolean = true): Promise<void> {
-    await this.storageService.set(StorageKey.AUTH_DATA, authData);
+    await this.storageService.set<IAuthData>(StorageKey.AUTH_DATA, authData);
     if (isSyncServer) await this.saveUserProfile();
   }
 
@@ -311,7 +311,8 @@ export class AuthService {
     this.localStorageService.clear([
       StorageKey.LANGUAGE,
       StorageKey.FIREBASE_DEVICE_TOKEN,
-      StorageKey.ENABLE_BIOMETRIC
+      StorageKey.ENABLE_BIOMETRIC,
+      StorageKey.BIOMETRIC_AVAILABLE_RESULT
     ]);
     // Xóa sạch storage chỉ giữ lại lịch sử tài khoản đăng nhập
     await this.storageService.clear([StorageKey.ACCOUNT_HISTORY]);

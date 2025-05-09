@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Device } from '@capacitor/device';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -11,6 +10,7 @@ import { AuthService } from './services/auth/auth.service';
 import { SoundService } from './services/sound/sound.service';
 import { TextZoomService } from './services/text-zoom/text-zoom.service';
 import { StorageService } from './services/storage/storage.service';
+import { BiometricService } from './services/biometric/biometric.service';
 import { CommonConstants } from './shared/classes/common-constants';
 import { StorageKey } from './shared/enums/storage-key';
 import { LanguageKeys } from './shared/enums/language-keys';
@@ -32,27 +32,30 @@ export class AppComponent implements OnInit, OnDestroy {
     private stateService: StateService,
     private themeService: ThemeService,
     private textZoomService: TextZoomService,
-    private router: Router,
     private authService: AuthService,
     private soundService: SoundService,
     private storageService: StorageService,
+    private biometricService: BiometricService
   ) {
   }
 
   ngOnInit() {
-    // Set text zoom
-    this.textZoomService.initZoom();
     // Load device ID
     Device.getId().then(deviceId => CommonConstants.deviceId = deviceId.identifier);
+    // Set text zoom
+    this.textZoomService.initZoom();
+    // Check available biometric
+    this.biometricService.checkAvailable();
     // Init checking app lock
     this.checkLock();
     // Initial translation
     this.initializeTranslation();
     // Initial storage
     this.storageService.init();
-    // Redirect app to login page
+    // Load theme setting
     this.themeService.loadTheme();
-    //this.router.navigateByUrl(PageRoutes.LOGIN).then(() => this.themeService.loadTheme());
+    // Initial sound
+    this.initializeSound();
   }
 
   ngOnDestroy() {
@@ -64,7 +67,7 @@ export class AppComponent implements OnInit, OnDestroy {
    */
   private checkLock() {
     this.appLockService.monitorAppState();
-    this.appLockService.shouldLockAtStartup().then(showLockScreen => this.showLockScreen = showLockScreen);
+    this.showLockScreen = this.appLockService.getSettingAppLockStatus();
 
     // On lock screen state change from monitorAppState function of AppLockService
     this.showLockScreenSubscribe = this.stateService.showLockScreen$.subscribe((showLockScreen) => {
@@ -83,5 +86,17 @@ export class AppComponent implements OnInit, OnDestroy {
     this.translate.addLangs([LanguageKeys.EN, LanguageKeys.VN]);
     this.translate.resetLang(defaultLanguage);
     this.translate.use(defaultLanguage);
+  }
+
+  /**
+   * initializeSound
+   * @private
+   */
+  private initializeSound(): void {
+    setTimeout(() => {
+      if (this.authService.isAuthenticated()) {
+        this.soundService.loadUserSounds();
+      }
+    }, 500);
   }
 }

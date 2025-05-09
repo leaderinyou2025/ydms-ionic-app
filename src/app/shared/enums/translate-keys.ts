@@ -64,6 +64,7 @@ export enum TranslateKeys {
   TITLE_BIRTHDAY = 'TITLE.birthday',
   TITLE_BIRTHDAY_NOTIFICATION = 'TITLE.birthday_notification',
   TITLE_LOCK_APP = 'TITLE.lock_app',
+  TITLE_LOGIN_BY_BIOMETRIC = 'TITLE.login_by_biometric',
   TITLE_CHANGE_PASSWORD = 'TITLE.change_password',
   TITLE_PERSONAL_INFO = 'TITLE.personal_info',
   TITLE_SETUP_LOCK_APP_PIN = 'TITLE.setup_lock_app_pin',
@@ -72,6 +73,15 @@ export enum TranslateKeys {
   TITLE_UNLOCK_APP_BIOMETRIC = 'TITLE.unlock_app_biometric',
   TITLE_ENABLE_VIEW_AND_COMMENT = 'TITLE.enable_view_and_comment',
   TITLE_BLOCK_AND_HIDDEN = 'TITLE.block_and_hidden',
+  TITLE_AUTO_LOCK_IMMEDIATELY = 'TITLE.auto_lock_immediately',
+  TITLE_AUTO_LOCK_30_SECONDS = 'TITLE.auto_lock_30_seconds',
+  TITLE_AUTO_LOCK_1_MINUTE = 'TITLE.auto_lock_1_minute',
+  TITLE_AUTO_LOCK_5_MINUTES = 'TITLE.auto_lock_5_minutes',
+  TITLE_AUTO_LOCK_15_MINUTES = 'TITLE.auto_lock_15_minutes',
+  TITLE_AUTO_LOCK_30_MINUTES = 'TITLE.auto_lock_30_minutes',
+  TITLE_ENTER_NEW_PIN = 'TITLE.enter_new_pin',
+  TITLE_CONFIRM_NEW_PIN = 'TITLE.confirm_new_pin',
+  TITLE_ENTER_CURRENT_PIN = 'TITLE.enter_current_pin',
 
   // VALIDATE
   VALIDATE_PHONE_REQUIRED = 'VALIDATE.phone_required',
