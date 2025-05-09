@@ -128,4 +128,43 @@ export class ForceTestData {
       privacy_rights: {}
     }
   };
+
+  /**
+   * Tasks detail
+   */
+  static tasksDetail = {
+    id: 1,
+    name: 'Nhiệm vụ 1',
+    questions: [
+      {
+        text: 'Tôi có thể thảo luận về niềm tin của mình với mẹ/cha mà không cảm thấy bị gò bó hay xấu hổ.',
+        options: [
+          { text: 'Đúng', selected: true },
+          { text: 'Tôi thấy hơi xấu hổ', selected: false }
+        ]
+      },
+      {
+        text: 'Đôi khi tôi gặp khó khăn trong việc tin vào mọi điều mẹ/cha nói với tôi.',
+        options: [
+          { text: 'Đúng', selected: false },
+          { text: 'Không đúng', selected: true },
+          { text: 'Tôi không rõ', selected: false }
+        ]
+      },
+      {
+        text: 'Mẹ/cha tôi luôn là người biết lắng nghe.',
+        options: [
+          { text: 'Đúng', selected: true },
+          { text: 'Không đúng', selected: false }
+        ]
+      },
+      {
+        text: 'Mẹ/cha tôi luôn là người không biết lắng nghe.',
+        options: [
+          { text: 'Đúng', selected: false },
+          { text: 'Không đúng', selected: false }
+        ]
+      }
+    ]
+  };
 }

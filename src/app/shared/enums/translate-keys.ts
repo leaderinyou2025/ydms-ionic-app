@@ -9,6 +9,9 @@ export enum TranslateKeys {
   HOME_WELCOME_TITLE = 'HOME.welcome_title',
   HOME_WELCOME_SUBTITLE = 'HOME.welcome_subtitle',
 
+  // TASK
+  TASK_SUBTITLE = 'TASK.subtitle',
+
   // TITLE
   TITLE_PHONE = 'TITLE.phone',
   TITLE_EMAIL = 'TITLE.email',
@@ -112,6 +115,7 @@ export enum TranslateKeys {
   BUTTON_SET_AS_CURRENT = 'BUTTON_TITLES.set_as_current',
   BUTTON_UPDATE = 'BUTTON_TITLES.update',
   BUTTON_EXECUTE = 'BUTTON_TITLES.execute',
+  BUTTON_COMPLETE = 'BUTTON_TITLES.complete',
 
   // TOAST
   TOAST_ERROR_HEADER = 'TOAST.error_header',
@@ -123,6 +127,9 @@ export enum TranslateKeys {
   TOAST_NETWORK_ONLINE = 'TOAST.network_online',
   TOAST_NETWORK_OFFLINE = 'TOAST.network_offline',
   TOAST_CHANGE_PASS_SUCCESS = 'TOAST.password_changed_success',
+  TOAST_TASK_COMPLETE_SUCCESS = 'TOAST.task_complete_success',
+  TOAST_TASK_COMPLETE_ERROR = 'TOAST.task_complete_error',
+  TOAST_ANSWER_ALL_QUESTIONS = 'TOAST.answer_all_questions',
 
   // ERROR
   ERROR_NETWORK = 'ERROR.network',
