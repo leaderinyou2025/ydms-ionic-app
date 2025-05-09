@@ -67,6 +67,7 @@
     "change_lock_app_pin": "Đổi mã khóa ứng dụng",
     "auto_lock_app": "Tự động khóa ứng dụng",
     "unlock_app_biometric": "Mở khóa nhận diện sinh trắc học",
+    "login_by_biometric": "Đăng nhập nhận diện sinh trắc học",
     "enable_view_and_comment": "Cho phép xem và bình luận",
     "block_and_hidden": "Chặn và ẩn",
     "auto_lock_immediately": "Ngay lập tức",

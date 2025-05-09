@@ -66,6 +66,7 @@
     "change_lock_app_pin": "Change lock app PIN",
     "auto_lock_app": "Auto lock app",
     "unlock_app_biometric": "Unlock app by biometric",
+    "login_by_biometric": "Login by biometric",
     "enable_view_and_comment": "Enable view and comment",
     "block_and_hidden": "Block and hidden",
     "auto_lock_immediately": "Immediately",

@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetButton, ActionSheetController, ModalController, NavController } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { ActionSheetButton, ActionSheetController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { AvailableResult } from 'capacitor-native-biometric';
 
 import { AppLockService } from '../../../../../services/app-lock/app-lock.service';
-import { LocalStorageService } from '../../../../../services/local-storage/local-storage.service';
+import { BiometricService } from '../../../../../services/biometric/biometric.service';
 import { PageRoutes } from '../../../../../shared/enums/page-routes';
 import { TranslateKeys } from '../../../../../shared/enums/translate-keys';
-import { StorageKey } from '../../../../../shared/enums/storage-key';
 import { PinSetupModalComponent } from '../../../../../shared/components/pin-setup-modal/pin-setup-modal.component';
 import { PinVerifyModalComponent } from '../../../../../shared/components/pin-verify-modal/pin-verify-modal.component';
 import { StyleClass } from '../../../../../shared/enums/style-class';
@@ -24,66 +23,23 @@ export class AppLockSettingsComponent implements OnInit {
   isBiometricEnabled = false;
   autoLockTimeout = 0;
   autoLockLabel = '';
+  biometricAvailable!: AvailableResult | undefined;
+  isFaceId!: boolean;
 
   protected readonly PageRoutes = PageRoutes;
   protected readonly TranslateKeys = TranslateKeys;
 
   constructor(
     private modalCtrl: ModalController,
-    private navCtrl: NavController,
-    private router: Router,
     private appLockService: AppLockService,
-    private localStorageService: LocalStorageService,
     private actionSheetCtrl: ActionSheetController,
-    private translate: TranslateService
-  ) { }
+    private translate: TranslateService,
+    private biometricService: BiometricService,
+  ) {
+  }
 
   ngOnInit() {
     this.loadSettings();
-  }
-
-  /**
-   * Load current app lock settings
-   */
-  private loadSettings() {
-    // Đọc giá trị từ localStorage
-    const appLockEnabled = this.localStorageService.get<boolean>(StorageKey.APP_LOCK_ENABLE);
-    const biometricEnabled = this.localStorageService.get<boolean>(StorageKey.APP_UNLOCK_BIOMETRIC_ENABLE);
-    const autoLockTimeout = this.localStorageService.get<number>(StorageKey.APP_LOCK_TIMEOUT);
-
-    // Chuyển đổi giá trị số thành boolean
-    this.isAppLockEnabled = appLockEnabled === true;
-    this.isBiometricEnabled = biometricEnabled === true;
-    this.autoLockTimeout = autoLockTimeout || 0;
-    this.updateAutoLockLabel();
-  }
-
-  /**
-   * Update auto-lock label based on current timeout
-   */
-  private updateAutoLockLabel() {
-    switch (this.autoLockTimeout) {
-      case 0:
-        this.autoLockLabel = this.translate.instant(TranslateKeys.TITLE_AUTO_LOCK_IMMEDIATELY);
-        break;
-      case 30:
-        this.autoLockLabel = this.translate.instant(TranslateKeys.TITLE_AUTO_LOCK_30_SECONDS);
-        break;
-      case 60:
-        this.autoLockLabel = this.translate.instant(TranslateKeys.TITLE_AUTO_LOCK_1_MINUTE);
-        break;
-      case 300:
-        this.autoLockLabel = this.translate.instant(TranslateKeys.TITLE_AUTO_LOCK_5_MINUTES);
-        break;
-      case 900:
-        this.autoLockLabel = this.translate.instant(TranslateKeys.TITLE_AUTO_LOCK_15_MINUTES);
-        break;
-      case 1800:
-        this.autoLockLabel = this.translate.instant(TranslateKeys.TITLE_AUTO_LOCK_30_MINUTES);
-        break;
-      default:
-        this.autoLockLabel = this.translate.instant(TranslateKeys.TITLE_AUTO_LOCK_IMMEDIATELY);
-    }
   }
 
   /**
@@ -96,17 +52,17 @@ export class AppLockSettingsComponent implements OnInit {
       // Enable app lock - need to set up PIN
       const modal = await this.modalCtrl.create({
         component: PinSetupModalComponent,
-        cssClass: 'fullscreen-modal',
+        cssClass: StyleClass.FULLSCREEN_MODAL,
         backdropDismiss: false
       });
 
       await modal.present();
-      const { data } = await modal.onDidDismiss();
+      const {data} = await modal.onDidDismiss();
 
       if (data?.pin) {
         // Save the PIN and enable app lock
         await this.appLockService.setPin(data.pin);
-        this.localStorageService.set(StorageKey.APP_LOCK_ENABLE, true);
+        this.appLockService.setSettingAppLockStatus(true);
         this.isAppLockEnabled = true;
       } else {
         // User cancelled, revert toggle
@@ -117,15 +73,15 @@ export class AppLockSettingsComponent implements OnInit {
       // Disable app lock - need to verify current PIN
       const modal = await this.modalCtrl.create({
         component: PinVerifyModalComponent,
-        cssClass: 'fullscreen-modal'
+        cssClass: StyleClass.FULLSCREEN_MODAL
       });
 
       await modal.present();
-      const { data } = await modal.onDidDismiss();
+      const {data} = await modal.onDidDismiss();
 
       if (data?.verified) {
-        this.localStorageService.remove(StorageKey.APP_LOCK_ENABLE);
-        this.localStorageService.remove(StorageKey.APP_UNLOCK_BIOMETRIC_ENABLE);
+        this.appLockService.setSettingAppLockStatus(false);
+        this.appLockService.setSettingAppUnlockBiometricStatus(false);
         this.isAppLockEnabled = false;
         this.isBiometricEnabled = false;
       } else {
@@ -139,13 +95,12 @@ export class AppLockSettingsComponent implements OnInit {
   /**
    * Toggle biometric unlock
    */
-  toggleBiometricUnlock(event: any) {
-    const isEnabled = event.detail.checked;
-    if (isEnabled) {
-      this.localStorageService.set(StorageKey.APP_UNLOCK_BIOMETRIC_ENABLE, true);
-    } else {
-      this.localStorageService.remove(StorageKey.APP_UNLOCK_BIOMETRIC_ENABLE);
-    }
+  async toggleBiometricUnlock(event: any) {
+    const verifyBiometricResult = await this.biometricService.verifyIdentity();
+    if (!verifyBiometricResult) return;
+
+    const isEnabled: boolean = event.detail.checked || false;
+    this.appLockService.setSettingAppUnlockBiometricStatus(isEnabled);
     this.isBiometricEnabled = isEnabled;
   }
 
@@ -201,7 +156,7 @@ export class AppLockSettingsComponent implements OnInit {
         cssClass: this.autoLockTimeout === 0 ? StyleClass.SELECTED_BUTTON : '',
         handler: () => {
           this.autoLockTimeout = 0;
-          this.localStorageService.remove(StorageKey.APP_LOCK_TIMEOUT);
+          this.appLockService.setSettingAppLockTime(this.autoLockTimeout);
           this.updateAutoLockLabel();
         },
       },
@@ -210,7 +165,7 @@ export class AppLockSettingsComponent implements OnInit {
         cssClass: this.autoLockTimeout === 30 ? StyleClass.SELECTED_BUTTON : '',
         handler: () => {
           this.autoLockTimeout = 30;
-          this.localStorageService.set(StorageKey.APP_LOCK_TIMEOUT, 30);
+          this.appLockService.setSettingAppLockTime(this.autoLockTimeout);
           this.updateAutoLockLabel();
         },
       },
@@ -219,7 +174,7 @@ export class AppLockSettingsComponent implements OnInit {
         cssClass: this.autoLockTimeout === 60 ? StyleClass.SELECTED_BUTTON : '',
         handler: () => {
           this.autoLockTimeout = 60;
-          this.localStorageService.set(StorageKey.APP_LOCK_TIMEOUT, 60);
+          this.appLockService.setSettingAppLockTime(this.autoLockTimeout);
           this.updateAutoLockLabel();
         },
       },
@@ -228,7 +183,7 @@ export class AppLockSettingsComponent implements OnInit {
         cssClass: this.autoLockTimeout === 300 ? StyleClass.SELECTED_BUTTON : '',
         handler: () => {
           this.autoLockTimeout = 300;
-          this.localStorageService.set(StorageKey.APP_LOCK_TIMEOUT, 300);
+          this.appLockService.setSettingAppLockTime(this.autoLockTimeout);
           this.updateAutoLockLabel();
         },
       },
@@ -237,7 +192,7 @@ export class AppLockSettingsComponent implements OnInit {
         cssClass: this.autoLockTimeout === 900 ? StyleClass.SELECTED_BUTTON : '',
         handler: () => {
           this.autoLockTimeout = 900;
-          this.localStorageService.set(StorageKey.APP_LOCK_TIMEOUT, 900);
+          this.appLockService.setSettingAppLockTime(this.autoLockTimeout);
           this.updateAutoLockLabel();
         },
       },
@@ -246,7 +201,7 @@ export class AppLockSettingsComponent implements OnInit {
         cssClass: this.autoLockTimeout === 1800 ? StyleClass.SELECTED_BUTTON : '',
         handler: () => {
           this.autoLockTimeout = 1800;
-          this.localStorageService.set(StorageKey.APP_LOCK_TIMEOUT, 1800);
+          this.appLockService.setSettingAppLockTime(this.autoLockTimeout);
           this.updateAutoLockLabel();
         },
       },
@@ -263,6 +218,47 @@ export class AppLockSettingsComponent implements OnInit {
     });
 
     await actionSheet.present();
+  }
+
+  /**
+   * Load current app lock settings
+   */
+  private loadSettings() {
+    this.biometricAvailable = this.biometricService.getAvailableResult();
+    this.isFaceId = this.biometricService.isFaceId();
+    this.isAppLockEnabled = this.appLockService.getSettingAppLockStatus();
+    this.isBiometricEnabled = this.appLockService.getSettingAppUnlockBiometricStatus();
+    this.autoLockTimeout = this.appLockService.getSettingAppLockTime();
+
+    this.updateAutoLockLabel();
+  }
+
+  /**
+   * Update auto-lock label based on current timeout
+   */
+  private updateAutoLockLabel() {
+    switch (this.autoLockTimeout) {
+      case 0:
+        this.autoLockLabel = this.translate.instant(TranslateKeys.TITLE_AUTO_LOCK_IMMEDIATELY);
+        break;
+      case 30:
+        this.autoLockLabel = this.translate.instant(TranslateKeys.TITLE_AUTO_LOCK_30_SECONDS);
+        break;
+      case 60:
+        this.autoLockLabel = this.translate.instant(TranslateKeys.TITLE_AUTO_LOCK_1_MINUTE);
+        break;
+      case 300:
+        this.autoLockLabel = this.translate.instant(TranslateKeys.TITLE_AUTO_LOCK_5_MINUTES);
+        break;
+      case 900:
+        this.autoLockLabel = this.translate.instant(TranslateKeys.TITLE_AUTO_LOCK_15_MINUTES);
+        break;
+      case 1800:
+        this.autoLockLabel = this.translate.instant(TranslateKeys.TITLE_AUTO_LOCK_30_MINUTES);
+        break;
+      default:
+        this.autoLockLabel = this.translate.instant(TranslateKeys.TITLE_AUTO_LOCK_IMMEDIATELY);
+    }
   }
 
 }

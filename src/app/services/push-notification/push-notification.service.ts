@@ -44,7 +44,7 @@ export class PushNotificationService {
    * Init push notifications
    */
   async init() {
-    if (!this.platform.is('mobileweb') && (this.platform.is('android') || this.platform.is('ios'))) {
+    if (!this.platform.is(NativePlatform.MOBILEWEB) && (this.platform.is(NativePlatform.ANDROID) || this.platform.is(NativePlatform.IOS))) {
       await this.registerNotifications();
       this.addListeners();
     } else {

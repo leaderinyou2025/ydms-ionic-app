@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { TranslateService } from '@ngx-translate/core';
@@ -12,7 +12,7 @@ import { TranslateKeys } from '../../enums/translate-keys';
   styleUrls: ['./pin-verify-modal.component.scss'],
   standalone: false
 })
-export class PinVerifyModalComponent implements OnInit {
+export class PinVerifyModalComponent  {
   @Input() title: string;
   protected readonly TranslateKeys = TranslateKeys;
 
@@ -21,8 +21,6 @@ export class PinVerifyModalComponent implements OnInit {
   dots = new Array(this.maxLength);
   numberPad = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
   isError = false;
-  attempts = 0;
-  maxAttempts = 5;
 
   constructor(
     private modalCtrl: ModalController,
@@ -31,8 +29,6 @@ export class PinVerifyModalComponent implements OnInit {
   ) {
     this.title = this.translate.instant(TranslateKeys.TITLE_ENTER_CURRENT_PIN);
   }
-
-  ngOnInit() {}
 
   /**
    * Handle input digit
@@ -60,9 +56,7 @@ export class PinVerifyModalComponent implements OnInit {
    * Cancel verification
    */
   public cancel(): void {
-    this.modalCtrl.dismiss({
-      verified: false
-    });
+    this.modalCtrl.dismiss({verified: false});
   }
 
   /**
@@ -73,21 +67,16 @@ export class PinVerifyModalComponent implements OnInit {
 
     if (isValid) {
       // PIN is correct, dismiss modal with success
-      this.modalCtrl.dismiss({
-        verified: true
-      });
+      this.modalCtrl.dismiss({verified: true});
     } else {
-      // PIN is incorrect
-      this.attempts++;
       this.isError = true;
-
       Haptics.impact({style: ImpactStyle.Heavy});
 
       // Reset PIN
       setTimeout(() => {
         this.isError = false;
         this.pin = '';
-        }, 500);
+      }, 500);
     }
   }
 }

@@ -25,7 +25,7 @@ export class StorageService {
    * @param key
    * @param value
    */
-  public async set(key: string, value: any) {
+  public async set<T>(key: string, value: T) {
     if (!this._storage) await this.init();
     if (!this._storage || !key || value == undefined) return;
 

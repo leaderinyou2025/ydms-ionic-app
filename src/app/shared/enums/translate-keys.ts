@@ -62,6 +62,7 @@ export enum TranslateKeys {
   TITLE_BIRTHDAY = 'TITLE.birthday',
   TITLE_BIRTHDAY_NOTIFICATION = 'TITLE.birthday_notification',
   TITLE_LOCK_APP = 'TITLE.lock_app',
+  TITLE_LOGIN_BY_BIOMETRIC = 'TITLE.login_by_biometric',
   TITLE_CHANGE_PASSWORD = 'TITLE.change_password',
   TITLE_PERSONAL_INFO = 'TITLE.personal_info',
   TITLE_SETUP_LOCK_APP_PIN = 'TITLE.setup_lock_app_pin',

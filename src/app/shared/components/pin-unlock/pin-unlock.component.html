@@ -1,15 +1,14 @@
 <div class="ios-lock-screen h-full flex flex-col items-center justify-center text-center z-50">
-<!--  <div class="text-5xl mt-3 mb-6">-->
-<!--    <ion-icon name="lock-closed-outline" color="light"></ion-icon>-->
-<!--  </div>-->
 
-  <div class="text-2xl font-light mb-8 text-gray-500">{{ TranslateKeys.TITLE_INPUT_PIN | translate }}</div>
+  <div class="text-5xl mt-3 mb-6">
+    <ion-icon name="lock-closed-outline" color="primary"></ion-icon>
+  </div>
 
   <!-- Chấm tròn hiển thị số lượng số đã nhập -->
   <div class="flex gap-4 mb-14 justify-center" [ngClass]="{ 'shake': isError }">
     <div *ngFor="let dot of dots; let i = index"
          class="w-4 h-4 rounded-full border-2"
-         [ngClass]="{'border-[0px] bg-blue-500': i < pin.length, 'border-blue-500': i >= pin.length}">
+         [ngClass]="{'border-none bg-blue-500': i < pin.length, 'border-blue-500': i >= pin.length}">
     </div>
   </div>
 
@@ -22,7 +21,7 @@
     </ng-container>
 
     <!-- Nút ẩn -->
-    <div class="ios-button opacity-0">
+    <div class="ios-button invisible">
       &nbsp;
     </div>
 
@@ -38,10 +37,9 @@
   </div>
 
   <!-- Nút xác thực sinh trắc học -->
-  <div class="w-full mt-12 flex justify-center" *ngIf="biometricAvailable?.isAvailable">
-    <div class="ios-button biometric-button" (click)="useBiometric()" [appSoundClick]="true">
-      <ion-img *ngIf="isFaceID" src="assets/icons/svg/face-id-svgrepo-com.svg" class="w-8 h-8"></ion-img>
-      <ion-img *ngIf="!isFaceID" src="assets/icons/svg/fingerprint-scan-svgrepo-com.svg" class="w-8 h-8"></ion-img>
-    </div>
-  </div>
+  <ion-button fill="clear" type="button" class="w-full mt-8" [appSoundClick]="true"
+              *ngIf="biometricAvailable?.isAvailable && enableBiometric" (click)="useBiometric()">
+    <ion-img *ngIf="isFaceID" src="assets/icons/svg/face-id-svgrepo-com.svg" class="w-12 h-12"></ion-img>
+    <ion-img *ngIf="!isFaceID" src="assets/icons/svg/fingerprint-scan-svgrepo-com.svg" class="w-12 h-12"></ion-img>
+  </ion-button>
 </div>

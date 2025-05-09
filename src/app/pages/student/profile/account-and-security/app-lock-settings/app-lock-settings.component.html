@@ -17,12 +17,8 @@
           {{ (isAppLockEnabled ? TranslateKeys.TITLE_ON : TranslateKeys.TITLE_OFF) | translate }}
         </span>
       </ion-label>
-      <ion-toggle
-        mode="ios"
-        slot="end"
-        [enableOnOffLabels]="true"
-        [checked]="isAppLockEnabled"
-        (ionChange)="toggleAppLock($event)">
+      <ion-toggle mode="ios" slot="end" [enableOnOffLabels]="true"
+                  [checked]="isAppLockEnabled" (ionChange)="toggleAppLock($event)">
       </ion-toggle>
     </ion-item>
 
@@ -46,20 +42,15 @@
     </ion-item>
 
     <!--  Mở khóa bằng sinh trắc học  -->
-    <ion-item detail="false" [disabled]="!isAppLockEnabled">
+    <ion-item detail="false" [disabled]="!isAppLockEnabled" *ngIf="biometricAvailable?.isAvailable">
       <ion-label class="py-2" [class.text-gray-400]="!isAppLockEnabled">
         {{ TranslateKeys.TITLE_UNLOCK_APP_BIOMETRIC | translate }}<br>
         <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="isAppLockEnabled">
           {{ (isBiometricEnabled ? TranslateKeys.TITLE_ON : TranslateKeys.TITLE_OFF) | translate }}
         </span>
       </ion-label>
-      <ion-toggle
-        mode="ios"
-        slot="end"
-        [enableOnOffLabels]="true"
-        [checked]="isBiometricEnabled"
-        [disabled]="!isAppLockEnabled"
-        (ionChange)="toggleBiometricUnlock($event)">
+      <ion-toggle mode="ios" slot="end" [enableOnOffLabels]="true"
+                  [disabled]="!isAppLockEnabled" [checked]="isBiometricEnabled" (ionChange)="toggleBiometricUnlock($event)">
       </ion-toggle>
     </ion-item>
 

@@ -15,7 +15,7 @@ export class LocalStorageService {
    * @param value
    */
   set<T>(key: string, value: T): void {
-    if (!key || !value) {
+    if (!key || value == undefined) {
       return;
     }
 

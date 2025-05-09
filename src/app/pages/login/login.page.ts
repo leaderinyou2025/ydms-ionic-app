@@ -2,17 +2,17 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonContent, LoadingController, NavController, Platform, ToastButton, ToastController, ToastOptions } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { AvailableResult, BiometryType, NativeBiometric } from 'capacitor-native-biometric';
 import { debounceTime, Subject, Subscription } from 'rxjs';
+import { AvailableResult } from 'capacitor-native-biometric';
 
 import { AuthService } from '../../services/auth/auth.service';
 import { LiveUpdateService } from '../../services/live-update/live-update.service';
 import { LocalStorageService } from '../../services/local-storage/local-storage.service';
 import { AccountHistoryService } from '../../services/account-history/account-history.service';
-import { StateService } from '../../services/state/state.service';
 import { KeyboardService } from '../../services/keyboard/keyboard.service';
 import { NetworkService } from '../../services/network/network.service';
 import { PushNotificationService } from '../../services/push-notification/push-notification.service';
+import { BiometricService } from '../../services/biometric/biometric.service';
 import { StorageKey } from '../../shared/enums/storage-key';
 import { TranslateKeys } from '../../shared/enums/translate-keys';
 import { SoundService } from '../../services/sound/sound.service';
@@ -24,7 +24,6 @@ import { Position } from '../../shared/enums/position';
 import { BtnRoles } from '../../shared/enums/btn-roles';
 import { IonicColors } from '../../shared/enums/ionic-colors';
 import { CommonConstants } from '../../shared/classes/common-constants';
-import { environment } from '../../../environments/environment';
 import { PageRoutes } from '../../shared/enums/page-routes';
 import { LanguageKeys } from '../../shared/enums/language-keys';
 
@@ -71,11 +70,11 @@ export class LoginPage implements OnInit, OnDestroy {
     private toastController: ToastController,
     private accountHistoryService: AccountHistoryService,
     private navCtrl: NavController,
-    private stateService: StateService,
     private keyboardService: KeyboardService,
     private pushNotificationService: PushNotificationService,
     private networkService: NetworkService,
     private soundService: SoundService,
+    private biometricService: BiometricService
   ) {
   }
 
@@ -192,7 +191,7 @@ export class LoginPage implements OnInit, OnDestroy {
    */
   private async handleLogin(): Promise<void> {
     // Show loading
-    const loading = await this.loadingController.create({mode: 'ios'});
+    const loading = await this.loadingController.create({mode: NativePlatform.IOS});
     await loading.present();
     try {
       // Call API login and get user profile
@@ -211,7 +210,7 @@ export class LoginPage implements OnInit, OnDestroy {
         // Clear biometric credentials
         if (this.hasCredentials) {
           this.hasCredentials = false;
-          this.deleteUserCredentials(`${environment.serverUrl}/${this.loginForm.value.phone}`);
+          await this.biometricService.deleteCredentials(this.loginForm.value.phone);
         }
 
         // End process
@@ -320,6 +319,13 @@ export class LoginPage implements OnInit, OnDestroy {
   }
 
   /**
+   * onBlurUsernameInput
+   */
+  public onBlurUsernameInput(): void {
+    setTimeout(() => this.showSuggestions = false, 500);
+  }
+
+  /**
    * On select username
    * @param acc
    * @public
@@ -401,33 +407,28 @@ export class LoginPage implements OnInit, OnDestroy {
    * Login with biometric
    * @public
    */
-  public async onClickLoginBiometric() {
-    if (!this.biometricAvailable) return;
+  public async onClickLoginBiometric(): Promise<void> {
+    if (!this.biometricAvailable?.isAvailable) return;
 
     const username: string = this.loginForm.get('phone')?.value;
-    const serverUser = `${environment.serverUrl}/${username}`;
 
-    NativeBiometric.verifyIdentity({
-      title: this.translate.instant(TranslateKeys.TITLE_AUTH_USER_TITLE),
-      negativeButtonText: this.translate.instant(TranslateKeys.BUTTON_CANCEL),
-      maxAttempts: 5
-    }).then(() => {
-      NativeBiometric.getCredentials({server: serverUser}).then(certificate => {
-        if (certificate?.username && certificate?.password) {
-          this.loginForm.get('phone')?.setValue(certificate.username);
-          this.loginForm.get('password')?.setValue(certificate.password);
-          this.handleLogin();
-        }
-      }).catch(() => {
-        console.error('Can not get biometric credentials.');
-        this.toastErrorBiometric();
-        this.deleteUserCredentials(serverUser);
-      });
-    }).catch(() => {
-      console.error('Biometric permission denied.');
+    const verifyResult = await this.biometricService.verifyIdentity();
+    if (!verifyResult) {
       this.toastErrorBiometric();
-      this.deleteUserCredentials(serverUser);
-    }).finally(() => this.stateService.verifyByBiometric());
+      await this.biometricService.deleteCredentials(username);
+      return;
+    }
+
+    const certificate = await this.biometricService.getCredentials(username);
+    if (!certificate || !certificate?.username || !certificate?.password) {
+      this.toastErrorBiometric();
+      await this.biometricService.deleteCredentials(username);
+      return;
+    }
+
+    this.loginForm.get('phone')?.setValue(certificate.username);
+    this.loginForm.get('password')?.setValue(certificate.password);
+    await this.handleLogin();
   }
 
   /**
@@ -435,35 +436,21 @@ export class LoginPage implements OnInit, OnDestroy {
    * @private
    */
   private checkBiometricAvailable(): void {
-    this.isEnableBiometric = this.localStorageService.get<boolean>(StorageKey.ENABLE_BIOMETRIC);
-    if (this.platform.is('mobileweb') || (!this.platform.is('ios') && !this.platform.is('android'))) return;
+    this.isEnableBiometric = this.biometricService.getBiometricSettingStatus();
+    if (this.platform.is(NativePlatform.MOBILEWEB) ||
+      (!this.platform.is(NativePlatform.ANDROID) && !this.platform.is(NativePlatform.IOS))) return;
 
-    NativeBiometric.isAvailable().then(result => {
-      this.biometricAvailable = result;
-      this.isFaceID = (this.biometricAvailable.biometryType === BiometryType.FACE_ID);
-      this.localStorageService.set(StorageKey.BIOMETRIC_AVAILABLE_RESULT, result);
-      this.hasCredentials = false;
+    this.biometricAvailable = this.biometricService.getAvailableResult();
+    this.hasCredentials = false;
+    this.isFaceID = this.biometricService.isFaceId();
 
-      if (this.biometricAvailable?.isAvailable) {
-        const username: string = this.loginForm.get('phone')?.value;
-        const serverUser = `${environment.serverUrl}/${username}`;
+    if (!this.biometricAvailable?.isAvailable) return;
 
-        NativeBiometric.getCredentials({server: serverUser}).then(certificate => {
-          this.hasCredentials = (certificate?.username != null && certificate?.username === username && certificate?.password != null);
-          if (certificate?.username && !certificate?.password) {
-            this.deleteUserCredentials(serverUser);
-          }
-        });
-      }
+    const username: string = this.loginForm.get('phone')?.value;
+    this.biometricService.getCredentials(username).then(certificate => {
+      this.hasCredentials = (certificate?.username != null && certificate?.username === username && certificate?.password != null);
+      if (!this.hasCredentials && certificate) this.biometricService.deleteCredentials(username);
     });
-  }
-
-  /**
-   * Delete user's credentials
-   * @private
-   */
-  private deleteUserCredentials(serverUser: string) {
-    NativeBiometric.deleteCredentials({server: serverUser}).finally(() => this.biometricAvailable = undefined);
   }
 
   /**
