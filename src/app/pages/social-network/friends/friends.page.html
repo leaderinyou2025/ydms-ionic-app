@@ -1,0 +1,62 @@
+<ion-header class="ion-no-border bg-gradient-to-r from-[#0a1f5c] to-[#4a2a8c]">
+  <div class="relative flex flex-col justify-end h-50 px-4 py-5">
+    <div class="absolute flex justify-center items-center z-0 top-12 right-4 w-24 h-20">
+      <div class="character-image">
+        <img src="assets/images/owl_img.png" alt="Owl character" />
+      </div>
+    </div>
+    <ion-buttons slot="start">
+      <ion-back-button text="" color="white" defaultHref="/{{PageRoutes.HOME}}"></ion-back-button>
+    </ion-buttons>
+    <h1 class="m-0 mt-8 px-4 text-2xl font-semibold text-white">Bạn bè</h1>
+    <div class="relative z-10 w-full px-4 mt-2.5">
+      <ion-searchbar
+        placeholder="Tìm kiếm bạn bè..."
+        class="ion-no-padding h-11 m-0 opacity-90"
+        inputmode="text"
+        style="--background: rgba(255, 255, 255, 0.9); --box-shadow: none; --placeholder-color: #888; --icon-color: #888; --color: #333; --placeholder-opacity: 0.8; --padding-start: 40px;
+        ">
+      </ion-searchbar>
+    </div>
+  </div>
+</ion-header>
+<ion-content class="bg-gradient-to-r from-[#0a1f5c] to-[#4a2a8c]">
+  <div class="flex flex-col h-full pb-5 bg-white">
+    <div class="flex justify-between px-4 pt-4 pb-2.5 text-gray-800">
+      <div class="text-sm font-bold">Tổng số bạn bè: {{ totalFriends }}</div>
+      <div class="text-sm font-bold">Thân thiện</div>
+    </div>
+    <div class="flex-1 overflow-auto px-2 mb-4">
+      <ion-list class="w-full bg-transparent">
+        <ion-item
+          *ngFor="let friend of friends"
+          lines="none"
+          detail="false"
+          class="w-full mb-1 border-b border-gray-200"
+          style="--background: transparent; --border-radius: 0; --padding-start: 8px; --padding-end: 8px; --inner-padding-end: 8px; --min-height: 60px; ">
+          <ion-avatar slot="start" class="w-[42px] h-[42px] mr-2.5">
+            <div class="w-full h-full overflow-hidden rounded-full border-2 border-blue-500">
+              <img [src]="friend.avatar" alt="Friend avatar" class="object-cover w-full h-full" onerror="this.src='assets/icons/svg/avatar.svg'" />
+            </div>
+          </ion-avatar>
+          <div class="text-sm font-medium text-gray-800">
+            {{ friend.name }}
+          </div>
+          <div slot="end" class="flex items-center min-w-[50px] text-[#ff4961]">
+            <ion-icon name="heart" class="text-lg text-[#ff4961]"></ion-icon>
+            <span class="ml-1 text-sm">{{ friend.likeCount }}</span>
+          </div>
+        </ion-item>
+      </ion-list>
+    </div>
+    <ion-button
+      expand="block"
+      class="h-11 mx-4 text-sm font-semibold uppercase"
+      style="--background: #00a0ff; --color: white; --border-radius: 8px;">
+      THÊM BẠN BÈ
+    </ion-button>
+  </div>
+</ion-content>
+
+<app-footer></app-footer>
+
