@@ -95,7 +95,8 @@
     "close": "Đóng",
     "set_as_current": "Đặt làm hiện tại",
     "current": "Hiện tại",
-    "save_changes": "Lưu thay đổi"
+    "save_changes": "Lưu thay đổi",
+    "update": "Cập nhật"
   },
   "TOAST": {
     "error_header": "Lỗi",

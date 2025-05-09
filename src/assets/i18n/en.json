@@ -94,7 +94,8 @@
     "close": "Close",
     "set_as_current": "Set as current",
     "current": "Current",
-    "save_changes": "Save Changes"
+    "save_changes": "Save Changes",
+    "update": "Update"
   },
   "TOAST": {
     "error_header": "Error",

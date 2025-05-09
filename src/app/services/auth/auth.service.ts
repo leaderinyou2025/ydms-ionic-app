@@ -358,23 +358,7 @@ export class AuthService {
         return false;
       }
 
-      // const dataRequest = new RequestPayload();
-      // dataRequest.params.service = OdooJsonrpcServiceNames.COMMON;
-      // dataRequest.params.method = OdooMethodName.CHANGE_PASSWORD;
-      // dataRequest.params.args = [
-      //   environment.database,
-      //   authData.id,
-      //   currentPassword,
-      //   newPassword
-      // ];
-
-      // Call API to change password
-      // const result = await this.httpClientService.post(
-      //   environment.serverUrl,
-      //   dataRequest,
-      //   {headers: CommonConstants.getRequestHeader()},
-      //   {operation: 'changePassword'}
-      // );
+      // TODO: Call API to change password
 
       // For testing purposes, return true
       return true;
