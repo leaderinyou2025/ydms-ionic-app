@@ -5,6 +5,9 @@ export enum TranslateKeys {
   COMMON_ENGLISH = 'COMMON.english',
   COMMON_VIETNAMESE = 'COMMON.vietnamese',
 
+  // TASK
+  TASK_SUBTITLE = 'TASK.subtitle',
+
   // TITLE
   TITLE_PHONE = 'TITLE.phone',
   TITLE_EMAIL = 'TITLE.email',
@@ -118,6 +121,9 @@ export enum TranslateKeys {
   TOAST_NETWORK_ONLINE = 'TOAST.network_online',
   TOAST_NETWORK_OFFLINE = 'TOAST.network_offline',
   TOAST_CHANGE_PASS_SUCCESS = 'TOAST.password_changed_success',
+  TOAST_TASK_COMPLETE_SUCCESS = 'TOAST.task_complete_success',
+  TOAST_TASK_COMPLETE_ERROR = 'TOAST.task_complete_error',
+  TOAST_ANSWER_ALL_QUESTIONS = 'TOAST.answer_all_questions',
 
   // ERROR
   ERROR_NETWORK = 'ERROR.network',
