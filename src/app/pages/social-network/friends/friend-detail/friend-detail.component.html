@@ -1,0 +1,70 @@
+<ion-header class="ion-no-border bg-gradient-to-r from-[#0a1f5c] to-[#4a2a8c]">
+  <div class="relative flex flex-col justify-end h-190 px-4 py-5">
+    <ion-buttons class="absolute top-4 left-4 z-10">
+      <ion-back-button text="" color="white" defaultHref="/{{PageRoutes.FRIENDS}}"></ion-back-button>
+    </ion-buttons>
+    <div class="absolute flex justify-center items-center z-0 top-12 right-4 w-24 h-20">
+      <div class="character-image">
+        <img src="assets/images/owl_img.png" alt="Owl character" />
+      </div>
+    </div>
+  </div>
+
+</ion-header>
+
+<ion-content>
+  <div class="bg-white h-full p-4 pt-16">
+    <div class="flex gap-3 ">
+      <div class="w-1/2">
+        <div class="flex justify-center items-center">
+          <img src="assets/images/owl_img.png" alt="Owl character" />>
+        </div>
+        <div class="text-center text-gray-800 font-bold text-lg text-green-800 italic mt-2">{{friend?.name}}</div>
+      </div>
+      <div class="w-1/2 flex flex-col gap-2">
+        <div class="rounded-lg border border-gray-300  shadow-sm">
+          <div class="flex items-center p-4 px-4 gap-1">
+            <ion-icon name="ribbon" class="text-3xl text-orange-500"></ion-icon>
+            <div>
+              <div class="text-xl font-bold text-green-500 leading-none">{{friend?.achievements}}</div>
+              <div class="text-sm text-gray-500 font-semibold leading-none">Huy hiệu</div>
+            </div>
+          </div>
+        </div>
+        <div class="rounded-lg border border-gray-300  shadow-sm">
+          <div class="flex items-center p-4 px-4 gap-1">
+            <ion-icon name="podium" class="text-3xl text-blue-500"></ion-icon>
+            <div>
+              <div class="text-xl font-bold text-green-500 leading-none">{{friend?.rank}}</div>
+              <div class="text-sm text-gray-500 font-semibold leading-none">Xếp hạng</div>
+            </div>
+          </div>
+        </div>
+        <div class="rounded-lg border border-gray-300  shadow-sm">
+          <div class="flex items-center p-4 px-4 gap-1">
+            <ion-icon name="flash" class="text-3xl text-yellow-500"></ion-icon>
+            <div>
+              <div class="text-xl font-bold text-green-500 leading-none">{{friend?.friendshipLevel}}</div>
+              <div class="text-sm text-gray-500 font-semibold leading-none">Nhiệm vụ</div>
+            </div>
+          </div>
+        </div>
+        <div class="rounded-lg border border-gray-300  shadow-sm">
+          <div class="flex items-center p-4 px-4 gap-1">
+            <ion-icon name="heart" class="text-3xl text-red-500"></ion-icon>
+            <div>
+              <div class="text-xl font-bold text-green-500 leading-none">{{friend?.likeCount}}</div>
+              <div class="text-sm text-gray-500 font-semibold leading-none">Thân thiện</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ion-button expand="block" color="danger" class="h-8 mx-24 text-sm font-semibold uppercase mt-12"
+      style="--border-radius: 8px;" (click)="unfriend()">
+      HỦY KẾT BẠN
+    </ion-button>
+  </div>
+</ion-content>
+
+<app-footer></app-footer>

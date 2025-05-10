@@ -49,13 +49,18 @@ const routes: Routes = [
   {
     path: 'class-group',
     loadChildren: () => import('./pages/social-network/class-group/class-group.module').then(m => m.ClassGroupPageModule)
-  },  {
+  },
+  {
     path: 'school-group',
     loadChildren: () => import('./pages/social-network/school-group/school-group.module').then( m => m.SchoolGroupPageModule)
   },
   {
     path: 'personal-diary',
     loadChildren: () => import('./pages/student/personal-diary/personal-diary.module').then( m => m.PersonalDiaryPageModule)
+  },
+  {
+    path: 'friends',
+    loadChildren: () => import('./pages/social-network/friends/friends.module').then( m => m.FriendsPageModule)
   }
 
 
