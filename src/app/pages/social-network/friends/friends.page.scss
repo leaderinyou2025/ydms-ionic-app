@@ -1,16 +1,33 @@
-// Custom styles for friend detail page
-.character-image {
-  animation: float 3s ease-in-out infinite;
-}
+// Shared styles for friends and friend-detail components
+::ng-deep {
+  // Animation for character image
+  .character-image {
+    animation: float 3s ease-in-out infinite;
+  }
 
-@keyframes float {
-  0% {
-    transform: translateY(0px);
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
   }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0px);
+
+  ion-header.bg-gradient-to-r {
+    .h-190 {
+      min-height: 190px;
+    }
+
+    h1 {
+      margin-top: 2rem;
+    }
+
+    .mt-2\.5 {
+      height: 2.75rem;
+    }
   }
 }

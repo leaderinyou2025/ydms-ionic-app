@@ -8,6 +8,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { SharedModule } from '../../../shared/shared.module';
 import { FriendsPage } from './friends.page';
 import { FriendsPageRoutingModule } from './friends-routing.module';
+import { FriendDetailComponent } from './friend-detail/friend-detail.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,7 @@ import { FriendsPageRoutingModule } from './friends-routing.module';
     SharedModule,
     TranslateModule
   ],
-  declarations: [FriendsPage],
+  declarations: [FriendsPage, FriendDetailComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class FriendsPageModule {}
