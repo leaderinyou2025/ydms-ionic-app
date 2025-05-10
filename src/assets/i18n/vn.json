@@ -12,6 +12,13 @@
   "TASK": {
     "subtitle": "Hoàn thành nhiệm vụ để nhận thưởng!"
   },
+  "RANK": {
+    "position": "Hạng",
+    "nickname": "Nick name",
+    "points": "điểm",
+    "points_header": "Điểm",
+    "badge_new": "MỚI"
+  },
   "TITLE": {
     "phone": "Số điện thoại",
     "email": "Email",
@@ -35,6 +42,10 @@
     "family_page": "Trang gia đình",
     "class_group": "Nhóm lớp",
     "school_group": "Nhóm toàn trường",
+    "rank": "Xếp hạng",
+    "achievements": "Thành tích",
+    "your_rank": "Xếp hạng của bạn",
+    "your_achievements": "Thành tích của bạn",
     "theme_and_background": "Giao diện & hình nền",
     "notification_and_sound": "Thông báo & âm thanh",
     "language": "Ngôn ngữ",

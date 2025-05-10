@@ -6,6 +6,8 @@ import { TextZoomSize } from '../enums/text-zoom-size';
 import { AssetResourceCategory } from '../enums/asset-resource-category';
 import { StatusItemType } from '../enums/home/status-item-type.enum';
 import { IStatusItem, ITask, ICharacter } from '../interfaces/home/home.interfaces';
+import { IRankItem } from '../interfaces/rank/rank.interfaces';
+import { IAchievementCategory } from '../interfaces/rank/achievement.interfaces';
 
 export class ForceTestData {
 
@@ -167,4 +169,62 @@ export class ForceTestData {
       }
     ]
   };
+
+  static rankData: Array<IRankItem> = [
+    { userId: 1, position: 1, nickname: 'Zoro Đầu rêu', points: 250, avatar: null },
+    { userId: 2, position: 2, nickname: 'Bé thân thiện', points: 245, avatar: null },
+    { userId: 3, position: 3, nickname: 'Hoa tiêu Nami', points: 220, avatar: null },
+    { userId: 4, position: 4, nickname: 'Tứ hoàng Luffy', points: 186, avatar: null },
+    { userId: 5, position: 5, nickname: 'Mèo Tom', points: 180, avatar: null },
+    { userId: 6, position: 6, nickname: 'Vịt Donald', points: 168, avatar: null },
+    { userId: 7, position: 7, nickname: 'Chuột Micky', points: 160, avatar: null },
+    { userId: 8, position: 8, nickname: 'Chuột Micky1', points: 160, avatar: null },
+    { userId: 9, position: 9, nickname: 'Chuột Micky2', points: 160, avatar: null },
+    { userId: 10, position: 10, nickname: 'Chuột Micky3', points: 160, avatar: null },
+  ];
+
+
+  static currentUserRank: IRankItem = {
+    userId: 999,
+    position: 11,
+    nickname: 'Nhóc Conan',
+    points: 120,
+    avatar: null,
+    isCurrentUser: true,
+  };
+
+  static achievementCategories: Array<IAchievementCategory> = [
+    {
+      title: 'Cảm xúc',
+      badges: [
+        { name: 'Hoa hậu thân thiện', desc: '', unlocked: true, isNew: true, image: 'https://64.media.tumblr.com/9c7a316de427182c4404dd7189a37047/843c0e4a552c60eb-e8/s540x810/06a658046765d7b0d7089655004a877f66d2b181.jpg' },
+        { name: 'Thiện xạ', desc: '3 trên 5', unlocked: true, isNew: true, image: 'https://preview.redd.it/tell-me-who-would-be-simping-for-these-characters-v0-n1p8f6n9e52e1.png?width=277&format=png&auto=webp&s=b3af047af94f561002f6af879cf84d8c4c161cc6' },
+        { name: 'Vị thần KN', desc: '3 trên 10', unlocked: true, isNew: true, image: 'https://i.redd.it/tell-me-who-would-be-simping-for-these-characters-v0-3booxv46e52e1.png?width=277&format=png&auto=webp&s=3bff9a7a4658f7d9b54ace423823bc89b1ecfa70' },
+      ],
+    },
+    {
+      title: 'Giảm mâu thuẫn gia đình',
+      badges: [
+        { name: 'Đại gia từ vựng', desc: '2 trên 10', unlocked: true, isNew: true, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMVSrt0AjNphqU5mPFHoFUpQ-kfgKXCuWsDQ&s' },
+        { name: 'Thợ săn nhiệm vụ', desc: '', unlocked: false, isNew: false, image: 'https://preview.redd.it/duolingo-be-looking-strangely-familiar-with-those-sunglasses-v0-mqv1u18vyomc1.jpeg?auto=webp&s=2b9336a9479bf4dac9acef4772244015cc97d7c0' },
+        { name: 'Thợ sửa lỗi sai', desc: '', unlocked: false, isNew: false, image: 'https://preview.redd.it/duolingo-be-looking-strangely-familiar-with-those-sunglasses-v0-mqv1u18vyomc1.jpeg?auto=webp&s=2b9336a9479bf4dac9acef4772244015cc97d7c0' },
+      ],
+    },
+    {
+      title: 'Cải thiện giao tiếp',
+      badges: [
+        { name: 'Người tiếp lửa', desc: '', unlocked: false, isNew: false, image: 'https://preview.redd.it/duolingo-be-looking-strangely-familiar-with-those-sunglasses-v0-mqv1u18vyomc1.jpeg?auto=webp&s=2b9336a9479bf4dac9acef4772244015cc97d7c0' },
+        { name: 'Quán quân', desc: '', unlocked: false, isNew: false, image: 'https://preview.redd.it/duolingo-be-looking-strangely-familiar-with-those-sunglasses-v0-mqv1u18vyomc1.jpeg?auto=webp&s=2b9336a9479bf4dac9acef4772244015cc97d7c0' },
+        { name: 'Thợ săn đêm', desc: '', unlocked: false, isNew: false, image: 'https://preview.redd.it/duolingo-be-looking-strangely-familiar-with-those-sunglasses-v0-mqv1u18vyomc1.jpeg?auto=webp&s=2b9336a9479bf4dac9acef4772244015cc97d7c0' },
+      ],
+    },
+    {
+      title: 'Khám phá bản thân',
+      badges: [
+        { name: 'Dậy sớm', desc: '', unlocked: false, isNew: false, image: 'https://preview.redd.it/duolingo-be-looking-strangely-familiar-with-those-sunglasses-v0-mqv1u18vyomc1.jpeg?auto=webp&s=2b9336a9479bf4dac9acef4772244015cc97d7c0' },
+        { name: 'Huyền thoại', desc: '', unlocked: false, isNew: false, image: 'https://preview.redd.it/duolingo-be-looking-strangely-familiar-with-those-sunglasses-v0-mqv1u18vyomc1.jpeg?auto=webp&s=2b9336a9479bf4dac9acef4772244015cc97d7c0' },
+        { name: 'Tay đua tốc độ', desc: '', unlocked: false, isNew: false, image: 'https://preview.redd.it/duolingo-be-looking-strangely-familiar-with-those-sunglasses-v0-mqv1u18vyomc1.jpeg?auto=webp&s=2b9336a9479bf4dac9acef4772244015cc97d7c0' },
+      ],
+    },
+  ];
 }

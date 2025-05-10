@@ -12,6 +12,13 @@
   "TASK": {
     "subtitle": "Complete tasks to earn rewards!"
   },
+  "RANK": {
+    "position": "Rank",
+    "nickname": "Nickname",
+    "points": "points",
+    "points_header": "Points",
+    "badge_new": "NEW"
+  },
   "TITLE": {
     "phone": "Phone",
     "email": "Email",
@@ -35,6 +42,10 @@
     "family_page": "Family page",
     "class_group": "Class group",
     "school_group": "School group",
+    "rank": "Rank",
+    "achievements": "Achievements",
+    "your_rank": "Your Rank",
+    "your_achievements": "Your Achievements",
     "theme_and_background": "Theme & background",
     "notification_and_sound": "Notification & sound",
     "language": "Language",
