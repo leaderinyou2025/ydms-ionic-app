@@ -1,0 +1,143 @@
+<ion-header>
+  <ion-toolbar class="rank-header">
+    <ion-buttons>
+      <ion-back-button text="" defaultHref="/" class="custom-back-button"></ion-back-button>
+    </ion-buttons>
+    <div class="header-content-wrapper">
+      <div class="header-title-area">
+        <h1 *ngIf="activeTab === 'rank'">{{ TranslateKeys.TITLE_YOUR_RANK | translate }}</h1>
+        <h1 *ngIf="activeTab === 'achievements'">{{ TranslateKeys.TITLE_YOUR_ACHIEVEMENTS | translate }}</h1>
+      </div>
+      <div class="flex-1"></div>
+      <div class="header-character-area">
+        <img src="assets/images/ranking.png" alt="Character">
+      </div>
+    </div>
+  </ion-toolbar>
+  <!-- Tab navigation -->
+  <div class="tab-navigation">
+    <button [class.active]="activeTab === 'rank'" (click)="switchTab('rank')">
+      {{ TranslateKeys.TITLE_RANK | translate }}
+    </button>
+    <button [class.active]="activeTab === 'achievements'" (click)="switchTab('achievements')">
+      {{ TranslateKeys.TITLE_ACHIEVEMENTS | translate }}
+    </button>
+  </div>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <!-- Loading spinner -->
+  <ion-spinner *ngIf="isLoading" name="crescent" class="loading-spinner"></ion-spinner>
+
+  <!-- Rank content -->
+  <div class="rank-content-wrapper" *ngIf="!isLoading && activeTab === 'rank'">
+    <!-- Top 3 ranks -->
+    <div class="top-ranks-container" *ngIf="rankList.length > 0">
+      <div class="rank-item-top rank-silver" *ngIf="rankList.length > 1 && rankList[1]">
+        <div class="medal-display">
+          <img src="assets/images/trophy_2.png" alt="Silver Medal" class="medal-image">
+          <div class="points-banner">{{ rankList[1].points }} điểm</div>
+        </div>
+        <div class="flex items-center gap-2">
+          <img [src]="rankList[1].avatar" onError="this.src='https://ionicframework.com/docs/img/demos/avatar.svg'" alt="Avatar" class="avatar-top">
+          <div class="rank-nickname-top">{{ rankList[1].nickname }}</div>
+        </div>
+      </div>
+
+      <div class="rank-item-top rank-gold" *ngIf="rankList[0]">
+        <div class="medal-display">
+          <img src="assets/images/trophy_1.png" alt="Gold Trophy" class="medal-image gold-medal-image">
+          <div class="points-banner points-banner-gold">{{ rankList[0].points }} điểm</div>
+        </div>
+        <div class="flex items-center gap-2">
+          <img [src]="rankList[0].avatar" onError="this.src='https://ionicframework.com/docs/img/demos/avatar.svg'" alt="Avatar" class="avatar-top avatar-gold">
+          <div class="rank-nickname-top nickname-gold">{{ rankList[0].nickname }}</div>
+        </div>
+      </div>
+
+      <div class="rank-item-top rank-bronze" *ngIf="rankList.length > 2 && rankList[2]">
+        <div class="medal-display">
+          <img src="assets/images/trophy_3.png" alt="Bronze Medal" class="medal-image">
+          <div class="points-banner">{{ rankList[2].points }} điểm</div>
+        </div>
+        <div class="flex items-center gap-2">
+          <img [src]="rankList[2].avatar" onError="this.src='https://ionicframework.com/docs/img/demos/avatar.svg'" alt="Avatar" class="avatar-top">
+          <div class="rank-nickname-top">{{ rankList[2].nickname }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Other ranks -->
+    <div class="rank-table">
+      <div class="rank-table-header">
+        <div class="rank-col header-rank">Hạng</div>
+        <div class="rank-col header-nickname">Nick name</div>
+        <div class="rank-col header-points">Điểm</div>
+      </div>
+
+      <div class="rank-table-body"
+           #rankTableBody
+           [class]="shouldShowFixedUserRank() && getCurrentUserRank() ? 'mb-[25px]' : 'mb-[30px]'"
+           (scroll)="checkCurrentUserVisibility()">
+        <!-- Start loop from the 4th item (index 3) -->
+        <div class="rank-table-row"
+             *ngFor="let item of rankList.slice(3)"
+             [class.current-user]="item.isCurrentUser"
+             [attr.data-user-id]="item.userId">
+          <div class="rank-col row-rank">{{ item.position }}</div>
+          <div class="rank-col row-nickname">
+            <img [src]="item.avatar"
+                 onError="this.src='https://ionicframework.com/docs/img/demos/avatar.svg'"
+                 alt="Avatar"
+                 class="avatar-list">
+            <span>{{ item.nickname }}</span>
+          </div>
+          <div class="rank-col row-points">{{ item.points }}</div>
+        </div>
+      </div>
+
+      <!-- Fixed current user rank at bottom if position >= 10 and not yet scrolled to that row -->
+      <div class="fixed-current-user" *ngIf="shouldShowFixedUserRank() && getCurrentUserRank()">
+        <div class="rank-table-row current-user">
+          <div class="rank-col row-rank">{{ getCurrentUserRank()?.position }}</div>
+          <div class="rank-col row-nickname">
+            <img [src]="getCurrentUserRank()?.avatar" onError="this.src='https://ionicframework.com/docs/img/demos/avatar.svg'" alt="Avatar" class="avatar-list">
+            <span>{{ getCurrentUserRank()?.nickname }}</span>
+          </div>
+          <div class="rank-col row-points">{{ getCurrentUserRank()?.points }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Achievements content (placeholder) -->
+  <div class="achievements-content" *ngIf="!isLoading && activeTab === 'achievements'">
+    <ion-list>
+      <ion-item-group *ngFor="let category of achievements">
+        <ion-card class="category-card">
+          <ion-card-header>
+            <ion-card-title class="category-title">{{ category.title }}</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="4" *ngFor="let badge of category.badges">
+                  <div class="badge-container" [ngClass]="{ 'locked': !badge.unlocked }">
+                    <img [src]="badge.image" class="badge-image" />
+                    <ion-badge *ngIf="badge.isNew" class="new-badge">MỚI</ion-badge>
+                    <div class="name">{{ badge.name }}</div>
+                    <div class="desc" *ngIf="badge.desc">{{ badge.desc }}</div>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-item-group>
+    </ion-list>
+  </div>
+</ion-content>
+
+<app-footer></app-footer>
