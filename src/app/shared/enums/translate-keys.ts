@@ -5,6 +5,10 @@ export enum TranslateKeys {
   COMMON_ENGLISH = 'COMMON.english',
   COMMON_VIETNAMESE = 'COMMON.vietnamese',
 
+  // HOME
+  HOME_WELCOME_TITLE = 'HOME.welcome_title',
+  HOME_WELCOME_SUBTITLE = 'HOME.welcome_subtitle',
+
   // TITLE
   TITLE_PHONE = 'TITLE.phone',
   TITLE_EMAIL = 'TITLE.email',
@@ -107,6 +111,7 @@ export enum TranslateKeys {
   BUTTON_CURRENT = 'BUTTON_TITLES.current',
   BUTTON_SET_AS_CURRENT = 'BUTTON_TITLES.set_as_current',
   BUTTON_UPDATE = 'BUTTON_TITLES.update',
+  BUTTON_EXECUTE = 'BUTTON_TITLES.execute',
 
   // TOAST
   TOAST_ERROR_HEADER = 'TOAST.error_header',

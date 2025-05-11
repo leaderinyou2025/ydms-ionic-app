@@ -1,18 +1,61 @@
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-    <ion-img *ngIf="imageUrl" [src]="imageUrl"></ion-img>
-    <ion-button color="danger" (click)="onClickLogout()">
-      {{ TranslateKeys.TITLE_LOGOUT | translate }}
-    </ion-button>
+<ion-header class="status-bar text-gray-600 dark:text-gray-400">
+  <div class="status-item" *ngFor="let item of statusItems">
+    <img [src]="getImagePathByType(item.type)" alt="icon" class="status-image">
+    <div class="status-item-top">
+      <span class="status-value">{{ item.value }}</span>
+      <span class="status-label">{{ item.label }}</span>
+    </div>
   </div>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <!-- Main Character -->
+  <div class="character-container">
+    <div class="character-image">
+      <img [src]="character.imagePath" [alt]="character.altText || character.name">
+      <div class="character-shadow"></div>
+    </div>
+    <div class="character-name">
+      <span>{{ character.name }}</span>
+      <ion-icon name="sparkles"></ion-icon>
+    </div>
+  </div>
+
+  <!-- Welcome Message & Progress -->
+  <div class="welcome-container">
+    <div class="flex justify-between ">
+      <h3>{{ TranslateKeys.HOME_WELCOME_TITLE | translate }}</h3>
+      <ion-icon name="checkmark-circle" class="mr-8 font-bold text-[#53ad0d] text-xl"></ion-icon>
+    </div>
+    <p>{{ TranslateKeys.HOME_WELCOME_SUBTITLE | translate }}</p>
+
+    <div class="progress-container">
+      <ion-progress-bar type="determinate" [value]="progress.value"></ion-progress-bar>
+      <div class="progress-text"><span class="completed">{{ progress.completed }}</span>/<span class="total">{{ progress.total }}</span></div>
+    </div>
+  </div>
+
+  <!-- Task List -->
+  <div class="tasks-container">
+    <ion-list>
+      <ion-item class="task-item" lines="none" *ngFor="let task of tasks">
+        <div class="task-card">
+          <div class="task-content">
+            <p>{{ task.description }}</p>
+            <div class="task-reward">
+              <img src="assets/images/lighting.png" alt="icon" class="task-image">
+              <span>+{{ task.points }}</span>
+            </div>
+          </div>
+          <ion-button class="task-button" fill="outline" (click)="executeTask(task)">
+            {{ TranslateKeys.BUTTON_EXECUTE | translate }}
+          </ion-button>
+        </div>
+      </ion-item>
+    </ion-list>
+  </div>
+
 </ion-content>
 
 <app-footer></app-footer>

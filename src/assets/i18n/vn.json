@@ -5,6 +5,10 @@
     "english": "English",
     "vietnamese": "Tiếng Việt"
   },
+  "HOME": {
+    "welcome_title": "Chào mừng trở lại",
+    "welcome_subtitle": "Hãy hoàn thành nhiệm vụ để nhận thưởng nhé!"
+  },
   "TITLE": {
     "phone": "Số điện thoại",
     "email": "Email",
@@ -106,7 +110,8 @@
     "set_as_current": "Đặt làm hiện tại",
     "current": "Hiện tại",
     "save_changes": "Lưu thay đổi",
-    "update": "Cập nhật"
+    "update": "Cập nhật",
+    "execute": "Thực hiện"
   },
   "TOAST": {
     "error_header": "Lỗi",
