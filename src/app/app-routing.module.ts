@@ -40,7 +40,7 @@ const routes: Routes = [
   },
   {
     path: 'badge-collection',
-    loadChildren: () => import('./pages/student/badge-collection/badge-collection.module').then( m => m.BadgeCollectionPageModule)
+    loadChildren: () => import('./pages/student/badge-collection/badge-collection.module').then(m => m.BadgeCollectionPageModule)
   },
   {
     path: 'family-group',
@@ -49,16 +49,19 @@ const routes: Routes = [
   {
     path: 'class-group',
     loadChildren: () => import('./pages/social-network/class-group/class-group.module').then(m => m.ClassGroupPageModule)
-  },  {
+  },
+  {
     path: 'school-group',
-    loadChildren: () => import('./pages/social-network/school-group/school-group.module').then( m => m.SchoolGroupPageModule)
+    loadChildren: () => import('./pages/social-network/school-group/school-group.module').then(m => m.SchoolGroupPageModule)
   },
   {
     path: 'personal-diary',
-    loadChildren: () => import('./pages/student/personal-diary/personal-diary.module').then( m => m.PersonalDiaryPageModule)
+    loadChildren: () => import('./pages/student/personal-diary/personal-diary.module').then(m => m.PersonalDiaryPageModule)
+  },
+  {
+    path: 'chatbot',
+    loadChildren: () => import('./pages/chatbot/chatbot.module').then(m => m.ChatbotPageModule)
   }
-
-
 ];
 
 @NgModule({

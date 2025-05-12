@@ -163,7 +163,7 @@ export class OdooService {
     kwArgs: IKwArgs = {}
   ): Promise<any> {
     const authData = await this.authService.getAuthData();
-    const authToken = this.authService.getAuthToken();
+    const authToken = await this.authService.getAuthToken();
     if (!authData || !authToken) return false;
 
     const dataRequest = new RequestPayload();

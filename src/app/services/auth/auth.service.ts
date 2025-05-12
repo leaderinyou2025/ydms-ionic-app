@@ -52,7 +52,8 @@ export class AuthService {
    * Check user is authenticated
    */
   public isAuthenticated(): boolean {
-    return this.getAuthToken() !== undefined;
+    const authToken = this.localStorageService.get<string>(StorageKey.AUTH_TOKEN_SESSION);
+    return authToken !== undefined;
   }
 
   /**
@@ -61,18 +62,17 @@ export class AuthService {
    */
   public saveAuthToken(password: string): void {
     if (!password) return;
-    const encryptedPassword = CommonConstants.encrypt(password);
-    this.localStorageService.set(StorageKey.AUTH_TOKEN_SESSION, encryptedPassword);
+    CommonConstants.encrypt(password).then(encryptedPassword => this.localStorageService.set(StorageKey.AUTH_TOKEN_SESSION, encryptedPassword));
   }
 
   /**
    * Decrypt auth token to password
    * @return string
    */
-  public getAuthToken(): string | undefined {
+  public async getAuthToken(): Promise<string | undefined> {
     const authToken = this.localStorageService.get<string>(StorageKey.AUTH_TOKEN_SESSION);
     if (!authToken) return undefined;
-    const decryptedPassword = CommonConstants.decrypt(authToken);
+    const decryptedPassword = await CommonConstants.decrypt(authToken);
     if (!decryptedPassword?.length) return undefined;
     return decryptedPassword;
   }
@@ -280,7 +280,7 @@ export class AuthService {
    */
   public async getBasicAuthHeader(): Promise<HttpHeaders | undefined> {
     const authData = await this.getAuthData();
-    const password = this.getAuthToken();
+    const password = await this.getAuthToken();
     if (!authData || !password) return;
     return new HttpHeaders({
       Authorization: 'Basic ' + btoa(`${authData.login}:${password}`)
@@ -354,7 +354,7 @@ export class AuthService {
       if (!authData) return false;
 
       // Verify current password matches stored password
-      const storedPassword = this.getAuthToken();
+      const storedPassword = await this.getAuthToken();
       if (currentPassword !== storedPassword) {
         return false;
       }

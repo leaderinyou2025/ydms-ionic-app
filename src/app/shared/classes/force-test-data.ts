@@ -1,5 +1,5 @@
 import { IAuthData } from '../interfaces/auth/auth-data';
-import { IUserRoles } from '../enums/user-roles';
+import { UserRoles } from '../enums/user-roles';
 import { Theme } from '../enums/theme';
 import { ILiyYdmsAssetsResource } from '../interfaces/models/liy-ydms-assets-resource';
 import { TextZoomSize } from '../enums/text-zoom-size';
@@ -89,7 +89,7 @@ export class ForceTestData {
     id: 1,
     login: '0964164434',
     name: 'Phạm Bá Việt',
-    role: IUserRoles.STUDENT,
+    role: UserRoles.STUDENT,
     nickname: 'Sóc nâu',
     phone: '0964164434',
     email: 'viet220994@gmail.com',

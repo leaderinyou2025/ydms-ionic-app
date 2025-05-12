@@ -1,54 +1,59 @@
-<ion-header class="status-bar text-gray-600 dark:text-gray-400">
-  <div class="status-item" *ngFor="let item of statusItems">
-    <img [src]="getImagePathByType(item.type)" alt="icon" class="status-image">
-    <div class="status-item-top">
-      <span class="status-value">{{ item.value }}</span>
-      <span class="status-label">{{ item.label }}</span>
+<ion-header>
+  <ion-toolbar class="home-toolbar">
+    <div class="flex justify-between py-3 w-full h-auto ion-padding-start ion-padding-end">
+      <div class="flex items-center" *ngFor="let item of statusItems">
+        <ion-img [src]="getImagePathByType(item.type)" alt="icon" class="w-7 h-7 mr-1 object-contain"></ion-img>
+        <div class="flex flex-col justify-center">
+          <span class="text-xs text-green-500 font-bold">{{ item.value }}</span>
+          <span class="block text-center text-xs text-gray-600 dark:text-gray-400">{{ item.label }}</span>
+        </div>
+      </div>
     </div>
-  </div>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
 
   <!-- Main Character -->
-  <div class="character-container">
-    <div class="character-image">
-      <img [src]="character.imagePath" [alt]="character.altText || character.name">
-      <div class="character-shadow"></div>
+  <div class="flex flex-col items-center my-5">
+    <div class="relative mb-8">
+      <ion-img [src]="character.imagePath" [alt]="character.altText || character.name"></ion-img>
     </div>
-    <div class="character-name">
-      <span>{{ character.name }}</span>
-      <ion-icon name="sparkles"></ion-icon>
+    <div class="flex items-center">
+      <div class="relative">
+        <span class="text-2xl text-teal-500 italic z-10">{{ character.name }}</span>
+        <ng-lottie class="absolute right-[-20px] top-[-46px]" [options]="options" style="width: 80px; height: 80px;"></ng-lottie>
+      </div>
     </div>
   </div>
 
   <!-- Welcome Message & Progress -->
-  <div class="welcome-container">
+  <div class="ion-padding-start ion-padding-end mb-5">
     <div class="flex justify-between ">
-      <h3>{{ TranslateKeys.HOME_WELCOME_TITLE | translate }}</h3>
+      <h3 class="text-base italic font-bold text-blue-400">{{ TranslateKeys.HOME_WELCOME_TITLE | translate }}</h3>
       <ion-icon name="checkmark-circle" class="mr-8 font-bold text-[#53ad0d] text-xl"></ion-icon>
     </div>
-    <p>{{ TranslateKeys.HOME_WELCOME_SUBTITLE | translate }}</p>
+    <p class="text-sm">{{ TranslateKeys.HOME_WELCOME_SUBTITLE | translate }}</p>
 
-    <div class="progress-container">
-      <ion-progress-bar type="determinate" [value]="progress.value"></ion-progress-bar>
-      <div class="progress-text"><span class="completed">{{ progress.completed }}</span>/<span class="total">{{ progress.total }}</span></div>
+    <div class="flex gap-1 items-center">
+      <ion-progress-bar class="task-progress h-4" type="determinate" [value]="progress.value"></ion-progress-bar>
+      <div class="text-[#53ad0d]"><span class="completed text-sm">{{ progress.completed }}</span>/<span class="total text-base">{{ progress.total }}</span></div>
     </div>
   </div>
 
   <!-- Task List -->
-  <div class="tasks-container">
-    <ion-list>
-      <ion-item class="task-item" lines="none" *ngFor="let task of tasks">
-        <div class="task-card">
-          <div class="task-content">
-            <p>{{ task.description }}</p>
-            <div class="task-reward">
-              <img src="assets/images/lighting.png" alt="icon" class="task-image">
+  <div class="ion-padding-start ion-padding-end">
+    <ion-list class="bg-transparent p-0">
+      <ion-item class="task-item mb-3" lines="none" *ngFor="let task of tasks">
+        <div class="flex justify-between items-center w-full p-4 bg-[#cd83fe] text-white rounded-xl">
+          <div class="flex-1">
+            <p class="text-sm mb-1">{{ task.description }}</p>
+            <div class="flex items-center text-sm">
+              <ion-img src="assets/images/lighting.png" alt="icon" class="w-5 h-5 object-contain"></ion-img>
               <span>+{{ task.points }}</span>
             </div>
           </div>
-          <ion-button class="task-button" fill="outline" (click)="executeTask(task)">
+          <ion-button class="task-button ml-2 h-9" fill="outline" (click)="executeTask(task)">
             {{ TranslateKeys.BUTTON_EXECUTE | translate }}
           </ion-button>
         </div>

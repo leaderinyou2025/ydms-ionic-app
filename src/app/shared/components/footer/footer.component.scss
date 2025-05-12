@@ -1,4 +1,15 @@
 ion-footer {
   --padding-bottom: env(safe-area-inset-bottom) !important;
 
+  ion-toolbar {
+    --padding-start: 0;
+    --padding-end: 0;
+  }
+
+  a {
+    span {
+      font-size: 0.6rem;
+      line-height: 0.8rem;
+    }
+  }
 }
