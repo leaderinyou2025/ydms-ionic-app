@@ -1,16 +1,33 @@
-// Custom styles for friend page
-ion-img.banner-img {
-  animation: float 3s ease-in-out infinite;
-}
+::ng-deep {
+  .banner-img {
+    animation: float 3s ease-in-out infinite;
+  }
 
-@keyframes float {
-  0% {
-    transform: translateY(0px);
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
+
+    100% {
+      transform: translateY(0px);
+    }
   }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0px);
+
+  ion-header.bg-gradient-to-r {
+    .h-190 {
+      min-height: 190px;
+    }
+
+    h1 {
+      margin-top: 2rem;
+    }
+
+    .mt-2\.5 {
+      height: 2.75rem;
+    }
   }
 }

@@ -37,7 +37,8 @@
           lines="none"
           detail="false"
           class="w-full mb-1 border-b border-gray-200"
-          style="--background: transparent; --border-radius: 0; --padding-start: 8px; --padding-end: 8px; --inner-padding-end: 8px; --min-height: 60px; ">
+          style="--background: transparent; --border-radius: 0; --padding-start: 8px; --padding-end: 8px; --inner-padding-end: 8px; --min-height: 60px; "
+          [routerLink]="['/' + PageRoutes.FRIENDS + '/' + PageRoutes.FRIEND_DETAIL, friend.id]">>
           <ion-avatar slot="start" class="w-[42px] h-[42px] mr-2.5">
             <div class="w-full h-full overflow-hidden rounded-full border-2 border-blue-500">
               <ion-img [src]="friend.avatar" alt="Friend avatar" class="object-cover w-full h-full"></ion-img>

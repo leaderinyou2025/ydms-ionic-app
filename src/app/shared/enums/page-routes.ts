@@ -19,4 +19,5 @@ export enum PageRoutes {
   FAMILY_GROUP = 'family-group',
   SCHOOL_GROUP = 'school-group',
   FRIENDS = 'friends',
+  FRIEND_DETAIL = 'friend-detail',
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 import { ForceTestData } from '../../shared/classes/force-test-data';
 import { IFriend } from '../../shared/interfaces/friend/friend';
@@ -80,5 +81,30 @@ export class FriendService {
         observer.complete();
       }, 500); // 500ms delay to simulate network request
     });
+  }
+
+  /**
+   * Get friend details by ID
+   * @param friendId The ID of the friend to retrieve
+   * @returns Observable with friend details or undefined if not found
+   */
+  public getFriendById(friendId: number): Observable<IFriend | undefined> {
+    // TODO: Implement actual API call when backend is ready
+    // Example of how it would be implemented with real API:
+    /*
+    return from(this.odooService.read<IFriend>(
+      ModelName.FRIENDS,
+      [friendId],
+      ['id', 'name', 'avatar', 'likeCount', 'rank', 'achievements', 'friendshipLevel']
+    )).pipe(
+      map(results => results && results.length > 0 ? results[0] : undefined)
+    );
+    */
+
+    // For now, return test data
+    const friend = ForceTestData.friends.find(f => f.id === friendId);
+
+    // Simulate network delay
+    return of(friend).pipe(delay(300));
   }
 }
