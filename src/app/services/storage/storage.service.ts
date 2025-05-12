@@ -32,7 +32,7 @@ export class StorageService {
     try {
       // stringify and encrypt data
       const valueString = JSON.stringify(value);
-      const encryptedValue = CommonConstants.encrypt(valueString);
+      const encryptedValue = await CommonConstants.encrypt(valueString);
       await this._storage.set(key, encryptedValue);
     } catch (e: any) {
       console.error('[StorageService:set] Failed to save', key, e?.message);
@@ -47,14 +47,15 @@ export class StorageService {
     if (!this._storage) await this.init();
     if (!key) return undefined;
 
-    try {
-      const dataStr = await this._storage.get(key);
-      if (!dataStr) return undefined;
+    const dataStr = await this._storage.get(key);
+    if (!dataStr) return undefined;
+    const decryptedData = await CommonConstants.decrypt(dataStr);
 
-      const decryptedData = CommonConstants.decrypt(dataStr);
+    try {
       return JSON.parse(decryptedData);
     } catch (e: any) {
       console.error(key, e?.message);
+      console.log(decryptedData);
       return undefined;
     }
   }

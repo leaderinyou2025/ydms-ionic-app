@@ -18,4 +18,7 @@ export enum PageRoutes {
   CLASS_GROUP = 'class-group',
   FAMILY_GROUP = 'family-group',
   SCHOOL_GROUP = 'school-group',
+  CHATBOT = 'chatbot',
+  FRIENDS = 'friends',
+  RANK = 'rank',
 }
