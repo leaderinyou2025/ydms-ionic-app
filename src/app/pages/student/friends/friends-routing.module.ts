@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { FriendsPage } from './friends.page';
 import { FriendDetailComponent } from './friend-detail/friend-detail.component';
-import { PageRoutes } from '../../../shared/enums/page-routes';
 
 const routes: Routes = [
   {
@@ -11,7 +10,7 @@ const routes: Routes = [
     component: FriendsPage
   },
   {
-    path: `${PageRoutes.FRIEND_DETAIL}/:id`,
+    path: `:id`,
     component: FriendDetailComponent
   }
 ];
@@ -20,4 +19,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class FriendsPageRoutingModule {}
+export class FriendsPageRoutingModule {
+}
