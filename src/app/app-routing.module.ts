@@ -61,6 +61,10 @@ const routes: Routes = [
   {
     path: 'chatbot',
     loadChildren: () => import('./pages/chatbot/chatbot.module').then(m => m.ChatbotPageModule)
+  },
+  {
+    path: 'rank',
+    loadChildren: () => import('./pages/student/rank/rank.module').then(m => m.RankPageModule)
   }
 ];
 
