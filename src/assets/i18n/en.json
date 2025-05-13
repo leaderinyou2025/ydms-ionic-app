@@ -286,7 +286,10 @@
     "discovery_level": "Discovery Level",
     "self_discovery_survey_questions": "Self Discovery Survey Questions",
     "discovery_points": "Points",
-    "no_self_discovery_survey_history": "No self discovery survey history yet"
+    "no_self_discovery_survey_history": "No self discovery survey history yet",
+    "emotional_survey": "Emotional Survey",
+    "emotional_survey_history": "Survey History",
+    "emotional_survey_detail": "Survey Detail"
   },
   "VALIDATE": {
     "phone_required": "Please input your phone number.",

@@ -17,7 +17,8 @@ import { SharedModule } from '../../../shared/shared.module';
     IonicModule,
     PersonalDiaryPageRoutingModule,
     TranslateModule,
-    SharedModule
+    SharedModule,
+    TranslateModule
   ],
   declarations: [PersonalDiaryPage]
 })

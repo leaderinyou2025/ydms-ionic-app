@@ -286,7 +286,10 @@
     "discovery_level": "Mức độ khám phá",
     "self_discovery_survey_questions": "Câu hỏi khảo sát khám phá bản thân",
     "discovery_points": "Điểm",
-    "no_self_discovery_survey_history": "Chưa có lịch sử khảo sát khám phá bản thân"
+    "no_self_discovery_survey_history": "Chưa có lịch sử khảo sát khám phá bản thân",
+    "emotional_survey": "Khảo sát cảm xúc",
+    "emotional_survey_history": "Lịch sử khảo sát cảm xúc",
+    "emotional_survey_detail": "Chi tiết khảo sát"
   },
   "VALIDATE": {
     "phone_required": "Vui lòng nhập vào số điện thoại.",
