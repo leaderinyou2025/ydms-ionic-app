@@ -1,10 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter, Subscription } from 'rxjs';
 
 import { PageRoutes } from '../../enums/page-routes';
 import { KeyboardService } from '../../../services/keyboard/keyboard.service';
 import { TranslateKeys } from '../../enums/translate-keys';
+import { AuthService } from '../../../services/auth/auth.service';
+import { UserRoles } from '../../enums/user-roles';
 
 @Component({
   selector: 'app-footer',
@@ -14,27 +16,36 @@ import { TranslateKeys } from '../../enums/translate-keys';
 })
 export class FooterComponent implements OnInit, OnDestroy {
 
-  protected readonly PageRoutes = PageRoutes;
   isKeyboardShowing!: boolean;
+  activePage!: string | undefined;
+  userRole!: UserRoles | undefined;
+
+  protected readonly TranslateKeys = TranslateKeys;
+  protected readonly UserRoles = UserRoles;
+  protected readonly PageRoutes = PageRoutes;
   private keyboardSubscription!: Subscription;
 
   constructor(
     private router: Router,
     private keyboardService: KeyboardService,
+    private authService: AuthService,
   ) {
   }
 
   ngOnInit() {
     this.keyboardSubscription = this.keyboardService.isKeyboardOpen$.subscribe((isKeyboardShowing) => this.isKeyboardShowing = isKeyboardShowing);
+    this.authService.getAuthData().then(authData => this.userRole = authData?.role)
+
+    this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
+      this.activePage = event.urlAfterRedirects.split('/')?.pop();
+    });
   }
 
   ngOnDestroy() {
     this.keyboardSubscription?.unsubscribe();
   }
 
-  isActive(path: string): boolean {
-    return this.router.url.startsWith(path);
+  public isActive(path: string): boolean {
+    return this.activePage === path;
   }
-
-  protected readonly TranslateKeys = TranslateKeys;
 }

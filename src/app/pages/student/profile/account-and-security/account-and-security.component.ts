@@ -61,7 +61,7 @@ export class AccountAndSecurityComponent implements OnInit {
       if (!isEnabled) {
         await this.biometricService.deleteCredentials(this.authData.login);
       } else {
-        const password = this.authService.getAuthToken() || '';
+        const password = await this.authService.getAuthToken() || '';
         await this.biometricService.setCredentials({username: this.authData.login, password: password});
       }
     }

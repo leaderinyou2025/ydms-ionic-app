@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { HttpHeaders } from '@angular/common/http';
-import * as CryptoJS from 'crypto-js';
+import { Device } from '@capacitor/device';
 
 import { IBase } from '../interfaces/base/base';
 import { environment } from '../../../environments/environment';
@@ -11,6 +11,15 @@ export class CommonConstants {
    * Device ID
    */
   public static deviceId: string = '';
+
+  /**
+   * Load device identifier
+   */
+  public static async loadDeviceId(): Promise<void> {
+    if (CommonConstants.deviceId?.length > 0) return;
+    const deviceId = await Device.getId();
+    CommonConstants.deviceId = deviceId.identifier;
+  }
 
   /**
    * Url of language flag images
@@ -195,57 +204,101 @@ export class CommonConstants {
   }
 
   /**
-   * generateKey for encrypt
-   * @param secret
-   * @param salt
-   * @private
+   * Sinh key từ secret + salt sử dụng PBKDF2
+   * @param secret Chuỗi nguyên liệu để sinh key (salt + deviceId)
+   * @param salt Chuỗi salt hex
+   * @returns CryptoKey dùng cho AES-GCM
    */
-  private static generateKey(secret: string, salt: string) {
-    return CryptoJS.PBKDF2(secret, salt, {
-      keySize: 256 / 32,
-      iterations: 1000,
-    });
-  }
+  private static async generateKey(secret: string, salt: string): Promise<CryptoKey> {
+    const enc = new TextEncoder();
+    const baseKey = await crypto.subtle.importKey(
+      'raw',
+      enc.encode(secret),
+      'PBKDF2',
+      false,
+      ['deriveKey']
+    );
 
-  /**
-   * Encrypt by AES
-   * @param text
-   */
-  public static encrypt(text: string): string {
-    const salt = CryptoJS.lib.WordArray.random(128 / 8);
-    const iv = CryptoJS.lib.WordArray.random(128 / 8);
-    const key = CommonConstants.generateKey(`${environment.salt}${CommonConstants.deviceId}`, salt.toString());
-
-    const encrypted = CryptoJS.AES.encrypt(text, key, {iv});
-
-    return CryptoJS.enc.Base64.stringify(
-      CryptoJS.enc.Utf8.parse(JSON.stringify({
-        ct: encrypted.ciphertext.toString(CryptoJS.enc.Base64),
-        iv: iv.toString(CryptoJS.enc.Hex),
-        s: salt.toString(CryptoJS.enc.Hex),
-      }))
+    return await crypto.subtle.deriveKey(
+      {
+        name: 'PBKDF2',
+        salt: this.hex2buf(salt),
+        iterations: 1000,
+        hash: 'SHA-256',
+      },
+      baseKey,
+      {name: 'AES-GCM', length: 256},
+      false,
+      ['encrypt', 'decrypt']
     );
   }
 
   /**
-   * Decrypt
-   * @param cipherTextBase64
+   * Mã hóa chuỗi text thành base64 an toàn
+   * @param text Chuỗi cần mã hóa
+   * @returns Chuỗi base64 chứa ct, iv, s
    */
-  public static decrypt(cipherTextBase64: string): string {
-    const jsonStr = CryptoJS.enc.Base64.parse(cipherTextBase64).toString(CryptoJS.enc.Utf8);
+  public static async encrypt(text: string): Promise<string> {
+    await this.loadDeviceId();
+
+    const salt = crypto.getRandomValues(new Uint8Array(16));
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const key = await this.generateKey(`${environment.salt}${this.deviceId}`, this.buf2hex(salt));
+
+    const encodedText = new TextEncoder().encode(text);
+    const cipherBuffer = await crypto.subtle.encrypt(
+      {name: 'AES-GCM', iv},
+      key,
+      encodedText
+    );
+
+    const payload = {
+      ct: this.buf2hex(new Uint8Array(cipherBuffer)),
+      iv: this.buf2hex(iv),
+      s: this.buf2hex(salt)
+    };
+
+    const jsonStr = JSON.stringify(payload);
+    return btoa(jsonStr); // Trả về dạng base64 để lưu
+  }
+
+  /**
+   * Giải mã chuỗi base64 được tạo bởi encrypt()
+   * @param cipherTextBase64 Chuỗi base64 mã hóa
+   * @returns Chuỗi gốc đã được giải mã
+   */
+  public static async decrypt(cipherTextBase64: string): Promise<string> {
+    await this.loadDeviceId();
+
+    const jsonStr = atob(cipherTextBase64);
     const json = JSON.parse(jsonStr);
 
-    const iv = CryptoJS.enc.Hex.parse(json.iv);
-    const key = CommonConstants.generateKey(`${environment.salt}${CommonConstants.deviceId}`, json.s);
+    const iv = this.hex2buf(json.iv);
+    const salt = json.s;
+    const ciphertext = this.hex2buf(json.ct);
 
-    const encrypted = CryptoJS.enc.Base64.parse(json.ct);
+    const key = await this.generateKey(`${environment.salt}${this.deviceId}`, salt);
 
-    const decrypted = CryptoJS.AES.decrypt(
-      {ciphertext: encrypted} as any,
+    const plainBuffer = await crypto.subtle.decrypt(
+      {name: 'AES-GCM', iv},
       key,
-      {iv}
+      ciphertext
     );
 
-    return decrypted.toString(CryptoJS.enc.Utf8);
+    return new TextDecoder().decode(plainBuffer);
+  }
+
+  /**
+   * Chuyển Uint8Array sang chuỗi hex
+   */
+  private static buf2hex(buffer: Uint8Array): string {
+    return Array.from(buffer).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  /**
+   * Chuyển chuỗi hex về Uint8Array
+   */
+  private static hex2buf(hex: string): Uint8Array {
+    return new Uint8Array(hex.match(/.{1,2}/g)!.map(byte => parseInt(byte, 16)));
   }
 }
