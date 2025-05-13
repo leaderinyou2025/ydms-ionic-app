@@ -1,12 +1,17 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { FriendsPage } from './friends.page';
+import { FriendDetailComponent } from './friend-detail/friend-detail.component';
 
 const routes: Routes = [
   {
     path: '',
     component: FriendsPage
+  },
+  {
+    path: `:id`,
+    component: FriendDetailComponent
   }
 ];
 
@@ -14,4 +19,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class FriendsPageRoutingModule {}
+export class FriendsPageRoutingModule {
+}
