@@ -3,7 +3,14 @@
     "app_name": "Youth Development Monitoring System",
     "copyright": "© 2025 LeaderInYou",
     "english": "English",
-    "vietnamese": "Tiếng Việt"
+    "vietnamese": "Tiếng Việt",
+    "just_now": "Just now",
+    "minutes_ago": "{{minutes}} minutes ago",
+    "today_at": "Today at {{time}}",
+    "yesterday": "Yesterday"
+  },
+  "BUTTON": {
+    "remove": "Remove"
   },
   "HOME": {
     "welcome_title": "Welcome back",
@@ -18,6 +25,40 @@
     "points": "points",
     "points_header": "Points",
     "badge_new": "NEW"
+  },
+  "PERSONAL_DIARY": {
+    "title": "Personal Diary",
+    "my_entries": "My Entries",
+    "shared_entries": "Shared Entries",
+    "new_entry": "New Entry",
+    "content_placeholder": "What's on your mind?",
+    "emotion_type": "How are you feeling?",
+    "anonymous": "Anonymous",
+    "public": "Share with others",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "suggestions": "Suggestions",
+    "withdraw": "Withdraw",
+    "confirm_withdraw": "Are you sure you want to withdraw this entry?",
+    "reaction_stats": "Reaction Statistics",
+    "reaction_love": "Love",
+    "reaction_happy": "Happy",
+    "reaction_sad": "Sad",
+    "reaction_angry": "Angry",
+    "total_reactions": "Total Reactions",
+    "no_entries": "No entries found",
+    "no_suggestions": "No suggestions available for this emotion type",
+    "anonymous_user": "Anonymous user"
+  },
+  "EMOTION": {
+    "happy": "Happy",
+    "sad": "Sad",
+    "angry": "Angry",
+    "anxious": "Anxious",
+    "excited": "Excited",
+    "tired": "Tired",
+    "calm": "Calm",
+    "confused": "Confused"
   },
   "TITLE": {
     "phone": "Phone",

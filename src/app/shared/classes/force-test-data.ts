@@ -10,6 +10,9 @@ import { IFriend } from '../interfaces/friend/friend';
 import { IRankItem } from '../interfaces/rank/rank.interfaces';
 import { IAchievementCategory } from '../interfaces/rank/achievement.interfaces';
 
+import { EmotionType } from '../enums/personal-diary/personal-diary.enum';
+import { IPersonalDiaryEntry, IEmotionSuggestion, IReactionCount, IUserReaction } from '../interfaces/personal-diary/personal-diary.interfaces';
+
 export class ForceTestData {
 
   static background_images: Array<ILiyYdmsAssetsResource> = [
@@ -243,4 +246,194 @@ export class ForceTestData {
     {id: 7, name: 'Chuột Micky', avatar: 'assets/images/avatar/Shiba-Inu-Dog-2.png', likeCount: 70, rank: 9, achievements: 18, friendshipLevel: 75},
     {id: 8, name: 'Nhóc Conan', avatar: 'assets/images/avatar/Shiba-Inu-Dog-3.png', likeCount: 186, rank: 3, achievements: 38, friendshipLevel: 186},
   ];
+
+  /**
+   * Mock user for shared entries in personal diary
+   */
+  static mockDiaryUser: IAuthData = {
+    id: 2,
+    name: 'Bạn lớp 6A',
+    nickname: 'Bạn lớp 6A',
+    login: 'student2',
+    role: UserRoles.STUDENT,
+    avatar: 'assets/icons/svg/avatar.svg'
+  };
+
+  /**
+   * Mock diary entries for personal diary
+   */
+  static personalDiaryEntries: IPersonalDiaryEntry[] = [
+    {
+      id: 1,
+      user: this.authData,
+      content: 'Hôm nay mình cảm thấy vui vì đã hoàn thành bài tập về nhà sớm.',
+      emotionType: EmotionType.HAPPY,
+      timestamp: new Date(Date.now() - 1000 * 60 * 30), // 30 minutes ago
+      isAnonymous: false,
+      isPublic: true,
+      likes: 5,
+      reactions: {
+        love: 3,
+        happy: 2,
+        sad: 0,
+        angry: 0
+      },
+      userReactions: [
+        { userId: 2, reactionType: 'love' },
+        { userId: 3, reactionType: 'love' },
+        { userId: 4, reactionType: 'love' },
+        { userId: 5, reactionType: 'happy' },
+        { userId: 6, reactionType: 'happy' }
+      ]
+    },
+    {
+      id: 2,
+      user: this.mockDiaryUser,
+      content: 'Mình đang lo lắng về bài kiểm tra ngày mai. Mình chưa ôn tập đủ.',
+      emotionType: EmotionType.ANXIOUS,
+      timestamp: new Date(Date.now() - 1000 * 60 * 60), // 1 hour ago
+      isAnonymous: false,
+      isPublic: true,
+      likes: 3,
+      reactions: {
+        love: 1,
+        happy: 0,
+        sad: 2,
+        angry: 0
+      },
+      userReactions: [
+        { userId: 1, reactionType: 'sad' },
+        { userId: 3, reactionType: 'sad' },
+        { userId: 5, reactionType: 'love' }
+      ]
+    },
+    {
+      id: 3,
+      user: this.authData,
+      content: 'Mình cảm thấy buồn vì đã làm mất cuốn sách yêu thích.',
+      emotionType: EmotionType.SAD,
+      timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2), // 2 hours ago
+      isAnonymous: false,
+      isPublic: false,
+      likes: 0
+    },
+    {
+      id: 4,
+      user: this.mockDiaryUser,
+      content: 'Mình rất tức giận vì bạn trong nhóm không hoàn thành phần việc của mình.',
+      emotionType: EmotionType.ANGRY,
+      timestamp: new Date(Date.now() - 1000 * 60 * 60 * 3), // 3 hours ago
+      isAnonymous: true,
+      isPublic: true,
+      likes: 7,
+      reactions: {
+        love: 2,
+        happy: 0,
+        sad: 1,
+        angry: 4
+      },
+      userReactions: [
+        { userId: 1, reactionType: 'angry' },
+        { userId: 3, reactionType: 'angry' },
+        { userId: 5, reactionType: 'angry' },
+        { userId: 6, reactionType: 'angry' },
+        { userId: 7, reactionType: 'love' },
+        { userId: 8, reactionType: 'love' },
+        { userId: 9, reactionType: 'sad' }
+      ]
+    },
+    {
+      id: 5,
+      user: this.authData,
+      content: 'Mình rất phấn khích vì sắp được đi dã ngoại cùng lớp!',
+      emotionType: EmotionType.EXCITED,
+      timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24), // 1 day ago
+      isAnonymous: false,
+      isPublic: true,
+      likes: 10
+    }
+  ];
+
+  /**
+   * Mock emotion suggestions for personal diary
+   */
+  static emotionSuggestions: IEmotionSuggestion[] = [
+    {
+      id: 1,
+      emotionType: EmotionType.HAPPY,
+      suggestions: [
+        'Chia sẻ niềm vui với bạn bè',
+        'Viết nhật ký về những điều tích cực',
+        'Tận hưởng cảm xúc vui vẻ này'
+      ]
+    },
+    {
+      id: 2,
+      emotionType: EmotionType.SAD,
+      suggestions: [
+        'Nói chuyện với người thân hoặc bạn bè',
+        'Nghe nhạc thư giãn',
+        'Viết ra cảm xúc của bạn',
+        'Tập thể dục nhẹ nhàng'
+      ]
+    },
+    {
+      id: 3,
+      emotionType: EmotionType.ANGRY,
+      suggestions: [
+        'Hít thở sâu và đếm đến 10',
+        'Viết ra điều khiến bạn tức giận',
+        'Tập thể dục để giải tỏa năng lượng tiêu cực',
+        'Nói chuyện với người bạn tin tưởng'
+      ]
+    },
+    {
+      id: 4,
+      emotionType: EmotionType.ANXIOUS,
+      suggestions: [
+        'Thực hành các bài tập thở sâu',
+        'Tập trung vào hiện tại',
+        'Chia sẻ lo lắng với người lớn',
+        'Viết ra những điều bạn lo lắng'
+      ]
+    },
+    {
+      id: 5,
+      emotionType: EmotionType.EXCITED,
+      suggestions: [
+        'Chia sẻ niềm vui với bạn bè',
+        'Lập kế hoạch cho những điều thú vị',
+        'Ghi lại cảm xúc trong nhật ký'
+      ]
+    },
+    {
+      id: 6,
+      emotionType: EmotionType.TIRED,
+      suggestions: [
+        'Nghỉ ngơi đầy đủ',
+        'Uống nhiều nước',
+        'Đi ngủ sớm hơn',
+        'Tập thể dục nhẹ nhàng'
+      ]
+    },
+    {
+      id: 7,
+      emotionType: EmotionType.CALM,
+      suggestions: [
+        'Thực hành thiền định',
+        'Đọc sách yêu thích',
+        'Dành thời gian cho sở thích'
+      ]
+    },
+    {
+      id: 8,
+      emotionType: EmotionType.CONFUSED,
+      suggestions: [
+        'Viết ra những điều bạn đang băn khoăn',
+        'Nói chuyện với giáo viên hoặc phụ huynh',
+        'Chia nhỏ vấn đề để giải quyết từng phần'
+      ]
+    }
+  ];
+
 }
