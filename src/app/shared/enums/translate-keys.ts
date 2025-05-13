@@ -9,6 +9,16 @@ export enum TranslateKeys {
   HOME_WELCOME_TITLE = 'HOME.welcome_title',
   HOME_WELCOME_SUBTITLE = 'HOME.welcome_subtitle',
 
+  // TASK
+  TASK_SUBTITLE = 'TASK.subtitle',
+
+  // RANK PAGE
+  RANK_POSITION = 'RANK.position',
+  RANK_NICKNAME = 'RANK.nickname',
+  RANK_POINTS = 'RANK.points',
+  RANK_POINTS_HEADER = 'RANK.points_header',
+  BADGE_NEW = 'RANK.badge_new',
+
   // TITLE
   TITLE_PHONE = 'TITLE.phone',
   TITLE_EMAIL = 'TITLE.email',
@@ -26,6 +36,9 @@ export enum TranslateKeys {
   TITLE_HOME = 'TITLE.home',
   TITLE_PROFILE = 'TITLE.profile',
   TITLE_DASHBOARD = 'TITLE.dashboard',
+  TITLE_CHATBOT = 'TITLE.chatbot',
+  TITLE_RANK = 'TITLE.rank',
+  TITLE_MENU = 'TITLE.menu',
   TITLE_VIEW_PROFILE_PAGE = 'TITLE.view_profile_page',
   TITLE_BADGE_COLLECTION = 'TITLE.badge_collection',
   TITLE_FAMILY_PAGE = 'TITLE.family_page',
@@ -36,16 +49,17 @@ export enum TranslateKeys {
   TITLE_CLOSE_FRIENDS = 'TITLE.close_friends',
   TITLE_ADD_FRIEND = 'TITLE.add_friend',
   TITLE_SEARCH_FRIENDS = 'TITLE.search_friends',
+  TITLE_ACHIEVEMENTS = 'TITLE.achievements',
+  TITLE_YOUR_RANK = 'TITLE.your_rank',
+  TITLE_YOUR_ACHIEVEMENTS = 'TITLE.your_achievements',
   TITLE_FRIEND_DETAIL = 'TITLE.friend_detail',
   TITLE_MESSAGE = 'TITLE.message',
   TITLE_UNFRIEND = 'TITLE.unfriend',
   TITLE_BADGES = 'TITLE.badges',
-  TITLE_RANK = 'TITLE.rank',
   TITLE_MISSIONS = 'TITLE.missions',
   TITLE_FRIENDLY = 'TITLE.friendly',
   TITLE_SCHOOL = 'TITLE.school',
   TITLE_CLASS = 'TITLE.class',
-  TITLE_ACHIEVEMENTS = 'TITLE.achievements',
   TITLE_THEME_AND_BACKGROUND = 'TITLE.theme_and_background',
   TITLE_NOTIFICATION_AND_SOUND = 'TITLE.notification_and_sound',
   TITLE_LANGUAGE = 'TITLE.language',
@@ -127,6 +141,7 @@ export enum TranslateKeys {
   BUTTON_SET_AS_CURRENT = 'BUTTON_TITLES.set_as_current',
   BUTTON_UPDATE = 'BUTTON_TITLES.update',
   BUTTON_EXECUTE = 'BUTTON_TITLES.execute',
+  BUTTON_COMPLETE = 'BUTTON_TITLES.complete',
 
   // TOAST
   TOAST_ERROR_HEADER = 'TOAST.error_header',
@@ -138,6 +153,9 @@ export enum TranslateKeys {
   TOAST_NETWORK_ONLINE = 'TOAST.network_online',
   TOAST_NETWORK_OFFLINE = 'TOAST.network_offline',
   TOAST_CHANGE_PASS_SUCCESS = 'TOAST.password_changed_success',
+  TOAST_TASK_COMPLETE_SUCCESS = 'TOAST.task_complete_success',
+  TOAST_TASK_COMPLETE_ERROR = 'TOAST.task_complete_error',
+  TOAST_ANSWER_ALL_QUESTIONS = 'TOAST.answer_all_questions',
 
   // ERROR
   ERROR_NETWORK = 'ERROR.network',

@@ -9,6 +9,16 @@
     "welcome_title": "Welcome back",
     "welcome_subtitle": "Complete tasks to earn rewards!"
   },
+  "TASK": {
+    "subtitle": "Complete tasks to earn rewards!"
+  },
+  "RANK": {
+    "position": "Rank",
+    "nickname": "Nickname",
+    "points": "points",
+    "points_header": "Points",
+    "badge_new": "NEW"
+  },
   "TITLE": {
     "phone": "Phone",
     "email": "Email",
@@ -23,6 +33,8 @@
     "version": "Version",
     "home": "Home",
     "profile": "Profile",
+    "chatbot": "Chatbot",
+    "menu": "Menu",
     "view_profile_page": "View profile page",
     "badge_collection": "Badge collection",
     "family_page": "Family page",
@@ -33,16 +45,18 @@
     "close_friends": "Close friends",
     "add_friend": "Add friend",
     "search_friends": "Search friends...",
+    "rank": "Rank",
+    "achievements": "Achievements",
+    "your_rank": "Your Rank",
+    "your_achievements": "Your Achievements",
     "friend_detail": "Friend Detail",
     "message": "Message",
     "unfriend": "Unfriend",
     "badges": "Badges",
-    "rank": "Rank",
     "missions": "Missions",
     "friendly": "Friendly",
     "school": "School",
     "class": "Class",
-    "achievements": "Achievements",
     "theme_and_background": "Theme & background",
     "notification_and_sound": "Notification & sound",
     "language": "Language",
@@ -125,7 +139,8 @@
     "current": "Current",
     "save_changes": "Save Changes",
     "update": "Update",
-    "execute": "Execute"
+    "execute": "Execute",
+    "complete": "Complete"
   },
   "TOAST": {
     "error_header": "Error",
@@ -136,7 +151,10 @@
     "auth_by_password": "Authentication failed. Please log in using your password.",
     "network_online": "You are back online.",
     "network_offline": "You are offline. Please check your connection.",
-    "password_changed_success": "Password changed successfully."
+    "password_changed_success": "Password changed successfully.",
+    "task_complete_success": "Task completed successfully!",
+    "task_complete_error": "Could not complete the task. Please try again.",
+    "answer_all_questions": "Please answer all questions before submitting."
   },
   "ERROR": {
     "network": "Network error. Please check your internet connection.",

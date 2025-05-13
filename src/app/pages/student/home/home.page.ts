@@ -1,18 +1,13 @@
 import { Component } from '@angular/core';
 import { ToastController } from '@ionic/angular';
+import { AnimationOptions } from 'ngx-lottie';
 
 import { AuthService } from '../../../services/auth/auth.service';
 import { TranslateKeys } from '../../../shared/enums/translate-keys';
 import { StatusItemType } from '../../../shared/enums/home/status-item-type.enum';
 import { ForceTestData } from '../../../shared/classes/force-test-data';
-import {
-  IStatusItem,
-  ITask,
-  ICharacter,
-  IProgress,
-} from '../../../shared/interfaces/home/home.interfaces';
-import {ModelName} from "../../../shared/enums/model-name";
-import {OdooService} from "../../../services/odoo/odoo.service";
+import { IStatusItem, ITask, ICharacter, IProgress, } from '../../../shared/interfaces/home/home.interfaces';
+import { OdooService } from '../../../services/odoo/odoo.service';
 
 @Component({
   selector: 'app-home',
@@ -23,6 +18,12 @@ import {OdooService} from "../../../services/odoo/odoo.service";
 export class HomePage {
 
   protected readonly TranslateKeys = TranslateKeys;
+
+  options: AnimationOptions = {
+    path: '/assets/animations/1747072943680.json',
+    loop: true,
+    autoplay: true,
+  };
 
   /**
    * Character information
@@ -56,7 +57,8 @@ export class HomePage {
     private authService: AuthService,
     private odooService: OdooService,
     private toastController: ToastController
-  ) {}
+  ) {
+  }
 
   async ngOnInit() {
     await this.loadHomeData();
@@ -211,7 +213,7 @@ export class HomePage {
       case StatusItemType.BADGE:
         return 'assets/images/badge.webp';
       case StatusItemType.RANK:
-        return 'assets/images/rank.jpg';
+        return 'assets/images/rank.png';
       case StatusItemType.MISSION:
         return 'assets/images/lighting.png';
       case StatusItemType.FRIENDLY:

@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Device } from '@capacitor/device';
 import { TranslateService } from '@ngx-translate/core';
 
 import { LocalStorageService } from './services/local-storage/local-storage.service';
@@ -40,8 +39,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // Load device ID
-    Device.getId().then(deviceId => CommonConstants.deviceId = deviceId.identifier);
     // Set text zoom
     this.textZoomService.initZoom();
     // Check available biometric
@@ -50,8 +47,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.checkLock();
     // Initial translation
     this.initializeTranslation();
-    // Initial storage
-    this.storageService.init();
     // Load theme setting
     this.themeService.loadTheme();
     // Initial sound

@@ -10,6 +10,8 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { provideLottieOptions } from 'ngx-lottie';
+import player from 'lottie-web';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -23,6 +25,10 @@ enableProdMode();
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json?cb=' + new Date().getTime());
+}
+
+export function playerFactory() {
+  return player;
 }
 
 @NgModule({
@@ -46,6 +52,7 @@ export function createTranslateLoader(http: HttpClient) {
   providers: [
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
     provideHttpClient(withInterceptorsFromDi()),
+    provideLottieOptions({player: playerFactory}),
     {provide: LOCALE_ID, useValue: 'vi-VN'},
     [{provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptorService, multi: true}],
     [{provide: DEFAULT_TIMEOUT, useValue: 10000}]
