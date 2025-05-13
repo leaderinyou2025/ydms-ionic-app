@@ -1,0 +1,66 @@
+<ion-header class="ion-no-border bg-gradient-to-r from-[#0a1f5c] to-[#4a2a8c]">
+  <div class="relative flex flex-col justify-end h-50 px-4 py-5">
+    <div class="absolute flex justify-center items-center z-0 top-12 right-4 w-24 h-20">
+      <ion-img class="banner-img" src="assets/images/owl_img.png" alt="Owl character"></ion-img>
+    </div>
+    <ion-buttons slot="start">
+      <ion-back-button text="" color="white" defaultHref="/{{PageRoutes.HOME}}"></ion-back-button>
+    </ion-buttons>
+    <h1 class="m-0 mt-8 px-4 text-2xl font-semibold text-white">{{ TranslateKeys.TITLE_FRIENDS | translate }}</h1>
+    <div class="relative z-10 w-full px-4 mt-2.5">
+      <ion-searchbar
+        [placeholder]="TranslateKeys.TITLE_SEARCH_FRIENDS | translate"
+        class="ion-no-padding h-11 m-0 opacity-90"
+        inputmode="text"
+        (ionInput)="onSearchChange($event)"
+        style="--background: rgba(255, 255, 255, 0.9); --box-shadow: none; --placeholder-color: #888; --icon-color: #888; --color: #333; --placeholder-opacity: 0.8; --padding-start: 40px;
+        ">
+      </ion-searchbar>
+    </div>
+  </div>
+</ion-header>
+<ion-content class="bg-gradient-to-r from-[#0a1f5c] to-[#4a2a8c]">
+  <!-- Pull to refresh -->
+  <ion-refresher mode="md" slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="flex flex-col h-full pb-5 bg-white">
+    <div class="flex justify-between px-4 pt-4 pb-2.5 text-gray-800">
+      <div class="text-sm font-bold">{{ TranslateKeys.TITLE_TOTAL_FRIENDS | translate }}: {{ totalFriends }}</div>
+      <div class="text-sm font-bold">{{ TranslateKeys.TITLE_CLOSE_FRIENDS | translate }}</div>
+    </div>
+    <div class="flex-1 overflow-auto px-2 mb-4">
+      <ion-list class="w-full bg-transparent">
+        <ion-item
+          *ngFor="let friend of friends"
+          lines="none"
+          detail="false"
+          class="w-full mb-1 border-b border-gray-200 friend-item">
+          <ion-avatar slot="start" class="w-[42px] h-[42px] mr-2.5">
+            <div class="w-full h-full overflow-hidden rounded-full border-2 border-blue-500">
+              <ion-img [src]="friend.avatar" alt="Friend avatar" class="object-cover w-full h-full"></ion-img>
+            </div>
+          </ion-avatar>
+          <div class="text-sm font-medium text-gray-800">
+            {{ friend.name }}
+          </div>
+          <div slot="end" class="flex items-center min-w-[50px] text-red-500">
+            <ion-icon name="heart" class="text-lg text-red-500"></ion-icon>
+            <span class="ml-1 text-sm">{{ friend.likeCount }}</span>
+          </div>
+        </ion-item>
+      </ion-list>
+
+      <!-- Infinite scroll for pagination -->
+      <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMore($event)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </div>
+    <ion-button expand="block" color="primary" class="h-11 mx-4 text-sm font-semibold uppercase">
+      {{ TranslateKeys.TITLE_ADD_FRIEND | translate }}
+    </ion-button>
+  </div>
+</ion-content>
+
+<app-footer></app-footer>

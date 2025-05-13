@@ -40,7 +40,7 @@ const routes: Routes = [
   },
   {
     path: 'badge-collection',
-    loadChildren: () => import('./pages/student/badge-collection/badge-collection.module').then(m => m.BadgeCollectionPageModule)
+    loadChildren: () => import('./pages/student/badge-collection/badge-collection.module').then( m => m.BadgeCollectionPageModule)
   },
   {
     path: 'family-group',
@@ -59,12 +59,20 @@ const routes: Routes = [
     loadChildren: () => import('./pages/student/personal-diary/personal-diary.module').then(m => m.PersonalDiaryPageModule)
   },
   {
+    path: 'friends',
+    loadChildren: () => import('./pages/student/friends/friends.module').then( m => m.FriendsPageModule)
+  },
+  {
     path: 'chatbot',
     loadChildren: () => import('./pages/chatbot/chatbot.module').then(m => m.ChatbotPageModule)
   },
   {
     path: 'rank',
     loadChildren: () => import('./pages/student/rank/rank.module').then(m => m.RankPageModule)
+  },
+  {
+    path: 'friends',
+    loadChildren: () => import('./pages/student/friends/friends.module').then( m => m.FriendsPageModule)
   }
 ];
 
