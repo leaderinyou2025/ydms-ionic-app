@@ -9,6 +9,9 @@
     "welcome_title": "Welcome back",
     "welcome_subtitle": "Complete tasks to earn rewards!"
   },
+  "TASK": {
+    "subtitle": "Complete tasks to earn rewards!"
+  },
   "TITLE": {
     "phone": "Phone",
     "email": "Email",
@@ -114,7 +117,8 @@
     "current": "Current",
     "save_changes": "Save Changes",
     "update": "Update",
-    "execute": "Execute"
+    "execute": "Execute",
+    "complete": "Complete"
   },
   "TOAST": {
     "error_header": "Error",
@@ -125,7 +129,10 @@
     "auth_by_password": "Authentication failed. Please log in using your password.",
     "network_online": "You are back online.",
     "network_offline": "You are offline. Please check your connection.",
-    "password_changed_success": "Password changed successfully."
+    "password_changed_success": "Password changed successfully.",
+    "task_complete_success": "Task completed successfully!",
+    "task_complete_error": "Could not complete the task. Please try again.",
+    "answer_all_questions": "Please answer all questions before submitting."
   },
   "ERROR": {
     "network": "Network error. Please check your internet connection.",

@@ -9,6 +9,9 @@
     "welcome_title": "Chào mừng trở lại",
     "welcome_subtitle": "Hãy hoàn thành nhiệm vụ để nhận thưởng nhé!"
   },
+  "TASK": {
+    "subtitle": "Hoàn thành nhiệm vụ để nhận thưởng!"
+  },
   "TITLE": {
     "phone": "Số điện thoại",
     "email": "Email",
@@ -115,7 +118,8 @@
     "current": "Hiện tại",
     "save_changes": "Lưu thay đổi",
     "update": "Cập nhật",
-    "execute": "Thực hiện"
+    "execute": "Thực hiện",
+    "complete": "Hoàn thành"
   },
   "TOAST": {
     "error_header": "Lỗi",
@@ -126,7 +130,10 @@
     "auth_by_password": "Không thể xác thực. Vui lòng đăng nhập bằng mật khẩu.",
     "network_online": "Đã có kết nối mạng trở lại.",
     "network_offline": "Mất kết nối. Vui lòng kiểm tra lại kết nối mạng của bạn.",
-    "password_changed_success": "Đổi mật khẩu thành công."
+    "password_changed_success": "Đổi mật khẩu thành công.",
+    "task_complete_success": "Nhiệm vụ hoàn thành thành công!",
+    "task_complete_error": "Không thể hoàn thành nhiệm vụ. Vui lòng thử lại.",
+    "answer_all_questions": "Vui lòng trả lời tất cả các câu hỏi trước khi gửi."
   },
   "ERROR": {
     "network": "Lỗi mạng. Vui lòng kiểm tra kết nối mạng của bạn và thử lại.",
