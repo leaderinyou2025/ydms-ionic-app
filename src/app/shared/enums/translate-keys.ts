@@ -12,6 +12,13 @@ export enum TranslateKeys {
   // TASK
   TASK_SUBTITLE = 'TASK.subtitle',
 
+  // RANK PAGE
+  RANK_POSITION = 'RANK.position',
+  RANK_NICKNAME = 'RANK.nickname',
+  RANK_POINTS = 'RANK.points',
+  RANK_POINTS_HEADER = 'RANK.points_header',
+  BADGE_NEW = 'RANK.badge_new',
+
   // TITLE
   TITLE_PHONE = 'TITLE.phone',
   TITLE_EMAIL = 'TITLE.email',
@@ -38,6 +45,9 @@ export enum TranslateKeys {
   TITLE_FAMILY_PAGE = 'TITLE.family_page',
   TITLE_CLASS_GROUP = 'TITLE.class_group',
   TITLE_SCHOOL_GROUP = 'TITLE.school_group',
+  TITLE_ACHIEVEMENTS = 'TITLE.achievements',
+  TITLE_YOUR_RANK = 'TITLE.your_rank',
+  TITLE_YOUR_ACHIEVEMENTS = 'TITLE.your_achievements',
   TITLE_THEME_AND_BACKGROUND = 'TITLE.theme_and_background',
   TITLE_NOTIFICATION_AND_SOUND = 'TITLE.notification_and_sound',
   TITLE_LANGUAGE = 'TITLE.language',
