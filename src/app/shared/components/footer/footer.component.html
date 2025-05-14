@@ -2,23 +2,23 @@
   <ion-toolbar class="flex items-center h-auto bg-white border-t border-gray-200">
     <div class="flex justify-between items-center h-full py-2 ion-padding-start ion-padding-end">
       <a [routerLink]="'/' + PageRoutes.HOME" routerLinkActive="active" class="flex flex-col items-center justify-center text-gray-500">
-        <ion-img src="/assets/icons/footer/home-icon.png" class="w-8 h-8"></ion-img>
+        <ion-img src="/assets/icons/footer/ico_home.svg" class="w-8 h-8"></ion-img>
         <span class="pt-1" [class.text-blue-500]="isActive(PageRoutes.HOME)">{{ TranslateKeys.TITLE_HOME | translate }}</span>
       </a>
       <a [routerLink]="'/' + PageRoutes.CHATBOT" routerLinkActive="active" class="flex flex-col items-center justify-center text-gray-500">
-        <ion-img src="/assets/icons/footer/icon-chatbot.png" class="w-8 h-8"></ion-img>
+        <ion-img src="/assets/icons/footer/ico_chatbot.svg" class="w-8 h-8"></ion-img>
         <span class="pt-1" [class.text-blue-500]="isActive(PageRoutes.CHATBOT)">{{ TranslateKeys.TITLE_CHATBOT | translate }}</span>
       </a>
       <a [routerLink]="'/' + PageRoutes.RANK" routerLinkActive="active" class="flex flex-col items-center justify-center text-gray-500">
-        <ion-img src="/assets/icons/footer/rank-icon.png" class="w-8 h-8"></ion-img>
+        <ion-img src="/assets/icons/footer/ico_achievement.svg" class="w-8 h-8"></ion-img>
         <span class="pt-1" [class.text-blue-500]="isActive(PageRoutes.RANK)">{{ TranslateKeys.TITLE_RANK | translate }}</span>
       </a>
       <a [routerLink]="'/' + PageRoutes.FRIENDS" routerLinkActive="active" class="flex flex-col items-center justify-center text-gray-500" *ngIf="userRole === UserRoles.STUDENT">
-        <ion-img src="/assets/icons/footer/friends-icon.png" class="w-8 h-8"></ion-img>
+        <ion-img src="/assets/icons/footer/ico_friends.svg" class="w-8 h-8"></ion-img>
         <span class="pt-1" [class.text-blue-500]="isActive(PageRoutes.FRIENDS)">{{ TranslateKeys.TITLE_FRIENDS | translate }}</span>
       </a>
       <a [routerLink]="'/' + PageRoutes.PROFILE" routerLinkActive="active" class="flex flex-col items-center justify-center text-gray-500">
-        <ion-img src="/assets/icons/footer/icon-other.png" class="w-8 h-8"></ion-img>
+        <ion-img src="/assets/icons/footer/ico_more.svg" class="w-8 h-8"></ion-img>
         <span class="pt-1" [class.text-blue-500]="isActive(PageRoutes.PROFILE)">{{ TranslateKeys.TITLE_MENU | translate }}</span>
       </a>
     </div>

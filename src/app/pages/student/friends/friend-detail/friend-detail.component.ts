@@ -7,6 +7,7 @@ import { PageRoutes } from '../../../../shared/enums/page-routes';
 import { IFriend } from '../../../../shared/interfaces/friend/friend';
 import { FriendService } from '../../../../services/friend/friend.service';
 import { NativePlatform } from '../../../../shared/enums/native-platform';
+import { IHeaderAnimeImage, IHeaderSearchbar } from '../../../../shared/interfaces/header/header';
 
 @Component({
   selector: 'app-friend-detail',
@@ -19,6 +20,7 @@ export class FriendDetailComponent implements OnInit {
   friendId: number = 0;
   friend: IFriend | undefined;
   isLoading: boolean = false;
+  animeImage!: IHeaderAnimeImage;
 
   protected readonly TranslateKeys = TranslateKeys;
   protected readonly PageRoutes = PageRoutes;
@@ -35,6 +37,7 @@ export class FriendDetailComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (id != null) {
       this.friendId = +id;
+      this.initHeader();
       await this.loadFriendDetails();
     } else {
       history.back();
@@ -77,5 +80,21 @@ export class FriendDetailComponent implements OnInit {
         this.isLoading = false;
       }
     );
+  }
+
+  /**
+   * initHeader
+   * @private
+   */
+  private initHeader(): void {
+    this.animeImage = {
+      imageUrl: '/assets/images/owl_img.png',
+      width: '100px',
+      height: 'auto',
+      position: {
+        position: 'absolute',
+        top: '-10px'
+      }
+    }
   }
 }

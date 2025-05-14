@@ -9,6 +9,28 @@ ion-toolbar.home-toolbar {
   --background: var(--ion-backdrop-color);
 }
 
+ion-content.home-content {
+  --background: none;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+}
+
+:host-context(.dark) ion-content.home-content::before {
+  background: rgba(0, 0, 0, 0.5);
+}
+
 ion-progress-bar.task-progress {
   --progress-background: #53ad0d;
   --background: #e0e0e0;

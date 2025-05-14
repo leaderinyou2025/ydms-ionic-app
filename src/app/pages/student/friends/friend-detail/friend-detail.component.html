@@ -1,8 +1,8 @@
-<ion-header>
-  <ion-buttons class="absolute top-4 left-4 z-10">
-    <ion-back-button text="" color="white" defaultHref="/{{PageRoutes.FRIENDS}}"></ion-back-button>
-  </ion-buttons>
-</ion-header>
+<app-header
+  [pageTitle]="TranslateKeys.TITLE_FRIENDS"
+  backgroundColor="linear-gradient(to right, #0a1f5c, #4a2a8c)"
+  [animeImage]="animeImage">
+</app-header>
 
 <ion-content [fullscreen]="true">
   <div class="flex items-center justify-center w-full h-full">
@@ -13,36 +13,36 @@
           <p class="text-center font-bold text-lg text-teal-500 italic mt-2">{{ friend?.name }}</p>
         </ion-col>
         <ion-col size="6" class="my-auto">
-          <div class="mb-3 rounded-lg border border-gray-300 shadow-sm">
+          <div class="mb-4 rounded-lg border border-gray-300 shadow-sm">
             <div class="flex items-center p-4 px-4 gap-1">
-              <ion-icon name="ribbon" class="text-3xl text-orange-500"></ion-icon>
+              <ion-img src="/assets/icons/svg/ico_top_achievement.svg" class="w-9 h-9 pr-2"></ion-img>
               <div>
                 <div class="text-xl font-bold text-green-500 leading-none">{{ friend?.achievements }}</div>
                 <div class="text-sm text-gray-500 font-semibold leading-none">{{ TranslateKeys.TITLE_BADGES | translate }}</div>
               </div>
             </div>
           </div>
-          <div class="mb-3 rounded-lg border border-gray-300  shadow-sm">
+          <div class="mb-4 rounded-lg border border-gray-300  shadow-sm">
             <div class="flex items-center p-4 px-4 gap-1">
-              <ion-icon name="podium" class="text-3xl text-blue-500"></ion-icon>
+              <ion-img src="/assets/icons/svg/ico_top_rank.svg" class="w-9 h-9 pr-2"></ion-img>
               <div>
                 <div class="text-xl font-bold text-green-500 leading-none">{{ friend?.rank }}</div>
                 <div class="text-sm text-gray-500 font-semibold leading-none">{{ TranslateKeys.TITLE_RANK | translate }}</div>
               </div>
             </div>
           </div>
-          <div class="mb-3 rounded-lg border border-gray-300  shadow-sm">
+          <div class="mb-4 rounded-lg border border-gray-300  shadow-sm">
             <div class="flex items-center p-4 px-4 gap-1">
-              <ion-icon name="flash" class="text-3xl text-yellow-500"></ion-icon>
+              <ion-img src="/assets/icons/svg/ico_top_mission.svg" class="w-9 h-9 pr-2"></ion-img>
               <div>
                 <div class="text-xl font-bold text-green-500 leading-none">{{ friend?.friendshipLevel }}</div>
                 <div class="text-sm text-gray-500 font-semibold leading-none">{{ TranslateKeys.TITLE_MISSIONS | translate }}</div>
               </div>
             </div>
           </div>
-          <div class="mb-3 rounded-lg border border-gray-300  shadow-sm">
+          <div class="mb-4 rounded-lg border border-gray-300  shadow-sm">
             <div class="flex items-center p-4 px-4 gap-1">
-              <ion-icon name="heart" class="text-3xl text-red-500"></ion-icon>
+              <ion-img src="/assets/icons/svg/ico_top_friendly.svg" class="w-9 h-9 pr-2"></ion-img>
               <div>
                 <div class="text-xl font-bold text-green-500 leading-none">{{ friend?.likeCount }}</div>
                 <div class="text-sm text-gray-500 font-semibold leading-none">{{ TranslateKeys.TITLE_FRIENDLY | translate }}</div>
