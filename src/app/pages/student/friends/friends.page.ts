@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+
 import { TranslateKeys } from '../../../shared/enums/translate-keys';
 import { PageRoutes } from '../../../shared/enums/page-routes';
 import { FriendService } from '../../../services/friend/friend.service';
 import { IFriend } from '../../../shared/interfaces/friend/friend';
+import { IHeaderAnimeImage, IHeaderSearchbar } from '../../../shared/interfaces/header/header';
+import { InputTypes } from '../../../shared/enums/input-types';
 
 @Component({
   selector: 'app-friends',
@@ -13,6 +17,8 @@ import { IFriend } from '../../../shared/interfaces/friend/friend';
 export class FriendsPage implements OnInit {
 
   friends: IFriend[] = [];
+  searchbar!: IHeaderSearchbar;
+  animeImage!: IHeaderAnimeImage;
   totalFriends: number = 0;
   searchTerm: string = '';
 
@@ -21,12 +27,18 @@ export class FriendsPage implements OnInit {
   pageSize: number = 10;
   hasMoreData: boolean = true;
 
+  protected readonly TranslateKeys = TranslateKeys;
+  protected readonly PageRoutes = PageRoutes;
+
   constructor(
-    private friendService: FriendService
-  ) { }
+    private friendService: FriendService,
+    private translate: TranslateService
+  ) {
+  }
 
   ngOnInit() {
     this.loadFriends();
+    this.initHeader();
   }
 
   /**
@@ -90,19 +102,38 @@ export class FriendsPage implements OnInit {
    * @param event Refresh event
    */
   doRefresh(event: any) {
-    // Reset and reload data
     this.loadFriends(event, true);
   }
 
   /**
    * Handle search input changes
    */
-  onSearchChange(event: any) {
-    this.searchTerm = event.detail.value;
+  onSearchChange(searchTerm: string) {
+    this.searchTerm = searchTerm || '';
     // Reset pagination and reload with search term
     this.loadFriends(null, true);
   }
 
-  protected readonly TranslateKeys = TranslateKeys;
-  protected readonly PageRoutes = PageRoutes;
+  /**
+   * initHeader
+   * @private
+   */
+  private initHeader(): void {
+    this.searchbar = {
+      type: InputTypes.SEARCH,
+      inputmode: InputTypes.TEXT,
+      placeholder: this.translate.instant(TranslateKeys.TITLE_SEARCH_FRIENDS),
+      animated: true,
+      showClearButton: true,
+    };
+    this.animeImage = {
+      imageUrl: '/assets/images/owl_img.png',
+      width: '100px',
+      height: 'auto',
+      position: {
+        position: 'absolute',
+        top: '-10px'
+      }
+    }
+  }
 }

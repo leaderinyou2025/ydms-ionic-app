@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { AnimationOptions } from 'ngx-lottie';
 
@@ -6,7 +6,7 @@ import { AuthService } from '../../../services/auth/auth.service';
 import { TranslateKeys } from '../../../shared/enums/translate-keys';
 import { StatusItemType } from '../../../shared/enums/home/status-item-type.enum';
 import { ForceTestData } from '../../../shared/classes/force-test-data';
-import { IStatusItem, ITask, ICharacter, IProgress, } from '../../../shared/interfaces/home/home.interfaces';
+import { ICharacter, IProgress, IStatusItem, ITask, } from '../../../shared/interfaces/home/home.interfaces';
 import { OdooService } from '../../../services/odoo/odoo.service';
 
 @Component({
@@ -15,15 +15,20 @@ import { OdooService } from '../../../services/odoo/odoo.service';
   styleUrls: ['home.page.scss'],
   standalone: false,
 })
-export class HomePage {
+export class HomePage implements OnInit {
 
   protected readonly TranslateKeys = TranslateKeys;
 
+  // Animation option
   options: AnimationOptions = {
     path: '/assets/animations/1747072943680.json',
     loop: true,
     autoplay: true,
   };
+
+  // User setting background and avatar
+  background!: string;
+  avatar!: string;
 
   /**
    * Character information
@@ -62,6 +67,11 @@ export class HomePage {
 
   async ngOnInit() {
     await this.loadHomeData();
+
+  }
+
+  ionViewWillEnter() {
+    this.loadConfigAvatarAndBackground();
   }
 
   /**
@@ -211,13 +221,13 @@ export class HomePage {
   public getImagePathByType(type: StatusItemType): string {
     switch (type) {
       case StatusItemType.BADGE:
-        return 'assets/images/badge.webp';
+        return 'assets/icons/svg/ico_top_achievement.svg';
       case StatusItemType.RANK:
-        return 'assets/images/rank.png';
+        return 'assets/icons/svg/ico_top_rank.svg';
       case StatusItemType.MISSION:
-        return 'assets/images/lighting.png';
+        return 'assets/icons/svg/ico_top_mission.svg';
       case StatusItemType.FRIENDLY:
-        return 'assets/images/heart.png';
+        return 'assets/icons/svg/ico_top_friendly.svg';
       default:
         return '';
     }
@@ -231,4 +241,15 @@ export class HomePage {
 
   }
 
+  /**
+   * Load user setting background and avatar image
+   */
+  public loadConfigAvatarAndBackground(): void {
+    this.authService.getThemeSettings().then(themeSettings => {
+      if (themeSettings?.background?.resource_url)
+        this.background = `url(${themeSettings.background.resource_url})`;
+      if (themeSettings?.avatar?.resource_url)
+        this.avatar = themeSettings?.avatar?.resource_url;
+    })
+  }
 }

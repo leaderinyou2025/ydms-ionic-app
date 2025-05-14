@@ -1,9 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
-import {SegmentValue} from "@ionic/angular";
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { SegmentValue } from '@ionic/angular';
+
 import { TranslateKeys } from '../../../shared/enums/translate-keys';
-import { IRankItem } from "../../../shared/interfaces/rank/rank.interfaces";
-import { IAchievementCategory } from "../../../shared/interfaces/rank/achievement.interfaces";
+import { IRankItem } from '../../../shared/interfaces/rank/rank.interfaces';
+import { IAchievementCategory } from '../../../shared/interfaces/rank/achievement.interfaces';
 import { RankService } from '../../../services/rank/rank.service';
+import { IHeaderAnimation, IHeaderAnimeImage, IHeaderSegment } from '../../../shared/interfaces/header/header';
 
 @Component({
   selector: 'app-rank',
@@ -12,11 +14,16 @@ import { RankService } from '../../../services/rank/rank.service';
   standalone: false,
 })
 export class RankPage implements OnInit, AfterViewInit, OnDestroy {
-  activeTab: 'rank' | 'achievements' = 'rank';
+
   isLoading: boolean = false;
   rankList: IRankItem[] = [];
   userRank: IRankItem | undefined;
   achievements: IAchievementCategory[] = [];
+
+  activeTab: 'rank' | 'achievements' = 'rank';
+  segment!: IHeaderSegment;
+  animeImage!: IHeaderAnimeImage;
+  animation!: IHeaderAnimation;
 
   @ViewChild('rankTableBody') rankTableBody!: ElementRef;
   isCurrentUserVisible: boolean = false;
@@ -25,9 +32,11 @@ export class RankPage implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private rankService: RankService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
+    this.initHeader();
     this.loadRankData();
     this.loadAchievements();
   }
@@ -156,5 +165,43 @@ export class RankPage implements OnInit, AfterViewInit, OnDestroy {
     }
 
     return currentUser;
+  }
+
+  /**
+   * init header
+   * @private
+   */
+  private initHeader(): void {
+    this.segment = {
+      value: this.activeTab,
+      buttons: [
+        {value: 'rank', label: TranslateKeys.TITLE_RANK},
+        {value: 'achievements', label: TranslateKeys.TITLE_ACHIEVEMENTS}
+      ]
+    };
+    this.animeImage = {
+      name: 'rank',
+      imageUrl: '/assets/images/rank/ranking.png',
+      width: '130px',
+      height: 'auto',
+      position: {
+        position: 'absolute',
+        right: '-20px'
+      }
+    };
+    this.animation = {
+      animation: {
+        path: '/assets/animations/1747072943679.json',
+        loop: true,
+        autoplay: true,
+      },
+      width: '130px',
+      height: '130px',
+      position: {
+        position: 'absolute',
+        top: '-30px',
+        right: '50px',
+      }
+    }
   }
 }

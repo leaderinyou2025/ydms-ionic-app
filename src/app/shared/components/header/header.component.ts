@@ -1,0 +1,106 @@
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SearchbarCustomEvent, SegmentCustomEvent } from '@ionic/angular';
+
+import { PageRoutes } from '../../enums/page-routes';
+import { AuthService } from '../../../services/auth/auth.service';
+import { UserRoles } from '../../enums/user-roles';
+import { TranslateKeys } from '../../enums/translate-keys';
+import { IHeaderAnimation, IHeaderAnimeImage, IHeaderSearchbar, IHeaderSegment } from '../../interfaces/header/header';
+
+@Component({
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss'],
+  standalone: false,
+})
+export class HeaderComponent implements OnInit {
+
+  @Input() defaultBackHref!: string;
+  @Input() pageTitle!: TranslateKeys;
+  @Input() backgroundImageUrl!: string;
+  @Input() backgroundColor!: string;
+  @Input() animation!: IHeaderAnimation;
+  @Input() animeImage!: IHeaderAnimeImage;
+
+  @Input() searchbar!: IHeaderSearchbar;
+  @Output() inputSearch = new EventEmitter<string>();
+
+  @Input() segment?: IHeaderSegment;
+  @Output() changeSegment = new EventEmitter<string | number>();
+
+  protected readonly PageRoutes = PageRoutes;
+  protected readonly TranslateKeys = TranslateKeys;
+
+  constructor(
+    private authService: AuthService,
+  ) {
+  }
+
+  ngOnInit() {
+    this.loadDefaultBackHref();
+
+  }
+
+  /**
+   * On input search, emit event output search value for parent
+   * @param event
+   */
+  public onInputSearch(event: SearchbarCustomEvent): void {
+    console.log('onInputSearch', event.detail.value);
+    this.inputSearch.emit(event.detail.value || '');
+  }
+
+  /**
+   * On change segment, emit event output change segment value for parent
+   * @param event
+   */
+  public onChangeSegment(event: SegmentCustomEvent): void {
+    console.log('onChangeSegment', event.detail.value);
+    this.changeSegment.emit(event.detail.value || '');
+  }
+
+  /**
+   * Style background of header
+   */
+  public getBackgroundStyle(): { [key: string]: string } {
+    if (this.backgroundColor?.startsWith('linear-gradient')) {
+      return {
+        'background-image': this.backgroundColor,
+        'background-size': 'cover',
+        'background-repeat': 'no-repeat',
+        'background-position': 'center'
+      };
+    } else if (this.backgroundColor) {
+      return {
+        'background': this.backgroundColor
+      };
+    } else if (this.backgroundImageUrl) {
+      return {
+        'background-image': 'url(' + this.backgroundImageUrl + ')',
+        'background-size': 'cover',
+        'background-repeat': 'no-repeat',
+        'background-position': 'right bottom'
+      };
+    } else {
+      return {
+        'background': '#fff'
+      };
+    }
+  }
+
+  /**
+   * Set defaultBackHref by user role
+   * @private
+   */
+  private loadDefaultBackHref(): void {
+    if (!this.defaultBackHref) {
+      if (this.authService.getRole() === UserRoles.STUDENT) {
+        this.defaultBackHref = `/${PageRoutes.HOME}`;
+      } else if (this.authService.getRole() === UserRoles.PARENT) {
+        this.defaultBackHref = `/${PageRoutes.PARENT_DASHBOARD}`;
+      } else {
+        this.defaultBackHref = `/${PageRoutes.TEACHER_DASHBOARD}`;
+      }
+    }
+  }
+}

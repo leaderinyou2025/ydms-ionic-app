@@ -1,23 +1,21 @@
-<ion-header>
-  <ion-toolbar class="home-toolbar">
-    <div class="flex justify-between py-3 w-full h-auto ion-padding-start ion-padding-end">
-      <div class="flex items-center" *ngFor="let item of statusItems">
-        <ion-img [src]="getImagePathByType(item.type)" alt="icon" class="w-7 h-7 mr-1 object-contain"></ion-img>
-        <div class="flex flex-col justify-center">
-          <span class="text-xs text-green-500 font-bold">{{ item.value }}</span>
-          <span class="block text-center text-xs text-gray-600 dark:text-gray-400">{{ item.label }}</span>
-        </div>
+<ion-toolbar class="home-toolbar">
+  <div class="flex justify-between py-3 w-full h-auto ion-padding-start ion-padding-end">
+    <div class="flex items-center" *ngFor="let item of statusItems">
+      <ion-img [src]="getImagePathByType(item.type)" alt="icon" class="w-7 h-7 mr-1 object-contain"></ion-img>
+      <div class="flex flex-col justify-center">
+        <span class="text-xs text-green-500 font-bold">{{ item.value }}</span>
+        <span class="block text-center text-xs text-gray-600 dark:text-gray-400">{{ item.label }}</span>
       </div>
     </div>
-  </ion-toolbar>
-</ion-header>
+  </div>
+</ion-toolbar>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="home-content" [style.background-image]="background">
 
   <!-- Main Character -->
   <div class="flex flex-col items-center my-5">
-    <div class="relative mb-8">
-      <ion-img [src]="character.imagePath" [alt]="character.altText || character.name"></ion-img>
+    <div class="relative mb-8" *ngIf="avatar">
+      <ion-img [src]="avatar" [alt]="character.altText || character.name"></ion-img>
     </div>
     <div class="flex items-center">
       <div class="relative">
@@ -49,7 +47,7 @@
           <div class="flex-1">
             <p class="text-sm mb-1">{{ task.description }}</p>
             <div class="flex items-center text-sm">
-              <ion-img src="assets/images/lighting.png" alt="icon" class="w-5 h-5 object-contain"></ion-img>
+              <ion-img src="assets/icons/svg/ico_top_mission.svg" alt="icon" class="w-5 h-5 object-contain"></ion-img>
               <span>+{{ task.points }}</span>
             </div>
           </div>

@@ -1,0 +1,89 @@
+<ion-header [ngStyle]="getBackgroundStyle()" class="block relative w-full h-auto">
+  <!-- Back button -->
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" mode="ios" [defaultHref]="defaultBackHref"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <!-- Page title -->
+  <div *ngIf="pageTitle" class="block pt-2 ion-padding-start ion-padding-end" [class]="(animation || animeImage) ? 'w-2/3' : 'w-full'">
+    <h1 class="text-2xl font-semibold text-white m-0 p-0">
+      {{ pageTitle | translate }}
+    </h1>
+  </div>
+
+  <!-- Anime image -->
+  <ng-container *ngIf="animeImage">
+    <ion-img [src]="animeImage.imageUrl"
+             [alt]="animeImage.name"
+             [class]="animeImage?.position?.position || 'absolute'"
+             [style.top]="animeImage?.position?.top || 'auto'"
+             [style.right]="animeImage?.position?.right || '0'"
+             [style.bottom]="animeImage?.position?.bottom || '0'"
+             [style.left]="animeImage?.position?.left || 'auto'"
+             [style.width]="animeImage.width"
+             [style.height]="animeImage.height"></ion-img>
+  </ng-container>
+
+  <!-- Animation  -->
+  <ng-container *ngIf="animation">
+    <ng-lottie [class]="animation.position?.position || 'absolute'"
+               [style.top]="animation.position?.top || 'auto'"
+               [style.right]="animation.position?.right || '0'"
+               [style.bottom]="animation.position?.bottom || '0'"
+               [style.left]="animation.position?.left || 'auto'"
+               [options]="animation.animation"
+               [style.width]="animation.width"
+               [style.height]="animation.height"></ng-lottie>
+  </ng-container>
+
+  <!-- Searchbar & segment -->
+  <div class="flex items-end justify-items-center w-full h-28">
+    <!-- Searchbar -->
+    <div *ngIf="searchbar" class="block w-full py-2 ion-padding-start ion-padding-end">
+      <ion-searchbar
+        mode="ios"
+        [type]="searchbar.type"
+        [inputmode]="searchbar.inputmode"
+        [placeholder]="searchbar.placeholder"
+        [value]="searchbar.value"
+        [disabled]="searchbar.disabled"
+        [searchIcon]="searchbar.searchIcon"
+        [showCancelButton]="searchbar.showCancelButton"
+        [cancelButtonText]="searchbar.cancelButtonText"
+        [cancelButtonIcon]="searchbar.cancelButtonIcon"
+        [showClearButton]="searchbar.showClearButton"
+        [clearIcon]="searchbar.clearIcon"
+        [maxlength]="searchbar.maxlength"
+        [minlength]="searchbar.minlength"
+        [debounce]="searchbar.debounce || 1000"
+        [animated]="searchbar.animated"
+        (ionInput)="onInputSearch($event)">
+      </ion-searchbar>
+    </div>
+
+    <!-- Segment -->
+    <div *ngIf="segment" class="block w-full py-2 px-1">
+      <ion-segment
+        mode="ios"
+        [color]="segment.color"
+        [value]="segment.value"
+        [scrollable]="segment.scrollable"
+        [disabled]="segment.disabled"
+        (ionChange)="onChangeSegment($event)">
+
+        <ng-container *ngFor="let segmentButton of segment.buttons">
+          <ion-segment-button
+            [value]="segmentButton.value"
+            [layout]="segmentButton.layout"
+            [type]="segmentButton.type"
+            [disabled]="segmentButton.disabled">
+            <ion-label *ngIf="segmentButton.label">{{ segmentButton.label | translate }}</ion-label>
+            <ion-icon *ngIf="segmentButton.icon" [name]="segmentButton.icon" [color]="segmentButton.iconColor"></ion-icon>
+          </ion-segment-button>
+        </ng-container>
+      </ion-segment>
+    </div>
+  </div>
+</ion-header>

@@ -12,6 +12,8 @@ import { PinVerifyModalComponent } from './components/pin-verify-modal/pin-verif
 import { FooterComponent } from './components/footer/footer.component';
 import { ImageCarouselSelectComponent } from './components/image-carousel-select/image-carousel-select.component';
 import { SoundClickDirective } from '../core/directive/sound-click.directive';
+import { HeaderComponent } from './components/header/header.component';
+import { LottieComponent } from 'ngx-lottie';
 
 @NgModule({
   declarations: [
@@ -20,24 +22,27 @@ import { SoundClickDirective } from '../core/directive/sound-click.directive';
     PinSetupModalComponent,
     PinVerifyModalComponent,
     FooterComponent,
-    ImageCarouselSelectComponent
+    ImageCarouselSelectComponent,
+    HeaderComponent,
   ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    TranslatePipe,
-    SoundClickDirective,
-    RouterLink,
-    RouterLinkActive,
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        TranslatePipe,
+        SoundClickDirective,
+        RouterLink,
+        RouterLinkActive,
+        LottieComponent,
+    ],
   exports: [
     SelectDatetimeComponent,
     PinUnlockComponent,
     PinSetupModalComponent,
     PinVerifyModalComponent,
     FooterComponent,
-    ImageCarouselSelectComponent
+    ImageCarouselSelectComponent,
+    HeaderComponent,
   ]
 })
 export class SharedModule {

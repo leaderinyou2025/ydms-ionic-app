@@ -28,12 +28,14 @@ import { INotificationSettings } from '../../shared/interfaces/settings/notifica
 import { ISoundSettings } from '../../shared/interfaces/settings/sound-settings';
 import { IThemeSettings } from '../../shared/interfaces/settings/theme-settings';
 import { IPrivacyRightsSettings } from '../../shared/interfaces/settings/privacy-rights-settings';
+import { UserRoles } from '../../shared/enums/user-roles';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private authData!: IAuthData | undefined;
+  private userRoles!: UserRoles | undefined;
 
   constructor(
     private loadingController: LoadingController,
@@ -54,6 +56,23 @@ export class AuthService {
   public isAuthenticated(): boolean {
     const authToken = this.localStorageService.get<string>(StorageKey.AUTH_TOKEN_SESSION);
     return authToken !== undefined;
+  }
+
+  /**
+   * Get cache user role
+   */
+  public getRole(): UserRoles | undefined {
+    if (!this.userRoles) this.userRoles = this.localStorageService.get<UserRoles>(StorageKey.USER_ROLE);
+    return this.userRoles;
+  }
+
+  /**
+   * Set cache user role
+   * @param role
+   */
+  public setRole(role: UserRoles): void {
+    this.userRoles = role;
+    this.localStorageService.set<UserRoles>(StorageKey.USER_ROLE, this.userRoles);
   }
 
   /**
@@ -255,6 +274,7 @@ export class AuthService {
 
     // Saved user profile to localStorage not sync back to server
     this.saveAuthToken(password);
+    this.setRole(userProfile.role);
     await this.setAuthData(userProfile, false);
 
     return true;
