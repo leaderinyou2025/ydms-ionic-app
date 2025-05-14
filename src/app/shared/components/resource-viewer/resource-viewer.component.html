@@ -1,0 +1,68 @@
+
+<div class="flex flex-col h-full bg-white">
+  <!-- Content -->
+  <div class="flex-1 overflow-auto">
+    <!-- Loading indicator -->
+    <div *ngIf="isLoading" class="flex justify-center items-center h-32">
+      <ion-spinner name="crescent"></ion-spinner>
+      <span class="ml-2 text-gray-600">{{ TranslateKeys.RESOURCE_LOADING | translate }}</span>
+    </div>
+
+    <!-- Resource not found -->
+    <div *ngIf="!resource" class="flex flex-col justify-center items-center h-32 text-gray-500">
+      <ion-icon name="alert-circle-outline" class="text-4xl mb-2"></ion-icon>
+      <p>{{ TranslateKeys.RESOURCE_NOT_FOUND | translate }}</p>
+    </div>
+
+    <!-- Resource content -->
+    <div *ngIf="resource" class="resource-content">
+      <!-- Video content -->
+      <div *ngIf="isVideo()" class="relative pb-[56.25%] h-0 overflow-hidden">
+        <iframe
+          *ngIf="safeResourceUrl"
+          [src]="safeResourceUrl"
+          frameborder="0"
+          allowfullscreen
+          (load)="onIframeLoad()"
+          class="absolute top-0 left-0 w-full h-full"
+        ></iframe>
+      </div>
+
+      <!-- Document content -->
+      <div *ngIf="isPdfDocument()" class="h-[70vh]">
+        <iframe
+          *ngIf="safeResourceUrl"
+          [src]="safeResourceUrl"
+          frameborder="0"
+          (load)="onIframeLoad()"
+          class="w-full h-full"
+        ></iframe>
+      </div>
+
+      <!-- Resource details -->
+      <div class="p-4">
+        <h2 class="text-xl font-bold text-gray-800 mb-2">{{ resource.title }}</h2>
+
+        <div class="flex items-center mb-4">
+          <ion-chip class="mr-2 bg-blue-100 text-blue-800">
+            <ion-icon [name]="isVideo() ? 'videocam-outline' : 'document-text-outline'"></ion-icon>
+            <ion-label>{{ isVideo() ? (TranslateKeys.RESOURCE_TYPE_VIDEO | translate) : (TranslateKeys.RESOURCE_TYPE_DOCUMENT | translate) }}</ion-label>
+          </ion-chip>
+
+          <ion-chip class="bg-purple-100 text-purple-800">
+            <ion-label>{{ 'RESOURCE.topic_' + resource.topic.toLowerCase() | translate }}</ion-label>
+          </ion-chip>
+
+          <div class="ml-auto text-sm text-gray-500 flex items-center">
+            <ion-icon name="eye-outline" class="mr-1"></ion-icon>
+            <span>{{ resource.viewCount }}</span>
+          </div>
+        </div>
+
+        <div class="text-gray-700">
+          <p>{{ resource.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

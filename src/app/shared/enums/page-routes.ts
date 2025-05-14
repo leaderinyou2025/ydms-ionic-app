@@ -21,6 +21,7 @@ export enum PageRoutes {
   CHATBOT = 'chatbot',
   FRIENDS = 'friends',
   RANK = 'rank',
+  LIBRARY = 'library',
   PARENT_DASHBOARD = 'parent-database',
   TEACHER_DASHBOARD = 'teacher-dashboard',
   FAMILY_CONFLICT_SURVEY = 'family-conflict-survey',

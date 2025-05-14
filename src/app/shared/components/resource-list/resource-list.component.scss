@@ -1,0 +1,16 @@
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
+ion-button {
+  --border-radius: 24px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  font-size: 14px;
+  height: 24px;
+}

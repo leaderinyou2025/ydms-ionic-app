@@ -11,6 +11,7 @@ import { PinSetupModalComponent } from './components/pin-setup-modal/pin-setup-m
 import { PinVerifyModalComponent } from './components/pin-verify-modal/pin-verify-modal.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ImageCarouselSelectComponent } from './components/image-carousel-select/image-carousel-select.component';
+
 import { SoundClickDirective } from '../core/directive/sound-click.directive';
 import { HeaderComponent } from './components/header/header.component';
 import { LottieComponent } from 'ngx-lottie';
