@@ -17,11 +17,11 @@
   <ng-container *ngIf="animeImage">
     <ion-img [src]="animeImage.imageUrl"
              [alt]="animeImage.name"
-             [class]="animeImage?.position?.position || 'absolute'"
-             [style.top]="animeImage?.position?.top || 'auto'"
-             [style.right]="animeImage?.position?.right || '0'"
-             [style.bottom]="animeImage?.position?.bottom || '0'"
-             [style.left]="animeImage?.position?.left || 'auto'"
+             [class]="animeImage.position?.position || 'absolute'"
+             [style.top]="animeImage.position?.top || 'auto'"
+             [style.right]="animeImage.position?.right || '0'"
+             [style.bottom]="animeImage.position?.bottom || '0'"
+             [style.left]="animeImage.position?.left || 'auto'"
              [style.width]="animeImage.width"
              [style.height]="animeImage.height"></ion-img>
   </ng-container>

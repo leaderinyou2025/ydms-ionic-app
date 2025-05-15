@@ -19,7 +19,7 @@ import { NativePlatform } from '../../shared/enums/native-platform';
 })
 export class LiveUpdateService {
 
-  private readonly liveUpdateFields!: Array<string>;
+  public liveUpdateFields = ['platform', 'version_build', 'version_code', 'public_url'];
 
   constructor(
     private platform: Platform,
@@ -27,16 +27,15 @@ export class LiveUpdateService {
     private storageService: StorageService,
     private networkService: NetworkService
   ) {
-    // Load live update model fields from AppVersion interface
-    this.liveUpdateFields = CommonConstants.getKeys<ILiyYdmsAppVersion>() as string[];
   }
 
   /**
    * Check and live update app
    */
-  async checkUpdateApp(): Promise<void> {
-    if (this.platform.is(NativePlatform.MOBILEWEB) || (!this.platform.is(NativePlatform.IOS) && !this.platform.is(NativePlatform.ANDROID))) {
-      return;
+  async checkUpdateApp(): Promise<boolean> {
+    if (this.platform.is(NativePlatform.MOBILEWEB) ||
+      (!this.platform.is(NativePlatform.IOS) && !this.platform.is(NativePlatform.ANDROID))) {
+      return false;
     }
 
     let localAppVersion = await this.storageService.get<ILiyYdmsAppVersion>(StorageKey.CURRENT_APP_VERSION);
@@ -46,29 +45,32 @@ export class LiveUpdateService {
       localAppVersion = {
         id: Math.random(),
         name: appInfo.name,
-        bundle_id: appInfo.id,
+        app_bundle_id: appInfo.id,
         platform: this.platform.is(NativePlatform.ANDROID) ? NativePlatform.ANDROID : NativePlatform.IOS,
         version_build: currentAppVersion || appInfo.version,
         version_code: appInfo.build,
-        bundle_file: '',
+        public_url: '',
       };
     }
 
+    // Get latest version from server
     const latestVersion = await this.getLatestAppVersion();
-    if (!latestVersion || !latestVersion?.version_build || !latestVersion?.bundle_file) {
+    if (!latestVersion || !latestVersion?.version_build || !latestVersion?.public_url) {
       console.error('Can not get app version from server.');
-      return;
+      return false;
     }
 
+    // Check local version with latest version on server
     if (localAppVersion.version_build === latestVersion.version_build) {
       console.error(`The app version ${latestVersion.version_build} is latest.`);
-      return;
+      return false;
     }
 
-    await LiveUpdate.downloadBundle({url: latestVersion.bundle_file, bundleId: latestVersion.version_build,});
-    // await LiveUpdate.setBundle({bundleId: latestVersion.version_build});
+    await LiveUpdate.downloadBundle({url: latestVersion.public_url, bundleId: latestVersion.version_build,});
+    await LiveUpdate.setBundle({bundleId: latestVersion.version_build});
     await this.storageService.set<ILiyYdmsAppVersion>(StorageKey.CURRENT_APP_VERSION, latestVersion);
     await LiveUpdate.reload();
+    return true;
   }
 
   /**
@@ -78,16 +80,12 @@ export class LiveUpdateService {
   async getLatestAppVersion(): Promise<ILiyYdmsAppVersion | undefined> {
     if (!this.networkService.isOnline()) return;
 
-    const appInfo = await App.getInfo();
     const platformKey: keyof ILiyYdmsAppVersion = 'platform';
-    const bundleIdKey: keyof ILiyYdmsAppVersion = 'bundle_id';
     const activeKey: keyof ILiyYdmsAppVersion = 'active';
     const platform = this.platform.is(NativePlatform.ANDROID) ? NativePlatform.ANDROID : NativePlatform.IOS;
 
-    // TODO: Call api to get latest app version
     const args: SearchDomain = [
       [platformKey, OdooDomainOperator.EQUAL, platform],
-      [bundleIdKey, OdooDomainOperator.EQUAL, appInfo.id],
       [activeKey, OdooDomainOperator.EQUAL, true]
     ];
     const appVersions: Array<ILiyYdmsAppVersion> = await this.odooService.searchRead(

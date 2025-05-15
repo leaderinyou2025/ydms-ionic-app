@@ -6,8 +6,10 @@ export const environment = {
   production: false,
   serverUrl: 'https://ydms-dev.leaderinyou.vn/jsonrpc',
   checkInternetConnectionUrl: 'https://www.cloudflare.com/cdn-cgi/trace',
-  database: 'liy_ydms_dev',
+  database: 'ydms_dev',
   salt: '5xgc9QHlMHsWbaYLlSFhKABnZWwVkwVC',
+  appVersionManagerAccessId: 6,
+  appVersionManagerAccessToken: 'MIICWgIBAAKBgGIszc8KLYNqaszSb1d1HD8tqV/xz5v64B3KcJtsAKGzMAVRmSMu',
   webPushPublicKey: 'BEifqADxDf2KwsImWoSGavULRJbZGqGBdC76UmvuTsG2C62G1MrzMmm5TYwM2TLTjfKQ9vQ08yD7dU190DpiIB4',
   firebaseConfig: {
     apiKey: 'AIzaSyB0vQ9mVAyhF9PUL4htX169rH6DZK2vRrE',
@@ -19,7 +21,6 @@ export const environment = {
     measurementId: 'G-3M7EKD6CX9'
   }
 };
-
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

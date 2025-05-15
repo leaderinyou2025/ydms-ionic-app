@@ -115,6 +115,7 @@ export enum TranslateKeys {
   TITLE_ENTER_NEW_PIN = 'TITLE.enter_new_pin',
   TITLE_CONFIRM_NEW_PIN = 'TITLE.confirm_new_pin',
   TITLE_ENTER_CURRENT_PIN = 'TITLE.enter_current_pin',
+  TITLE_APP_UPDATE = 'TITLE.app_update',
 
   // VALIDATE
   VALIDATE_PHONE_REQUIRED = 'VALIDATE.phone_required',
@@ -130,6 +131,7 @@ export enum TranslateKeys {
   ALERT_ERROR_SYSTEM_HEADER = 'ALERT.error_system_header',
   ALERT_ACCESS_PERMISSION_NOTIFICATION = 'ALERT.access_permission_notification_alert',
   ALERT_CONFIRM_LOGOUT = 'ALERT.confirm_logout_alert',
+  ALERT_APP_UPDATE_SUCCESSFUL = 'ALERT.app_update_successful',
 
   // BUTTON TITLES
   BUTTON_CONFIRM = 'BUTTON_TITLES.confirm',

@@ -215,8 +215,8 @@ export class PushNotificationService {
       mode: NativePlatform.IOS
     };
 
-    const alert = await this.alertController.create(alertOption);
-    await alert.present();
+    const alertItem = await this.alertController.create(alertOption);
+    await alertItem.present();
   }
 
   /**

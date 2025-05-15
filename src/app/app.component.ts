@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
+import { Platform } from '@ionic/angular';
 
 import { LocalStorageService } from './services/local-storage/local-storage.service';
 import { AppLockService } from './services/app-lock/app-lock.service';
@@ -8,11 +10,11 @@ import { ThemeService } from './services/theme/theme.service';
 import { AuthService } from './services/auth/auth.service';
 import { SoundService } from './services/sound/sound.service';
 import { TextZoomService } from './services/text-zoom/text-zoom.service';
-import { StorageService } from './services/storage/storage.service';
 import { BiometricService } from './services/biometric/biometric.service';
-import { CommonConstants } from './shared/classes/common-constants';
 import { StorageKey } from './shared/enums/storage-key';
 import { LanguageKeys } from './shared/enums/language-keys';
+import { PageRoutes } from './shared/enums/page-routes';
+import { NativePlatform } from './shared/enums/native-platform';
 
 @Component({
   selector: 'app-root',
@@ -33,12 +35,15 @@ export class AppComponent implements OnInit, OnDestroy {
     private textZoomService: TextZoomService,
     private authService: AuthService,
     private soundService: SoundService,
-    private storageService: StorageService,
-    private biometricService: BiometricService
+    private biometricService: BiometricService,
+    private router: Router,
+    private platform: Platform,
   ) {
   }
 
   ngOnInit() {
+    // Redirect to login page on native device
+    if (this.platform.is(NativePlatform.CAPACITOR)) this.router.navigateByUrl(PageRoutes.LOGIN);
     // Set text zoom
     this.textZoomService.initZoom();
     // Check available biometric

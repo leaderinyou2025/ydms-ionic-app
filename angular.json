@@ -44,7 +44,8 @@
             "allowedCommonJsDependencies": [
               "localforage",
               "howler",
-              "crypto-js"
+              "crypto-js",
+              "lottie-web"
             ]
           },
           "configurations": {

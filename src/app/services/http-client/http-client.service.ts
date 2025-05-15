@@ -100,7 +100,7 @@ export class HttpClientService {
     httpOptions?: IHttpOptions,
     options?: { operation?: string; showAlert?: boolean; timeoutMs?: number; retryTimes?: number }
   ): Promise<T> {
-    const {operation = method, showAlert = true, timeoutMs = 10000, retryTimes = 0} = options || {};
+    const {operation = method, showAlert = true, timeoutMs = 0, retryTimes = 0} = options || {};
 
     let request$: Observable<any>;
 
@@ -184,7 +184,7 @@ export class HttpClientService {
         }
       }
 
-      console.error(`[${operation}] failed:`, errorMessage, error);
+      console.error(`[${operation}] failed:`, JSON.stringify(errorMessage), JSON.stringify(error));
 
       if (showAlert) {
         // this.alertController.create({
