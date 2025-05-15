@@ -7,7 +7,7 @@ import { OdooService, SearchDomain } from '../odoo/odoo.service';
 import { StorageService } from '../storage/storage.service';
 import { NetworkService } from '../network/network.service';
 import { StorageKey } from '../../shared/enums/storage-key';
-import { ILiyYdmsAppVersion } from '../../shared/interfaces/models/liy-ydms-app-version';
+import { ILiyYdmsAppVersion } from '../../shared/interfaces/models/liy.ydms.app.version';
 import { CommonConstants } from '../../shared/classes/common-constants';
 import { ModelName } from '../../shared/enums/model-name';
 import { OrderBy } from '../../shared/enums/order-by';

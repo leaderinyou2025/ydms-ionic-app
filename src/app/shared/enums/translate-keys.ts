@@ -21,6 +21,7 @@ export enum TranslateKeys {
 
   // TITLE
   TITLE_PHONE = 'TITLE.phone',
+  TITLE_ACCOUNT = 'TITLE.account',
   TITLE_EMAIL = 'TITLE.email',
   TITLE_PASSWORD = 'TITLE.password',
   TITLE_NEW_PASSWORD = 'TITLE.new_password',
@@ -116,9 +117,12 @@ export enum TranslateKeys {
   TITLE_CONFIRM_NEW_PIN = 'TITLE.confirm_new_pin',
   TITLE_ENTER_CURRENT_PIN = 'TITLE.enter_current_pin',
   TITLE_APP_UPDATE = 'TITLE.app_update',
+  TITLE_NOT_SET = 'TITLE.not_set',
+  TITLE_NOT_SET_NICKNAME = 'TITLE.not_set_nickname',
 
   // VALIDATE
   VALIDATE_PHONE_REQUIRED = 'VALIDATE.phone_required',
+  VALIDATE_ACCOUNT_REQUIRED = 'VALIDATE.account_required',
   VALIDATE_PASS_REQUIRED = 'VALIDATE.password_required',
   VALIDATE_NEW_PASS_REQUIRED = 'VALIDATE.new_password_required',
   VALIDATE_CONFIRM_PASS_REQUIRED = 'VALIDATE.confirm_password_required',

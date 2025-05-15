@@ -46,7 +46,6 @@ export class HeaderComponent implements OnInit {
    * @param event
    */
   public onInputSearch(event: SearchbarCustomEvent): void {
-    console.log('onInputSearch', event.detail.value);
     this.inputSearch.emit(event.detail.value || '');
   }
 
@@ -55,7 +54,6 @@ export class HeaderComponent implements OnInit {
    * @param event
    */
   public onChangeSegment(event: SegmentCustomEvent): void {
-    console.log('onChangeSegment', event.detail.value);
     this.changeSegment.emit(event.detail.value || '');
   }
 

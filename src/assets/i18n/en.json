@@ -21,6 +21,7 @@
   },
   "TITLE": {
     "phone": "Phone",
+    "account": "Account",
     "email": "Email",
     "password": "Password",
     "login": "Login",
@@ -58,7 +59,7 @@
     "school": "School",
     "class": "Class",
     "theme_and_background": "Theme & background",
-    "notification_and_sound": "Notification & sound",
+    "notification_and_sound": "Sound and notification",
     "language": "Language",
     "account_and_security": "Account & security",
     "privacy_rights": "Privacy rights",
@@ -113,10 +114,13 @@
     "enter_new_pin": "Enter new PIN",
     "confirm_new_pin": "Confirm new PIN",
     "enter_current_pin": "Enter current PIN",
-    "app_update": "App update"
+    "app_update": "App update",
+    "not_set": "Not set",
+    "not_set_nickname": "Nickname not yet"
   },
   "VALIDATE": {
     "phone_required": "Please input your phone number.",
+    "account_required": "Please input your username.",
     "password_required": "Please input your password.",
     "new_password_required": "Please input your new password.",
     "confirm_password_required": "Please confirm your new password.",

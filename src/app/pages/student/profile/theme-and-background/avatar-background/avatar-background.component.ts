@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 import { WallpaperService } from '../../../../../services/wallpaper/wallpaper.service';
 import { TranslateKeys } from '../../../../../shared/enums/translate-keys';
 import { PageRoutes } from '../../../../../shared/enums/page-routes';
-import { ILiyYdmsAssetsResource } from '../../../../../shared/interfaces/models/liy-ydms-assets-resource';
+import { IAssetsResource } from '../../../../../shared/interfaces/settings/assets-resource';
 
 @Component({
   selector: 'app-avatar-background',
@@ -14,8 +14,8 @@ import { ILiyYdmsAssetsResource } from '../../../../../shared/interfaces/models/
 })
 export class AvatarBackgroundComponent implements OnInit {
 
-  wallpapers!: Array<ILiyYdmsAssetsResource>;
-  selectedValue!: ILiyYdmsAssetsResource | undefined;
+  wallpapers!: Array<IAssetsResource>;
+  selectedValue!: IAssetsResource | undefined;
   isBackground!: boolean;
 
   protected readonly TranslateKeys = TranslateKeys;
@@ -37,7 +37,7 @@ export class AvatarBackgroundComponent implements OnInit {
    * selectWallpaper
    * @param selectItem
    */
-  public async selectWallpaper(selectItem: ILiyYdmsAssetsResource) {
+  public async selectWallpaper(selectItem: IAssetsResource) {
     this.selectedValue = selectItem;
     if (this.isBackground) {
       await this.wallpaperService.setSelectedBackgroundImage(selectItem);
@@ -55,7 +55,7 @@ export class AvatarBackgroundComponent implements OnInit {
       this.wallpaperService.getBackgroundWallpapers().subscribe(images => this.wallpapers = images);
       this.wallpaperService.getSelectedBackgroundImage().then(image => this.selectedValue = image);
     } else {
-      this.wallpaperService.getAvatarWallpapers().subscribe(images => this.wallpapers = images);
+      this.wallpaperService.getAvatarWallpapers().then(images => this.wallpapers = images);
       this.wallpaperService.getSelectedAvatar().then(image => this.selectedValue = image);
     }
   }

@@ -14,7 +14,7 @@ import { StyleClass } from '../../../../shared/enums/style-class';
 import { BtnRoles } from '../../../../shared/enums/btn-roles';
 import { TextZoomSize } from '../../../../shared/enums/text-zoom-size';
 import { WallpaperService } from '../../../../services/wallpaper/wallpaper.service';
-import { ILiyYdmsAssetsResource } from '../../../../shared/interfaces/models/liy-ydms-assets-resource';
+import { IAssetsResource } from '../../../../shared/interfaces/settings/assets-resource';
 import { IThemeSettings } from '../../../../shared/interfaces/settings/theme-settings';
 
 @Component({
@@ -26,8 +26,8 @@ import { IThemeSettings } from '../../../../shared/interfaces/settings/theme-set
 export class ThemeAndBackgroundComponent implements OnInit {
 
   themeSettings!: IThemeSettings;
-  selectedBackground!: ILiyYdmsAssetsResource | undefined;
-  selectedAvatar!: ILiyYdmsAssetsResource | undefined;
+  selectedBackground!: IAssetsResource | undefined;
+  selectedAvatar!: IAssetsResource | undefined;
 
   protected readonly PageRoutes = PageRoutes;
   protected readonly TranslateKeys = TranslateKeys;
@@ -63,7 +63,7 @@ export class ThemeAndBackgroundComponent implements OnInit {
         cssClass: this.themeSettings.theme_model === Theme.LIGHT ? StyleClass.SELECTED_BUTTON : '',
         handler: () => {
           this.themeSettings.theme_model = Theme.LIGHT;
-          this.themeService.enableLight();
+          this.themeService.enableLight(false);
         },
       },
       {
@@ -71,7 +71,7 @@ export class ThemeAndBackgroundComponent implements OnInit {
         cssClass: this.themeSettings.theme_model === Theme.DARK ? StyleClass.SELECTED_BUTTON : '',
         handler: () => {
           this.themeSettings.theme_model = Theme.DARK;
-          this.themeService.enableDark();
+          this.themeService.enableDark(false);
         },
       },
       {
@@ -79,7 +79,7 @@ export class ThemeAndBackgroundComponent implements OnInit {
         cssClass: this.themeSettings.theme_model === Theme.SYSTEM ? StyleClass.SELECTED_BUTTON : '',
         handler: () => {
           this.themeSettings.theme_model = Theme.SYSTEM;
-          this.themeService.useSystemTheme();
+          this.themeService.useSystemTheme(false);
         },
       },
       {
@@ -100,7 +100,7 @@ export class ThemeAndBackgroundComponent implements OnInit {
         cssClass: this.themeSettings.text_size === TextZoomSize.SMALL ? StyleClass.SELECTED_BUTTON : '',
         handler: () => {
           this.themeSettings.text_size = TextZoomSize.SMALL;
-          this.textZoomService.setZoom(this.themeSettings.text_size);
+          this.textZoomService.setZoom(this.themeSettings.text_size, false);
         },
       },
       {
@@ -108,7 +108,7 @@ export class ThemeAndBackgroundComponent implements OnInit {
         cssClass: this.themeSettings.text_size === TextZoomSize.MEDIUM ? StyleClass.SELECTED_BUTTON : '',
         handler: () => {
           this.themeSettings.text_size = TextZoomSize.MEDIUM;
-          this.textZoomService.setZoom(this.themeSettings.text_size);
+          this.textZoomService.setZoom(this.themeSettings.text_size, false);
         },
       },
       {
@@ -116,7 +116,7 @@ export class ThemeAndBackgroundComponent implements OnInit {
         cssClass: this.themeSettings.text_size === TextZoomSize.LARGE ? StyleClass.SELECTED_BUTTON : '',
         handler: () => {
           this.themeSettings.text_size = TextZoomSize.LARGE;
-          this.textZoomService.setZoom(this.themeSettings.text_size);
+          this.textZoomService.setZoom(this.themeSettings.text_size, false);
         },
       },
       {
@@ -124,7 +124,7 @@ export class ThemeAndBackgroundComponent implements OnInit {
         cssClass: this.themeSettings.text_size === TextZoomSize.BIG_SIZE ? StyleClass.SELECTED_BUTTON : '',
         handler: () => {
           this.themeSettings.text_size = TextZoomSize.BIG_SIZE;
-          this.textZoomService.setZoom(this.themeSettings.text_size);
+          this.textZoomService.setZoom(this.themeSettings.text_size, false);
         },
       },
       {
@@ -160,12 +160,6 @@ export class ThemeAndBackgroundComponent implements OnInit {
   private loadThemeSettings(): void {
     this.authService.getThemeSettings().then((themeSettings) => {
       if (themeSettings) this.themeSettings = themeSettings;
-      else this.themeSettings = {
-        theme_model: Theme.SYSTEM,
-        text_size: TextZoomSize.MEDIUM,
-        avatar: ForceTestData.avatar_images[0],
-        background: ForceTestData.background_images[0],
-      }
-    })
+    });
   }
 }

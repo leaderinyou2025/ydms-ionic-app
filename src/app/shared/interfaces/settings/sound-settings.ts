@@ -1,4 +1,4 @@
-import { ILiyYdmsAssetsResource } from '../models/liy-ydms-assets-resource';
+import { IAssetsResource } from './assets-resource';
 import { IDictionary } from '../base/dictionary';
 
 export interface ISoundSettings extends IDictionary<any> {
@@ -18,6 +18,6 @@ export interface ISoundSetting {
   sound?: ISoundConfig
 }
 
-export interface ISoundConfig extends ILiyYdmsAssetsResource {
+export interface ISoundConfig extends IAssetsResource {
   volume?: number;
 }
