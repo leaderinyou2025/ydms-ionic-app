@@ -184,13 +184,6 @@ export class CommonConstants {
   }
 
   /**
-   * Get keys of Interface
-   */
-  public static getKeys<T extends object>(): (keyof T)[] {
-    return Object.keys({} as T) as (keyof T)[];
-  }
-
-  /**
    * Return the random string with dynamic length
    * @param length
    */

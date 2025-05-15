@@ -110,6 +110,10 @@ export class LoginPage implements OnInit, OnDestroy {
     await loading.present();
 
     try {
+      // Init login form and handle autocomplete input account
+      this.initLoginForm();
+      this.handleAccountAutocomplete();
+
       // Check network is online
       const isOnline = await this.networkService.isReallyOnline();
       if (isOnline) {
@@ -123,27 +127,23 @@ export class LoginPage implements OnInit, OnDestroy {
           this.isReady = false;
 
           // Preload music
-          await this.soundService.loadUserSounds();
+          this.soundService.loadUserSounds();
 
           // Sync user firebase device token to server
-          await this.pushNotificationService.updateUserFirebaseToken();
+          this.pushNotificationService.updateUserFirebaseToken();
 
           // TODO: Check user role and redirect to home page
-          // await this.router.navigateByUrl();
-          await this.navCtrl.navigateRoot(`/${PageRoutes.HOME}`, {replaceUrl: true});
+          console.error('Navigation to home');
+          this.navCtrl.navigateRoot(`/${PageRoutes.HOME}`, {replaceUrl: true}).finally(() => loading?.dismiss());
           return;
         }
       }
 
-      await loading.dismiss();
-
-      // Init login form and handle autocomplete input account
-      this.initLoginForm();
-      await this.handleAccountAutocomplete();
+      await loading?.dismiss();
       this.isReady = true;
     } finally {
       this.isReady = true;
-      await loading.dismiss();
+      await loading?.dismiss();
     }
   }
 
@@ -342,14 +342,15 @@ export class LoginPage implements OnInit, OnDestroy {
    * Load and handle account autocomplete
    * @private
    */
-  private async handleAccountAutocomplete(): Promise<void> {
+  private handleAccountAutocomplete(): void {
     // Load saved account list
-    const accountList = await this.accountHistoryService.getAccountHistory();
-    this.accountList = accountList.sort((a, b) => b.updated_at - a.updated_at);
-    if (this.accountList.length > 0) {
-      this.loginForm.get('phone')?.setValue(this.accountList[0].username);
-      this.checkBiometricAvailable();
-    }
+    this.accountHistoryService.getAccountHistory().then(accountList => {
+      this.accountList = accountList.sort((a, b) => b.updated_at - a.updated_at);
+      if (this.accountList.length > 0) {
+        this.loginForm.get('phone')?.setValue(this.accountList[0].username);
+        this.checkBiometricAvailable();
+      }
+    });
 
     // Handle subject change input username
     this.inputSubject.pipe(debounceTime(500)).subscribe((input) => {

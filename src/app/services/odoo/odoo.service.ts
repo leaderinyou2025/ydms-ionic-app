@@ -17,7 +17,7 @@ import { OrderBy } from '../../shared/enums/order-by';
 import { RelatedField } from '../../shared/interfaces/base/related-field';
 import { TranslateKeys } from '../../shared/enums/translate-keys';
 import { StyleClass } from '../../shared/enums/style-class';
-import { StorageKey } from '../../shared/enums/storage-key';
+import { IAuthData } from '../../shared/interfaces/auth/auth-data';
 
 
 export type SearchDomain = Array<string | Array<string | number | boolean | Array<string | number>>>;
@@ -162,12 +162,23 @@ export class OdooService {
     paramsArgs: Array<Array<number> | Partial<T> | SearchDomain> = [],
     kwArgs: IKwArgs = {}
   ): Promise<any> {
-    const authData = await this.authService.getAuthData();
-    const authToken = await this.authService.getAuthToken();
-    if (!authData || !authToken) return false;
+    let authData: IAuthData | undefined, authToken: string | undefined;
+    if (model !== ModelName.APP_VERSIONS) {
+      authData = await this.authService.getAuthData();
+      authToken = await this.authService.getAuthToken();
+      if (!authData || !authToken) return false;
+    }
 
     const dataRequest = new RequestPayload();
-    dataRequest.params.args = [environment.database, authData.id, authToken, model, method, paramsArgs, kwArgs];
+    dataRequest.params.args = [
+      environment.database,
+      authData?.id || environment.appVersionManagerAccessId,
+      authToken || environment.appVersionManagerAccessToken,
+      model,
+      method,
+      paramsArgs,
+      kwArgs
+    ];
 
     const result = await this.httpClientService.post(
       environment.serverUrl,
@@ -181,8 +192,8 @@ export class OdooService {
         header: this.translate.instant(TranslateKeys.ALERT_ERROR_SYSTEM_HEADER),
         message: result?.error?.data?.message,
         cssClass: `${StyleClass.ERROR_ALERT} ${StyleClass.TEXT_JUSTIFY}`,
-        buttons: this.translate.instant(TranslateKeys.BUTTON_CLOSE),
-      }).then(alert => alert.present());
+        buttons: [{text: this.translate.instant(TranslateKeys.BUTTON_CLOSE)}],
+      }).then(alertItem => alertItem.present());
     }
 
     return result?.error ? false : (result?.result != null ? result?.result : true);

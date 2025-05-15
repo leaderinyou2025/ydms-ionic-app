@@ -112,7 +112,8 @@
     "auto_lock_30_minutes": "30 minutes",
     "enter_new_pin": "Enter new PIN",
     "confirm_new_pin": "Confirm new PIN",
-    "enter_current_pin": "Enter current PIN"
+    "enter_current_pin": "Enter current PIN",
+    "app_update": "App update"
   },
   "VALIDATE": {
     "phone_required": "Please input your phone number.",
@@ -127,7 +128,8 @@
     "error_header": "Error",
     "error_system_header": "System error",
     "access_permission_notification_alert": "Please allow the app to display notifications to receive the latest updates.",
-    "confirm_logout_alert": "Are you sure you want to log out?"
+    "confirm_logout_alert": "Are you sure you want to log out?",
+    "app_update_successful": "App update successful. You are now running the latest version."
   },
   "BUTTON_TITLES": {
     "confirm": "Confirm",

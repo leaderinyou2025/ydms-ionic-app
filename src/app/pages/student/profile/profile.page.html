@@ -83,6 +83,14 @@
 
     <!--  Chính sách, hỗ trợ  -->
     <ion-list class="mb-2">
+      <ion-item detail="false" (click)="onClickUpdateApp()" *ngIf="platform.is(NativePlatform.CAPACITOR)">
+        <ion-icon name="cog" slot="start" color="primary" class="text-xl"></ion-icon>
+        <ion-label class="py-2">
+          {{ TranslateKeys.TITLE_APP_UPDATE | translate }}<br>
+          <span class="text-sm text-gray-500 italic dark:text-gray-400">{{ TranslateKeys.TITLE_VERSION | translate }}: {{ currentAppVersion }}</span>
+        </ion-label>
+        <ion-icon name="chevron-forward" slot="end" class="text-base"></ion-icon>
+      </ion-item>
       <ion-item [routerLink]="PageRoutes.REPORT_PROBLEMS" detail="false">
         <ion-icon name="warning" slot="start" color="primary" class="text-xl"></ion-icon>
         <ion-label class="py-2">{{ TranslateKeys.TITLE_REPORT_PROBLEMS | translate }}</ion-label>

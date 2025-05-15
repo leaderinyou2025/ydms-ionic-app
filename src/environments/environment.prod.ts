@@ -4,6 +4,8 @@ export const environment = {
   checkInternetConnectionUrl: 'https://www.cloudflare.com/cdn-cgi/trace',
   database: 'liy_ydms',
   salt: '5xgc9QHlMHsWbaYLlSFhKABnZWwVkwVC',
+  appVersionManagerAccessId: 6,
+  appVersionManagerAccessToken: 'MIICWgIBAAKBgGIszc8KLYNqaszSb1d1HD8tqV/xz5v64B3KcJtsAKGzMAVRmSMu',
   webPushPublicKey: 'BEifqADxDf2KwsImWoSGavULRJbZGqGBdC76UmvuTsG2C62G1MrzMmm5TYwM2TLTjfKQ9vQ08yD7dU190DpiIB4',
   firebaseConfig: {
     apiKey: 'AIzaSyB0vQ9mVAyhF9PUL4htX169rH6DZK2vRrE',

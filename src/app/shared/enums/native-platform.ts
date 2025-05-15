@@ -3,4 +3,5 @@ export enum NativePlatform {
   ANDROID = 'android',
   MD = 'md',
   MOBILEWEB = 'mobileweb',
+  CAPACITOR = 'capacitor'
 }

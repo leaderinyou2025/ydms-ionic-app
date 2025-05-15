@@ -36,6 +36,7 @@ import { UserRoles } from '../../shared/enums/user-roles';
 export class AuthService {
   private authData!: IAuthData | undefined;
   private userRoles!: UserRoles | undefined;
+  private userFields = [];
 
   constructor(
     private loadingController: LoadingController,
@@ -344,8 +345,7 @@ export class AuthService {
    * @private
    */
   private async getUserProfile(userId: number): Promise<IAuthData | undefined> {
-    const resUserFields = CommonConstants.getKeys<IAuthData>() as string[];
-    let results = await this.odooService.read<IAuthData>(ModelName.RES_USERS, [userId], resUserFields);
+    let results = await this.odooService.read<IAuthData>(ModelName.RES_USERS, [userId], this.userFields);
     if (!results || results?.length == 0) return;
     results = CommonConstants.convertArr2ListItem(results);
     if (!results?.length) return;

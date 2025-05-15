@@ -113,7 +113,8 @@
     "auto_lock_30_minutes": "30 phút",
     "enter_new_pin": "Nhập mã PIN mới",
     "confirm_new_pin": "Xác nhận mã PIN mới",
-    "enter_current_pin": "Nhập mã PIN hiện tại"
+    "enter_current_pin": "Nhập mã PIN hiện tại",
+    "app_update" : "Cập nhật ứng dụng"
   },
   "VALIDATE": {
     "phone_required": "Vui lòng nhập vào số điện thoại.",
@@ -128,12 +129,13 @@
     "error_header": "Lỗi",
     "error_system_header": "Lỗi hệ thống",
     "access_permission_notification_alert": "Vui lòng cho phép ứng dụng có quyền hiển thị thông báo để nhận được các thông tin cập nhật mới nhất. Xin cảm ơn!",
-    "confirm_logout_alert": "Bạn có chắc chắn muốn đăng xuất?"
+    "confirm_logout_alert": "Bạn có chắc chắn muốn đăng xuất?",
+    "app_update_successful": "Cập nhật ứng dụng thành công. Bạn đã sử dụng phiên bản mới nhất."
   },
   "BUTTON_TITLES": {
     "confirm": "Xác nhận",
     "cancel": "Hủy bỏ",
-    "open_setting": "Mở cài đặt",
+    "open_settings": "Mở cài đặt",
     "ok": "OK",
     "close": "Đóng",
     "set_as_current": "Đặt làm hiện tại",

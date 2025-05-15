@@ -17,11 +17,11 @@
   <ng-container *ngIf="animeImage">
     <ion-img [src]="animeImage.imageUrl"
              [alt]="animeImage.name"
-             [class]="animeImage?.position?.position || 'absolute'"
-             [style.top]="animeImage?.position?.top || 'auto'"
-             [style.right]="animeImage?.position?.right || '0'"
-             [style.bottom]="animeImage?.position?.bottom || '0'"
-             [style.left]="animeImage?.position?.left || 'auto'"
+             [class]="animeImage.position?.position || 'absolute'"
+             [style.top]="animeImage.position?.top || 'auto'"
+             [style.right]="animeImage.position?.right || '0'"
+             [style.bottom]="animeImage.position?.bottom || '0'"
+             [style.left]="animeImage.position?.left || 'auto'"
              [style.width]="animeImage.width"
              [style.height]="animeImage.height"></ion-img>
   </ng-container>
@@ -29,7 +29,7 @@
   <!-- Animation  -->
   <ng-container *ngIf="animation">
     <ng-lottie [class]="animation.position?.position || 'absolute'"
-               [style.top]="animation.position?.top || 'auto'"
+               [style.top]="getSafeTop(animation.position?.top)"
                [style.right]="animation.position?.right || '0'"
                [style.bottom]="animation.position?.bottom || '0'"
                [style.left]="animation.position?.left || 'auto'"

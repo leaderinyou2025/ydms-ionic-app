@@ -38,7 +38,9 @@ export class PinUnlockComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.enableBiometric = this.appLockService.getSettingAppUnlockBiometricStatus();
-    if (this.biometricAvailable?.isAvailable && this.enableBiometric) await this.useBiometric();
+    if (this.biometricAvailable?.isAvailable && this.enableBiometric) {
+      setTimeout(() => this.useBiometric(), 500);
+    }
   }
 
   /**
