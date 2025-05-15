@@ -3,6 +3,7 @@ ion-toolbar.home-toolbar {
   --background: #ffffff;
   --padding-start: 0;
   --padding-end: 0;
+  --padding-top: env(safe-area-inset-top) !important;
 }
 
 :host-context(.dark) ion-toolbar.home-toolbar {

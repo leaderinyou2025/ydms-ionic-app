@@ -103,4 +103,25 @@ export class HeaderComponent implements OnInit {
       }
     }
   }
+
+  /**
+   * Get Safe Top on native device
+   * @param top
+   */
+  public getSafeTop(top?: string): string {
+    if (!top) return 'auto';
+
+    if (top.trim() === '0') {
+      return 'env(safe-area-inset-top)';
+    }
+
+    const match = top.match(/^(-?\d*\.?\d+)([a-zA-Z%]+)$/);
+    if (match) {
+      const value = match[1];
+      const unit = match[2];
+      return `calc(env(safe-area-inset-top) + ${value}${unit})`;
+    }
+
+    return top;
+  }
 }

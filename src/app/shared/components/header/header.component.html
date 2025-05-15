@@ -29,7 +29,7 @@
   <!-- Animation  -->
   <ng-container *ngIf="animation">
     <ng-lottie [class]="animation.position?.position || 'absolute'"
-               [style.top]="animation.position?.top || 'auto'"
+               [style.top]="getSafeTop(animation.position?.top)"
                [style.right]="animation.position?.right || '0'"
                [style.bottom]="animation.position?.bottom || '0'"
                [style.left]="animation.position?.left || 'auto'"
