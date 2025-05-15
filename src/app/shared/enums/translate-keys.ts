@@ -76,6 +76,15 @@ export enum TranslateKeys {
   TITLE_PAGE = 'TITLE.page',
   TITLE_NO_FAMILY_COMMUNICATION_SURVEY_HISTORY = 'TITLE.no_family_communication_survey_history',
 
+  // SELF DISCOVERY SURVEY
+  TITLE_SELF_DISCOVERY_SURVEY = 'TITLE.self_discovery_survey',
+  TITLE_SELF_DISCOVERY_SURVEY_HISTORY = 'TITLE.self_discovery_survey_history',
+  TITLE_SELF_DISCOVERY_SURVEY_DETAIL = 'TITLE.self_discovery_survey_detail',
+  TITLE_DISCOVERY_LEVEL = 'TITLE.discovery_level',
+  TITLE_SELF_DISCOVERY_SURVEY_QUESTIONS = 'TITLE.self_discovery_survey_questions',
+  TITLE_DISCOVERY_POINTS = 'TITLE.discovery_points',
+  TITLE_NO_SELF_DISCOVERY_SURVEY_HISTORY = 'TITLE.no_self_discovery_survey_history',
+
   // TITLE
   TITLE_PHONE = 'TITLE.phone',
   TITLE_ACCOUNT = 'TITLE.account',
