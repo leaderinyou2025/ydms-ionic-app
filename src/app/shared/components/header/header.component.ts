@@ -17,6 +17,7 @@ export class HeaderComponent implements OnInit {
 
   @Input() defaultBackHref!: string;
   @Input() pageTitle!: TranslateKeys;
+  @Input() caption!: TranslateKeys;
   @Input() backgroundImageUrl!: string;
   @Input() backgroundColor!: string;
   @Input() animation!: IHeaderAnimation;

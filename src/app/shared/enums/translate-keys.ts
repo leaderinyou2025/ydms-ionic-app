@@ -119,6 +119,8 @@ export enum TranslateKeys {
   TITLE_APP_UPDATE = 'TITLE.app_update',
   TITLE_NOT_SET = 'TITLE.not_set',
   TITLE_NOT_SET_NICKNAME = 'TITLE.not_set_nickname',
+  TITLE_CHATBOT_AI = 'TITLE.chatbot_ai',
+  TITLE_TYPE_MESSAGE = 'TITLE.type_message',
 
   // VALIDATE
   VALIDATE_PHONE_REQUIRED = 'VALIDATE.phone_required',
@@ -176,4 +178,7 @@ export enum TranslateKeys {
 
   // WARNING
   WARNING_APP_LOCK = 'WARNING.app_lock',
+
+  // CAPTION
+  CAPTION_CHATBOT = 'CAPTION.chatbot',
 }
