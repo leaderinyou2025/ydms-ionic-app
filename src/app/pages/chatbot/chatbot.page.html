@@ -1,13 +1,51 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>chatbot</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header
+  [pageTitle]="TranslateKeys.TITLE_CHATBOT_AI"
+  backgroundImageUrl="/assets/images/banner.svg"
+  [animeImage]="animeImage"
+  [segment]="segment"
+  [searchbar]="searchbar"
+  [caption]="TranslateKeys.CAPTION_CHATBOT">
+</app-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">chatbot</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="bg-white">
+  <div *ngFor="let msg of messages" class="px-4 py-2 fade-in">
+    <div class="flex items-end gap-2" [ngClass]="msg.sender === 'me' ? 'justify-end flex-row-reverse' : 'justify-start'">
+
+      <!-- Avatar -->
+      <ion-avatar>
+        <ion-img [src]="msg.sender === 'me' ? userAvatarImg : botAvatarImg"
+                 [ngClass]="msg.sender === 'me' ? 'bg-gray-200' : 'bg-purple-800 p-2'" alt="avatar"/>
+      </ion-avatar>
+
+      <!-- Chat bubble -->
+      <div [ngClass]="msg.sender === 'me' ? 'bg-gray-200 text-black rounded-br-none' : 'bg-purple-800 text-white rounded-bl-none'"
+           class="rounded-xl px-4 py-2 w-[80%]">
+        <div class="whitespace-pre-line">
+          {{ msg.text }}
+        </div>
+        <div class="text-xs text-right mt-1 flex items-center justify-end gap-1">
+          <span>{{ msg.time }}</span>
+          <ion-icon *ngIf="msg.sender === 'me' && msg.text.length > 5" name="checkmark-done-outline" class="text-blue-500 text-sm"></ion-icon>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div class="flex items-center px-1">
+      <ion-textarea [(ngModel)]="inputText" (ionInput)="onInputChange()"
+                    [counter]="true" maxlength="200"
+                    [autoGrow]="true"
+                    placeholder="Type your message..." class="flex-1 bg-transparent px-0 py-2 mr-2">
+      </ion-textarea>
+      <ion-button [fill]="inputText.trim().length === 0 ? 'outline' : 'clear'"
+                  shape="round" color="secondary"
+                  (click)="onActionButtonClick()">
+        <ion-icon slot="icon-only" [name]="inputText.trim().length > 0 ? 'send' : 'mic'" class="text-3xl p-1"></ion-icon>
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

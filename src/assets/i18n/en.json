@@ -116,7 +116,8 @@
     "enter_current_pin": "Enter current PIN",
     "app_update": "App update",
     "not_set": "Not set",
-    "not_set_nickname": "Nickname not yet"
+    "not_set_nickname": "Nickname not yet",
+    "chatbot_ai": "Chatbot AI"
   },
   "VALIDATE": {
     "phone_required": "Please input your phone number.",
@@ -175,5 +176,8 @@
   },
   "WARNING": {
     "app_lock": "If you forget the encryption app, you must uninstall and reinstall the app to remove the old passcode."
+  },
+  "CAPTION": {
+    "chatbot": "How are you feeling today? Feel free to share with me!"
   }
 }

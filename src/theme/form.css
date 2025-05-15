@@ -3,6 +3,7 @@
 input:where(:not([type])):focus,
 [type='email']:focus,
 [type='url']:focus,
+[type='search']:focus,
 [type='password']:focus,
 [type='number']:focus,
 [type='date']:focus,
