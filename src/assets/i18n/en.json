@@ -12,6 +12,14 @@
   "BUTTON": {
     "remove": "Remove"
   },
+  "LOADING": {
+    "pull_to_refresh": "Pull to refresh",
+    "refreshing": "Refreshing...",
+    "loading_more_items": "Loading more items..."
+  },
+  "MESSAGE": {
+    "feature_under_development": "This feature is under development"
+  },
   "HOME": {
     "welcome_title": "Welcome back",
     "welcome_subtitle": "Complete tasks to earn rewards!"
@@ -169,7 +177,14 @@
     "conflict_level": "Conflict Level",
     "system_feedback": "System Feedback",
     "survey_questions": "Survey Questions",
-    "no_survey_history": "No survey history available"
+    "no_survey_history": "No survey history available",
+    "family_communication_quality_survey": "Family Communication Quality Survey",
+    "family_communication_quality_survey_history": "Family Communication Quality History",
+    "family_communication_quality_survey_detail": "Communication Quality Survey Detail",
+    "communication_level": "Communication Level",
+    "family_communication_survey_questions": "Family Communication Survey Questions",
+    "communication_points": "Communication Points",
+    "no_family_communication_survey_history": "No family communication survey history available"
   },
   "VALIDATE": {
     "phone_required": "Please input your phone number.",
@@ -194,6 +209,7 @@
     "open_settings": "Open settings",
     "ok": "OK",
     "close": "Close",
+    "back": "Back",
     "set_as_current": "Set as current",
     "current": "Current",
     "save_changes": "Save Changes",

@@ -37,6 +37,12 @@ export enum TranslateKeys {
   EMOTION_CALM = 'EMOTION.calm',
   EMOTION_CONFUSED = 'EMOTION.confused',
 
+  // LOADING AND REFRESH
+  PULL_TO_REFRESH = 'LOADING.pull_to_refresh',
+  REFRESHING = 'LOADING.refreshing',
+  LOADING_MORE_ITEMS = 'LOADING.loading_more_items',
+  MESSAGE_FEATURE_UNDER_DEVELOPMENT = 'MESSAGE.feature_under_development',
+
   // HOME
   HOME_WELCOME_TITLE = 'HOME.welcome_title',
   HOME_WELCOME_SUBTITLE = 'HOME.welcome_subtitle',
@@ -59,6 +65,16 @@ export enum TranslateKeys {
   TITLE_SYSTEM_FEEDBACK = 'TITLE.system_feedback',
   TITLE_SURVEY_QUESTIONS = 'TITLE.survey_questions',
   TITLE_NO_SURVEY_HISTORY = 'TITLE.no_survey_history',
+
+  // FAMILY COMMUNICATION QUALITY SURVEY
+  TITLE_FAMILY_COMMUNICATION_QUALITY_SURVEY = 'TITLE.family_communication_quality_survey',
+  TITLE_FAMILY_COMMUNICATION_QUALITY_SURVEY_HISTORY = 'TITLE.family_communication_quality_survey_history',
+  TITLE_FAMILY_COMMUNICATION_QUALITY_SURVEY_DETAIL = 'TITLE.family_communication_quality_survey_detail',
+  TITLE_COMMUNICATION_LEVEL = 'TITLE.communication_level',
+  TITLE_FAMILY_COMMUNICATION_SURVEY_QUESTIONS = 'TITLE.family_communication_survey_questions',
+  TITLE_COMMUNICATION_POINTS = 'TITLE.communication_points',
+  TITLE_PAGE = 'TITLE.page',
+  TITLE_NO_FAMILY_COMMUNICATION_SURVEY_HISTORY = 'TITLE.no_family_communication_survey_history',
 
   // TITLE
   TITLE_PHONE = 'TITLE.phone',
@@ -188,6 +204,7 @@ export enum TranslateKeys {
   BUTTON_OPEN_SETTING = 'BUTTON_TITLES.open_settings',
   BUTTON_OK = 'BUTTON_TITLES.ok',
   BUTTON_CLOSE = 'BUTTON_TITLES.close',
+  BUTTON_BACK = 'BUTTON_TITLES.back',
   BUTTON_CURRENT = 'BUTTON_TITLES.current',
   BUTTON_SET_AS_CURRENT = 'BUTTON_TITLES.set_as_current',
   BUTTON_UPDATE = 'BUTTON_TITLES.update',
