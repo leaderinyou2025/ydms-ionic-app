@@ -34,7 +34,7 @@ export class FooterComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.keyboardSubscription = this.keyboardService.isKeyboardOpen$.subscribe((isKeyboardShowing) => this.isKeyboardShowing = isKeyboardShowing);
-    this.authService.getAuthData().then(authData => this.userRole = authData?.role)
+    this.userRole = this.authService.getRole();
 
     this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
       this.activePage = event.urlAfterRedirects.split('/')?.pop();

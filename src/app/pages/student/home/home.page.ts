@@ -67,11 +67,23 @@ export class HomePage implements OnInit {
 
   async ngOnInit() {
     await this.loadHomeData();
-
+    await this.authService.loadUserProfile();
   }
 
   ionViewWillEnter() {
     this.loadConfigAvatarAndBackground();
+  }
+
+  /**
+   * Reload data
+   * @param event
+   */
+  public handleRefresh(event: CustomEvent): void {
+    setTimeout(async () => {
+      await this.authService.loadUserProfile();
+      await this.loadHomeData();
+      await (event.target as HTMLIonRefresherElement).complete();
+    }, 1000);
   }
 
   /**

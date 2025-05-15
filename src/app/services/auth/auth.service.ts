@@ -21,7 +21,6 @@ import { PageRoutes } from '../../shared/enums/page-routes';
 import { TranslateKeys } from '../../shared/enums/translate-keys';
 import { OdooJsonrpcServiceNames } from '../../shared/enums/odoo-jsonrpc-service-names';
 import { OdooMethodName } from '../../shared/enums/odoo-method-name';
-import { ForceTestData } from '../../shared/classes/force-test-data';
 import { IUserSettings } from '../../shared/interfaces/settings/user-settings';
 import { IAccountSecuritySettings } from '../../shared/interfaces/settings/account-security-settings';
 import { INotificationSettings } from '../../shared/interfaces/settings/notification-settings';
@@ -29,6 +28,9 @@ import { ISoundSettings } from '../../shared/interfaces/settings/sound-settings'
 import { IThemeSettings } from '../../shared/interfaces/settings/theme-settings';
 import { IPrivacyRightsSettings } from '../../shared/interfaces/settings/privacy-rights-settings';
 import { UserRoles } from '../../shared/enums/user-roles';
+import { Theme } from '../../shared/enums/theme';
+import { TextZoomSize } from '../../shared/enums/text-zoom-size';
+import { ForceTestData } from '../../shared/classes/force-test-data';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +38,12 @@ import { UserRoles } from '../../shared/enums/user-roles';
 export class AuthService {
   private authData!: IAuthData | undefined;
   private userRoles!: UserRoles | undefined;
-  private userFields = [];
+  private userFields = [
+    'name', 'email', 'phone', 'street', 'precint_id', 'district_id', 'state_id', 'country_id', 'image_128', 'lang',
+    'nickname', 'avatar', 'avatar_128', 'code', 'edu_id', 'social_id',
+    'is_teenager', 'is_parent', 'is_teacher',
+    'school_id', 'classroom_id', 'parent_id', 'partner_id', 'classroom_ids', 'child_ids'
+  ];
 
   constructor(
     private loadingController: LoadingController,
@@ -110,8 +117,10 @@ export class AuthService {
    * @param authData
    * @param isSyncServer
    */
-  public async setAuthData(authData: IAuthData, isSyncServer: boolean = true): Promise<void> {
+  public async setAuthData(authData: IAuthData, isSyncServer: boolean = false): Promise<void> {
+    this.authData = authData;
     await this.storageService.set<IAuthData>(StorageKey.AUTH_DATA, authData);
+    if (!authData.user_settings) await this.initNewUserSettings();
     if (isSyncServer) await this.saveUserProfile();
   }
 
@@ -128,13 +137,14 @@ export class AuthService {
   /**
    * setUserSettings
    * @param userSettings
+   * @param isSyncServer
    * @Promise<void>
    */
-  public async setUserSettings(userSettings: IUserSettings): Promise<void> {
+  public async setUserSettings(userSettings: IUserSettings, isSyncServer: boolean = false): Promise<void> {
     const authData = await this.getAuthData();
     if (!authData) return;
     authData.user_settings = userSettings;
-    await this.setAuthData(authData);
+    await this.setAuthData(authData, isSyncServer);
   }
 
   /**
@@ -151,11 +161,11 @@ export class AuthService {
    * setAccountSecuritySettings
    * @Promise<void>
    */
-  public async setAccountSecuritySettings(accountSecuritySettings: IAccountSecuritySettings): Promise<void> {
+  public async setAccountSecuritySettings(accountSecuritySettings: IAccountSecuritySettings, isSyncServer: boolean = false): Promise<void> {
     const userSettings = await this.getUserSettings();
     if (!userSettings) return;
     userSettings.account_security = accountSecuritySettings;
-    await this.setUserSettings(userSettings);
+    await this.setUserSettings(userSettings, isSyncServer);
   }
 
   /**
@@ -172,11 +182,11 @@ export class AuthService {
    * setThemeSettings
    * @Promise<void>
    */
-  public async setThemeSettings(themeSettings: IThemeSettings): Promise<void> {
+  public async setThemeSettings(themeSettings: IThemeSettings, isSyncServer: boolean = false): Promise<void> {
     const userSettings = await this.getUserSettings();
     if (!userSettings) return;
     userSettings.theme = themeSettings;
-    await this.setUserSettings(userSettings);
+    await this.setUserSettings(userSettings, isSyncServer);
   }
 
   /**
@@ -193,11 +203,11 @@ export class AuthService {
    * setSoundSettings
    * @Promise<void>
    */
-  public async setSoundSettings(soundSettings: ISoundSettings): Promise<void> {
+  public async setSoundSettings(soundSettings: ISoundSettings, isSyncServer: boolean = false): Promise<void> {
     const userSettings = await this.getUserSettings();
     if (!userSettings) return;
     userSettings.sound = soundSettings;
-    await this.setUserSettings(userSettings);
+    await this.setUserSettings(userSettings, isSyncServer);
   }
 
   /**
@@ -214,11 +224,11 @@ export class AuthService {
    * setNotificationSettings
    * @Promise<void>
    */
-  public async setNotificationSettings(notificationSettings: INotificationSettings): Promise<void> {
+  public async setNotificationSettings(notificationSettings: INotificationSettings, isSyncServer: boolean = false): Promise<void> {
     const userSettings = await this.getUserSettings();
     if (!userSettings) return;
     userSettings.notification = notificationSettings;
-    await this.setUserSettings(userSettings);
+    await this.setUserSettings(userSettings, isSyncServer);
   }
 
   /**
@@ -235,11 +245,11 @@ export class AuthService {
    * setPrivacyRightSettings
    * @Promise<void>
    */
-  public async setPrivacyRightSettings(privacyRightsSettings: IPrivacyRightsSettings): Promise<void> {
+  public async setPrivacyRightSettings(privacyRightsSettings: IPrivacyRightsSettings, isSyncServer: boolean = false): Promise<void> {
     const userSettings = await this.getUserSettings();
     if (!userSettings) return;
     userSettings.privacy_rights = privacyRightsSettings;
-    await this.setUserSettings(userSettings);
+    await this.setUserSettings(userSettings, isSyncServer);
   }
 
   /**
@@ -254,31 +264,23 @@ export class AuthService {
     dataRequest.params.args = [environment.database, username, password];
 
     // Login function api
-    // let loginResult = await this.httpClientService.post(
-    //   environment.serverUrl, dataRequest,
-    //   {headers: CommonConstants.getRequestHeader()},
-    //   {operation: 'login'}
-    // );
-    // TEST: Force login
-    const loginResult = ForceTestData.loginResult;
+    let loginResult = await this.httpClientService.post(
+      environment.serverUrl, dataRequest,
+      {headers: CommonConstants.getRequestHeader()},
+      {operation: 'login'}
+    );
     if (!loginResult || !loginResult?.result) {
       return false;
     }
 
-    // Get user profile
-    // const userProfile = await this.getUserProfile(+loginResult.result);
-    // TEST: Force user profile
-    const userProfile = ForceTestData.authData;
-    if (!userProfile) {
-      return false;
-    }
-
-    // Saved user profile to localStorage not sync back to server
+    // Set temp data after login success
     this.saveAuthToken(password);
-    this.setRole(userProfile.role);
-    await this.setAuthData(userProfile, false);
+    const tempUserProfile = {id: +loginResult.result, login: username, is_teenager: false, is_teacher: false, is_parent: false};
+    this.authData = tempUserProfile;
+    await this.setAuthData(tempUserProfile, false);
 
-    return true;
+    // Load user profile
+    return this.loadUserProfile();
   }
 
   /**
@@ -306,6 +308,50 @@ export class AuthService {
     return new HttpHeaders({
       Authorization: 'Basic ' + btoa(`${authData.login}:${password}`)
     });
+  }
+
+  /**
+   * Change user password
+   * @param currentPassword Current password for verification
+   * @param newPassword New password to set
+   * @returns Promise<boolean> Success status
+   */
+  public async changePassword(currentPassword: string, newPassword: string): Promise<boolean> {
+    try {
+      const authData = await this.getAuthData();
+      if (!authData) return false;
+
+      // Verify current password matches stored password
+      const storedPassword = await this.getAuthToken();
+      if (currentPassword !== storedPassword) {
+        return false;
+      }
+
+      const result = await this.odooService.callKw(ModelName.RES_USERS, OdooMethodName.CHANGE_PASSWORD, [currentPassword, newPassword]);
+      return !!result;
+    } catch (error) {
+      console.error('Error changing password:', error);
+      return false;
+    }
+  }
+
+  /**
+   * Load and save user profile
+   */
+  public async loadUserProfile(): Promise<boolean> {
+    const authData = await this.getAuthData();
+    if (!authData) return false;
+
+    const userProfile = await this.getUserProfile(authData.id);
+    if (!userProfile) {
+      return false;
+    }
+
+    // Saved user profile to localStorage not sync back to server
+    this.setRole(userProfile.is_parent ? UserRoles.PARENT : (userProfile.is_teacher ? UserRoles.TEACHER : UserRoles.STUDENT));
+    this.authData = userProfile;
+    await this.setAuthData(userProfile, false);
+    return true;
   }
 
   /**
@@ -357,35 +403,70 @@ export class AuthService {
    * @private
    */
   private async saveUserProfile(): Promise<boolean | number> {
-    const authData = await this.getAuthData();
-    if (!authData) return false;
-    return await this.odooService.write<IAuthData>(ModelName.RES_USERS, [authData.id], authData);
+    return this.saveUserAvatar();
+    // const authData = await this.getAuthData();
+    // if (!authData) return false;
+    // return await this.odooService.write<IAuthData>(ModelName.RES_USERS, [authData.id], authData);
   }
 
   /**
-   * Change user password
-   * @param currentPassword Current password for verification
-   * @param newPassword New password to set
-   * @returns Promise<boolean> Success status
+   * Save user avatar selected
+   * @private
    */
-  public async changePassword(currentPassword: string, newPassword: string): Promise<boolean> {
-    try {
-      const authData = await this.getAuthData();
-      if (!authData) return false;
+  private async saveUserAvatar(): Promise<boolean | number> {
+    const authData = await this.getAuthData();
+    if (!authData || !authData?.user_settings?.theme?.avatar?.id) return false;
+    const params = {avatar: authData.user_settings.theme.avatar.id};
+    return await this.odooService.write(ModelName.RES_USERS, [authData.id], params);
+  }
 
-      // Verify current password matches stored password
-      const storedPassword = await this.getAuthToken();
-      if (currentPassword !== storedPassword) {
-        return false;
-      }
-
-      // TODO: Call API to change password
-
-      // For testing purposes, return true
-      return true;
-    } catch (error) {
-      console.error('Error changing password:', error);
-      return false;
-    }
+  /**
+   * Init user settings
+   * @private
+   */
+  private async initNewUserSettings(): Promise<void> {
+    let userSettings = await this.getUserSettings();
+    if (userSettings) return;
+    userSettings = {
+      notification: {enabled: true},
+      sound: {
+        enabled: true,
+        touch: {
+          enabled: true,
+          volume: 0.7,
+          sound: ForceTestData.background_sounds[0]
+        },
+        reload: {
+          enabled: true,
+          volume: 0.7,
+          sound: ForceTestData.background_sounds[1]
+        },
+        notification: {
+          enabled: true,
+          volume: 0.7,
+          sound: ForceTestData.background_sounds[2]
+        },
+        background: {
+          enabled: true,
+          volume: 0.5,
+          sound: ForceTestData.background_sounds[3]
+        },
+      },
+      privacy_rights: {},
+      theme: {
+        theme_model: Theme.SYSTEM,
+        text_size: TextZoomSize.MEDIUM,
+        avatar: this.authData?.avatar ? {
+          id: this.authData.avatar.id,
+          name: this.authData.avatar.name,
+          resource_url: this.authData?.avatar_128 && CommonConstants.detectMimeType(this.authData.avatar_128) ?
+            `${CommonConstants.detectMimeType(this.authData.avatar_128)}${this.authData.avatar_128}`
+            : ForceTestData.avatar_images[0].resource_url,
+        } : ForceTestData.avatar_images[0],
+        background: ForceTestData.background_images[0],
+      },
+      account_security: {}
+    };
+    await this.setUserSettings(userSettings, false);
   }
 }

@@ -25,6 +25,7 @@ export class NotificationAndSoundComponent implements OnInit {
   protected readonly TranslateKeys = TranslateKeys;
   protected readonly PageRoutes = PageRoutes;
   protected readonly Theme = Theme;
+  protected readonly SoundKeys = SoundKeys;
 
   constructor(
     public soundService: SoundService,
@@ -112,10 +113,8 @@ export class NotificationAndSoundComponent implements OnInit {
       if (userSettings && this.soundSettings && this.notificationSettings) {
         userSettings.sound = this.soundSettings;
         userSettings.notification = this.notificationSettings;
-        this.authService.setUserSettings(userSettings);
+        this.authService.setUserSettings(userSettings, false);
       }
     });
   }
-
-  protected readonly SoundKeys = SoundKeys;
 }

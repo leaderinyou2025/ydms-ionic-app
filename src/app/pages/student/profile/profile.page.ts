@@ -13,6 +13,7 @@ import { LanguageKeys } from '../../../shared/enums/language-keys';
 import { StorageKey } from '../../../shared/enums/storage-key';
 import { StyleClass } from '../../../shared/enums/style-class';
 import { NativePlatform } from '../../../shared/enums/native-platform';
+import { CommonConstants } from '../../../shared/classes/common-constants';
 
 @Component({
   selector: 'app-profile',
@@ -97,5 +98,16 @@ export class ProfilePage implements OnInit {
         }
       }).finally(() => loading.dismiss());
     });
+  }
+
+  /**
+   * Get user avatar image
+   */
+  public getUserAvatarImage(): string | undefined {
+    if (!this.authData) return;
+    if (!this.authData.avatar_128) return '/assets/icons/svg/avatar.svg';
+    const prefix = CommonConstants.detectMimeType(this.authData.avatar_128);
+    if (!prefix) return '/assets/icons/svg/avatar.svg';
+    return prefix + this.authData.avatar_128;
   }
 }

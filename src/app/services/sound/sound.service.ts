@@ -7,7 +7,7 @@ import { ISoundConfig } from '../../shared/interfaces/settings/sound-settings';
 import { SoundKeys } from '../../shared/enums/sound-keys';
 import { HttpClientService } from '../http-client/http-client.service';
 import { OrderBy } from '../../shared/enums/order-by';
-import { ILiyYdmsAssetsResource } from '../../shared/interfaces/models/liy-ydms-assets-resource';
+import { IAssetsResource } from '../../shared/interfaces/settings/assets-resource';
 import { ForceTestData } from '../../shared/classes/force-test-data';
 
 @Injectable({
@@ -119,7 +119,7 @@ export class SoundService {
     offset: number = 0,
     limit: number = 20,
     order?: OrderBy
-  ): Promise<Array<ILiyYdmsAssetsResource>> {
+  ): Promise<Array<IAssetsResource>> {
     // TODO: Call API to load new audio list
     // Download and cache index source uri
     return ForceTestData.background_sounds;
