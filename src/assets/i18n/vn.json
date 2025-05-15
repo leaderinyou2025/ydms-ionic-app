@@ -117,7 +117,9 @@
     "enter_current_pin": "Nhập mã PIN hiện tại",
     "app_update" : "Cập nhật ứng dụng",
     "not_set": "Chưa thiết lập",
-    "not_set_nickname": "Chưa có biệt danh"
+    "not_set_nickname": "Chưa có biệt danh",
+    "chatbot_ai": "Chatbot AI",
+    "type_message": "Nhập tin nhắn..."
   },
   "VALIDATE": {
     "phone_required": "Vui lòng nhập vào số điện thoại.",
@@ -176,5 +178,8 @@
   },
   "WARNING": {
     "app_lock": "Trong trường hợp bạn quên mã khóa ứng dụng, bạn phải gỡ cài đặt và cài đặt lại ứng dụng từ cửa hàng để xóa mã khóa cũ."
+  },
+  "CAPTION": {
+    "chatbot": "Hôm nay bạn cảm thấy thế nào? Chia sẻ với mình nhé!"
   }
 }

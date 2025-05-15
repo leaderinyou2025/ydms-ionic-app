@@ -11,6 +11,9 @@
     <h1 class="text-2xl font-semibold text-white m-0 p-0">
       {{ pageTitle | translate }}
     </h1>
+    <p *ngIf="caption" class="text-base italic pb-3">
+      {{ caption | translate }}
+    </p>
   </div>
 
   <!-- Anime image -->
@@ -39,11 +42,12 @@
   </ng-container>
 
   <!-- Searchbar & segment -->
-  <div class="flex items-end justify-items-center w-full h-28">
+  <div class="flex flex-wrap items-end justify-items-center w-full h-28" *ngIf="segment || searchbar">
     <!-- Searchbar -->
-    <div *ngIf="searchbar" class="block w-full py-2 ion-padding-start ion-padding-end">
+    <div *ngIf="searchbar" class="block w-full py-2 px-2">
       <ion-searchbar
         mode="ios"
+        class="ion-no-padding min-h-0"
         [type]="searchbar.type"
         [inputmode]="searchbar.inputmode"
         [placeholder]="searchbar.placeholder"
@@ -64,7 +68,7 @@
     </div>
 
     <!-- Segment -->
-    <div *ngIf="segment" class="block w-full py-2 px-1">
+    <div *ngIf="segment" class="block w-full py-2 px-2">
       <ion-segment
         mode="ios"
         [color]="segment.color"
