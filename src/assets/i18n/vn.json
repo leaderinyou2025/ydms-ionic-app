@@ -12,6 +12,14 @@
   "BUTTON": {
     "remove": "Bỏ"
   },
+  "LOADING": {
+    "pull_to_refresh": "Kéo để làm mới",
+    "refreshing": "Đang làm mới...",
+    "loading_more_items": "Đang tải thêm..."
+  },
+  "MESSAGE": {
+    "feature_under_development": "Tính năng đang được phát triển"
+  },
   "HOME": {
     "welcome_title": "Chào mừng trở lại",
     "welcome_subtitle": "Hãy hoàn thành nhiệm vụ để nhận thưởng nhé!"
@@ -170,7 +178,14 @@
     "conflict_level": "Mức độ xung đột",
     "system_feedback": "Phản hồi hệ thống",
     "survey_questions": "Câu hỏi khảo sát",
-    "no_survey_history": "Chưa có lịch sử khảo sát"
+    "no_survey_history": "Chưa có lịch sử khảo sát",
+    "family_communication_quality_survey": "Khảo sát chất lượng giao tiếp gia đình",
+    "family_communication_quality_survey_history": "Lịch sử chất lượng giao tiếp gia đình",
+    "family_communication_quality_survey_detail": "Chi tiết khảo sát giao tiếp",
+    "communication_level": "Mức độ giao tiếp",
+    "family_communication_survey_questions": "Câu hỏi khảo sát về chất lượng giao tiếp gia đình",
+    "communication_points": "Điểm",
+    "no_family_communication_survey_history": "Chưa có lịch sử khảo sát giao tiếp gia đình"
   },
   "VALIDATE": {
     "phone_required": "Vui lòng nhập vào số điện thoại.",
@@ -195,6 +210,7 @@
     "open_settings": "Mở cài đặt",
     "ok": "OK",
     "close": "Đóng",
+    "back": "Quay lại",
     "set_as_current": "Đặt làm hiện tại",
     "current": "Hiện tại",
     "save_changes": "Lưu thay đổi",

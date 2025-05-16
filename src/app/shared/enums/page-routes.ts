@@ -24,4 +24,5 @@ export enum PageRoutes {
   PARENT_DASHBOARD = 'parent-database',
   TEACHER_DASHBOARD = 'teacher-dashboard',
   FAMILY_CONFLICT_SURVEY = 'family-conflict-survey',
+  FAMILY_COMMUNICATION_QUALITY_SURVEY = 'family-communication-quality-survey',
 }
