@@ -3,7 +3,14 @@
     "app_name": "Youth Development Monitoring System",
     "copyright": "© 2025 LeaderInYou",
     "english": "English",
-    "vietnamese": "Tiếng Việt"
+    "vietnamese": "Tiếng Việt",
+    "just_now": "Vừa xong",
+    "minutes_ago": "{{minutes}} phút trước",
+    "today_at": "{{time}} hôm nay",
+    "yesterday": "Hôm qua"
+  },
+  "BUTTON": {
+    "remove": "Bỏ"
   },
   "HOME": {
     "welcome_title": "Chào mừng trở lại",
@@ -18,6 +25,40 @@
     "points": "điểm",
     "points_header": "Điểm",
     "badge_new": "MỚI"
+  },
+  "PERSONAL_DIARY": {
+    "title": "Trang cá nhân",
+    "my_entries": "Nhật ký của tôi",
+    "shared_entries": "Nhật ký được chia sẻ",
+    "new_entry": "Tạo nhật ký mới",
+    "content_placeholder": "Bạn đang nghĩ gì?",
+    "emotion_type": "Bạn đang cảm thấy thế nào?",
+    "anonymous": "Không hiển thị tên",
+    "public": "Chia sẻ với mọi người",
+    "submit": "Gửi",
+    "cancel": "Hủy",
+    "suggestions": "Gợi ý",
+    "withdraw": "Thu hồi",
+    "confirm_withdraw": "Bạn có chắc muốn thu hồi nhật ký này không?",
+    "reaction_stats": "Thống kê cảm xúc",
+    "reaction_love": "Yêu thích",
+    "reaction_happy": "Vui vẻ",
+    "reaction_sad": "Buồn",
+    "reaction_angry": "Giận dữ",
+    "total_reactions": "Tổng số cảm xúc",
+    "no_entries": "Không có bài viết nào",
+    "no_suggestions": "Không có gợi ý nào cho loại cảm xúc này",
+    "anonymous_user": "Bạn ẩn danh"
+  },
+  "EMOTION": {
+    "happy": "Vui vẻ",
+    "sad": "Buồn",
+    "angry": "Tức giận",
+    "anxious": "Lo lắng",
+    "excited": "Phấn khích",
+    "tired": "Mệt mỏi",
+    "calm": "Bình yên",
+    "confused": "Băn khoăn"
   },
   "TITLE": {
     "phone": "Số điện thoại",
