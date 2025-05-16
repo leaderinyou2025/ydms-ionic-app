@@ -11,6 +11,10 @@
 </ion-toolbar>
 
 <ion-content [fullscreen]="true" class="home-content" [style.background-image]="background">
+  <!-- Refresh data -->
+  <ion-refresher slot="fixed" mode="md" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
   <!-- Main Character -->
   <div class="flex flex-col items-center my-5">
@@ -58,7 +62,6 @@
       </ion-item>
     </ion-list>
   </div>
-
 </ion-content>
 
 <app-footer></app-footer>

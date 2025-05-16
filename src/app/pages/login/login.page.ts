@@ -179,7 +179,7 @@ export class LoginPage implements OnInit, OnDestroy {
    */
   private initLoginForm(): void {
     this.loginForm = new FormGroup({
-      phone: new FormControl('', [Validators.required]),
+      username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
       remember: new FormControl(true, []),
     });
@@ -196,7 +196,7 @@ export class LoginPage implements OnInit, OnDestroy {
     try {
       // Call API login and get user profile
       const loginResult = await this.authService.login(
-        this.loginForm.value.phone,
+        this.loginForm.value.username,
         this.loginForm.value.password
       );
 
@@ -210,7 +210,7 @@ export class LoginPage implements OnInit, OnDestroy {
         // Clear biometric credentials
         if (this.hasCredentials) {
           this.hasCredentials = false;
-          await this.biometricService.deleteCredentials(this.loginForm.value.phone);
+          await this.biometricService.deleteCredentials(this.loginForm.value.username);
         }
 
         // End process
@@ -225,7 +225,7 @@ export class LoginPage implements OnInit, OnDestroy {
       // Remember account handle
       if (this.loginForm.value.remember) {
         const accountHistory: IAccountHistory = {
-          username: this.loginForm.value.phone,
+          username: this.loginForm.value.username,
           created_at: Date.now(),
           updated_at: Date.now()
         }
@@ -331,7 +331,7 @@ export class LoginPage implements OnInit, OnDestroy {
    * @public
    */
   public selectUsername(acc: IAccountHistory): void {
-    this.loginForm.get('phone')?.setValue(acc?.username || '');
+    this.loginForm.get('username')?.setValue(acc?.username || '');
     this.filteredAccounts = [];
     this.showSuggestions = false;
     this.hasCredentials = false;
@@ -347,7 +347,7 @@ export class LoginPage implements OnInit, OnDestroy {
     this.accountHistoryService.getAccountHistory().then(accountList => {
       this.accountList = accountList.sort((a, b) => b.updated_at - a.updated_at);
       if (this.accountList.length > 0) {
-        this.loginForm.get('phone')?.setValue(this.accountList[0].username);
+        this.loginForm.get('username')?.setValue(this.accountList[0].username);
         this.checkBiometricAvailable();
       }
     });
@@ -411,7 +411,7 @@ export class LoginPage implements OnInit, OnDestroy {
   public async onClickLoginBiometric(): Promise<void> {
     if (!this.biometricAvailable?.isAvailable) return;
 
-    const username: string = this.loginForm.get('phone')?.value;
+    const username: string = this.loginForm.get('username')?.value;
 
     const verifyResult = await this.biometricService.verifyIdentity();
     if (!verifyResult) {
@@ -427,7 +427,7 @@ export class LoginPage implements OnInit, OnDestroy {
       return;
     }
 
-    this.loginForm.get('phone')?.setValue(certificate.username);
+    this.loginForm.get('username')?.setValue(certificate.username);
     this.loginForm.get('password')?.setValue(certificate.password);
     await this.handleLogin();
   }

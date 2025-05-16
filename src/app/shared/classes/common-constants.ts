@@ -13,6 +13,20 @@ export class CommonConstants {
   public static deviceId: string = '';
 
   /**
+   * Prefix to show base64 image
+   */
+  public static IMAGE_BASE64_PREFIX = 'data:image/png;base64,';
+  public static signaturesMineTypes: { [key: string]: string } = {
+    iVBORw0KGgo: CommonConstants.IMAGE_BASE64_PREFIX
+  };
+  public static detectMimeType(b64: string): string | undefined {
+    for (let key in CommonConstants.signaturesMineTypes) {
+      if (b64.indexOf(key) === 0) return CommonConstants.signaturesMineTypes[key];
+    }
+    return undefined;
+  }
+
+  /**
    * Load device identifier
    */
   public static async loadDeviceId(): Promise<void> {

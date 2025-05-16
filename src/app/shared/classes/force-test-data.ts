@@ -1,11 +1,10 @@
 import { IAuthData } from '../interfaces/auth/auth-data';
-import { UserRoles } from '../enums/user-roles';
 import { Theme } from '../enums/theme';
-import { ILiyYdmsAssetsResource } from '../interfaces/models/liy-ydms-assets-resource';
+import { IAssetsResource } from '../interfaces/settings/assets-resource';
 import { TextZoomSize } from '../enums/text-zoom-size';
 import { AssetResourceCategory } from '../enums/asset-resource-category';
 import { StatusItemType } from '../enums/home/status-item-type.enum';
-import { IStatusItem, ITask, ICharacter } from '../interfaces/home/home.interfaces';
+import { ICharacter, IStatusItem, ITask } from '../interfaces/home/home.interfaces';
 import { IFriend } from '../interfaces/friend/friend';
 import { IRankItem } from '../interfaces/rank/rank.interfaces';
 import { IAchievementCategory } from '../interfaces/rank/achievement.interfaces';
@@ -15,7 +14,7 @@ import { IPersonalDiaryEntry, IEmotionSuggestion, IReactionCount, IUserReaction 
 
 export class ForceTestData {
 
-  static background_images: Array<ILiyYdmsAssetsResource> = [
+  static background_images: Array<IAssetsResource> = [
     {id: 1, resource_url: 'assets/images/background/pexels-eugene-golovesov-1810803-30980499.jpg', name: 'Nụ thường xuân'},
     {id: 2, resource_url: 'assets/images/background/beach-5234306_1920.jpg', name: 'Biển Đông'},
     {id: 3, resource_url: 'assets/images/background/bananas-7840213_1920.jpg', name: 'Chuối vườn nhà'},
@@ -23,7 +22,7 @@ export class ForceTestData {
     {id: 5, resource_url: 'assets/images/background/city-7629244_1920.jpg', name: 'Thành phố phồn hoa'},
     {id: 6, resource_url: 'assets/images/background/pexels-rahulp9800-1212487.jpg', name: 'Cúc họa mi'},
   ];
-  static avatar_images: Array<ILiyYdmsAssetsResource> = [
+  static avatar_images: Array<IAssetsResource> = [
     {id: 1, resource_url: 'assets/images/avatar/conan.png', name: 'Thám tử Conan'},
     {id: 2, resource_url: 'assets/images/avatar/Shiba-Inu-Dog-1.png', name: 'Shiba-Inu-Dog-1'},
     {id: 3, resource_url: 'assets/images/avatar/Shiba-Inu-Dog-2.png', name: 'Shiba-Inu-Dog-2'},
@@ -31,7 +30,7 @@ export class ForceTestData {
     {id: 5, resource_url: 'assets/images/avatar/Shiba-Inu-Dog-Showing-Muscles.png', name: 'Shiba-Inu-Dog-Showing-Muscles'},
     {id: 6, resource_url: 'assets/images/avatar/Shiba-Inu-Dog.png', name: 'Shiba-Inu-Dog'},
   ];
-  static background_sounds: Array<ILiyYdmsAssetsResource> = [
+  static background_sounds: Array<IAssetsResource> = [
     {id: 1, resource_url: '/assets/sounds/cork-85200.mp3', name: 'cork-85200', category: AssetResourceCategory.EFFECT},
     {id: 2, resource_url: '/assets/sounds/reload-124467.mp3', name: 'reload-124467', category: AssetResourceCategory.EFFECT},
     {id: 3, resource_url: '/assets/sounds/alert-234711.mp3', name: 'alert-234711', category: AssetResourceCategory.EFFECT},
@@ -99,11 +98,13 @@ export class ForceTestData {
     id: 1,
     login: '0964164434',
     name: 'Phạm Bá Việt',
-    role: UserRoles.STUDENT,
+    is_teenager: true,
+    is_parent: false,
+    is_teacher: false,
     nickname: 'Sóc nâu',
     phone: '0964164434',
     email: 'viet220994@gmail.com',
-    birthday: '1994-09-22',
+    // birthday: '1994-09-22',
     user_settings: {
       notification: {enabled: true},
       sound: {

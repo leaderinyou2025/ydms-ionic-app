@@ -17,8 +17,9 @@
         <img alt="Silhouette of a person's head" src="../../../../../assets/icons/svg/avatar.svg" *ngIf="!authData.avatar"/>
       </ion-avatar>
       <ion-label class="py-2">
-        {{ authData.nickname }}<br>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400"> {{ authData.name }}</span>
+        <ng-container *ngIf="authData.nickname">{{ authData.nickname }}<br></ng-container>
+        <ng-container *ngIf="!authData.nickname">{{ TranslateKeys.TITLE_NOT_SET_NICKNAME | translate }}<br></ng-container>
+        <span class="text-sm text-gray-500 italic dark:text-gray-400"> {{ TranslateKeys.TITLE_PERSONAL_INFO | translate }}</span>
       </ion-label>
       <ion-icon name="chevron-forward" slot="end" class="text-base"></ion-icon>
     </ion-item>
@@ -28,7 +29,8 @@
       <ion-icon name="call" slot="start" color="primary" class="text-xl"></ion-icon>
       <ion-label class="py-2">
         {{ TranslateKeys.TITLE_PHONE | translate }}<br>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400"> {{ authData.phone }} &nbsp;</span>
+        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="authData.phone"> {{ authData.phone }} &nbsp;</span>
+        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="!authData.phone"> {{ TranslateKeys.TITLE_NOT_SET | translate }}</span>
       </ion-label>
     </ion-item>
 
@@ -37,7 +39,8 @@
       <ion-icon name="mail" slot="start" color="primary" class="text-xl"></ion-icon>
       <ion-label class="py-2">
         {{ TranslateKeys.TITLE_EMAIL | translate }}<br>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400"> {{ authData.email }} &nbsp;</span>
+        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="authData.email"> {{ authData.email }} &nbsp;</span>
+        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="!authData.email"> {{ TranslateKeys.TITLE_NOT_SET | translate }} &nbsp;</span>
       </ion-label>
     </ion-item>
 
@@ -46,7 +49,7 @@
       <ion-icon name="calendar" slot="start" color="primary" class="text-xl"></ion-icon>
       <ion-label class="py-2">
         {{ TranslateKeys.TITLE_BIRTHDAY | translate }}<br>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400"> {{ authData.birthday | date:'dd/MM/yyyy' }} &nbsp;</span>
+        <span class="text-sm text-gray-500 italic dark:text-gray-400">{{ TranslateKeys.TITLE_NOT_SET | translate }}</span>
       </ion-label>
     </ion-item>
   </ion-list>

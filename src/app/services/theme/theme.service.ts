@@ -54,7 +54,7 @@ export class ThemeService {
    * @param isSyncServer
    */
   public useSystemTheme(isSyncServer: boolean = true) {
-    this.prefersDark.matches ? this.enableDark() : this.enableLight();
+    this.prefersDark.matches ? this.enableDark(isSyncServer) : this.enableLight(isSyncServer);
     if (isSyncServer) this.saveUserThemeSettings(Theme.SYSTEM);
   }
 

@@ -62,6 +62,7 @@
   },
   "TITLE": {
     "phone": "Số điện thoại",
+    "account": "Tài khoản",
     "email": "Email",
     "password": "Mật khẩu",
     "login": "Đăng nhập",
@@ -99,7 +100,7 @@
     "school": "Trường",
     "class": "Lớp",
     "theme_and_background": "Giao diện & hình nền",
-    "notification_and_sound": "Thông báo & âm thanh",
+    "notification_and_sound": "Âm thanh & thông báo",
     "language": "Ngôn ngữ",
     "account_and_security": "Tài khoản và bảo mật",
     "privacy_rights": "Quyền riêng tư",
@@ -155,10 +156,15 @@
     "enter_new_pin": "Nhập mã PIN mới",
     "confirm_new_pin": "Xác nhận mã PIN mới",
     "enter_current_pin": "Nhập mã PIN hiện tại",
-    "app_update" : "Cập nhật ứng dụng"
+    "app_update" : "Cập nhật ứng dụng",
+    "not_set": "Chưa thiết lập",
+    "not_set_nickname": "Chưa có biệt danh",
+    "chatbot_ai": "Chatbot AI",
+    "type_message": "Nhập tin nhắn..."
   },
   "VALIDATE": {
     "phone_required": "Vui lòng nhập vào số điện thoại.",
+    "account_required": "Vui lòng nhập vào tài khoản.",
     "password_required": "Vui lòng nhập vào mật khẩu.",
     "new_password_required": "Vui lòng nhập vào mật khẩu mới.",
     "confirm_password_required": "Vui lòng xác nhận mật khẩu mới.",
@@ -213,5 +219,8 @@
   },
   "WARNING": {
     "app_lock": "Trong trường hợp bạn quên mã khóa ứng dụng, bạn phải gỡ cài đặt và cài đặt lại ứng dụng từ cửa hàng để xóa mã khóa cũ."
+  },
+  "CAPTION": {
+    "chatbot": "Hôm nay bạn cảm thấy thế nào? Chia sẻ với mình nhé!"
   }
 }
