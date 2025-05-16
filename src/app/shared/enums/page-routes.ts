@@ -25,4 +25,5 @@ export enum PageRoutes {
   TEACHER_DASHBOARD = 'teacher-dashboard',
   FAMILY_CONFLICT_SURVEY = 'family-conflict-survey',
   FAMILY_COMMUNICATION_QUALITY_SURVEY = 'family-communication-quality-survey',
+  SELF_DISCOVERY_SURVEY = 'self-discovery-survey',
 }

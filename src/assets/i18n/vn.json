@@ -185,7 +185,14 @@
     "communication_level": "Mức độ giao tiếp",
     "family_communication_survey_questions": "Câu hỏi khảo sát về chất lượng giao tiếp gia đình",
     "communication_points": "Điểm",
-    "no_family_communication_survey_history": "Chưa có lịch sử khảo sát giao tiếp gia đình"
+    "no_family_communication_survey_history": "Chưa có lịch sử khảo sát giao tiếp gia đình",
+    "self_discovery_survey": "Khảo sát khám phá bản thân",
+    "self_discovery_survey_history": "Lịch sử khảo sát khám phá bản thân",
+    "self_discovery_survey_detail": "Chi tiết khảo sát khám phá bản thân",
+    "discovery_level": "Mức độ khám phá",
+    "self_discovery_survey_questions": "Câu hỏi khảo sát khám phá bản thân",
+    "discovery_points": "Điểm",
+    "no_self_discovery_survey_history": "Chưa có lịch sử khảo sát khám phá bản thân"
   },
   "VALIDATE": {
     "phone_required": "Vui lòng nhập vào số điện thoại.",

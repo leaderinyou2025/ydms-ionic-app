@@ -184,7 +184,14 @@
     "communication_level": "Communication Level",
     "family_communication_survey_questions": "Family Communication Survey Questions",
     "communication_points": "Communication Points",
-    "no_family_communication_survey_history": "No family communication survey history available"
+    "no_family_communication_survey_history": "No family communication survey history available",
+    "self_discovery_survey": "Self Discovery Survey",
+    "self_discovery_survey_history": "Self Discovery Survey History",
+    "self_discovery_survey_detail": "Self Discovery Survey Detail",
+    "discovery_level": "Discovery Level",
+    "self_discovery_survey_questions": "Self Discovery Survey Questions",
+    "discovery_points": "Points",
+    "no_self_discovery_survey_history": "No self discovery survey history yet"
   },
   "VALIDATE": {
     "phone_required": "Please input your phone number.",
