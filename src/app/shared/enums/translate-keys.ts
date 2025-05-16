@@ -51,6 +51,15 @@ export enum TranslateKeys {
   RANK_POINTS_HEADER = 'RANK.points_header',
   BADGE_NEW = 'RANK.badge_new',
 
+  // FAMILY CONFLICT SURVEY
+  TITLE_FAMILY_CONFLICT_SURVEY = 'TITLE.family_conflict_survey',
+  TITLE_FAMILY_CONFLICT_SURVEY_HISTORY = 'TITLE.family_conflict_survey_history',
+  TITLE_FAMILY_CONFLICT_SURVEY_DETAIL = 'TITLE.family_conflict_survey_detail',
+  TITLE_CONFLICT_LEVEL = 'TITLE.conflict_level',
+  TITLE_SYSTEM_FEEDBACK = 'TITLE.system_feedback',
+  TITLE_SURVEY_QUESTIONS = 'TITLE.survey_questions',
+  TITLE_NO_SURVEY_HISTORY = 'TITLE.no_survey_history',
+
   // TITLE
   TITLE_PHONE = 'TITLE.phone',
   TITLE_ACCOUNT = 'TITLE.account',
@@ -153,6 +162,8 @@ export enum TranslateKeys {
   TITLE_NOT_SET_NICKNAME = 'TITLE.not_set_nickname',
   TITLE_CHATBOT_AI = 'TITLE.chatbot_ai',
   TITLE_TYPE_MESSAGE = 'TITLE.type_message',
+  TITLE_POINTS = 'TITLE.points',
+  TITLE_LOADING_MORE = 'TITLE.loading_more',
 
   // VALIDATE
   VALIDATE_PHONE_REQUIRED = 'VALIDATE.phone_required',
@@ -182,6 +193,8 @@ export enum TranslateKeys {
   BUTTON_UPDATE = 'BUTTON_TITLES.update',
   BUTTON_EXECUTE = 'BUTTON_TITLES.execute',
   BUTTON_COMPLETE = 'BUTTON_TITLES.complete',
+  BUTTON_CREATE_NEW_SURVEY = 'BUTTON_TITLES.create_new_survey',
+  BUTTON_CREATE_FIRST_SURVEY = 'BUTTON_TITLES.create_first_survey',
 
   // TOAST
   TOAST_ERROR_HEADER = 'TOAST.error_header',

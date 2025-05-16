@@ -23,4 +23,5 @@ export enum PageRoutes {
   RANK = 'rank',
   PARENT_DASHBOARD = 'parent-database',
   TEACHER_DASHBOARD = 'teacher-dashboard',
+  FAMILY_CONFLICT_SURVEY = 'family-conflict-survey',
 }

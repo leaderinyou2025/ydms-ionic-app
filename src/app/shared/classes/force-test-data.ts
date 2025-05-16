@@ -1,3 +1,4 @@
+
 import { IAuthData } from '../interfaces/auth/auth-data';
 import { Theme } from '../enums/theme';
 import { IAssetsResource } from '../interfaces/settings/assets-resource';
@@ -8,11 +9,253 @@ import { ICharacter, IStatusItem, ITask } from '../interfaces/home/home.interfac
 import { IFriend } from '../interfaces/friend/friend';
 import { IRankItem } from '../interfaces/rank/rank.interfaces';
 import { IAchievementCategory } from '../interfaces/rank/achievement.interfaces';
+import {
+  IFamilyConflictSurveyHistory,
+  IFamilyConflictSurveyQuestion
+} from '../interfaces/family-conflict-survey/family-conflict-survey.interfaces';
 
 import { EmotionType } from '../enums/personal-diary/personal-diary.enum';
 import { IEmotionSuggestion, IPersonalDiaryEntry } from '../interfaces/personal-diary/personal-diary.interfaces';
 
 export class ForceTestData {
+
+  /**
+   * Conflict level constants
+   */
+  static ConflictLevels = {
+    LOW: 'low',
+    MEDIUM: 'medium',
+    HIGH: 'high',
+    SEVERE: 'severe'
+  };
+
+  /**
+   * Conflict level emojis
+   */
+  static ConflictLevelEmojis: Record<string, string> = {
+    [ForceTestData.ConflictLevels.LOW]: '🟢',
+    [ForceTestData.ConflictLevels.MEDIUM]: '🟡',
+    [ForceTestData.ConflictLevels.HIGH]: '🟠',
+    [ForceTestData.ConflictLevels.SEVERE]: '🔴'
+  };
+
+  /**
+   * Get conflict level emoji
+   * @param conflictLevel Conflict level
+   * @returns Emoji for the conflict level
+   */
+  static getConflictLevelEmoji(conflictLevel: string): string {
+    return ForceTestData.ConflictLevelEmojis[conflictLevel] || '🟢';
+  }
+
+  /**
+   * Mock data for family conflict survey history
+   */
+  static mockFamilyConflictSurveyHistory: IFamilyConflictSurveyHistory[] = [
+    {
+      id: 1,
+      date: new Date(2024, 10, 29),
+      result: 'Mức độ xung đột thấp',
+      conflictLevel: ForceTestData.ConflictLevels.LOW,
+      score: 15
+    },
+    {
+      id: 2,
+      date: new Date(2024, 10, 22),
+      result: 'Mức độ xung đột trung bình',
+      conflictLevel: ForceTestData.ConflictLevels.MEDIUM,
+      score: 35
+    },
+    {
+      id: 3,
+      date: new Date(2024, 10, 15),
+      result: 'Mức độ xung đột cao',
+      conflictLevel: ForceTestData.ConflictLevels.HIGH,
+      score: 65
+    },
+    {
+      id: 4,
+      date: new Date(2024, 10, 8),
+      result: 'Mức độ xung đột thấp',
+      conflictLevel: ForceTestData.ConflictLevels.LOW,
+      score: 20
+    },
+    {
+      id: 5,
+      date: new Date(2024, 10, 1),
+      result: 'Mức độ xung đột trung bình',
+      conflictLevel: ForceTestData.ConflictLevels.MEDIUM,
+      score: 40
+    },
+    {
+      id: 6,
+      date: new Date(2024, 9, 24),
+      result: 'Mức độ xung đột nghiêm trọng',
+      conflictLevel: ForceTestData.ConflictLevels.SEVERE,
+      score: 85
+    },
+    {
+      id: 7,
+      date: new Date(2024, 9, 17),
+      result: 'Mức độ xung đột cao',
+      conflictLevel: ForceTestData.ConflictLevels.HIGH,
+      score: 70
+    },
+    {
+      id: 8,
+      date: new Date(2024, 9, 10),
+      result: 'Mức độ xung đột thấp',
+      conflictLevel: ForceTestData.ConflictLevels.LOW,
+      score: 25
+    },
+    {
+      id: 9,
+      date: new Date(2024, 9, 3),
+      result: 'Mức độ xung đột trung bình',
+      conflictLevel: ForceTestData.ConflictLevels.MEDIUM,
+      score: 45
+    },
+    {
+      id: 10,
+      date: new Date(2024, 8, 26),
+      result: 'Mức độ xung đột cao',
+      conflictLevel: ForceTestData.ConflictLevels.HIGH,
+      score: 60
+    },
+    {
+      id: 11,
+      date: new Date(2024, 8, 19),
+      result: 'Mức độ xung đột nghiêm trọng',
+      conflictLevel: ForceTestData.ConflictLevels.SEVERE,
+      score: 90
+    },
+    {
+      id: 12,
+      date: new Date(2024, 8, 12),
+      result: 'Mức độ xung đột thấp',
+      conflictLevel: ForceTestData.ConflictLevels.LOW,
+      score: 10
+    }
+  ];
+
+  /**
+   * Mock data for family conflict survey questions
+   */
+  static mockFamilyConflictSurveyQuestions: IFamilyConflictSurveyQuestion[] = [
+    {
+      id: 1,
+      text: 'Trong tuần qua, bạn có thường xuyên cãi vã với các thành viên trong gia đình không?',
+      options: [
+        {id: 1, text: 'Không bao giờ', selected: false, value: 0},
+        {id: 2, text: 'Hiếm khi', selected: false, value: 1},
+        {id: 3, text: 'Thỉnh thoảng', selected: false, value: 2},
+        {id: 4, text: 'Thường xuyên', selected: true, value: 3},
+        {id: 5, text: 'Rất thường xuyên', selected: false, value: 4}
+      ]
+    },
+    {
+      id: 2,
+      text: 'Bạn có cảm thấy gia đình hiểu và tôn trọng ý kiến của bạn không?',
+      options: [
+        {id: 6, text: 'Không bao giờ', selected: false, value: 4},
+        {id: 7, text: 'Hiếm khi', selected: false, value: 3},
+        {id: 8, text: 'Thỉnh thoảng', selected: true, value: 2},
+        {id: 9, text: 'Thường xuyên', selected: false, value: 1},
+        {id: 10, text: 'Luôn luôn', selected: false, value: 0}
+      ]
+    },
+    {
+      id: 3,
+      text: 'Khi có mâu thuẫn, gia đình bạn có giải quyết một cách bình tĩnh và hiệu quả không?',
+      options: [
+        {id: 11, text: 'Không bao giờ', selected: false, value: 4},
+        {id: 12, text: 'Hiếm khi', selected: true, value: 3},
+        {id: 13, text: 'Thỉnh thoảng', selected: false, value: 2},
+        {id: 14, text: 'Thường xuyên', selected: false, value: 1},
+        {id: 15, text: 'Luôn luôn', selected: false, value: 0}
+      ]
+    },
+    {
+      id: 4,
+      text: 'Bạn có cảm thấy căng thẳng khi ở nhà với gia đình không?',
+      options: [
+        {id: 16, text: 'Không bao giờ', selected: false, value: 0},
+        {id: 17, text: 'Hiếm khi', selected: false, value: 1},
+        {id: 18, text: 'Thỉnh thoảng', selected: false, value: 2},
+        {id: 19, text: 'Thường xuyên', selected: true, value: 3},
+        {id: 20, text: 'Luôn luôn', selected: false, value: 4}
+      ]
+    },
+    {
+      id: 5,
+      text: 'Các thành viên trong gia đình có thường xuyên nói to, quát tháo hoặc la hét với nhau không?',
+      options: [
+        {id: 21, text: 'Không bao giờ', selected: false, value: 0},
+        {id: 22, text: 'Hiếm khi', selected: false, value: 1},
+        {id: 23, text: 'Thỉnh thoảng', selected: false, value: 2},
+        {id: 24, text: 'Thường xuyên', selected: false, value: 3},
+        {id: 25, text: 'Luôn luôn', selected: true, value: 4}
+      ]
+    }
+  ];
+
+  /**
+   * Get feedback based on conflict score
+   * @param score Conflict score
+   * @returns Feedback text
+   */
+  static getFeedbackForConflictScore(score: number): string {
+    if (score <= 20) {
+      return 'Mức độ xung đột trong gia đình bạn rất thấp. Đây là một môi trường gia đình lành mạnh và hỗ trợ. Hãy tiếp tục duy trì mối quan hệ tốt đẹp này.';
+    } else if (score <= 40) {
+      return 'Mức độ xung đột trong gia đình bạn ở mức thấp. Gia đình bạn có nền tảng giao tiếp tốt, nhưng vẫn có thể cải thiện thêm để giải quyết các mâu thuẫn hiệu quả hơn.';
+    } else if (score <= 60) {
+      return 'Mức độ xung đột trong gia đình bạn ở mức trung bình. Có một số vấn đề cần được giải quyết. Hãy thử cải thiện kỹ năng giao tiếp và lắng nghe trong gia đình.';
+    } else if (score <= 80) {
+      return 'Mức độ xung đột trong gia đình bạn ở mức cao. Có nhiều vấn đề cần được giải quyết. Hãy cân nhắc tìm kiếm sự hỗ trợ từ người thân hoặc chuyên gia tư vấn gia đình.';
+    } else {
+      return 'Mức độ xung đột trong gia đình bạn ở mức nghiêm trọng. Đây là tình trạng đáng lo ngại. Hãy tìm kiếm sự hỗ trợ từ chuyên gia tư vấn gia đình hoặc nhà tâm lý học càng sớm càng tốt.';
+    }
+  }
+
+  /**
+   * Get conflict level based on score
+   * @param score Conflict score
+   * @returns Conflict level
+   */
+  static getConflictLevelFromScore(score: number): string {
+    if (score <= 20) {
+      return ForceTestData.ConflictLevels.LOW;
+    } else if (score <= 50) {
+      return ForceTestData.ConflictLevels.MEDIUM;
+    } else if (score <= 80) {
+      return ForceTestData.ConflictLevels.HIGH;
+    } else {
+      return ForceTestData.ConflictLevels.SEVERE;
+    }
+  }
+
+  /**
+   * Get result text based on conflict level
+   * @param conflictLevel Conflict level
+   * @returns Result text
+   */
+  static getResultTextFromConflictLevel(conflictLevel: string): string {
+    switch (conflictLevel) {
+      case ForceTestData.ConflictLevels.LOW:
+        return 'Mức độ xung đột thấp';
+      case ForceTestData.ConflictLevels.MEDIUM:
+        return 'Mức độ xung đột trung bình';
+      case ForceTestData.ConflictLevels.HIGH:
+        return 'Mức độ xung đột cao';
+      case ForceTestData.ConflictLevels.SEVERE:
+        return 'Mức độ xung đột nghiêm trọng';
+      default:
+        return 'Mức độ xung đột không xác định';
+    }
+  }
+
+  // Original ForceTestData content starts here
 
   static background_images: Array<IAssetsResource> = [
     {id: 1, resource_url: 'assets/images/background/pexels-eugene-golovesov-1810803-30980499.jpg', name: 'Nụ thường xuân'},
@@ -32,8 +275,18 @@ export class ForceTestData {
   ];
   static background_sounds: Array<IAssetsResource> = [
     {id: 1, resource_url: '/assets/sounds/cork-85200.mp3', name: 'cork-85200', category: AssetResourceCategory.EFFECT},
-    {id: 2, resource_url: '/assets/sounds/reload-124467.mp3', name: 'reload-124467', category: AssetResourceCategory.EFFECT},
-    {id: 3, resource_url: '/assets/sounds/alert-234711.mp3', name: 'alert-234711', category: AssetResourceCategory.EFFECT},
+    {
+      id: 2,
+      resource_url: '/assets/sounds/reload-124467.mp3',
+      name: 'reload-124467',
+      category: AssetResourceCategory.EFFECT
+    },
+    {
+      id: 3,
+      resource_url: '/assets/sounds/alert-234711.mp3',
+      name: 'alert-234711',
+      category: AssetResourceCategory.EFFECT
+    },
     {id: 4, resource_url: '/assets/sounds/background.mp3', name: 'Pikachu', category: AssetResourceCategory.BACKGROUND},
   ]
 

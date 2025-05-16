@@ -160,7 +160,17 @@
     "not_set": "Chưa thiết lập",
     "not_set_nickname": "Chưa có biệt danh",
     "chatbot_ai": "Chatbot AI",
-    "type_message": "Nhập tin nhắn..."
+    "type_message": "Nhập tin nhắn...",
+    "points": "Điểm",
+    "loading_more": "Đang tải thêm...",
+    "page": "Trang",
+    "family_conflict_survey": "Khảo sát xung đột gia đình",
+    "family_conflict_survey_history": "Khảo sát mâu thuẫn gia đình",
+    "family_conflict_survey_detail": "Chi tiết khảo sát",
+    "conflict_level": "Mức độ xung đột",
+    "system_feedback": "Phản hồi hệ thống",
+    "survey_questions": "Câu hỏi khảo sát",
+    "no_survey_history": "Chưa có lịch sử khảo sát"
   },
   "VALIDATE": {
     "phone_required": "Vui lòng nhập vào số điện thoại.",
@@ -190,7 +200,9 @@
     "save_changes": "Lưu thay đổi",
     "update": "Cập nhật",
     "execute": "Thực hiện",
-    "complete": "Hoàn thành"
+    "complete": "Hoàn thành",
+    "create_new_survey": "Tạo khảo sát mới",
+    "create_first_survey": "Tạo khảo sát đầu tiên"
   },
   "TOAST": {
     "error_header": "Lỗi",
