@@ -1,4 +1,4 @@
-import {ReactionOption} from "../interfaces/personal-diary/personal-diary.interfaces";
+import { ReactionOption } from '../interfaces/personal-diary/personal-diary.interfaces';
 
 /**
  * Shared reaction options data

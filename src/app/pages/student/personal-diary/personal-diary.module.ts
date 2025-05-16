@@ -8,7 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { PersonalDiaryPageRoutingModule } from './personal-diary-routing.module';
 
 import { PersonalDiaryPage } from './personal-diary.page';
-import {SharedModule} from "../../../shared/shared.module";
+import { SharedModule } from '../../../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -21,4 +21,5 @@ import {SharedModule} from "../../../shared/shared.module";
   ],
   declarations: [PersonalDiaryPage]
 })
-export class PersonalDiaryPageModule {}
+export class PersonalDiaryPageModule {
+}

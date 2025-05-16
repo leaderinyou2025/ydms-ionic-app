@@ -1,5 +1,5 @@
 import { EmotionType } from '../enums/personal-diary/personal-diary.enum';
-import { EmotionOption } from "../interfaces/personal-diary/personal-diary.interfaces";
+import { EmotionOption } from '../interfaces/personal-diary/personal-diary.interfaces';
 import { TranslateKeys } from '../enums/translate-keys';
 
 /**

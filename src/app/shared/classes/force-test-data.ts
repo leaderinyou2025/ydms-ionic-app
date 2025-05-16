@@ -10,7 +10,7 @@ import { IRankItem } from '../interfaces/rank/rank.interfaces';
 import { IAchievementCategory } from '../interfaces/rank/achievement.interfaces';
 
 import { EmotionType } from '../enums/personal-diary/personal-diary.enum';
-import { IPersonalDiaryEntry, IEmotionSuggestion, IReactionCount, IUserReaction } from '../interfaces/personal-diary/personal-diary.interfaces';
+import { IEmotionSuggestion, IPersonalDiaryEntry } from '../interfaces/personal-diary/personal-diary.interfaces';
 
 export class ForceTestData {
 
@@ -256,8 +256,10 @@ export class ForceTestData {
     name: 'Bạn lớp 6A',
     nickname: 'Bạn lớp 6A',
     login: 'student2',
-    role: UserRoles.STUDENT,
-    avatar: 'assets/icons/svg/avatar.svg'
+    is_teenager: true,
+    is_parent: false,
+    is_teacher: false,
+    avatar_128: 'assets/icons/svg/avatar.svg'
   };
 
   /**
@@ -280,11 +282,11 @@ export class ForceTestData {
         angry: 0
       },
       userReactions: [
-        { userId: 2, reactionType: 'love' },
-        { userId: 3, reactionType: 'love' },
-        { userId: 4, reactionType: 'love' },
-        { userId: 5, reactionType: 'happy' },
-        { userId: 6, reactionType: 'happy' }
+        {userId: 2, reactionType: 'love'},
+        {userId: 3, reactionType: 'love'},
+        {userId: 4, reactionType: 'love'},
+        {userId: 5, reactionType: 'happy'},
+        {userId: 6, reactionType: 'happy'}
       ]
     },
     {
@@ -303,9 +305,9 @@ export class ForceTestData {
         angry: 0
       },
       userReactions: [
-        { userId: 1, reactionType: 'sad' },
-        { userId: 3, reactionType: 'sad' },
-        { userId: 5, reactionType: 'love' }
+        {userId: 1, reactionType: 'sad'},
+        {userId: 3, reactionType: 'sad'},
+        {userId: 5, reactionType: 'love'}
       ]
     },
     {
@@ -334,13 +336,13 @@ export class ForceTestData {
         angry: 4
       },
       userReactions: [
-        { userId: 1, reactionType: 'angry' },
-        { userId: 3, reactionType: 'angry' },
-        { userId: 5, reactionType: 'angry' },
-        { userId: 6, reactionType: 'angry' },
-        { userId: 7, reactionType: 'love' },
-        { userId: 8, reactionType: 'love' },
-        { userId: 9, reactionType: 'sad' }
+        {userId: 1, reactionType: 'angry'},
+        {userId: 3, reactionType: 'angry'},
+        {userId: 5, reactionType: 'angry'},
+        {userId: 6, reactionType: 'angry'},
+        {userId: 7, reactionType: 'love'},
+        {userId: 8, reactionType: 'love'},
+        {userId: 9, reactionType: 'sad'}
       ]
     },
     {

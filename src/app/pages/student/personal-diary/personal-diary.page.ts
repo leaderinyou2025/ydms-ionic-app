@@ -1,19 +1,17 @@
-import {Component, OnInit, HostListener} from '@angular/core';
-import {Observable} from 'rxjs';
-import {AlertController, ModalController, SegmentValue} from '@ionic/angular';
-import {TranslateService} from '@ngx-translate/core';
+import { Component, OnInit, HostListener } from '@angular/core';
+import { AlertController, ModalController, SegmentValue } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
-import {PersonalDiaryService} from '../../../services/personal-diary/personal-diary.service';
-import {AuthService} from '../../../services/auth/auth.service';
-import {EmotionFilterType, EmotionType} from '../../../shared/enums/personal-diary/personal-diary.enum';
-import {
-  IPersonalDiaryEntry,
-} from '../../../shared/interfaces/personal-diary/personal-diary.interfaces';
-import {IAuthData} from '../../../shared/interfaces/auth/auth-data';
-import {TranslateKeys} from '../../../shared/enums/translate-keys';
-import {getEmotionEmoji} from '../../../shared/data/emotion-options.data';
-import {REACTION_OPTIONS} from "../../../shared/data/reaction-options.data";
-import {IHeaderAnimeImage, IHeaderSegment} from "../../../shared/interfaces/header/header";
+import { PersonalDiaryService } from '../../../services/personal-diary/personal-diary.service';
+import { AuthService } from '../../../services/auth/auth.service';
+import { EmotionFilterType, EmotionType } from '../../../shared/enums/personal-diary/personal-diary.enum';
+import { IPersonalDiaryEntry } from '../../../shared/interfaces/personal-diary/personal-diary.interfaces';
+import { IAuthData } from '../../../shared/interfaces/auth/auth-data';
+import { TranslateKeys } from '../../../shared/enums/translate-keys';
+import { getEmotionEmoji } from '../../../shared/data/emotion-options.data';
+import { REACTION_OPTIONS } from '../../../shared/data/reaction-options.data';
+import { IHeaderAnimeImage, IHeaderSegment } from '../../../shared/interfaces/header/header';
 
 @Component({
   selector: 'app-personal-diary',
@@ -94,7 +92,7 @@ export class PersonalDiaryPage implements OnInit {
 
   /**
    * Handle segment change event
-   * @param event Segment change event
+   * @param filter
    */
   public segmentChanged(filter: SegmentValue | undefined): void {
     if (filter === EmotionFilterType.MY_ENTRIES || filter === EmotionFilterType.SHARED_ENTRIES) {
@@ -245,7 +243,7 @@ export class PersonalDiaryPage implements OnInit {
 
               // You could show a success toast here if needed
             } catch (error) {
-              console.error("ERROR:", error);
+              console.error('ERROR:', error);
               // You could show an error toast here if needed
             }
             return true; // Close the alert
@@ -413,7 +411,7 @@ export class PersonalDiaryPage implements OnInit {
         );
 
       } catch (error) {
-        console.error("ERROR:", error)
+        console.error('ERROR:', error)
       }
     }
   }
