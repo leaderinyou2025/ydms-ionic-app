@@ -6,6 +6,7 @@ import { TextZoomSize } from '../enums/text-zoom-size';
 import { AssetResourceCategory } from '../enums/asset-resource-category';
 import { StatusItemType } from '../enums/home/status-item-type.enum';
 import { ICharacter, IStatusItem, ITask } from '../interfaces/home/home.interfaces';
+import { INotification, NotificationType } from '../interfaces/notification/notification.interface';
 import { IFriend } from '../interfaces/friend/friend';
 import { IRankItem } from '../interfaces/rank/rank.interfaces';
 import { IAchievementCategory } from '../interfaces/rank/achievement.interfaces';
@@ -353,6 +354,150 @@ export class ForceTestData {
       description: 'Bạn thích sáng tạo? Hãy thử khóa học vẽ tranh sơ dành cho người mới bắt đầu.',
       points: 10
     },
+  ];
+
+  /**
+   * Unread notifications data
+   */
+  static unreadNotifications: INotification[] = [
+    {
+      id: 1,
+      sender: {
+        id: 1,
+        name: 'HH',
+        avatar: 'assets/images/avatar/Shiba-Inu-Dog.png'
+      },
+      title: 'Cảm xúc mới',
+      message: 'đã bày tỏ cảm xúc của mình!',
+      timestamp: new Date(Date.now() - 3600000).toISOString(), // 1 hour ago
+      isRead: false,
+      type: NotificationType.EMOTION_SHARED
+    },
+    {
+      id: 2,
+      sender: {
+        id: 2,
+        name: 'AA',
+        avatar: 'assets/images/avatar/Shiba-Inu-Dog-1.png'
+      },
+      title: 'Cảm xúc mới',
+      message: 'đã bày tỏ cảm xúc của mình!',
+      timestamp: new Date(Date.now() - 7200000).toISOString(), // 2 hours ago
+      isRead: false,
+      type: NotificationType.EMOTION_SHARED
+    },
+    {
+      id: 3,
+      sender: {
+        id: 3,
+        name: 'BB',
+        avatar: 'assets/images/avatar/Shiba-Inu-Dog-2.png'
+      },
+      title: 'Nhiệm vụ mới',
+      message: 'đã giao nhiệm vụ mới cho bạn!',
+      timestamp: new Date(Date.now() - 10800000).toISOString(), // 3 hours ago
+      isRead: false,
+      type: NotificationType.PERSONAL_TASK
+    },
+    {
+      id: 4,
+      sender: {
+        id: 4,
+        name: 'GG',
+        avatar: 'assets/images/avatar/Shiba-Inu-Dog-3.png'
+      },
+      title: 'Thông báo hệ thống',
+      message: 'Hệ thống đã được cập nhật phiên bản mới',
+      timestamp: new Date(Date.now() - 86400000).toISOString(), // 1 day ago
+      isRead: false,
+      type: NotificationType.OTHER
+    },
+    {
+      id: 5,
+      sender: {
+        id: 5,
+        name: 'MM',
+        avatar: 'assets/images/avatar/Shiba-Inu-Dog-Showing-Muscles.png'
+      },
+      title: 'Nhiệm vụ mới',
+      message: 'đã giao nhiệm vụ mới cho bạn!',
+      timestamp: new Date(Date.now() - 172800000).toISOString(), // 2 days ago
+      isRead: false,
+      type: NotificationType.PERSONAL_TASK
+    },
+    {
+      id: 6,
+      sender: {
+        id: 6,
+        name: 'NN',
+        avatar: 'assets/images/avatar/Shiba-Inu-Dog.png'
+      },
+      title: 'Cảm xúc mới',
+      message: 'đã bày tỏ cảm xúc của mình!',
+      timestamp: new Date(Date.now() - 259200000).toISOString(), // 3 days ago
+      isRead: false,
+      type: NotificationType.EMOTION_SHARED
+    },
+    {
+      id: 9,
+      sender: {
+        id: 9,
+        name: 'QQ',
+        avatar: 'assets/images/avatar/Shiba-Inu-Dog-1.png'
+      },
+      title: 'Nhiệm vụ mới',
+      message: 'đã giao nhiệm vụ mới cho bạn!',
+      timestamp: new Date(Date.now() - 345600000).toISOString(), // 4 days ago
+      isRead: false,
+      type: NotificationType.PERSONAL_TASK
+    },
+    {
+      id: 10,
+      sender: {
+        id: 10,
+        name: 'RR',
+        avatar: 'assets/images/avatar/Shiba-Inu-Dog-2.png'
+      },
+      title: 'Cảm xúc mới',
+      message: 'đã bày tỏ cảm xúc của mình!',
+      timestamp: new Date(Date.now() - 432000000).toISOString(), // 5 days ago
+      isRead: false,
+      type: NotificationType.EMOTION_SHARED
+    }
+
+
+  ];
+
+  /**
+   * Read notifications data
+   */
+  static readNotifications: INotification[] = [
+    {
+      id: 7,
+      sender: {
+        id: 1,
+        name: 'HH',
+        avatar: 'assets/images/avatar/Shiba-Inu-Dog.png'
+      },
+      title: 'Cảm xúc mới',
+      message: 'đã bày tỏ cảm xúc của mình!',
+      timestamp: new Date(Date.now() - 604800000).toISOString(), // 1 week ago
+      isRead: true,
+      type: NotificationType.EMOTION_SHARED
+    },
+    {
+      id: 8,
+      sender: {
+        id: 2,
+        name: 'AA',
+        avatar: 'assets/images/avatar/Shiba-Inu-Dog-1.png'
+      },
+      title: 'Thông báo hệ thống',
+      message: 'đã bày tỏ cảm xúc của mình!',
+      timestamp: new Date(Date.now() - 1209600000).toISOString(), // 2 weeks ago
+      isRead: true,
+      type: NotificationType.OTHER
+    }
   ];
 
   static loginResult = {result: 1};
