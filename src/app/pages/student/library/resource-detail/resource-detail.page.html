@@ -1,0 +1,20 @@
+<!-- Header for Resource Viewer -->
+<app-header
+  [pageTitle]="TranslateKeys.RESOURCE_LIBRARY"
+  [backgroundColor]="'#9c27b0'"
+  [searchbar]="searchbarConfig"
+  [animeImage]="animeImage"
+  [animation]="animation"
+  [defaultBackHref]="'/library'"
+></app-header>
+
+<ion-content class="bg-white">
+  <div class="h-full">
+    <app-resource-viewer
+      [resource]="resource"
+      (backToList)="onBackToList()"
+    ></app-resource-viewer>
+  </div>
+</ion-content>
+
+<app-footer></app-footer>

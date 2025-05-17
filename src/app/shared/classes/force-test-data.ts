@@ -9,6 +9,9 @@ import { ICharacter, IStatusItem, ITask } from '../interfaces/home/home.interfac
 import { IFriend } from '../interfaces/friend/friend';
 import { IRankItem } from '../interfaces/rank/rank.interfaces';
 import { IAchievementCategory } from '../interfaces/rank/achievement.interfaces';
+import { IResource } from '../interfaces/resource/resource.interface';
+import { ResourceType } from '../enums/libary/resource-type.enum';
+import { ResourceTopic } from '../enums/libary/resource-topic.enum';
 import {
   IFamilyConflictSurveyHistory,
   IFamilyConflictSurveyQuestion
@@ -28,6 +31,20 @@ import { EmotionType } from '../enums/personal-diary/personal-diary.enum';
 import { IEmotionSuggestion, IPersonalDiaryEntry } from '../interfaces/personal-diary/personal-diary.interfaces';
 
 export class ForceTestData {
+
+  /**
+   * Resource topic thumbnail mapping
+   * Maps each resource topic to its default thumbnail image
+   */
+  static resourceTopicThumbnails = {
+    [ResourceTopic.MUSIC]: 'assets/images/resources/music-1.jpg',
+    [ResourceTopic.EDUCATION]: 'assets/images/resources/education-1.jpg',
+    [ResourceTopic.SCIENCE]: 'assets/images/resources/science-1.jpg',
+    [ResourceTopic.TECHNOLOGY]: 'assets/images/resources/technology-1.jpg',
+    [ResourceTopic.ARTS]: 'assets/images/resources/arts-1.jpg',
+    [ResourceTopic.SPORTS]: 'assets/images/resources/sports-1.jpg',
+    [ResourceTopic.ALL]: 'assets/images/resources/default.jpg'
+  };
 
   /**
    * Conflict level constants
@@ -509,6 +526,142 @@ export class ForceTestData {
     {id: 6, name: 'Vịt Donald', avatar: 'assets/images/avatar/Shiba-Inu-Dog-1.png', likeCount: 50, rank: 10, achievements: 12, friendshipLevel: 60},
     {id: 7, name: 'Chuột Micky', avatar: 'assets/images/avatar/Shiba-Inu-Dog-2.png', likeCount: 70, rank: 9, achievements: 18, friendshipLevel: 75},
     {id: 8, name: 'Nhóc Conan', avatar: 'assets/images/avatar/Shiba-Inu-Dog-3.png', likeCount: 186, rank: 3, achievements: 38, friendshipLevel: 186},
+  ];
+
+  /**
+   * Resources data (documents and videos)
+   */
+  static resources: Array<IResource> = [
+    {
+      id: 1,
+      title: 'A Whole New World',
+      description: 'Bài hát nổi tiếng từ phim hoạt hình Aladdin của Disney, thể hiện bởi ca sĩ Âu Mỹ.',
+      shortDescription: 'Bài hát nổi tiếng từ phim Aladdin',
+      resourceUrl: 'https://www.youtube.com/embed/hZ1Rb9hC4JY',
+      thumbnailUrl: 'https://img.youtube.com/vi/hZ1Rb9hC4JY/hqdefault.jpg',
+      type: ResourceType.VIDEO,
+      topic: ResourceTopic.MUSIC,
+      isExternal: true,
+      viewCount: 120,
+      createdDate: '2023-05-15'
+    },
+    {
+      id: 2,
+      title: 'Thích quá rùi nà',
+      description: 'Video cover bài hát "Thích quá rùi nà" được thể hiện bởi nhiều ca sĩ trẻ Việt Nam.',
+      shortDescription: 'Cover bài hát "Thích quá rùi nà"',
+      resourceUrl: 'https://www.youtube.com/embed/HZi4eJXWZU0',
+      thumbnailUrl: 'https://img.youtube.com/vi/HZi4eJXWZU0/hqdefault.jpg',
+      type: ResourceType.VIDEO,
+      topic: ResourceTopic.MUSIC,
+      isExternal: true,
+      viewCount: 85,
+      createdDate: '2023-06-20'
+    },
+    {
+      id: 3,
+      title: 'Chuyện gì sẽ xảy ra nếu bạn không uống nước?',
+      description: 'Video giải thích khoa học về tầm quan trọng của nước đối với cơ thể con người và những hậu quả nếu không uống đủ nước.',
+      shortDescription: 'Tầm quan trọng của nước với cơ thể',
+      resourceUrl: 'https://www.youtube.com/embed/9iMGFqMmUFs',
+      thumbnailUrl: 'https://img.youtube.com/vi/9iMGFqMmUFs/hqdefault.jpg',
+      type: ResourceType.VIDEO,
+      topic: ResourceTopic.SCIENCE,
+      isExternal: true,
+      viewCount: 210,
+      createdDate: '2023-04-10'
+    },
+    {
+      id: 4,
+      title: 'Tại sao mèo lại hành xử kỳ lạ đến vậy?',
+      description: 'Video khám phá hành vi của loài mèo và giải thích khoa học đằng sau những hành động kỳ lạ của chúng.',
+      shortDescription: 'Khám phá hành vi của loài mèo',
+      resourceUrl: 'https://www.youtube.com/embed/Z-QsJGDR9nU',
+      thumbnailUrl: 'https://img.youtube.com/vi/Z-QsJGDR9nU/hqdefault.jpg',
+      type: ResourceType.VIDEO,
+      topic: ResourceTopic.SCIENCE,
+      isExternal: true,
+      viewCount: 175,
+      createdDate: '2023-07-05'
+    },
+    {
+      id: 5,
+      title: 'Hướng dẫn học tập hiệu quả',
+      description: 'Tài liệu PDF cung cấp các phương pháp học tập hiệu quả, kỹ thuật ghi nhớ và quản lý thời gian cho học sinh.',
+      shortDescription: 'Phương pháp học tập hiệu quả',
+      resourceUrl: 'assets/documents/huong-dan-hoc-tap-hieu-qua.pdf',
+      thumbnailUrl: 'https://img.youtube.com/vi/hZ1Rb9hC4JY/hqdefault.jpg',
+      type: ResourceType.DOCUMENT,
+      topic: ResourceTopic.EDUCATION,
+      fileType: 'pdf',
+      viewCount: 320,
+      createdDate: '2023-03-15'
+    },
+    {
+      id: 6,
+      title: 'Kỹ năng giao tiếp cơ bản',
+      description: 'Tài liệu hướng dẫn các kỹ năng giao tiếp cơ bản, cách thể hiện bản thân và xây dựng mối quan hệ tốt với mọi người.',
+      shortDescription: 'Hướng dẫn kỹ năng giao tiếp',
+      resourceUrl: 'assets/documents/ky-nang-giao-tiep.pdf',
+      thumbnailUrl: 'https://img.youtube.com/vi/hZ1Rb9hC4JY/hqdefault.jpg',
+      type: ResourceType.DOCUMENT,
+      topic: ResourceTopic.EDUCATION,
+      fileType: 'pdf',
+      viewCount: 280,
+      createdDate: '2023-02-28'
+    },
+    {
+      id: 7,
+      title: 'Giới thiệu về Trí tuệ nhân tạo',
+      description: 'Tài liệu giới thiệu cơ bản về trí tuệ nhân tạo, lịch sử phát triển và các ứng dụng trong cuộc sống hiện đại.',
+      shortDescription: 'Giới thiệu về AI',
+      resourceUrl: 'assets/documents/gioi-thieu-tri-tue-nhan-tao.pdf',
+      thumbnailUrl: 'https://img.youtube.com/vi/hZ1Rb9hC4JY/hqdefault.jpg',
+      type: ResourceType.DOCUMENT,
+      topic: ResourceTopic.TECHNOLOGY,
+      fileType: 'pdf',
+      viewCount: 195,
+      createdDate: '2023-05-20'
+    },
+    {
+      id: 8,
+      title: 'Hướng dẫn vẽ tranh cơ bản',
+      description: 'Tài liệu hướng dẫn các kỹ thuật vẽ tranh cơ bản cho người mới bắt đầu, từ phác thảo đến tô màu.',
+      shortDescription: 'Kỹ thuật vẽ tranh cơ bản',
+      resourceUrl: 'assets/documents/huong-dan-ve-tranh.pdf',
+      thumbnailUrl: 'https://img.youtube.com/vi/hZ1Rb9hC4JY/hqdefault.jpg',
+      type: ResourceType.DOCUMENT,
+      topic: ResourceTopic.ARTS,
+      fileType: 'pdf',
+      viewCount: 150,
+      createdDate: '2023-06-10'
+    },
+    {
+      id: 9,
+      title: 'Các bài tập thể dục tại nhà',
+      description: 'Tài liệu hướng dẫn các bài tập thể dục đơn giản có thể thực hiện tại nhà mà không cần dụng cụ phức tạp.',
+      shortDescription: 'Bài tập thể dục tại nhà',
+      resourceUrl: 'assets/documents/bai-tap-the-duc.pdf',
+      thumbnailUrl: 'https://img.youtube.com/vi/hZ1Rb9hC4JY/hqdefault.jpg',
+      type: ResourceType.DOCUMENT,
+      topic: ResourceTopic.SPORTS,
+      fileType: 'pdf',
+      viewCount: 230,
+      createdDate: '2023-04-25'
+    },
+    {
+      id: 10,
+      title: 'Lập trình web cơ bản',
+      description: 'Video hướng dẫn lập trình web cơ bản với HTML, CSS và JavaScript cho người mới bắt đầu.',
+      shortDescription: 'Hướng dẫn lập trình web',
+      resourceUrl: 'https://www.youtube.com/embed/zJSY8tbf_ys',
+      thumbnailUrl: 'https://img.youtube.com/vi/zJSY8tbf_ys/hqdefault.jpg',
+      type: ResourceType.VIDEO,
+      topic: ResourceTopic.TECHNOLOGY,
+      isExternal: true,
+      viewCount: 310,
+      createdDate: '2023-03-30'
+    }
   ];
 
   /**

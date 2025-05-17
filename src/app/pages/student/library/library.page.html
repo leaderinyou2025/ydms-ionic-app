@@ -1,0 +1,24 @@
+<!-- Header for Resource List -->
+<app-header
+  [pageTitle]="TranslateKeys.RESOURCE_LIBRARY"
+  [backgroundColor]="'#9c27b0'"
+  [searchbar]="searchbarConfig"
+  [segment]="segment"
+  [animeImage]="animeImage"
+  [animation]="animation"
+  (inputSearch)="onSearchChange($event)"
+  (changeSegment)="onSegmentChange($event)"
+></app-header>
+
+<ion-content class="bg-white">
+  <div class="h-full">
+    <!-- Resource List Component -->
+    <app-resource-list
+      [searchTerm]="searchTerm"
+      [selectedType]="selectedType"
+      (resourceSelected)="onResourceSelected($event)"
+    ></app-resource-list>
+  </div>
+</ion-content>
+
+<app-footer></app-footer>
