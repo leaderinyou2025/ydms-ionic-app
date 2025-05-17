@@ -26,6 +26,7 @@ import {
 
 import { EmotionType } from '../enums/personal-diary/personal-diary.enum';
 import { IEmotionSuggestion, IPersonalDiaryEntry } from '../interfaces/personal-diary/personal-diary.interfaces';
+import { IDailyEmotionJournal, IEmotionIcon, IEmotionStreakStatus, EmotionShareTargetType } from '../interfaces/daily-emotion-journal/daily-emotion-journal.interfaces';
 
 export class ForceTestData {
 
@@ -617,6 +618,130 @@ export class ForceTestData {
       isAnonymous: false,
       isPublic: true,
       likes: 10
+    }
+  ];
+
+  /**
+   * Mock emotion icons for daily emotion journal
+   */
+  static emotionIcons: IEmotionIcon[] = [
+  {
+    id: 1,
+    name: 'Vui vẻ',
+    emoji: '😊',
+  },
+  {
+    id: 2,
+    name: 'Buồn',
+    emoji: '😢',
+  },
+  {
+    id: 3,
+    name: 'Tức giận',
+    emoji: '😡',
+  },
+  {
+    id: 4,
+    name: 'Lo lắng',
+    emoji: '😰',
+  },
+  {
+    id: 5,
+    name: 'Hào hứng',
+    emoji: '🤩',
+  },
+  {
+    id: 6,
+    name: 'Mệt mỏi',
+    emoji: '😴',
+  },
+  {
+    id: 7,
+    name: 'Bình tĩnh',
+    emoji: '😌',
+  },
+  {
+    id: 8,
+    name: 'Bối rối',
+    emoji: '🤔',
+  },
+  {
+    id: 9,
+    name: 'Tự hào',
+    emoji: '🥳',
+  },
+  {
+    id: 10,
+    name: 'Biết ơn',
+    emoji: '🙏',
+  }
+];
+
+  /**
+   * Mock emotion streak status for daily emotion journal
+   */
+  static emotionStreakStatus: IEmotionStreakStatus = {
+    currentStreak: 4,
+    longestStreak: 7,
+    streakMilestones: {
+      days3: true,
+      days5: false,
+      days7: true,
+      days15: false,
+      days28: false
+    }
+  };
+
+  /**
+   * Mock daily emotion journal entries
+   */
+  static dailyEmotionJournalEntries: IDailyEmotionJournal[] = [
+    {
+      id: 1,
+      date: new Date(new Date().setDate(new Date().getDate() - 1)), // Yesterday
+      emotionIcon: this.emotionIcons[0], // Happy
+      caption: 'Nay là 1 ngày tuyệt vời!',
+      userId: 1
+    },
+    {
+      id: 2,
+      date: new Date(new Date().setDate(new Date().getDate() - 2)), // 2 days ago
+      emotionIcon: this.emotionIcons[4], // Excited
+      caption: 'Mong chờ đến cuối tuần!',
+      userId: 1,
+      sharedWith: [
+        { id: 1, type: EmotionShareTargetType.CLASS_GROUP, name: 'Lớp 6A' },
+        { id: 2, type: EmotionShareTargetType.FRIEND, name: 'Bạn thân' }
+      ]
+    },
+    {
+      id: 3,
+      date: new Date(new Date().setDate(new Date().getDate() - 3)), // 3 days ago
+      emotionIcon: this.emotionIcons[6], // Calm
+      caption: 'Tận hưởng cuốn sách yêu thích',
+      userId: 1
+    },
+    {
+      id: 4,
+      date: new Date(new Date().setDate(new Date().getDate() - 4)), // 4 days ago
+      emotionIcon: this.emotionIcons[1], // Sad
+      caption: 'Nhớ người bạn đã chuyển đi',
+      userId: 1,
+      sharedWith: [
+        { id: 3, type: EmotionShareTargetType.FAMILY, name: 'Mẹ' }
+      ]
+    },
+    {
+      id: 5,
+      date: new Date(new Date().setDate(new Date().getDate() - 7)), // 7 days ago
+      emotionIcon: this.emotionIcons[8], // Proud
+      caption: 'Nay được điểm cao trong bài kiểm tra!',
+      userId: 1,
+      sharedWith: [
+        { id: 1, type: EmotionShareTargetType.CLASS_GROUP, name: 'Lớp 6A' },
+        { id: 4, type: EmotionShareTargetType.TEACHER, name: 'Giáo viên' },
+        { id: 3, type: EmotionShareTargetType.FAMILY, name: 'Mẹ' }
+      ]
     }
   ];
 
