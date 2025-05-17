@@ -15,6 +15,7 @@ export enum PageRoutes {
   CHANGE_PASSWORD = 'change-password',
   BADGE_COLLECTION = 'badge-collection',
   PERSONAL_DIARY = 'personal-diary',
+  DAILY_EMOTION_JOURNAL = 'daily-emotion-journal',
   CLASS_GROUP = 'class-group',
   FAMILY_GROUP = 'family-group',
   SCHOOL_GROUP = 'school-group',
