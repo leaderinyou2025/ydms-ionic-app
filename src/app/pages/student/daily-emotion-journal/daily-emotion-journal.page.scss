@@ -1,0 +1,19 @@
+ion-button {
+  --background: #22aff7;
+  --background-activated: #1d96d4;
+  --background-focused: #1d96d4;
+  --background-hover: #1d96d4;
+  --border-radius: 8px;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --padding-top: 16px;
+  --padding-bottom: 16px;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.font-comic-sans {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+}
+
+/* Using Tailwind CSS classes for emotion icons */

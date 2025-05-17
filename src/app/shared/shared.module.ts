@@ -13,6 +13,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ImageCarouselSelectComponent } from './components/image-carousel-select/image-carousel-select.component';
 import { SoundClickDirective } from '../core/directive/sound-click.directive';
 import { HeaderComponent } from './components/header/header.component';
+import { EmotionIconSelectorComponent } from './components/emotion-icon-selector/emotion-icon-selector.component';
+import { EmotionShareComponent } from './components/emotion-share/emotion-share.component';
 import { LottieComponent } from 'ngx-lottie';
 
 @NgModule({
@@ -34,6 +36,8 @@ import { LottieComponent } from 'ngx-lottie';
         RouterLink,
         RouterLinkActive,
         LottieComponent,
+        EmotionIconSelectorComponent,
+        EmotionShareComponent,
     ],
   exports: [
     SelectDatetimeComponent,
