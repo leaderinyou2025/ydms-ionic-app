@@ -46,7 +46,9 @@
     "time_hours_ago": "hours ago",
     "time_days_ago": "days ago",
     "loading": "Loading notifications...",
-    "loading_more": "Loading more notifications..."
+    "loading_more": "Loading more notifications...",
+    "sender": "Sender",
+    "attach_file": "Attach file"
   },
   "HOME": {
     "welcome_title": "Welcome back",
@@ -146,6 +148,7 @@
     "theme": "Theme",
     "theme_light": "Light",
     "theme_dark": "Dark",
+    "theme_system": "System",
     "text_size": "Text size",
     "text_size_small": "Small",
     "text_size_medium": "Medium",

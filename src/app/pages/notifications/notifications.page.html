@@ -1,269 +1,115 @@
 <app-header
   [pageTitle]="TranslateKeys.NOTIFICATIONS_TITLE"
-  [defaultBackHref]="'/' + PageRoutes.HOME"
   backgroundColor="linear-gradient(to bottom, #3b82f6, #1e40af)"
   [segment]="segment"
   [searchbar]="searchbar"
   (changeSegment)="onSegmentChange($event)"
   (inputSearch)="onSearchInput($event)">
 </app-header>
+
+<!-- Filter form -->
+<ion-toolbar class="filter-form ion-no-padding">
+  <div class="flex space-x-5 overflow-x-auto p-2">
+    <!-- From date -->
+    <app-select-datetime [required]="true" (selectedDatetime)="onSelectStartDate($event)"
+                         [default]="false"
+                         placeholder="{{TranslateKeys.NOTIFICATIONS_SEARCH_FROM_DATE | translate}}">
+    </app-select-datetime>
+
+    <!-- To date -->
+    <app-select-datetime [required]="true" (selectedDatetime)="onSelectEndDate($event)"
+                         [default]="false"
+                         placeholder="{{TranslateKeys.NOTIFICATIONS_SEARCH_TO_DATE | translate}}">
+    </app-select-datetime>
+
+    <!-- Type filter -->
+    <ion-item lines="none" class="select-type min-w-max">
+      <ion-select interface="popover" (ionChange)="onFilterChange($event)"
+                  placeholder="{{ TranslateKeys.NOTIFICATIONS_SEARCH_TYPE | translate }}">
+        <ion-select-option *ngFor="let type of notificationTypes" [value]="type.value">
+          {{ type.label }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+  </div>
+</ion-toolbar>
+
 <ion-content [fullscreen]="true" class="custom-page-bg-light">
   <!-- Pull to refresh -->
   <ion-refresher mode="md" slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <div class="flex flex-col h-full">
-    <!-- Inline filter form - fixed at top -->
-    <div class="filter-form bg-white dark:bg-gray-800 px-2 pt-3 border-b border-gray-400 dark:border-gray-700">
-      <div class="flex space-x-2 overflow-x-auto pb-2" style="-webkit-overflow-scrolling: touch;">
-        <!-- From date -->
-        <div class="min-w-[140px] rounded-lg shadow-sm bg-white px-2 py-1">
-          <ion-input
-            type="date"
-            [(ngModel)]="fromDate"
-            (ionChange)="onFilterChange()"
-            class="text-sm">
-          </ion-input>
+  <ion-list *ngIf="notifications?.length" class="bg-transparent pt-4 ion-padding-start ion-padding-end">
+    <ion-item *ngFor="let notification of notifications"
+              routerLink="/{{PageRoutes.NOTIFICATIONS}}/{{notification.id}}"
+              class="mb-3 rounded-xl shadow notification-item"
+              [class.bg-white]="!notification.state"
+              [class.dark:bg-gray-700]="!notification.state"
+              [class.bg-gray-100]="notification.state"
+              [class.dark:bg-gray-800]="notification.state"
+              lines="none" detail="false">
+
+      <div class="flex w-full items-start">
+        <!-- Mail icon instead of avatar -->
+        <div class="flex items-center justify-center mr-3 w-10 h-10">
+          <ion-icon
+            [name]="notification.state ? 'mail-open-outline' : 'mail-unread-outline'"
+            [color]="notification.state ? 'medium' : 'danger'"
+            class="text-2xl">
+          </ion-icon>
         </div>
 
-        <!-- To date -->
-        <div class="min-w-[140px] rounded-lg shadow-sm bg-white px-2 py-1">
-          <ion-input
-            type="date"
-            [(ngModel)]="toDate"
-            (ionChange)="onFilterChange()"
-            class="text-sm">
-          </ion-input>
-        </div>
+        <div class="flex-1">
+          <!-- Title -->
+          <div class="font-bold text-sm text-blue-600 dark:text-blue-400 mb-1">
+            {{ notification.name }}
+          </div>
 
-        <!-- Type filter -->
-        <ion-item class="min-w-[200px] rounded-lg shadow-sm" lines="none">
-          <ion-select
-            interface="popover"
-            [(ngModel)]="searchType"
-            (ionChange)="onFilterChange()"
-            placeholder="{{ TranslateKeys.NOTIFICATIONS_SEARCH_TYPE | translate }}"
-            class="text-sm">
-            <ion-select-option *ngFor="let type of notificationTypes" [value]="type.value">
-              {{ type.label }}
-            </ion-select-option>
-          </ion-select>
-        </ion-item>
+          <!-- Message body -->
+          <div [class.font-medium]="!notification.state"
+               [class.text-gray-600]="notification.state"
+               [class.dark:text-gray-300]="notification.state"
+               class="mb-1">
+            {{ notification.body }}
+          </div>
+
+          <!-- Footer: Timestamp and Type -->
+          <div class="flex justify-between items-center">
+            <div class="text-xs text-gray-500 dark:text-gray-400">
+              {{ notification.create_date | date: DateFormat.DATE_TIME }}
+            </div>
+
+            <div class="notification-type text-xs px-2 py-1 rounded-full"
+                 [ngClass]="{
+                      'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200': notification.type === NotificationTypes.EMOTION_SHARED,
+                      'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200': notification.type === NotificationTypes.PERSONAL_TASK,
+                      'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200': notification.type === NotificationTypes.OTHER
+                    }">
+              {{
+                notification.type === NotificationTypes.EMOTION_SHARED ?
+                  (TranslateKeys.NOTIFICATIONS_TYPE_EMOTION | translate) :
+                  notification.type === NotificationTypes.PERSONAL_TASK ?
+                    (TranslateKeys.NOTIFICATIONS_TYPE_TASK | translate) :
+                    (TranslateKeys.NOTIFICATIONS_TYPE_OTHER | translate)
+              }}
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </ion-item>
+  </ion-list>
 
-    <!-- Scrollable content area -->
-    <div class="flex-1 overflow-auto px-2 pb-5 bg-white">
-      <!-- Search Results -->
-      <ion-list *ngIf="isSearchVisible" class="bg-transparent pt-4">
-        <ion-item *ngFor="let notification of filteredNotifications"
-                class="mb-3 rounded-xl shadow notification-item"
-                [class.bg-white]="!notification.isRead"
-                [class.dark:bg-gray-700]="!notification.isRead"
-                [class.bg-gray-100]="notification.isRead"
-                [class.dark:bg-gray-800]="notification.isRead"
-                lines="none" detail="false">
-          <div class="flex w-full items-start">
-            <!-- Mail icon instead of avatar -->
-            <div class="flex items-center justify-center mr-3 w-10 h-10">
-              <ion-icon
-                [name]="notification.isRead ? 'mail-open-outline' : 'mail-unread-outline'"
-                [color]="notification.isRead ? 'medium' : 'danger'"
-                class="text-2xl">
-              </ion-icon>
-            </div>
-
-            <div class="flex-1">
-              <!-- Title -->
-              <div class="font-bold text-sm text-blue-600 dark:text-blue-400 mb-1">
-                {{ notification.title || 'Thông báo' }}
-              </div>
-
-              <!-- Message -->
-              <div [class.font-medium]="!notification.isRead"
-                  [class.text-gray-600]="notification.isRead"
-                  [class.dark:text-gray-300]="notification.isRead"
-                  class="mb-1">
-                <span class="font-bold">{{ notification.sender.name }}</span>
-                {{ notification.message }}
-              </div>
-
-              <!-- Footer: Timestamp and Type -->
-              <div class="flex justify-between items-center">
-                <div class="text-xs text-gray-500 dark:text-gray-400">
-                  {{ formatTimestamp(notification.timestamp) }}
-                </div>
-
-                <div class="notification-type text-xs px-2 py-1 rounded-full"
-                    [ngClass]="{
-                      'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200': notification.type === NotificationType.EMOTION_SHARED,
-                      'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200': notification.type === NotificationType.PERSONAL_TASK,
-                      'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200': notification.type === NotificationType.OTHER
-                    }">
-                  {{
-                    notification.type === NotificationType.EMOTION_SHARED ?
-                      (TranslateKeys.NOTIFICATIONS_TYPE_EMOTION | translate) :
-                      notification.type === NotificationType.PERSONAL_TASK ?
-                        (TranslateKeys.NOTIFICATIONS_TYPE_TASK | translate) :
-                        (TranslateKeys.NOTIFICATIONS_TYPE_OTHER | translate)
-                  }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </ion-item>
-
-        <!-- Empty state for search results -->
-        <div *ngIf="filteredNotifications.length === 0 && !isLoading" class="p-8 text-center text-gray-500 dark:text-gray-400">
-          <ion-icon name="search-outline" class="text-6xl mb-4"></ion-icon>
-          <p>{{ 'NOTIFICATIONS.no_results' | translate }}</p>
-        </div>
-
-        <!-- Infinite scroll -->
-        <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreNotifications($event)" [disabled]="!hasMoreData">
-          <ion-infinite-scroll-content
-            loadingSpinner="crescent"
-            loadingText="{{ 'NOTIFICATIONS.loading_more' | translate }}">
-          </ion-infinite-scroll-content>
-        </ion-infinite-scroll>
-      </ion-list>
-
-      <!-- Unread Notifications Tab -->
-      <ion-list *ngIf="!isSearchVisible && currentTab === 'unread'" class="bg-transparent pt-4">
-        <ion-item *ngFor="let notification of notifications"
-                class="mb-3 rounded-xl bg-white dark:bg-gray-700 shadow notification-item"
-                lines="none" detail="false">
-          <div class="flex w-full items-start">
-            <!-- Mail icon for unread -->
-            <div class="flex items-center justify-center mr-3 w-10 h-10">
-              <ion-icon
-                name="mail-unread-outline"
-                color="danger"
-                class="text-2xl">
-              </ion-icon>
-            </div>
-
-            <div class="flex-1">
-              <!-- Title -->
-              <div class="font-bold text-sm text-blue-600 dark:text-blue-400 mb-1">
-                {{ notification.title || 'Thông báo' }}
-              </div>
-
-              <!-- Message -->
-              <div class="font-medium mb-1">
-                <span class="font-bold">{{ notification.sender.name }}</span>
-                {{ notification.message }}
-              </div>
-
-              <!-- Footer: Timestamp and Type -->
-              <div class="flex justify-between items-center">
-                <div class="text-xs text-gray-500 dark:text-gray-400">
-                  {{ formatTimestamp(notification.timestamp) }}
-                </div>
-
-                <div class="notification-type text-xs px-2 py-1 rounded-full"
-                    [ngClass]="{
-                      'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200': notification.type === NotificationType.EMOTION_SHARED,
-                      'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200': notification.type === NotificationType.PERSONAL_TASK,
-                      'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200': notification.type === NotificationType.OTHER
-                    }">
-                  {{
-                    notification.type === NotificationType.EMOTION_SHARED ?
-                      (TranslateKeys.NOTIFICATIONS_TYPE_EMOTION | translate) :
-                      notification.type === NotificationType.PERSONAL_TASK ?
-                        (TranslateKeys.NOTIFICATIONS_TYPE_TASK | translate) :
-                        (TranslateKeys.NOTIFICATIONS_TYPE_OTHER | translate)
-                  }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </ion-item>
-
-        <!-- Empty state for unread notifications -->
-        <div *ngIf="notifications.length === 0" class="p-8 text-center text-gray-500 dark:text-gray-400">
-          <ion-icon name="notifications-off-outline" class="text-6xl mb-4"></ion-icon>
-          <p>{{ TranslateKeys.NOTIFICATIONS_NO_UNREAD | translate }}</p>
-        </div>
-
-        <!-- Infinite scroll -->
-        <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreNotifications($event)" [disabled]="!hasMoreData">
-          <ion-infinite-scroll-content
-            loadingSpinner="crescent"
-            loadingText="{{ 'NOTIFICATIONS.loading_more' | translate }}">
-          </ion-infinite-scroll-content>
-        </ion-infinite-scroll>
-      </ion-list>
-
-      <!-- Read Notifications Tab -->
-      <ion-list *ngIf="!isSearchVisible && currentTab === 'read'" class="bg-transparent pt-4">
-        <ion-item *ngFor="let notification of readNotifications"
-                class="mb-3 rounded-xl bg-gray-100 dark:bg-gray-800 shadow notification-item"
-                lines="none" detail="false">
-          <div class="flex w-full items-start">
-            <!-- Mail icon for read -->
-            <div class="flex items-center justify-center mr-3 w-10 h-10">
-              <ion-icon
-                name="mail-open-outline"
-                color="medium"
-                class="text-2xl">
-              </ion-icon>
-            </div>
-
-            <!-- Content -->
-            <div class="flex-1">
-              <!-- Title -->
-              <div class="font-bold text-sm text-blue-600 dark:text-blue-400 mb-1">
-                {{ notification.title || 'Thông báo' }}
-              </div>
-
-              <!-- Message -->
-              <div class="font-medium text-gray-600 dark:text-gray-300 mb-1">
-                <span class="font-bold">{{ notification.sender.name }}</span>
-                {{ notification.message }}
-              </div>
-
-              <!-- Footer: Timestamp and Type -->
-              <div class="flex justify-between items-center">
-                <div class="text-xs text-gray-500 dark:text-gray-400">
-                  {{ formatTimestamp(notification.timestamp) }}
-                </div>
-
-                <div class="notification-type text-xs px-2 py-1 rounded-full"
-                    [ngClass]="{
-                      'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200': notification.type === NotificationType.EMOTION_SHARED,
-                      'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200': notification.type === NotificationType.PERSONAL_TASK,
-                      'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200': notification.type === NotificationType.OTHER
-                    }">
-                  {{
-                    notification.type === NotificationType.EMOTION_SHARED ?
-                      (TranslateKeys.NOTIFICATIONS_TYPE_EMOTION | translate) :
-                      notification.type === NotificationType.PERSONAL_TASK ?
-                        (TranslateKeys.NOTIFICATIONS_TYPE_TASK | translate) :
-                        (TranslateKeys.NOTIFICATIONS_TYPE_OTHER | translate)
-                  }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </ion-item>
-
-        <!-- Empty state for read notifications -->
-        <div *ngIf="readNotifications.length === 0" class="p-8 text-center text-gray-500 dark:text-gray-400">
-          <ion-icon name="document-text-outline" class="text-6xl mb-4"></ion-icon>
-          <p>{{ TranslateKeys.NOTIFICATIONS_NO_READ | translate }}</p>
-        </div>
-
-        <!-- Infinite scroll -->
-        <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreNotifications($event)" [disabled]="!hasMoreData">
-          <ion-infinite-scroll-content
-            loadingSpinner="crescent"
-            loadingText="{{ 'NOTIFICATIONS.loading_more' | translate }}">
-          </ion-infinite-scroll-content>
-        </ion-infinite-scroll>
-      </ion-list>
-    </div>
+  <!-- Empty state for search results -->
+  <div *ngIf="!notifications?.length && isLoading === false && !isLoadMore && !isRefresh" class="p-8 text-center text-gray-500 dark:text-gray-400">
+    <ion-icon name="search-outline" class="text-6xl mb-4"></ion-icon>
+    <p>{{ TranslateKeys.NOTIFICATIONS_NO_RESULTS | translate }}</p>
   </div>
+
+  <!-- Infinite scroll -->
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreNotifications($event)">
+    <ion-infinite-scroll-content loadingSpinner="crescent"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
+
 <app-footer></app-footer>

@@ -1,11 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { RefresherCustomEvent, SelectCustomEvent } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+
+import { NotificationService } from '../../services/notification/notification.service';
 import { TranslateKeys } from '../../shared/enums/translate-keys';
 import { PageRoutes } from '../../shared/enums/page-routes';
-import { INotification, NotificationType } from '../../shared/interfaces/notification/notification.interface';
-import { NotificationService } from '../../services/notification/notification.service';
+import { ILiyYdmsNotification } from '../../shared/interfaces/models/liy.ydms.notification';
+import { NotificationTypes } from '../../shared/enums/notification-type';
 import { IHeaderSearchbar, IHeaderSegment } from '../../shared/interfaces/header/header';
 import { InputTypes } from '../../shared/enums/input-types';
+import { CommonConstants } from '../../shared/classes/common-constants';
+import { DateFormat } from '../../shared/enums/date-format';
+import { SearchNotificationParams } from '../../shared/interfaces/notification/notification.interface';
 
 @Component({
   selector: 'app-notifications',
@@ -14,206 +20,174 @@ import { InputTypes } from '../../shared/enums/input-types';
   standalone: false,
 })
 export class NotificationsPage implements OnInit {
-  // Current selected tab
-  currentTab: 'unread' | 'read' = 'unread';
 
-  // Notifications data
-  notifications: INotification[] = [];
-  readNotifications: INotification[] = [];
-  filteredNotifications: INotification[] = [];
-
-  // Search form state
-  isSearchVisible = false;
-  searchTitle = '';
-  searchType: NotificationType | 'all' = 'all';
-  fromDate?: string;
-  toDate?: string;
+  // Search form states
+  searchForm!: SearchNotificationParams;
+  paged!: number;
+  limit: number = 20;
+  notifications: ILiyYdmsNotification[] = [];
 
   // Infinite scroll state
-  isLoading = false;
-  hasMoreData = true;
+  isLoading!: boolean | undefined;
+  isLoadMore!: boolean | undefined;
+  isRefresh!: boolean | undefined;
 
   // Header configuration
   segment: IHeaderSegment = {
     value: 'unread',
     buttons: [
-      { value: 'unread', label: TranslateKeys.NOTIFICATIONS_UNREAD },
-      { value: 'read', label: TranslateKeys.NOTIFICATIONS_READ }
+      {value: 'unread', label: TranslateKeys.NOTIFICATIONS_UNREAD},
+      {value: 'read', label: TranslateKeys.NOTIFICATIONS_READ}
     ]
   };
-
   searchbar: IHeaderSearchbar = {
     placeholder: this.translate.instant(TranslateKeys.NOTIFICATIONS_SEARCH),
-    type: InputTypes.TEXT,
-    inputmode: InputTypes.TEXT,
+    type: InputTypes.SEARCH,
+    inputmode: InputTypes.SEARCH,
     debounce: 500,
     showClearButton: true
   };
 
+  // Notification types for dropdown
+  notificationTypes = [
+    {value: NotificationTypes.EMOTION_SHARED, label: this.translate.instant(TranslateKeys.NOTIFICATIONS_TYPE_EMOTION)},
+    {value: NotificationTypes.PERSONAL_TASK, label: this.translate.instant(TranslateKeys.NOTIFICATIONS_TYPE_TASK)},
+    {value: NotificationTypes.OTHER, label: this.translate.instant(TranslateKeys.NOTIFICATIONS_TYPE_OTHER)}
+  ]
+
   protected readonly TranslateKeys = TranslateKeys;
   protected readonly PageRoutes = PageRoutes;
-  protected readonly NotificationType = NotificationType;
-
-  // Notification types for dropdown
-  get notificationTypes() {
-    return [
-      { value: 'all', label: this.translate.instant(TranslateKeys.NOTIFICATIONS_SEARCH_TYPE) },
-      { value: NotificationType.EMOTION_SHARED, label: this.translate.instant(TranslateKeys.NOTIFICATIONS_TYPE_EMOTION) },
-      { value: NotificationType.PERSONAL_TASK, label: this.translate.instant(TranslateKeys.NOTIFICATIONS_TYPE_TASK) },
-      { value: NotificationType.OTHER, label: this.translate.instant(TranslateKeys.NOTIFICATIONS_TYPE_OTHER) }
-    ];
-  }
+  protected readonly NotificationTypes = NotificationTypes;
 
   constructor(
     private notificationService: NotificationService,
     private translate: TranslateService
-  ) { }
+  ) {
+  }
 
-  ngOnInit() {
-    // Subscribe to unread notifications
-    this.notificationService.getUnreadNotifications().subscribe(notifications => {
-      this.notifications = notifications;
-    });
+  async ngOnInit() {
+    this.initParams();
+    await this.loadNotifications();
+  }
 
-    // Subscribe to read notifications
-    this.notificationService.getReadNotifications().subscribe(notifications => {
-      this.readNotifications = notifications;
-    });
+  /**
+   * On change filter
+   * @param event
+   */
+  public async onFilterChange(event: SelectCustomEvent): Promise<void> {
+    this.searchForm.type = event.detail.value;
+    await this.loadNotifications();
   }
 
   /**
    * Handle segment change from header component
    * @param value The selected segment value
    */
-  onSegmentChange(value: string | number): void {
-    if (typeof value === 'string' && (value === 'unread' || value === 'read')) {
-      this.currentTab = value;
-    }
+  public async onSegmentChange(value: string | number): Promise<void> {
+    if (typeof value !== 'string' || !this.searchForm) return;
+    this.searchForm.state = value === 'unread' ? false : (value === 'read' ? true : undefined);
+    await this.loadNotifications();
   }
 
   /**
    * Handle search input from header component
    * @param searchText The search text
    */
-  onSearchInput(searchText: string): void {
-    this.searchTitle = searchText;
-
-    // Apply search after a short delay (debounce)
-    setTimeout(() => {
-      this.applyFilters();
-    }, 500);
-  }
-
-  /**
-   * Handle filter changes with debounce
-   */
-  onFilterChange(): void {
-    // Apply filters after a short delay (debounce)
-    setTimeout(() => {
-      this.applyFilters();
-    }, 500);
-  }
-
-  /**
-   * Format timestamp to display as HH:mm dd/MM/yyyy
-   * @param timestamp ISO timestamp string
-   * @returns Formatted time string
-   */
-  formatTimestamp(timestamp: string): string {
-    const date = new Date(timestamp);
-
-    // Format as HH:mm dd/MM/yyyy
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-indexed
-    const year = date.getFullYear();
-
-    return `${hours}:${minutes} ${day}/${month}/${year}`;
-  }
-
-  /**
-   * Apply search filters
-   */
-  applyFilters(): void {
-    // This will be handled by the backend in a real implementation
-    // For now, just simulate filtering
-
-    // Check if we have any search or filter criteria
-    const hasSearchTerm = !!this.searchTitle.trim();
-    const hasTypeFilter = this.searchType !== 'all';
-    const hasDateFilter = !!this.fromDate || !!this.toDate;
-
-    // Set search visible if any filter is applied
-    this.isSearchVisible = hasSearchTerm || hasTypeFilter || hasDateFilter;
-
-    if (this.isSearchVisible) {
-      // Combine both read and unread notifications for search
-      let allNotifications = [...this.notifications, ...this.readNotifications];
-
-      // Apply filters one by one
-      if (hasSearchTerm) {
-        allNotifications = allNotifications.filter(notification =>
-          (notification.title && notification.title.toLowerCase().includes(this.searchTitle.toLowerCase())) ||
-          notification.message.toLowerCase().includes(this.searchTitle.toLowerCase())
-        );
-      }
-
-      if (hasTypeFilter) {
-        allNotifications = allNotifications.filter(notification =>
-          notification.type === this.searchType
-        );
-      }
-
-      if (hasDateFilter) {
-        const fromTimestamp = this.fromDate ? new Date(this.fromDate).getTime() : 0;
-        const toTimestamp = this.toDate ? new Date(this.toDate).getTime() + 86400000 : Date.now(); // Add one day to include the end date
-
-        allNotifications = allNotifications.filter(notification => {
-          const notificationTimestamp = new Date(notification.timestamp).getTime();
-          return notificationTimestamp >= fromTimestamp && notificationTimestamp <= toTimestamp;
-        });
-      }
-
-      this.filteredNotifications = allNotifications;
-    }
+  public async onSearchInput(searchText: string): Promise<void> {
+    if (!this.searchForm) return;
+    this.searchForm.name = searchText;
+    await this.loadNotifications();
   }
 
   /**
    * Load more notifications when scrolling
    * @param event The infinite scroll event
    */
-  loadMoreNotifications(event: any): void {
-    // This would be handled by the backend in a real implementation
-    // For now, just complete the event
-    setTimeout(() => {
+  public async loadMoreNotifications(event: any): Promise<void> {
+    if (this.isLoadMore) return event.target.complete();
+
+    const hasMore = this.notifications?.length === ((this.paged - 1) * this.limit);
+    if (!hasMore) return event.target.complete();
+
+    this.isLoadMore = true;
+    this.paged += 1;
+    this.loadNotifications().finally(() => {
+      this.isLoadMore = false;
       event.target.complete();
-      // In a real implementation, we would check if there are more items to load
-      // this.hasMoreData = (more items available);
-    }, 500);
+    });
+  }
+
+  /**
+   * On selected start date
+   * @param value
+   */
+  public async onSelectStartDate(value?: string | Array<string> | null): Promise<void> {
+    if (!this.searchForm) return;
+    if (!value || typeof (value) === 'string') this.searchForm.start_date = value || undefined;
+    return this.loadNotifications();
+  }
+
+  /**
+   * On selected end date
+   * @param value
+   */
+  public async onSelectEndDate(value?: string | Array<string> | null): Promise<void> {
+    if (!this.searchForm) return;
+    if (!value || typeof (value) === 'string') this.searchForm.end_date = value || undefined;
+    return this.loadNotifications();
   }
 
   /**
    * Handle pull-to-refresh event
    * @param event The refresh event
    */
-  doRefresh(event: any): void {
-    // Reset pagination
-    this.hasMoreData = true;
-
-    // Reload notifications
-    this.notificationService.getUnreadNotifications().subscribe(notifications => {
-      this.notifications = notifications;
-      event.target.complete();
+  public doRefresh(event: RefresherCustomEvent): void {
+    if (this.isRefresh) return;
+    this.isRefresh = true;
+    this.resetSearch();
+    this.loadNotifications().finally(() => {
+      this.isRefresh = false;
+      event.detail.complete();
     });
-
-    this.notificationService.getReadNotifications().subscribe(notifications => {
-      this.readNotifications = notifications;
-    });
-
-    // If search is active, reapply filters
-    if (this.isSearchVisible) {
-      this.applyFilters();
-    }
   }
+
+  /**
+   * Load notifications
+   * @private
+   */
+  private async loadNotifications(): Promise<void> {
+    if (this.isLoading) return;
+    this.isLoading = true;
+
+    const offset = ((this.paged - 1) * this.limit) || 0;
+    const results: ILiyYdmsNotification[] = await this.notificationService.getNotificationList(this.searchForm, offset, this.limit);
+    this.notifications = CommonConstants.mergeArrayObjectById(this.notifications, results) || [];
+    this.isLoading = false;
+  }
+
+  /**
+   * Init all params
+   * @private
+   */
+  private initParams() {
+    this.searchForm = {
+      name: '',
+      state: undefined,
+      type: undefined,
+      start_date: undefined,
+      end_date: undefined,
+    }
+    this.resetSearch();
+  }
+
+  /**
+   * Reset pages and notification list
+   * @private
+   */
+  private resetSearch(): void {
+    this.paged = 1;
+    this.notifications = new Array<ILiyYdmsNotification>();
+  }
+
+  protected readonly DateFormat = DateFormat;
 }

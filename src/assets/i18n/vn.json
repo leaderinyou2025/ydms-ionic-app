@@ -46,7 +46,9 @@
     "time_hours_ago": "giờ trước",
     "time_days_ago": "ngày trước",
     "loading": "Đang tải thông báo...",
-    "loading_more": "Đang tải thêm thông báo..."
+    "loading_more": "Đang tải thêm thông báo...",
+    "sender": "Người gửi",
+    "attach_file": "Tệp đính kèm"
   },
   "HOME": {
     "welcome_title": "Chào mừng trở lại",
@@ -192,7 +194,7 @@
     "enter_new_pin": "Nhập mã PIN mới",
     "confirm_new_pin": "Xác nhận mã PIN mới",
     "enter_current_pin": "Nhập mã PIN hiện tại",
-    "app_update" : "Cập nhật ứng dụng",
+    "app_update": "Cập nhật ứng dụng",
     "not_set": "Chưa thiết lập",
     "not_set_nickname": "Chưa có biệt danh",
     "chatbot_ai": "Chatbot AI",

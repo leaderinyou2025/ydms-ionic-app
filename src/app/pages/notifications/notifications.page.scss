@@ -8,34 +8,12 @@ ion-content.custom-page-bg-light {
 
 /* Filter form styles */
 .filter-form {
-  ion-item {
-    --background: #f9fafb;
-    --border-color: transparent;
+  --border-width: 0;
+
+  ion-item.select-type {
     --border-radius: 8px;
-    --padding-start: 8px;
-    --padding-end: 8px;
-    --min-height: 40px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --border-width: 1px;
   }
-
-  ion-select, ion-input {
-    --padding-start: 8px;
-    --padding-end: 8px;
-    font-size: 14px;
-    min-height: 40px;
-  }
-}
-
-/* Hide scrollbar in filter form only */
-.filter-form .overflow-x-auto::-webkit-scrollbar {
-  display: none;
-  width: 0;
-  height: 0;
-}
-
-.filter-form .overflow-x-auto {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 }
 
 /* Notification item styles */
