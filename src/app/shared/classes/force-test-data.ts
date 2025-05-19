@@ -1,4 +1,3 @@
-
 import { IAuthData } from '../interfaces/auth/auth-data';
 import { Theme } from '../enums/theme';
 import { IAssetsResource } from '../interfaces/settings/assets-resource';
@@ -6,26 +5,17 @@ import { TextZoomSize } from '../enums/text-zoom-size';
 import { AssetResourceCategory } from '../enums/asset-resource-category';
 import { StatusItemType } from '../enums/home/status-item-type.enum';
 import { ICharacter, IStatusItem, ITask } from '../interfaces/home/home.interfaces';
+import { ILiyYdmsNotification } from '../interfaces/models/liy.ydms.notification';
 import { IFriend } from '../interfaces/friend/friend';
 import { IRankItem } from '../interfaces/rank/rank.interfaces';
 import { IAchievementCategory } from '../interfaces/rank/achievement.interfaces';
-import {
-  IFamilyConflictSurveyHistory,
-  IFamilyConflictSurveyQuestion
-} from '../interfaces/family-conflict-survey/family-conflict-survey.interfaces';
-import {
-  IFamilyCommunicationQualitySurveyHistory,
-  IFamilyCommunicationQualitySurveyDetail,
-  IFamilyCommunicationQualitySurveyQuestion
-} from '../interfaces/family-communication-quality-survey/family-communication-quality-survey.interfaces';
-import {
-  ISelfDiscoverySurveyHistory,
-  ISelfDiscoverySurveyDetail,
-  ISelfDiscoverySurveyQuestion
-} from '../interfaces/self-discovery-survey/self-discovery-survey.interfaces';
+import { IFamilyConflictSurveyHistory, IFamilyConflictSurveyQuestion } from '../interfaces/family-conflict-survey/family-conflict-survey.interfaces';
+import { IFamilyCommunicationQualitySurveyHistory, IFamilyCommunicationQualitySurveyQuestion } from '../interfaces/family-communication-quality-survey/family-communication-quality-survey.interfaces';
+import { ISelfDiscoverySurveyHistory, ISelfDiscoverySurveyQuestion } from '../interfaces/self-discovery-survey/self-discovery-survey.interfaces';
 
 import { EmotionType } from '../enums/personal-diary/personal-diary.enum';
 import { IEmotionSuggestion, IPersonalDiaryEntry } from '../interfaces/personal-diary/personal-diary.interfaces';
+import { NotificationTypes } from '../enums/notification-type';
 
 export class ForceTestData {
 
@@ -353,6 +343,232 @@ export class ForceTestData {
       description: 'Bạn thích sáng tạo? Hãy thử khóa học vẽ tranh sơ dành cho người mới bắt đầu.',
       points: 10
     },
+  ];
+
+  /**
+   * notifications data
+   */
+  static notifications: ILiyYdmsNotification[] = [
+    {
+      id: 1,
+      name: 'Cảm xúc mới',
+      description: 'HH đã bày tỏ cảm xúc của mình!',
+      body: 'HH đã bày tỏ cảm xúc của mình!',
+      sender_id: {id: 1, name: 'HH'},
+      recipient_ids: [],
+      state: false,
+      create_date: '2025-05-19 9:41:32',
+      type: NotificationTypes.EMOTION_SHARED
+    },
+    {
+      id: 2,
+      name: 'Thông báo công việc',
+      description: 'Bạn có một nhiệm vụ mới.',
+      body: 'Hãy hoàn thành nhiệm vụ trước hạn.',
+      sender_id: {id: 2, name: 'Admin'},
+      recipient_ids: [],
+      state: true,
+      create_date: '2025-05-18 14:23:50',
+      type: NotificationTypes.PERSONAL_TASK
+    },
+    {
+      id: 3,
+      name: 'Tin nhắn hệ thống',
+      description: 'Hệ thống sẽ bảo trì vào cuối tuần.',
+      body: 'Vui lòng lưu công việc trước thời gian bảo trì.',
+      sender_id: {id: 3, name: 'System'},
+      recipient_ids: [],
+      state: false,
+      create_date: '2025-05-17 21:11:04',
+      type: NotificationTypes.OTHER
+    },
+    {
+      id: 4,
+      name: 'Nhiệm vụ cá nhân',
+      description: 'Bạn có một nhiệm vụ chưa hoàn thành.',
+      body: 'Đừng quên hoàn thành nhiệm vụ hôm nay.',
+      sender_id: {id: 4, name: 'PM'},
+      recipient_ids: [],
+      state: true,
+      create_date: '2025-05-15 8:05:18',
+      type: NotificationTypes.PERSONAL_TASK
+    },
+    {
+      id: 5,
+      name: 'Cảm xúc mới',
+      description: 'An đã bày tỏ cảm xúc của mình!',
+      body: 'An đã bày tỏ cảm xúc của mình!',
+      sender_id: {id: 5, name: 'An'},
+      recipient_ids: [],
+      state: false,
+      create_date: '2025-05-14 17:00:00',
+      type: NotificationTypes.EMOTION_SHARED
+    },
+    {
+      id: 6,
+      name: 'Cập nhật hệ thống',
+      description: 'Phiên bản mới đã được cài đặt.',
+      body: 'Vui lòng khởi động lại ứng dụng để cập nhật.',
+      sender_id: {id: 6, name: 'System'},
+      recipient_ids: [],
+      state: true,
+      create_date: '2025-05-13 22:34:02',
+      type: NotificationTypes.OTHER
+    },
+    {
+      id: 7,
+      name: 'Thông báo công việc',
+      description: 'Bạn được giao nhiệm vụ kiểm thử.',
+      body: 'Hãy kiểm thử module mới trong hôm nay.',
+      sender_id: {id: 7, name: 'QA Lead'},
+      recipient_ids: [],
+      state: false,
+      create_date: '2025-05-12 10:12:15',
+      type: NotificationTypes.PERSONAL_TASK
+    },
+    {
+      id: 8,
+      name: 'Cảm xúc mới',
+      description: 'Tú đã bày tỏ cảm xúc của mình!',
+      body: 'Tú đã bày tỏ cảm xúc của mình!',
+      sender_id: {id: 8, name: 'Tú'},
+      recipient_ids: [],
+      state: true,
+      create_date: '2025-05-11 16:59:21',
+      type: NotificationTypes.EMOTION_SHARED
+    },
+    {
+      id: 9,
+      name: 'Thông báo hệ thống',
+      description: 'Ứng dụng sẽ được nâng cấp vào 22h tối nay.',
+      body: 'Thời gian downtime dự kiến là 30 phút.',
+      sender_id: {id: 9, name: 'System'},
+      recipient_ids: [],
+      state: true,
+      create_date: '2025-05-10 19:30:00',
+      type: NotificationTypes.OTHER
+    },
+    {
+      id: 10,
+      name: 'Nhắc nhở nhiệm vụ',
+      description: 'Bạn chưa cập nhật tiến độ công việc.',
+      body: 'Vui lòng cập nhật tiến độ trước 17h hôm nay.',
+      sender_id: {id: 10, name: 'Scrum Master'},
+      recipient_ids: [],
+      state: false,
+      create_date: '2025-05-09 13:47:55',
+      type: NotificationTypes.PERSONAL_TASK
+    },
+    {
+      id: 11,
+      name: 'Cảm xúc mới',
+      description: 'Minh đã bày tỏ cảm xúc của mình!',
+      body: 'Minh đã bày tỏ cảm xúc của mình!',
+      sender_id: {id: 11, name: 'Minh'},
+      recipient_ids: [],
+      state: false,
+      create_date: '2025-05-08 11:22:45',
+      type: NotificationTypes.EMOTION_SHARED
+    },
+    {
+      id: 12,
+      name: 'Thông báo nội bộ',
+      description: 'Công ty tổ chức họp toàn thể vào thứ Sáu.',
+      body: 'Thời gian: 15h tại phòng họp chính.',
+      sender_id: {id: 12, name: 'HR'},
+      recipient_ids: [],
+      state: true,
+      create_date: '2025-05-07 9:10:05',
+      type: NotificationTypes.OTHER
+    },
+    {
+      id: 13,
+      name: 'Nhiệm vụ mới',
+      description: 'Bạn được phân công viết tài liệu.',
+      body: 'Deadline là thứ Tư tuần sau.',
+      sender_id: {id: 13, name: 'Leader'},
+      recipient_ids: [],
+      state: false,
+      create_date: '2025-05-06 7:00:30',
+      type: NotificationTypes.PERSONAL_TASK
+    },
+    {
+      id: 14,
+      name: 'Cảm xúc mới',
+      description: 'Linh đã bày tỏ cảm xúc của mình!',
+      body: 'Linh đã bày tỏ cảm xúc của mình!',
+      sender_id: {id: 14, name: 'Linh'},
+      recipient_ids: [],
+      state: true,
+      create_date: '2025-05-05 18:00:00',
+      type: NotificationTypes.EMOTION_SHARED
+    },
+    {
+      id: 15,
+      name: 'Thông báo bảo trì',
+      description: 'Server sẽ ngưng hoạt động lúc 23h.',
+      body: 'Mong bạn thông cảm về sự bất tiện này.',
+      sender_id: {id: 15, name: 'IT'},
+      recipient_ids: [],
+      state: false,
+      create_date: '2025-05-04 23:00:00',
+      type: NotificationTypes.OTHER
+    },
+    {
+      id: 16,
+      name: 'Cập nhật thông tin',
+      description: 'Bạn cần cập nhật hồ sơ cá nhân.',
+      body: 'Hãy vào phần cài đặt để cập nhật thông tin.',
+      sender_id: {id: 16, name: 'System'},
+      recipient_ids: [],
+      state: true,
+      create_date: '2025-05-03 15:11:42',
+      type: NotificationTypes.OTHER
+    },
+    {
+      id: 17,
+      name: 'Cảm xúc mới',
+      description: 'Hà đã bày tỏ cảm xúc của mình!',
+      body: 'Hà đã bày tỏ cảm xúc của mình!',
+      sender_id: {id: 17, name: 'Hà'},
+      recipient_ids: [],
+      state: false,
+      create_date: '2025-05-02 8:08:08',
+      type: NotificationTypes.EMOTION_SHARED
+    },
+    {
+      id: 18,
+      name: 'Nhiệm vụ cập nhật',
+      description: 'Bạn cần kiểm tra bản thiết kế.',
+      body: 'Vui lòng phản hồi trong hôm nay.',
+      sender_id: {id: 18, name: 'UX'},
+      recipient_ids: [],
+      state: true,
+      create_date: '2025-05-01 14:25:25',
+      type: NotificationTypes.PERSONAL_TASK
+    },
+    {
+      id: 19,
+      name: 'Thông báo mới',
+      description: 'Chính sách công ty được cập nhật.',
+      body: 'Xem chi tiết trong mục Tài liệu.',
+      sender_id: {id: 19, name: 'HR'},
+      recipient_ids: [],
+      state: true,
+      create_date: '2025-04-30 10:10:10',
+      type: NotificationTypes.OTHER
+    },
+    {
+      id: 20,
+      name: 'Cảm xúc mới',
+      description: 'Lan đã bày tỏ cảm xúc của mình!',
+      body: 'Lan đã bày tỏ cảm xúc của mình!',
+      sender_id: {id: 20, name: 'Lan'},
+      recipient_ids: [],
+      state: false,
+      create_date: '2025-04-29 20:45:00',
+      type: NotificationTypes.EMOTION_SHARED
+    }
   ];
 
   static loginResult = {result: 1};
@@ -860,55 +1076,55 @@ export class ForceTestData {
       id: 1,
       text: 'Các thành viên trong gia đình có thường xuyên chia sẻ cảm xúc và suy nghĩ với nhau không?',
       options: [
-        { id: 1, text: 'Không bao giờ', selected: false, value: 0 },
-        { id: 2, text: 'Hiếm khi', selected: false, value: 1 },
-        { id: 3, text: 'Thỉnh thoảng', selected: false, value: 2 },
-        { id: 4, text: 'Thường xuyên', selected: true, value: 3 },
-        { id: 5, text: 'Rất thường xuyên', selected: false, value: 4 }
+        {id: 1, text: 'Không bao giờ', selected: false, value: 0},
+        {id: 2, text: 'Hiếm khi', selected: false, value: 1},
+        {id: 3, text: 'Thỉnh thoảng', selected: false, value: 2},
+        {id: 4, text: 'Thường xuyên', selected: true, value: 3},
+        {id: 5, text: 'Rất thường xuyên', selected: false, value: 4}
       ]
     },
     {
       id: 2,
       text: 'Khi có vấn đề, các thành viên trong gia đình có cùng nhau thảo luận để tìm giải pháp không?',
       options: [
-        { id: 6, text: 'Không bao giờ', selected: false, value: 0 },
-        { id: 7, text: 'Hiếm khi', selected: false, value: 1 },
-        { id: 8, text: 'Thỉnh thoảng', selected: true, value: 2 },
-        { id: 9, text: 'Thường xuyên', selected: false, value: 3 },
-        { id: 10, text: 'Rất thường xuyên', selected: false, value: 4 }
+        {id: 6, text: 'Không bao giờ', selected: false, value: 0},
+        {id: 7, text: 'Hiếm khi', selected: false, value: 1},
+        {id: 8, text: 'Thỉnh thoảng', selected: true, value: 2},
+        {id: 9, text: 'Thường xuyên', selected: false, value: 3},
+        {id: 10, text: 'Rất thường xuyên', selected: false, value: 4}
       ]
     },
     {
       id: 3,
       text: 'Bạn có cảm thấy được lắng nghe khi nói chuyện với các thành viên trong gia đình không?',
       options: [
-        { id: 11, text: 'Không bao giờ', selected: false, value: 0 },
-        { id: 12, text: 'Hiếm khi', selected: false, value: 1 },
-        { id: 13, text: 'Thỉnh thoảng', selected: false, value: 2 },
-        { id: 14, text: 'Thường xuyên', selected: true, value: 3 },
-        { id: 15, text: 'Rất thường xuyên', selected: false, value: 4 }
+        {id: 11, text: 'Không bao giờ', selected: false, value: 0},
+        {id: 12, text: 'Hiếm khi', selected: false, value: 1},
+        {id: 13, text: 'Thỉnh thoảng', selected: false, value: 2},
+        {id: 14, text: 'Thường xuyên', selected: true, value: 3},
+        {id: 15, text: 'Rất thường xuyên', selected: false, value: 4}
       ]
     },
     {
       id: 4,
       text: 'Các thành viên trong gia đình có tôn trọng ý kiến của nhau không?',
       options: [
-        { id: 16, text: 'Không bao giờ', selected: false, value: 0 },
-        { id: 17, text: 'Hiếm khi', selected: false, value: 1 },
-        { id: 18, text: 'Thỉnh thoảng', selected: true, value: 2 },
-        { id: 19, text: 'Thường xuyên', selected: false, value: 3 },
-        { id: 20, text: 'Rất thường xuyên', selected: false, value: 4 }
+        {id: 16, text: 'Không bao giờ', selected: false, value: 0},
+        {id: 17, text: 'Hiếm khi', selected: false, value: 1},
+        {id: 18, text: 'Thỉnh thoảng', selected: true, value: 2},
+        {id: 19, text: 'Thường xuyên', selected: false, value: 3},
+        {id: 20, text: 'Rất thường xuyên', selected: false, value: 4}
       ]
     },
     {
       id: 5,
       text: 'Gia đình bạn có dành thời gian để trò chuyện cùng nhau không?',
       options: [
-        { id: 21, text: 'Không bao giờ', selected: false, value: 0 },
-        { id: 22, text: 'Hiếm khi', selected: false, value: 1 },
-        { id: 23, text: 'Thỉnh thoảng', selected: false, value: 2 },
-        { id: 24, text: 'Thường xuyên', selected: false, value: 3 },
-        { id: 25, text: 'Rất thường xuyên', selected: true, value: 4 }
+        {id: 21, text: 'Không bao giờ', selected: false, value: 0},
+        {id: 22, text: 'Hiếm khi', selected: false, value: 1},
+        {id: 23, text: 'Thỉnh thoảng', selected: false, value: 2},
+        {id: 24, text: 'Thường xuyên', selected: false, value: 3},
+        {id: 25, text: 'Rất thường xuyên', selected: true, value: 4}
       ]
     }
   ];
@@ -917,7 +1133,7 @@ export class ForceTestData {
    * Self Discovery Survey Data
    */
 
-  // Discovery level constants
+    // Discovery level constants
   static DiscoveryLevels = {
     EXCELLENT: 'excellent',
     GOOD: 'good',
@@ -1071,55 +1287,55 @@ export class ForceTestData {
       id: 1,
       text: 'Bạn có thường xuyên suy ngẫm về các giá trị và niềm tin cốt lõi của bản thân không?',
       options: [
-        { id: 1, text: 'Không bao giờ', selected: false, value: 0 },
-        { id: 2, text: 'Hiếm khi', selected: false, value: 1 },
-        { id: 3, text: 'Thỉnh thoảng', selected: false, value: 2 },
-        { id: 4, text: 'Thường xuyên', selected: true, value: 3 },
-        { id: 5, text: 'Rất thường xuyên', selected: false, value: 4 }
+        {id: 1, text: 'Không bao giờ', selected: false, value: 0},
+        {id: 2, text: 'Hiếm khi', selected: false, value: 1},
+        {id: 3, text: 'Thỉnh thoảng', selected: false, value: 2},
+        {id: 4, text: 'Thường xuyên', selected: true, value: 3},
+        {id: 5, text: 'Rất thường xuyên', selected: false, value: 4}
       ]
     },
     {
       id: 2,
       text: 'Bạn có hiểu rõ về điểm mạnh và điểm yếu của bản thân không?',
       options: [
-        { id: 6, text: 'Không hiểu gì cả', selected: false, value: 0 },
-        { id: 7, text: 'Hiểu rất ít', selected: false, value: 1 },
-        { id: 8, text: 'Hiểu một phần', selected: true, value: 2 },
-        { id: 9, text: 'Hiểu khá rõ', selected: false, value: 3 },
-        { id: 10, text: 'Hiểu rất rõ', selected: false, value: 4 }
+        {id: 6, text: 'Không hiểu gì cả', selected: false, value: 0},
+        {id: 7, text: 'Hiểu rất ít', selected: false, value: 1},
+        {id: 8, text: 'Hiểu một phần', selected: true, value: 2},
+        {id: 9, text: 'Hiểu khá rõ', selected: false, value: 3},
+        {id: 10, text: 'Hiểu rất rõ', selected: false, value: 4}
       ]
     },
     {
       id: 3,
       text: 'Bạn có thể nhận biết và kiểm soát cảm xúc của mình tốt đến mức nào?',
       options: [
-        { id: 11, text: 'Rất kém', selected: false, value: 0 },
-        { id: 12, text: 'Kém', selected: false, value: 1 },
-        { id: 13, text: 'Trung bình', selected: false, value: 2 },
-        { id: 14, text: 'Tốt', selected: true, value: 3 },
-        { id: 15, text: 'Rất tốt', selected: false, value: 4 }
+        {id: 11, text: 'Rất kém', selected: false, value: 0},
+        {id: 12, text: 'Kém', selected: false, value: 1},
+        {id: 13, text: 'Trung bình', selected: false, value: 2},
+        {id: 14, text: 'Tốt', selected: true, value: 3},
+        {id: 15, text: 'Rất tốt', selected: false, value: 4}
       ]
     },
     {
       id: 4,
       text: 'Bạn có mục tiêu rõ ràng cho tương lai của mình không?',
       options: [
-        { id: 16, text: 'Không có mục tiêu nào', selected: false, value: 0 },
-        { id: 17, text: 'Có vài ý tưởng mơ hồ', selected: false, value: 1 },
-        { id: 18, text: 'Có một số mục tiêu cơ bản', selected: true, value: 2 },
-        { id: 19, text: 'Có mục tiêu khá rõ ràng', selected: false, value: 3 },
-        { id: 20, text: 'Có mục tiêu rất rõ ràng và chi tiết', selected: false, value: 4 }
+        {id: 16, text: 'Không có mục tiêu nào', selected: false, value: 0},
+        {id: 17, text: 'Có vài ý tưởng mơ hồ', selected: false, value: 1},
+        {id: 18, text: 'Có một số mục tiêu cơ bản', selected: true, value: 2},
+        {id: 19, text: 'Có mục tiêu khá rõ ràng', selected: false, value: 3},
+        {id: 20, text: 'Có mục tiêu rất rõ ràng và chi tiết', selected: false, value: 4}
       ]
     },
     {
       id: 5,
       text: 'Bạn có thường xuyên tìm hiểu về những sở thích và đam mê mới không?',
       options: [
-        { id: 21, text: 'Không bao giờ', selected: false, value: 0 },
-        { id: 22, text: 'Hiếm khi', selected: false, value: 1 },
-        { id: 23, text: 'Thỉnh thoảng', selected: false, value: 2 },
-        { id: 24, text: 'Thường xuyên', selected: false, value: 3 },
-        { id: 25, text: 'Rất thường xuyên', selected: true, value: 4 }
+        {id: 21, text: 'Không bao giờ', selected: false, value: 0},
+        {id: 22, text: 'Hiếm khi', selected: false, value: 1},
+        {id: 23, text: 'Thỉnh thoảng', selected: false, value: 2},
+        {id: 24, text: 'Thường xuyên', selected: false, value: 3},
+        {id: 25, text: 'Rất thường xuyên', selected: true, value: 4}
       ]
     }
   ];

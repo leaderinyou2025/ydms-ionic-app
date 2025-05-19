@@ -1,0 +1,115 @@
+<app-header
+  [pageTitle]="TranslateKeys.NOTIFICATIONS_TITLE"
+  backgroundColor="linear-gradient(to bottom, #3b82f6, #1e40af)"
+  [segment]="segment"
+  [searchbar]="searchbar"
+  (changeSegment)="onSegmentChange($event)"
+  (inputSearch)="onSearchInput($event)">
+</app-header>
+
+<!-- Filter form -->
+<ion-toolbar class="filter-form ion-no-padding">
+  <div class="flex space-x-5 overflow-x-auto p-2">
+    <!-- From date -->
+    <app-select-datetime [required]="true" (selectedDatetime)="onSelectStartDate($event)"
+                         [default]="false"
+                         placeholder="{{TranslateKeys.NOTIFICATIONS_SEARCH_FROM_DATE | translate}}">
+    </app-select-datetime>
+
+    <!-- To date -->
+    <app-select-datetime [required]="true" (selectedDatetime)="onSelectEndDate($event)"
+                         [default]="false"
+                         placeholder="{{TranslateKeys.NOTIFICATIONS_SEARCH_TO_DATE | translate}}">
+    </app-select-datetime>
+
+    <!-- Type filter -->
+    <ion-item lines="none" class="select-type min-w-max">
+      <ion-select interface="popover" (ionChange)="onFilterChange($event)"
+                  placeholder="{{ TranslateKeys.NOTIFICATIONS_SEARCH_TYPE | translate }}">
+        <ion-select-option *ngFor="let type of notificationTypes" [value]="type.value">
+          {{ type.label }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+  </div>
+</ion-toolbar>
+
+<ion-content [fullscreen]="true" class="custom-page-bg-light">
+  <!-- Pull to refresh -->
+  <ion-refresher mode="md" slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list *ngIf="notifications?.length" class="bg-transparent pt-4 ion-padding-start ion-padding-end">
+    <ion-item *ngFor="let notification of notifications"
+              routerLink="/{{PageRoutes.NOTIFICATIONS}}/{{notification.id}}"
+              class="mb-3 rounded-xl shadow notification-item"
+              [class.bg-white]="!notification.state"
+              [class.dark:bg-gray-700]="!notification.state"
+              [class.bg-gray-100]="notification.state"
+              [class.dark:bg-gray-800]="notification.state"
+              lines="none" detail="false">
+
+      <div class="flex w-full items-start">
+        <!-- Mail icon instead of avatar -->
+        <div class="flex items-center justify-center mr-3 w-10 h-10">
+          <ion-icon
+            [name]="notification.state ? 'mail-open-outline' : 'mail-unread-outline'"
+            [color]="notification.state ? 'medium' : 'danger'"
+            class="text-2xl">
+          </ion-icon>
+        </div>
+
+        <div class="flex-1">
+          <!-- Title -->
+          <div class="font-bold text-sm text-blue-600 dark:text-blue-400 mb-1">
+            {{ notification.name }}
+          </div>
+
+          <!-- Message body -->
+          <div [class.font-medium]="!notification.state"
+               [class.text-gray-600]="notification.state"
+               [class.dark:text-gray-300]="notification.state"
+               class="mb-1">
+            {{ notification.body }}
+          </div>
+
+          <!-- Footer: Timestamp and Type -->
+          <div class="flex justify-between items-center">
+            <div class="text-xs text-gray-500 dark:text-gray-400">
+              {{ notification.create_date | date: DateFormat.DATE_TIME }}
+            </div>
+
+            <div class="notification-type text-xs px-2 py-1 rounded-full"
+                 [ngClass]="{
+                      'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200': notification.type === NotificationTypes.EMOTION_SHARED,
+                      'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200': notification.type === NotificationTypes.PERSONAL_TASK,
+                      'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200': notification.type === NotificationTypes.OTHER
+                    }">
+              {{
+                notification.type === NotificationTypes.EMOTION_SHARED ?
+                  (TranslateKeys.NOTIFICATIONS_TYPE_EMOTION | translate) :
+                  notification.type === NotificationTypes.PERSONAL_TASK ?
+                    (TranslateKeys.NOTIFICATIONS_TYPE_TASK | translate) :
+                    (TranslateKeys.NOTIFICATIONS_TYPE_OTHER | translate)
+              }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </ion-item>
+  </ion-list>
+
+  <!-- Empty state for search results -->
+  <div *ngIf="!notifications?.length && isLoading === false && !isLoadMore && !isRefresh" class="p-8 text-center text-gray-500 dark:text-gray-400">
+    <ion-icon name="search-outline" class="text-6xl mb-4"></ion-icon>
+    <p>{{ TranslateKeys.NOTIFICATIONS_NO_RESULTS | translate }}</p>
+  </div>
+
+  <!-- Infinite scroll -->
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreNotifications($event)">
+    <ion-infinite-scroll-content loadingSpinner="crescent"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+
+<app-footer></app-footer>

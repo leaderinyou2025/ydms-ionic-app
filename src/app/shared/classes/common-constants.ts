@@ -19,6 +19,7 @@ export class CommonConstants {
   public static signaturesMineTypes: { [key: string]: string } = {
     iVBORw0KGgo: CommonConstants.IMAGE_BASE64_PREFIX
   };
+
   public static detectMimeType(b64: string): string | undefined {
     for (let key in CommonConstants.signaturesMineTypes) {
       if (b64.indexOf(key) === 0) return CommonConstants.signaturesMineTypes[key];
@@ -208,6 +209,42 @@ export class CommonConstants {
       result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
     }
     return result;
+  }
+
+  /**
+   * Get file mime type form extension
+   * @param extension
+   */
+  public static getMimeType(extension: string): string {
+    const mimeTypes: { [key: string]: string } = {
+      pdf: 'application/pdf',
+      doc: 'application/msword',
+      docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      xls: 'application/vnd.ms-excel',
+      xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      ppt: 'application/vnd.ms-powerpoint',
+      pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+      txt: 'text/plain',
+      csv: 'text/csv',
+      jpg: 'image/jpeg',
+      jpeg: 'image/jpeg',
+      png: 'image/png',
+      gif: 'image/gif',
+      bmp: 'image/bmp',
+      svg: 'image/svg+xml',
+      webp: 'image/webp',
+      mp4: 'video/mp4',
+      mov: 'video/quicktime',
+      avi: 'video/x-msvideo',
+      wmv: 'video/x-ms-wmv',
+      webm: 'video/webm',
+      mkv: 'video/x-matroska',
+      mp3: 'audio/mpeg',
+      wav: 'audio/wav',
+      ogg: 'audio/ogg'
+    };
+
+    return mimeTypes[extension.toLowerCase()] || 'application/octet-stream';
   }
 
   /**

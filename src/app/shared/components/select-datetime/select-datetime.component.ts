@@ -3,6 +3,9 @@ import { formatDate } from '@angular/common';
 import { ModalController, Platform } from '@ionic/angular';
 import { v4 as uuidv4 } from 'uuid';
 import { DatePicker, DatePickerOptions } from '@capacitor-community/date-picker';
+import { StorageKey } from '../../enums/storage-key';
+import { LocalStorageService } from '../../../services/local-storage/local-storage.service';
+import { LanguageKeys } from '../../enums/language-keys';
 
 @Component({
   selector: 'app-select-datetime',
@@ -28,11 +31,15 @@ export class SelectDatetimeComponent implements OnInit {
   @Input() disabled: boolean | undefined;
   @Output() selectedDatetime = new EventEmitter<string | Array<string> | null>();
   defaultStr: string | null | undefined;
+  localStr: string;
 
   constructor(
     public modalController: ModalController,
     public platform: Platform,
+    private localStorageService: LocalStorageService,
   ) {
+    const lang = this.localStorageService.get<LanguageKeys>(StorageKey.LANGUAGE) || LanguageKeys.VN;
+    this.localStr = lang === LanguageKeys.VN ? 'vi-VN' : 'en-US';
   }
 
   ngOnInit() {
@@ -57,7 +64,7 @@ export class SelectDatetimeComponent implements OnInit {
     if (this.disabled) return;
     const dateOption: DatePickerOptions = {
       mode: 'date',
-      locale: 'vi-VN',
+      locale: this.localStr,
       doneText: 'Chọn',
       cancelText: 'Huỷ bỏ',
       android: {

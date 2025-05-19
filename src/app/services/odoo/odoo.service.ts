@@ -18,6 +18,8 @@ import { RelatedField } from '../../shared/interfaces/base/related-field';
 import { TranslateKeys } from '../../shared/enums/translate-keys';
 import { StyleClass } from '../../shared/enums/style-class';
 import { IAuthData } from '../../shared/interfaces/auth/auth-data';
+import { StorageKey } from '../../shared/enums/storage-key';
+import { LanguageKeys } from '../../shared/enums/language-keys';
 
 
 export type SearchDomain = Array<string | Array<string | number | boolean | Array<string | number>>>;
@@ -27,7 +29,7 @@ export type SearchDomain = Array<string | Array<string | number | boolean | Arra
 })
 export class OdooService {
   public maximumLimitRecords = 999999;
-  private lang: string = 'vi_VN';
+  private readonly lang!: 'vi_VN' | 'en-US';
   private auth!: AuthService;
 
   constructor(
@@ -37,6 +39,7 @@ export class OdooService {
     private translate: TranslateService,
     private localStorageService: LocalStorageService,
   ) {
+    this.lang = this.localStorageService.get<string>(StorageKey.LANGUAGE) === LanguageKeys.VN ? 'vi_VN' : 'en-US';
   }
 
   /**
