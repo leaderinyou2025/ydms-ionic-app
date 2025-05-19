@@ -285,6 +285,33 @@
   "WARNING": {
     "app_lock": "Trong trường hợp bạn quên mã khóa ứng dụng, bạn phải gỡ cài đặt và cài đặt lại ứng dụng từ cửa hàng để xóa mã khóa cũ."
   },
+  "RESOURCE": {
+    "library": "Thư viện tài nguyên",
+    "title": "Tiêu đề",
+    "description": "Mô tả",
+    "type": "Loại",
+    "topic": "Chủ đề",
+    "search": "Tìm kiếm tài nguyên...",
+    "filter": "Lọc",
+    "back_to_list": "Quay lại danh sách",
+    "loading": "Đang tải tài nguyên...",
+    "type_document": "Tài liệu",
+    "type_video": "Video",
+    "type_all": "Tất cả loại",
+    "topic_music": "Âm nhạc",
+    "topic_education": "Giáo dục",
+    "topic_science": "Khoa học",
+    "topic_technology": "Công nghệ",
+    "topic_arts": "Nghệ thuật",
+    "topic_sports": "Thể thao",
+    "topic_all": "Tất cả chủ đề",
+    "video_library": "Thư viện video",
+    "document_library": "Thư viện tài liệu",
+    "resource_not_found": "Không tìm thấy tài nguyên",
+    "no_resources_found": "Không tìm thấy tài nguyên nào",
+    "loading_more": "Đang tải thêm tài nguyên...",
+    "search_placeholder": "Tìm kiếm video, tài liệu..."
+  },
   "CAPTION": {
     "chatbot": "Hôm nay bạn cảm thấy thế nào? Chia sẻ với mình nhé!"
   }

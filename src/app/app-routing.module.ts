@@ -78,6 +78,10 @@ const routes: Routes = [
   {
     path: 'friends',
     loadChildren: () => import('./pages/student/friends/friends.module').then( m => m.FriendsPageModule)
+  },
+  {
+    path: 'library',
+    loadChildren: () => import('./pages/student/library/library.module').then( m => m.LibraryPageModule)
   }
 
 ];

@@ -4,6 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { LottieComponent } from 'ngx-lottie';
 
 import { SelectDatetimeComponent } from './components/select-datetime/select-datetime.component';
 import { PinUnlockComponent } from './components/pin-unlock/pin-unlock.component';
@@ -13,7 +14,9 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ImageCarouselSelectComponent } from './components/image-carousel-select/image-carousel-select.component';
 import { SoundClickDirective } from '../core/directive/sound-click.directive';
 import { HeaderComponent } from './components/header/header.component';
-import { LottieComponent } from 'ngx-lottie';
+import { ResourceViewerComponent } from './components/resource-viewer/resource-viewer.component';
+import { EmotionDiaryModalComponent } from '../pages/student/personal-diary/emotion-diary-modal/emotion-diary-modal.component';
+import { ResourceListComponent } from './components/resource-list/resource-list.component';
 
 @NgModule({
   declarations: [
@@ -24,17 +27,20 @@ import { LottieComponent } from 'ngx-lottie';
     FooterComponent,
     ImageCarouselSelectComponent,
     HeaderComponent,
+    ResourceViewerComponent,
+    EmotionDiaryModalComponent,
+    ResourceListComponent,
   ],
-    imports: [
-        CommonModule,
-        FormsModule,
-        IonicModule,
-        TranslatePipe,
-        SoundClickDirective,
-        RouterLink,
-        RouterLinkActive,
-        LottieComponent,
-    ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    TranslatePipe,
+    SoundClickDirective,
+    RouterLink,
+    RouterLinkActive,
+    LottieComponent,
+  ],
   exports: [
     SelectDatetimeComponent,
     PinUnlockComponent,
@@ -43,6 +49,9 @@ import { LottieComponent } from 'ngx-lottie';
     FooterComponent,
     ImageCarouselSelectComponent,
     HeaderComponent,
+    ResourceViewerComponent,
+    EmotionDiaryModalComponent,
+    ResourceListComponent,
   ]
 })
 export class SharedModule {

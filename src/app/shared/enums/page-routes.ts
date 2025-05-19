@@ -22,6 +22,7 @@ export enum PageRoutes {
   FRIENDS = 'friends',
   RANK = 'rank',
   NOTIFICATIONS = 'notifications',
+  LIBRARY = 'library',
   PARENT_DASHBOARD = 'parent-database',
   TEACHER_DASHBOARD = 'teacher-dashboard',
   FAMILY_CONFLICT_SURVEY = 'family-conflict-survey',

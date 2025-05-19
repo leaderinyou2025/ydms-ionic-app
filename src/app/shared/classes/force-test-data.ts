@@ -12,12 +12,28 @@ import { IAchievementCategory } from '../interfaces/rank/achievement.interfaces'
 import { IFamilyConflictSurveyHistory, IFamilyConflictSurveyQuestion } from '../interfaces/family-conflict-survey/family-conflict-survey.interfaces';
 import { IFamilyCommunicationQualitySurveyHistory, IFamilyCommunicationQualitySurveyQuestion } from '../interfaces/family-communication-quality-survey/family-communication-quality-survey.interfaces';
 import { ISelfDiscoverySurveyHistory, ISelfDiscoverySurveyQuestion } from '../interfaces/self-discovery-survey/self-discovery-survey.interfaces';
-
 import { EmotionType } from '../enums/personal-diary/personal-diary.enum';
 import { IEmotionSuggestion, IPersonalDiaryEntry } from '../interfaces/personal-diary/personal-diary.interfaces';
 import { NotificationTypes } from '../enums/notification-type';
+import { IResource } from '../interfaces/resource/resource.interface';
+import { ResourceType } from '../enums/libary/resource-type.enum';
+import { ResourceTopic } from '../enums/libary/resource-topic.enum';
 
 export class ForceTestData {
+
+  /**
+   * Resource topic thumbnail mapping
+   * Maps each resource topic to its default thumbnail image
+   */
+  static resourceTopicThumbnails = {
+    [ResourceTopic.MUSIC]: 'assets/images/resources/music-1.jpg',
+    [ResourceTopic.EDUCATION]: 'assets/images/resources/education-1.jpg',
+    [ResourceTopic.SCIENCE]: 'assets/images/resources/science-1.jpg',
+    [ResourceTopic.TECHNOLOGY]: 'assets/images/resources/technology-1.jpg',
+    [ResourceTopic.ARTS]: 'assets/images/resources/arts-1.jpg',
+    [ResourceTopic.SPORTS]: 'assets/images/resources/sports-1.jpg',
+    [ResourceTopic.ALL]: 'assets/images/resources/default.jpg'
+  };
 
   /**
    * Conflict level constants
@@ -343,232 +359,6 @@ export class ForceTestData {
       description: 'Bạn thích sáng tạo? Hãy thử khóa học vẽ tranh sơ dành cho người mới bắt đầu.',
       points: 10
     },
-  ];
-
-  /**
-   * notifications data
-   */
-  static notifications: ILiyYdmsNotification[] = [
-    {
-      id: 1,
-      name: 'Cảm xúc mới',
-      description: 'HH đã bày tỏ cảm xúc của mình!',
-      body: 'HH đã bày tỏ cảm xúc của mình!',
-      sender_id: {id: 1, name: 'HH'},
-      recipient_ids: [],
-      state: false,
-      create_date: '2025-05-19 9:41:32',
-      type: NotificationTypes.EMOTION_SHARED
-    },
-    {
-      id: 2,
-      name: 'Thông báo công việc',
-      description: 'Bạn có một nhiệm vụ mới.',
-      body: 'Hãy hoàn thành nhiệm vụ trước hạn.',
-      sender_id: {id: 2, name: 'Admin'},
-      recipient_ids: [],
-      state: true,
-      create_date: '2025-05-18 14:23:50',
-      type: NotificationTypes.PERSONAL_TASK
-    },
-    {
-      id: 3,
-      name: 'Tin nhắn hệ thống',
-      description: 'Hệ thống sẽ bảo trì vào cuối tuần.',
-      body: 'Vui lòng lưu công việc trước thời gian bảo trì.',
-      sender_id: {id: 3, name: 'System'},
-      recipient_ids: [],
-      state: false,
-      create_date: '2025-05-17 21:11:04',
-      type: NotificationTypes.OTHER
-    },
-    {
-      id: 4,
-      name: 'Nhiệm vụ cá nhân',
-      description: 'Bạn có một nhiệm vụ chưa hoàn thành.',
-      body: 'Đừng quên hoàn thành nhiệm vụ hôm nay.',
-      sender_id: {id: 4, name: 'PM'},
-      recipient_ids: [],
-      state: true,
-      create_date: '2025-05-15 8:05:18',
-      type: NotificationTypes.PERSONAL_TASK
-    },
-    {
-      id: 5,
-      name: 'Cảm xúc mới',
-      description: 'An đã bày tỏ cảm xúc của mình!',
-      body: 'An đã bày tỏ cảm xúc của mình!',
-      sender_id: {id: 5, name: 'An'},
-      recipient_ids: [],
-      state: false,
-      create_date: '2025-05-14 17:00:00',
-      type: NotificationTypes.EMOTION_SHARED
-    },
-    {
-      id: 6,
-      name: 'Cập nhật hệ thống',
-      description: 'Phiên bản mới đã được cài đặt.',
-      body: 'Vui lòng khởi động lại ứng dụng để cập nhật.',
-      sender_id: {id: 6, name: 'System'},
-      recipient_ids: [],
-      state: true,
-      create_date: '2025-05-13 22:34:02',
-      type: NotificationTypes.OTHER
-    },
-    {
-      id: 7,
-      name: 'Thông báo công việc',
-      description: 'Bạn được giao nhiệm vụ kiểm thử.',
-      body: 'Hãy kiểm thử module mới trong hôm nay.',
-      sender_id: {id: 7, name: 'QA Lead'},
-      recipient_ids: [],
-      state: false,
-      create_date: '2025-05-12 10:12:15',
-      type: NotificationTypes.PERSONAL_TASK
-    },
-    {
-      id: 8,
-      name: 'Cảm xúc mới',
-      description: 'Tú đã bày tỏ cảm xúc của mình!',
-      body: 'Tú đã bày tỏ cảm xúc của mình!',
-      sender_id: {id: 8, name: 'Tú'},
-      recipient_ids: [],
-      state: true,
-      create_date: '2025-05-11 16:59:21',
-      type: NotificationTypes.EMOTION_SHARED
-    },
-    {
-      id: 9,
-      name: 'Thông báo hệ thống',
-      description: 'Ứng dụng sẽ được nâng cấp vào 22h tối nay.',
-      body: 'Thời gian downtime dự kiến là 30 phút.',
-      sender_id: {id: 9, name: 'System'},
-      recipient_ids: [],
-      state: true,
-      create_date: '2025-05-10 19:30:00',
-      type: NotificationTypes.OTHER
-    },
-    {
-      id: 10,
-      name: 'Nhắc nhở nhiệm vụ',
-      description: 'Bạn chưa cập nhật tiến độ công việc.',
-      body: 'Vui lòng cập nhật tiến độ trước 17h hôm nay.',
-      sender_id: {id: 10, name: 'Scrum Master'},
-      recipient_ids: [],
-      state: false,
-      create_date: '2025-05-09 13:47:55',
-      type: NotificationTypes.PERSONAL_TASK
-    },
-    {
-      id: 11,
-      name: 'Cảm xúc mới',
-      description: 'Minh đã bày tỏ cảm xúc của mình!',
-      body: 'Minh đã bày tỏ cảm xúc của mình!',
-      sender_id: {id: 11, name: 'Minh'},
-      recipient_ids: [],
-      state: false,
-      create_date: '2025-05-08 11:22:45',
-      type: NotificationTypes.EMOTION_SHARED
-    },
-    {
-      id: 12,
-      name: 'Thông báo nội bộ',
-      description: 'Công ty tổ chức họp toàn thể vào thứ Sáu.',
-      body: 'Thời gian: 15h tại phòng họp chính.',
-      sender_id: {id: 12, name: 'HR'},
-      recipient_ids: [],
-      state: true,
-      create_date: '2025-05-07 9:10:05',
-      type: NotificationTypes.OTHER
-    },
-    {
-      id: 13,
-      name: 'Nhiệm vụ mới',
-      description: 'Bạn được phân công viết tài liệu.',
-      body: 'Deadline là thứ Tư tuần sau.',
-      sender_id: {id: 13, name: 'Leader'},
-      recipient_ids: [],
-      state: false,
-      create_date: '2025-05-06 7:00:30',
-      type: NotificationTypes.PERSONAL_TASK
-    },
-    {
-      id: 14,
-      name: 'Cảm xúc mới',
-      description: 'Linh đã bày tỏ cảm xúc của mình!',
-      body: 'Linh đã bày tỏ cảm xúc của mình!',
-      sender_id: {id: 14, name: 'Linh'},
-      recipient_ids: [],
-      state: true,
-      create_date: '2025-05-05 18:00:00',
-      type: NotificationTypes.EMOTION_SHARED
-    },
-    {
-      id: 15,
-      name: 'Thông báo bảo trì',
-      description: 'Server sẽ ngưng hoạt động lúc 23h.',
-      body: 'Mong bạn thông cảm về sự bất tiện này.',
-      sender_id: {id: 15, name: 'IT'},
-      recipient_ids: [],
-      state: false,
-      create_date: '2025-05-04 23:00:00',
-      type: NotificationTypes.OTHER
-    },
-    {
-      id: 16,
-      name: 'Cập nhật thông tin',
-      description: 'Bạn cần cập nhật hồ sơ cá nhân.',
-      body: 'Hãy vào phần cài đặt để cập nhật thông tin.',
-      sender_id: {id: 16, name: 'System'},
-      recipient_ids: [],
-      state: true,
-      create_date: '2025-05-03 15:11:42',
-      type: NotificationTypes.OTHER
-    },
-    {
-      id: 17,
-      name: 'Cảm xúc mới',
-      description: 'Hà đã bày tỏ cảm xúc của mình!',
-      body: 'Hà đã bày tỏ cảm xúc của mình!',
-      sender_id: {id: 17, name: 'Hà'},
-      recipient_ids: [],
-      state: false,
-      create_date: '2025-05-02 8:08:08',
-      type: NotificationTypes.EMOTION_SHARED
-    },
-    {
-      id: 18,
-      name: 'Nhiệm vụ cập nhật',
-      description: 'Bạn cần kiểm tra bản thiết kế.',
-      body: 'Vui lòng phản hồi trong hôm nay.',
-      sender_id: {id: 18, name: 'UX'},
-      recipient_ids: [],
-      state: true,
-      create_date: '2025-05-01 14:25:25',
-      type: NotificationTypes.PERSONAL_TASK
-    },
-    {
-      id: 19,
-      name: 'Thông báo mới',
-      description: 'Chính sách công ty được cập nhật.',
-      body: 'Xem chi tiết trong mục Tài liệu.',
-      sender_id: {id: 19, name: 'HR'},
-      recipient_ids: [],
-      state: true,
-      create_date: '2025-04-30 10:10:10',
-      type: NotificationTypes.OTHER
-    },
-    {
-      id: 20,
-      name: 'Cảm xúc mới',
-      description: 'Lan đã bày tỏ cảm xúc của mình!',
-      body: 'Lan đã bày tỏ cảm xúc của mình!',
-      sender_id: {id: 20, name: 'Lan'},
-      recipient_ids: [],
-      state: false,
-      create_date: '2025-04-29 20:45:00',
-      type: NotificationTypes.EMOTION_SHARED
-    }
   ];
 
   static loginResult = {result: 1};
@@ -1337,6 +1127,368 @@ export class ForceTestData {
         {id: 24, text: 'Thường xuyên', selected: false, value: 3},
         {id: 25, text: 'Rất thường xuyên', selected: true, value: 4}
       ]
+    }
+  ];
+
+  /**
+   * notifications data
+   */
+  static notifications: ILiyYdmsNotification[] = [
+    {
+      id: 1,
+      name: 'Cảm xúc mới',
+      description: 'HH đã bày tỏ cảm xúc của mình!',
+      body: 'HH đã bày tỏ cảm xúc của mình!',
+      sender_id: {id: 1, name: 'HH'},
+      recipient_ids: [],
+      state: false,
+      create_date: '2025-05-19 9:41:32',
+      type: NotificationTypes.EMOTION_SHARED
+    },
+    {
+      id: 2,
+      name: 'Thông báo công việc',
+      description: 'Bạn có một nhiệm vụ mới.',
+      body: 'Hãy hoàn thành nhiệm vụ trước hạn.',
+      sender_id: {id: 2, name: 'Admin'},
+      recipient_ids: [],
+      state: true,
+      create_date: '2025-05-18 14:23:50',
+      type: NotificationTypes.PERSONAL_TASK
+    },
+    {
+      id: 3,
+      name: 'Tin nhắn hệ thống',
+      description: 'Hệ thống sẽ bảo trì vào cuối tuần.',
+      body: 'Vui lòng lưu công việc trước thời gian bảo trì.',
+      sender_id: {id: 3, name: 'System'},
+      recipient_ids: [],
+      state: false,
+      create_date: '2025-05-17 21:11:04',
+      type: NotificationTypes.OTHER
+    },
+    {
+      id: 4,
+      name: 'Nhiệm vụ cá nhân',
+      description: 'Bạn có một nhiệm vụ chưa hoàn thành.',
+      body: 'Đừng quên hoàn thành nhiệm vụ hôm nay.',
+      sender_id: {id: 4, name: 'PM'},
+      recipient_ids: [],
+      state: true,
+      create_date: '2025-05-15 8:05:18',
+      type: NotificationTypes.PERSONAL_TASK
+    },
+    {
+      id: 5,
+      name: 'Cảm xúc mới',
+      description: 'An đã bày tỏ cảm xúc của mình!',
+      body: 'An đã bày tỏ cảm xúc của mình!',
+      sender_id: {id: 5, name: 'An'},
+      recipient_ids: [],
+      state: false,
+      create_date: '2025-05-14 17:00:00',
+      type: NotificationTypes.EMOTION_SHARED
+    },
+    {
+      id: 6,
+      name: 'Cập nhật hệ thống',
+      description: 'Phiên bản mới đã được cài đặt.',
+      body: 'Vui lòng khởi động lại ứng dụng để cập nhật.',
+      sender_id: {id: 6, name: 'System'},
+      recipient_ids: [],
+      state: true,
+      create_date: '2025-05-13 22:34:02',
+      type: NotificationTypes.OTHER
+    },
+    {
+      id: 7,
+      name: 'Thông báo công việc',
+      description: 'Bạn được giao nhiệm vụ kiểm thử.',
+      body: 'Hãy kiểm thử module mới trong hôm nay.',
+      sender_id: {id: 7, name: 'QA Lead'},
+      recipient_ids: [],
+      state: false,
+      create_date: '2025-05-12 10:12:15',
+      type: NotificationTypes.PERSONAL_TASK
+    },
+    {
+      id: 8,
+      name: 'Cảm xúc mới',
+      description: 'Tú đã bày tỏ cảm xúc của mình!',
+      body: 'Tú đã bày tỏ cảm xúc của mình!',
+      sender_id: {id: 8, name: 'Tú'},
+      recipient_ids: [],
+      state: true,
+      create_date: '2025-05-11 16:59:21',
+      type: NotificationTypes.EMOTION_SHARED
+    },
+    {
+      id: 9,
+      name: 'Thông báo hệ thống',
+      description: 'Ứng dụng sẽ được nâng cấp vào 22h tối nay.',
+      body: 'Thời gian downtime dự kiến là 30 phút.',
+      sender_id: {id: 9, name: 'System'},
+      recipient_ids: [],
+      state: true,
+      create_date: '2025-05-10 19:30:00',
+      type: NotificationTypes.OTHER
+    },
+    {
+      id: 10,
+      name: 'Nhắc nhở nhiệm vụ',
+      description: 'Bạn chưa cập nhật tiến độ công việc.',
+      body: 'Vui lòng cập nhật tiến độ trước 17h hôm nay.',
+      sender_id: {id: 10, name: 'Scrum Master'},
+      recipient_ids: [],
+      state: false,
+      create_date: '2025-05-09 13:47:55',
+      type: NotificationTypes.PERSONAL_TASK
+    },
+    {
+      id: 11,
+      name: 'Cảm xúc mới',
+      description: 'Minh đã bày tỏ cảm xúc của mình!',
+      body: 'Minh đã bày tỏ cảm xúc của mình!',
+      sender_id: {id: 11, name: 'Minh'},
+      recipient_ids: [],
+      state: false,
+      create_date: '2025-05-08 11:22:45',
+      type: NotificationTypes.EMOTION_SHARED
+    },
+    {
+      id: 12,
+      name: 'Thông báo nội bộ',
+      description: 'Công ty tổ chức họp toàn thể vào thứ Sáu.',
+      body: 'Thời gian: 15h tại phòng họp chính.',
+      sender_id: {id: 12, name: 'HR'},
+      recipient_ids: [],
+      state: true,
+      create_date: '2025-05-07 9:10:05',
+      type: NotificationTypes.OTHER
+    },
+    {
+      id: 13,
+      name: 'Nhiệm vụ mới',
+      description: 'Bạn được phân công viết tài liệu.',
+      body: 'Deadline là thứ Tư tuần sau.',
+      sender_id: {id: 13, name: 'Leader'},
+      recipient_ids: [],
+      state: false,
+      create_date: '2025-05-06 7:00:30',
+      type: NotificationTypes.PERSONAL_TASK
+    },
+    {
+      id: 14,
+      name: 'Cảm xúc mới',
+      description: 'Linh đã bày tỏ cảm xúc của mình!',
+      body: 'Linh đã bày tỏ cảm xúc của mình!',
+      sender_id: {id: 14, name: 'Linh'},
+      recipient_ids: [],
+      state: true,
+      create_date: '2025-05-05 18:00:00',
+      type: NotificationTypes.EMOTION_SHARED
+    },
+    {
+      id: 15,
+      name: 'Thông báo bảo trì',
+      description: 'Server sẽ ngưng hoạt động lúc 23h.',
+      body: 'Mong bạn thông cảm về sự bất tiện này.',
+      sender_id: {id: 15, name: 'IT'},
+      recipient_ids: [],
+      state: false,
+      create_date: '2025-05-04 23:00:00',
+      type: NotificationTypes.OTHER
+    },
+    {
+      id: 16,
+      name: 'Cập nhật thông tin',
+      description: 'Bạn cần cập nhật hồ sơ cá nhân.',
+      body: 'Hãy vào phần cài đặt để cập nhật thông tin.',
+      sender_id: {id: 16, name: 'System'},
+      recipient_ids: [],
+      state: true,
+      create_date: '2025-05-03 15:11:42',
+      type: NotificationTypes.OTHER
+    },
+    {
+      id: 17,
+      name: 'Cảm xúc mới',
+      description: 'Hà đã bày tỏ cảm xúc của mình!',
+      body: 'Hà đã bày tỏ cảm xúc của mình!',
+      sender_id: {id: 17, name: 'Hà'},
+      recipient_ids: [],
+      state: false,
+      create_date: '2025-05-02 8:08:08',
+      type: NotificationTypes.EMOTION_SHARED
+    },
+    {
+      id: 18,
+      name: 'Nhiệm vụ cập nhật',
+      description: 'Bạn cần kiểm tra bản thiết kế.',
+      body: 'Vui lòng phản hồi trong hôm nay.',
+      sender_id: {id: 18, name: 'UX'},
+      recipient_ids: [],
+      state: true,
+      create_date: '2025-05-01 14:25:25',
+      type: NotificationTypes.PERSONAL_TASK
+    },
+    {
+      id: 19,
+      name: 'Thông báo mới',
+      description: 'Chính sách công ty được cập nhật.',
+      body: 'Xem chi tiết trong mục Tài liệu.',
+      sender_id: {id: 19, name: 'HR'},
+      recipient_ids: [],
+      state: true,
+      create_date: '2025-04-30 10:10:10',
+      type: NotificationTypes.OTHER
+    },
+    {
+      id: 20,
+      name: 'Cảm xúc mới',
+      description: 'Lan đã bày tỏ cảm xúc của mình!',
+      body: 'Lan đã bày tỏ cảm xúc của mình!',
+      sender_id: {id: 20, name: 'Lan'},
+      recipient_ids: [],
+      state: false,
+      create_date: '2025-04-29 20:45:00',
+      type: NotificationTypes.EMOTION_SHARED
+    }
+  ];
+
+  /**
+   * Resources data (documents and videos)
+   */
+  static resources: Array<IResource> = [
+    {
+      id: 1,
+      title: 'A Whole New World',
+      description: 'Bài hát nổi tiếng từ phim hoạt hình Aladdin của Disney, thể hiện bởi ca sĩ Âu Mỹ.',
+      shortDescription: 'Bài hát nổi tiếng từ phim Aladdin',
+      resourceUrl: 'https://www.youtube.com/embed/hZ1Rb9hC4JY',
+      thumbnailUrl: 'https://img.youtube.com/vi/hZ1Rb9hC4JY/hqdefault.jpg',
+      type: ResourceType.VIDEO,
+      topic: ResourceTopic.MUSIC,
+      isExternal: true,
+      viewCount: 120,
+      createdDate: '2023-05-15'
+    },
+    {
+      id: 2,
+      title: 'Thích quá rùi nà',
+      description: 'Video cover bài hát "Thích quá rùi nà" được thể hiện bởi nhiều ca sĩ trẻ Việt Nam.',
+      shortDescription: 'Cover bài hát "Thích quá rùi nà"',
+      resourceUrl: 'https://www.youtube.com/embed/HZi4eJXWZU0',
+      thumbnailUrl: 'https://img.youtube.com/vi/HZi4eJXWZU0/hqdefault.jpg',
+      type: ResourceType.VIDEO,
+      topic: ResourceTopic.MUSIC,
+      isExternal: true,
+      viewCount: 85,
+      createdDate: '2023-06-20'
+    },
+    {
+      id: 3,
+      title: 'Chuyện gì sẽ xảy ra nếu bạn không uống nước?',
+      description: 'Video giải thích khoa học về tầm quan trọng của nước đối với cơ thể con người và những hậu quả nếu không uống đủ nước.',
+      shortDescription: 'Tầm quan trọng của nước với cơ thể',
+      resourceUrl: 'https://www.youtube.com/embed/9iMGFqMmUFs',
+      thumbnailUrl: 'https://img.youtube.com/vi/9iMGFqMmUFs/hqdefault.jpg',
+      type: ResourceType.VIDEO,
+      topic: ResourceTopic.SCIENCE,
+      isExternal: true,
+      viewCount: 210,
+      createdDate: '2023-04-10'
+    },
+    {
+      id: 4,
+      title: 'Tại sao mèo lại hành xử kỳ lạ đến vậy?',
+      description: 'Video khám phá hành vi của loài mèo và giải thích khoa học đằng sau những hành động kỳ lạ của chúng.',
+      shortDescription: 'Khám phá hành vi của loài mèo',
+      resourceUrl: 'https://www.youtube.com/embed/Z-QsJGDR9nU',
+      thumbnailUrl: 'https://img.youtube.com/vi/Z-QsJGDR9nU/hqdefault.jpg',
+      type: ResourceType.VIDEO,
+      topic: ResourceTopic.SCIENCE,
+      isExternal: true,
+      viewCount: 175,
+      createdDate: '2023-07-05'
+    },
+    {
+      id: 5,
+      title: 'Hướng dẫn học tập hiệu quả',
+      description: 'Tài liệu PDF cung cấp các phương pháp học tập hiệu quả, kỹ thuật ghi nhớ và quản lý thời gian cho học sinh.',
+      shortDescription: 'Phương pháp học tập hiệu quả',
+      resourceUrl: 'assets/documents/huong-dan-hoc-tap-hieu-qua.pdf',
+      thumbnailUrl: 'https://img.youtube.com/vi/hZ1Rb9hC4JY/hqdefault.jpg',
+      type: ResourceType.DOCUMENT,
+      topic: ResourceTopic.EDUCATION,
+      fileType: 'pdf',
+      viewCount: 320,
+      createdDate: '2023-03-15'
+    },
+    {
+      id: 6,
+      title: 'Kỹ năng giao tiếp cơ bản',
+      description: 'Tài liệu hướng dẫn các kỹ năng giao tiếp cơ bản, cách thể hiện bản thân và xây dựng mối quan hệ tốt với mọi người.',
+      shortDescription: 'Hướng dẫn kỹ năng giao tiếp',
+      resourceUrl: 'assets/documents/ky-nang-giao-tiep.pdf',
+      thumbnailUrl: 'https://img.youtube.com/vi/hZ1Rb9hC4JY/hqdefault.jpg',
+      type: ResourceType.DOCUMENT,
+      topic: ResourceTopic.EDUCATION,
+      fileType: 'pdf',
+      viewCount: 280,
+      createdDate: '2023-02-28'
+    },
+    {
+      id: 7,
+      title: 'Giới thiệu về Trí tuệ nhân tạo',
+      description: 'Tài liệu giới thiệu cơ bản về trí tuệ nhân tạo, lịch sử phát triển và các ứng dụng trong cuộc sống hiện đại.',
+      shortDescription: 'Giới thiệu về AI',
+      resourceUrl: 'assets/documents/gioi-thieu-tri-tue-nhan-tao.pdf',
+      thumbnailUrl: 'https://img.youtube.com/vi/hZ1Rb9hC4JY/hqdefault.jpg',
+      type: ResourceType.DOCUMENT,
+      topic: ResourceTopic.TECHNOLOGY,
+      fileType: 'pdf',
+      viewCount: 195,
+      createdDate: '2023-05-20'
+    },
+    {
+      id: 8,
+      title: 'Hướng dẫn vẽ tranh cơ bản',
+      description: 'Tài liệu hướng dẫn các kỹ thuật vẽ tranh cơ bản cho người mới bắt đầu, từ phác thảo đến tô màu.',
+      shortDescription: 'Kỹ thuật vẽ tranh cơ bản',
+      resourceUrl: 'assets/documents/huong-dan-ve-tranh.pdf',
+      thumbnailUrl: 'https://img.youtube.com/vi/hZ1Rb9hC4JY/hqdefault.jpg',
+      type: ResourceType.DOCUMENT,
+      topic: ResourceTopic.ARTS,
+      fileType: 'pdf',
+      viewCount: 150,
+      createdDate: '2023-06-10'
+    },
+    {
+      id: 9,
+      title: 'Các bài tập thể dục tại nhà',
+      description: 'Tài liệu hướng dẫn các bài tập thể dục đơn giản có thể thực hiện tại nhà mà không cần dụng cụ phức tạp.',
+      shortDescription: 'Bài tập thể dục tại nhà',
+      resourceUrl: 'assets/documents/bai-tap-the-duc.pdf',
+      thumbnailUrl: 'https://img.youtube.com/vi/hZ1Rb9hC4JY/hqdefault.jpg',
+      type: ResourceType.DOCUMENT,
+      topic: ResourceTopic.SPORTS,
+      fileType: 'pdf',
+      viewCount: 230,
+      createdDate: '2023-04-25'
+    },
+    {
+      id: 10,
+      title: 'Lập trình web cơ bản',
+      description: 'Video hướng dẫn lập trình web cơ bản với HTML, CSS và JavaScript cho người mới bắt đầu.',
+      shortDescription: 'Hướng dẫn lập trình web',
+      resourceUrl: 'https://www.youtube.com/embed/zJSY8tbf_ys',
+      thumbnailUrl: 'https://img.youtube.com/vi/zJSY8tbf_ys/hqdefault.jpg',
+      type: ResourceType.VIDEO,
+      topic: ResourceTopic.TECHNOLOGY,
+      isExternal: true,
+      viewCount: 310,
+      createdDate: '2023-03-30'
     }
   ];
 }

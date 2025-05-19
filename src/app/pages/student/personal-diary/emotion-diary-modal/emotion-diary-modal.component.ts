@@ -5,14 +5,13 @@ import { IonicModule, ModalController } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { EmotionType } from '../../../../shared/enums/personal-diary/personal-diary.enum';
 import { EMOTION_OPTIONS } from '../../../../shared/data/emotion-options.data';
-import { EmotionOption } from "../../../../shared/interfaces/personal-diary/personal-diary.interfaces";
+import { EmotionOption } from '../../../../shared/interfaces/personal-diary/personal-diary.interfaces';
 
 @Component({
   selector: 'app-personal-diary-modal',
   templateUrl: './emotion-diary-modal.component.html',
   styleUrls: ['./emotion-diary-modal.component.scss'],
-  standalone: true,
-  imports: [CommonModule, FormsModule, IonicModule, TranslateModule]
+  standalone: false,
 })
 export class EmotionDiaryModalComponent implements OnInit {
   @Input() title: string = '';
@@ -40,9 +39,11 @@ export class EmotionDiaryModalComponent implements OnInit {
   // Use shared emotion options data
   emotions: EmotionOption[] = EMOTION_OPTIONS;
 
-  constructor(private modalController: ModalController) { }
+  constructor(private modalController: ModalController) {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   selectEmotion(emotion: EmotionType): void {
     this.selectedEmotion = emotion;

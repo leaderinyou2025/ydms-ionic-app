@@ -285,6 +285,33 @@
   "WARNING": {
     "app_lock": "If you forget the encryption app, you must uninstall and reinstall the app to remove the old passcode."
   },
+  "RESOURCE": {
+    "library": "Resource Library",
+    "title": "Title",
+    "description": "Description",
+    "type": "Type",
+    "topic": "Topic",
+    "search": "Search resources...",
+    "filter": "Filter",
+    "back_to_list": "Back to list",
+    "loading": "Loading resource...",
+    "type_document": "Document",
+    "type_video": "Video",
+    "type_all": "All Types",
+    "topic_music": "Music",
+    "topic_education": "Education",
+    "topic_science": "Science",
+    "topic_technology": "Technology",
+    "topic_arts": "Arts",
+    "topic_sports": "Sports",
+    "topic_all": "All Topics",
+    "video_library": "Video Library",
+    "document_library": "Document Library",
+    "resource_not_found": "Resource not found",
+    "no_resources_found": "No resources found",
+    "loading_more": "Loading more resources...",
+    "search_placeholder": "Search videos, documents..."
+  },
   "CAPTION": {
     "chatbot": "How are you feeling today? Feel free to share with me!"
   }
