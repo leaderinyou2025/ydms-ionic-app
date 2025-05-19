@@ -70,3 +70,14 @@
 .shake {
   animation: shake 0.4s ease-in-out;
 }
+
+/*-------------- Date time picker -------------*/
+ion-modal.select-date-modal {
+  --background: transparent !important;
+}
+
+ion-modal.select-date-modal ion-content {
+  background: #0000003D;
+  --offset-top: 100 !important;
+  --offset-bottom: 0px !important;
+}

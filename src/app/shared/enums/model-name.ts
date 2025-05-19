@@ -3,4 +3,5 @@ export enum ModelName {
   RES_PARTNER = 'res.partner',
   APP_VERSIONS = 'liy.ydms.app.version',
   AVATAR = 'liy.ydms.avatar',
+  NOTIFICATION = 'liy.ydms.notification',
 }

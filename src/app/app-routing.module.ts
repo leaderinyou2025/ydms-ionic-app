@@ -71,6 +71,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/student/rank/rank.module').then(m => m.RankPageModule)
   },
   {
+    path: 'notifications',
+    loadChildren: () => import('./pages/notifications/notifications.module').then( m => m.NotificationsPageModule),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'friends',
     loadChildren: () => import('./pages/student/friends/friends.module').then( m => m.FriendsPageModule)
   },
@@ -78,6 +83,7 @@ const routes: Routes = [
     path: 'library',
     loadChildren: () => import('./pages/student/library/library.module').then( m => m.LibraryPageModule)
   }
+
 ];
 
 @NgModule({

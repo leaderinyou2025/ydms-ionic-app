@@ -1,4 +1,3 @@
-
 import { IAuthData } from '../interfaces/auth/auth-data';
 import { Theme } from '../enums/theme';
 import { IAssetsResource } from '../interfaces/settings/assets-resource';
@@ -6,29 +5,19 @@ import { TextZoomSize } from '../enums/text-zoom-size';
 import { AssetResourceCategory } from '../enums/asset-resource-category';
 import { StatusItemType } from '../enums/home/status-item-type.enum';
 import { ICharacter, IStatusItem, ITask } from '../interfaces/home/home.interfaces';
+import { ILiyYdmsNotification } from '../interfaces/models/liy.ydms.notification';
 import { IFriend } from '../interfaces/friend/friend';
 import { IRankItem } from '../interfaces/rank/rank.interfaces';
 import { IAchievementCategory } from '../interfaces/rank/achievement.interfaces';
+import { IFamilyConflictSurveyHistory, IFamilyConflictSurveyQuestion } from '../interfaces/family-conflict-survey/family-conflict-survey.interfaces';
+import { IFamilyCommunicationQualitySurveyHistory, IFamilyCommunicationQualitySurveyQuestion } from '../interfaces/family-communication-quality-survey/family-communication-quality-survey.interfaces';
+import { ISelfDiscoverySurveyHistory, ISelfDiscoverySurveyQuestion } from '../interfaces/self-discovery-survey/self-discovery-survey.interfaces';
+import { EmotionType } from '../enums/personal-diary/personal-diary.enum';
+import { IEmotionSuggestion, IPersonalDiaryEntry } from '../interfaces/personal-diary/personal-diary.interfaces';
+import { NotificationTypes } from '../enums/notification-type';
 import { IResource } from '../interfaces/resource/resource.interface';
 import { ResourceType } from '../enums/libary/resource-type.enum';
 import { ResourceTopic } from '../enums/libary/resource-topic.enum';
-import {
-  IFamilyConflictSurveyHistory,
-  IFamilyConflictSurveyQuestion
-} from '../interfaces/family-conflict-survey/family-conflict-survey.interfaces';
-import {
-  IFamilyCommunicationQualitySurveyHistory,
-  IFamilyCommunicationQualitySurveyDetail,
-  IFamilyCommunicationQualitySurveyQuestion
-} from '../interfaces/family-communication-quality-survey/family-communication-quality-survey.interfaces';
-import {
-  ISelfDiscoverySurveyHistory,
-  ISelfDiscoverySurveyDetail,
-  ISelfDiscoverySurveyQuestion
-} from '../interfaces/self-discovery-survey/self-discovery-survey.interfaces';
-
-import { EmotionType } from '../enums/personal-diary/personal-diary.enum';
-import { IEmotionSuggestion, IPersonalDiaryEntry } from '../interfaces/personal-diary/personal-diary.interfaces';
 
 export class ForceTestData {
 
@@ -529,142 +518,6 @@ export class ForceTestData {
   ];
 
   /**
-   * Resources data (documents and videos)
-   */
-  static resources: Array<IResource> = [
-    {
-      id: 1,
-      title: 'A Whole New World',
-      description: 'Bài hát nổi tiếng từ phim hoạt hình Aladdin của Disney, thể hiện bởi ca sĩ Âu Mỹ.',
-      shortDescription: 'Bài hát nổi tiếng từ phim Aladdin',
-      resourceUrl: 'https://www.youtube.com/embed/hZ1Rb9hC4JY',
-      thumbnailUrl: 'https://img.youtube.com/vi/hZ1Rb9hC4JY/hqdefault.jpg',
-      type: ResourceType.VIDEO,
-      topic: ResourceTopic.MUSIC,
-      isExternal: true,
-      viewCount: 120,
-      createdDate: '2023-05-15'
-    },
-    {
-      id: 2,
-      title: 'Thích quá rùi nà',
-      description: 'Video cover bài hát "Thích quá rùi nà" được thể hiện bởi nhiều ca sĩ trẻ Việt Nam.',
-      shortDescription: 'Cover bài hát "Thích quá rùi nà"',
-      resourceUrl: 'https://www.youtube.com/embed/HZi4eJXWZU0',
-      thumbnailUrl: 'https://img.youtube.com/vi/HZi4eJXWZU0/hqdefault.jpg',
-      type: ResourceType.VIDEO,
-      topic: ResourceTopic.MUSIC,
-      isExternal: true,
-      viewCount: 85,
-      createdDate: '2023-06-20'
-    },
-    {
-      id: 3,
-      title: 'Chuyện gì sẽ xảy ra nếu bạn không uống nước?',
-      description: 'Video giải thích khoa học về tầm quan trọng của nước đối với cơ thể con người và những hậu quả nếu không uống đủ nước.',
-      shortDescription: 'Tầm quan trọng của nước với cơ thể',
-      resourceUrl: 'https://www.youtube.com/embed/9iMGFqMmUFs',
-      thumbnailUrl: 'https://img.youtube.com/vi/9iMGFqMmUFs/hqdefault.jpg',
-      type: ResourceType.VIDEO,
-      topic: ResourceTopic.SCIENCE,
-      isExternal: true,
-      viewCount: 210,
-      createdDate: '2023-04-10'
-    },
-    {
-      id: 4,
-      title: 'Tại sao mèo lại hành xử kỳ lạ đến vậy?',
-      description: 'Video khám phá hành vi của loài mèo và giải thích khoa học đằng sau những hành động kỳ lạ của chúng.',
-      shortDescription: 'Khám phá hành vi của loài mèo',
-      resourceUrl: 'https://www.youtube.com/embed/Z-QsJGDR9nU',
-      thumbnailUrl: 'https://img.youtube.com/vi/Z-QsJGDR9nU/hqdefault.jpg',
-      type: ResourceType.VIDEO,
-      topic: ResourceTopic.SCIENCE,
-      isExternal: true,
-      viewCount: 175,
-      createdDate: '2023-07-05'
-    },
-    {
-      id: 5,
-      title: 'Hướng dẫn học tập hiệu quả',
-      description: 'Tài liệu PDF cung cấp các phương pháp học tập hiệu quả, kỹ thuật ghi nhớ và quản lý thời gian cho học sinh.',
-      shortDescription: 'Phương pháp học tập hiệu quả',
-      resourceUrl: 'assets/documents/huong-dan-hoc-tap-hieu-qua.pdf',
-      thumbnailUrl: 'https://img.youtube.com/vi/hZ1Rb9hC4JY/hqdefault.jpg',
-      type: ResourceType.DOCUMENT,
-      topic: ResourceTopic.EDUCATION,
-      fileType: 'pdf',
-      viewCount: 320,
-      createdDate: '2023-03-15'
-    },
-    {
-      id: 6,
-      title: 'Kỹ năng giao tiếp cơ bản',
-      description: 'Tài liệu hướng dẫn các kỹ năng giao tiếp cơ bản, cách thể hiện bản thân và xây dựng mối quan hệ tốt với mọi người.',
-      shortDescription: 'Hướng dẫn kỹ năng giao tiếp',
-      resourceUrl: 'assets/documents/ky-nang-giao-tiep.pdf',
-      thumbnailUrl: 'https://img.youtube.com/vi/hZ1Rb9hC4JY/hqdefault.jpg',
-      type: ResourceType.DOCUMENT,
-      topic: ResourceTopic.EDUCATION,
-      fileType: 'pdf',
-      viewCount: 280,
-      createdDate: '2023-02-28'
-    },
-    {
-      id: 7,
-      title: 'Giới thiệu về Trí tuệ nhân tạo',
-      description: 'Tài liệu giới thiệu cơ bản về trí tuệ nhân tạo, lịch sử phát triển và các ứng dụng trong cuộc sống hiện đại.',
-      shortDescription: 'Giới thiệu về AI',
-      resourceUrl: 'assets/documents/gioi-thieu-tri-tue-nhan-tao.pdf',
-      thumbnailUrl: 'https://img.youtube.com/vi/hZ1Rb9hC4JY/hqdefault.jpg',
-      type: ResourceType.DOCUMENT,
-      topic: ResourceTopic.TECHNOLOGY,
-      fileType: 'pdf',
-      viewCount: 195,
-      createdDate: '2023-05-20'
-    },
-    {
-      id: 8,
-      title: 'Hướng dẫn vẽ tranh cơ bản',
-      description: 'Tài liệu hướng dẫn các kỹ thuật vẽ tranh cơ bản cho người mới bắt đầu, từ phác thảo đến tô màu.',
-      shortDescription: 'Kỹ thuật vẽ tranh cơ bản',
-      resourceUrl: 'assets/documents/huong-dan-ve-tranh.pdf',
-      thumbnailUrl: 'https://img.youtube.com/vi/hZ1Rb9hC4JY/hqdefault.jpg',
-      type: ResourceType.DOCUMENT,
-      topic: ResourceTopic.ARTS,
-      fileType: 'pdf',
-      viewCount: 150,
-      createdDate: '2023-06-10'
-    },
-    {
-      id: 9,
-      title: 'Các bài tập thể dục tại nhà',
-      description: 'Tài liệu hướng dẫn các bài tập thể dục đơn giản có thể thực hiện tại nhà mà không cần dụng cụ phức tạp.',
-      shortDescription: 'Bài tập thể dục tại nhà',
-      resourceUrl: 'assets/documents/bai-tap-the-duc.pdf',
-      thumbnailUrl: 'https://img.youtube.com/vi/hZ1Rb9hC4JY/hqdefault.jpg',
-      type: ResourceType.DOCUMENT,
-      topic: ResourceTopic.SPORTS,
-      fileType: 'pdf',
-      viewCount: 230,
-      createdDate: '2023-04-25'
-    },
-    {
-      id: 10,
-      title: 'Lập trình web cơ bản',
-      description: 'Video hướng dẫn lập trình web cơ bản với HTML, CSS và JavaScript cho người mới bắt đầu.',
-      shortDescription: 'Hướng dẫn lập trình web',
-      resourceUrl: 'https://www.youtube.com/embed/zJSY8tbf_ys',
-      thumbnailUrl: 'https://img.youtube.com/vi/zJSY8tbf_ys/hqdefault.jpg',
-      type: ResourceType.VIDEO,
-      topic: ResourceTopic.TECHNOLOGY,
-      isExternal: true,
-      viewCount: 310,
-      createdDate: '2023-03-30'
-    }
-  ];
-
-  /**
    * Mock user for shared entries in personal diary
    */
   static mockDiaryUser: IAuthData = {
@@ -1013,55 +866,55 @@ export class ForceTestData {
       id: 1,
       text: 'Các thành viên trong gia đình có thường xuyên chia sẻ cảm xúc và suy nghĩ với nhau không?',
       options: [
-        { id: 1, text: 'Không bao giờ', selected: false, value: 0 },
-        { id: 2, text: 'Hiếm khi', selected: false, value: 1 },
-        { id: 3, text: 'Thỉnh thoảng', selected: false, value: 2 },
-        { id: 4, text: 'Thường xuyên', selected: true, value: 3 },
-        { id: 5, text: 'Rất thường xuyên', selected: false, value: 4 }
+        {id: 1, text: 'Không bao giờ', selected: false, value: 0},
+        {id: 2, text: 'Hiếm khi', selected: false, value: 1},
+        {id: 3, text: 'Thỉnh thoảng', selected: false, value: 2},
+        {id: 4, text: 'Thường xuyên', selected: true, value: 3},
+        {id: 5, text: 'Rất thường xuyên', selected: false, value: 4}
       ]
     },
     {
       id: 2,
       text: 'Khi có vấn đề, các thành viên trong gia đình có cùng nhau thảo luận để tìm giải pháp không?',
       options: [
-        { id: 6, text: 'Không bao giờ', selected: false, value: 0 },
-        { id: 7, text: 'Hiếm khi', selected: false, value: 1 },
-        { id: 8, text: 'Thỉnh thoảng', selected: true, value: 2 },
-        { id: 9, text: 'Thường xuyên', selected: false, value: 3 },
-        { id: 10, text: 'Rất thường xuyên', selected: false, value: 4 }
+        {id: 6, text: 'Không bao giờ', selected: false, value: 0},
+        {id: 7, text: 'Hiếm khi', selected: false, value: 1},
+        {id: 8, text: 'Thỉnh thoảng', selected: true, value: 2},
+        {id: 9, text: 'Thường xuyên', selected: false, value: 3},
+        {id: 10, text: 'Rất thường xuyên', selected: false, value: 4}
       ]
     },
     {
       id: 3,
       text: 'Bạn có cảm thấy được lắng nghe khi nói chuyện với các thành viên trong gia đình không?',
       options: [
-        { id: 11, text: 'Không bao giờ', selected: false, value: 0 },
-        { id: 12, text: 'Hiếm khi', selected: false, value: 1 },
-        { id: 13, text: 'Thỉnh thoảng', selected: false, value: 2 },
-        { id: 14, text: 'Thường xuyên', selected: true, value: 3 },
-        { id: 15, text: 'Rất thường xuyên', selected: false, value: 4 }
+        {id: 11, text: 'Không bao giờ', selected: false, value: 0},
+        {id: 12, text: 'Hiếm khi', selected: false, value: 1},
+        {id: 13, text: 'Thỉnh thoảng', selected: false, value: 2},
+        {id: 14, text: 'Thường xuyên', selected: true, value: 3},
+        {id: 15, text: 'Rất thường xuyên', selected: false, value: 4}
       ]
     },
     {
       id: 4,
       text: 'Các thành viên trong gia đình có tôn trọng ý kiến của nhau không?',
       options: [
-        { id: 16, text: 'Không bao giờ', selected: false, value: 0 },
-        { id: 17, text: 'Hiếm khi', selected: false, value: 1 },
-        { id: 18, text: 'Thỉnh thoảng', selected: true, value: 2 },
-        { id: 19, text: 'Thường xuyên', selected: false, value: 3 },
-        { id: 20, text: 'Rất thường xuyên', selected: false, value: 4 }
+        {id: 16, text: 'Không bao giờ', selected: false, value: 0},
+        {id: 17, text: 'Hiếm khi', selected: false, value: 1},
+        {id: 18, text: 'Thỉnh thoảng', selected: true, value: 2},
+        {id: 19, text: 'Thường xuyên', selected: false, value: 3},
+        {id: 20, text: 'Rất thường xuyên', selected: false, value: 4}
       ]
     },
     {
       id: 5,
       text: 'Gia đình bạn có dành thời gian để trò chuyện cùng nhau không?',
       options: [
-        { id: 21, text: 'Không bao giờ', selected: false, value: 0 },
-        { id: 22, text: 'Hiếm khi', selected: false, value: 1 },
-        { id: 23, text: 'Thỉnh thoảng', selected: false, value: 2 },
-        { id: 24, text: 'Thường xuyên', selected: false, value: 3 },
-        { id: 25, text: 'Rất thường xuyên', selected: true, value: 4 }
+        {id: 21, text: 'Không bao giờ', selected: false, value: 0},
+        {id: 22, text: 'Hiếm khi', selected: false, value: 1},
+        {id: 23, text: 'Thỉnh thoảng', selected: false, value: 2},
+        {id: 24, text: 'Thường xuyên', selected: false, value: 3},
+        {id: 25, text: 'Rất thường xuyên', selected: true, value: 4}
       ]
     }
   ];
@@ -1070,7 +923,7 @@ export class ForceTestData {
    * Self Discovery Survey Data
    */
 
-  // Discovery level constants
+    // Discovery level constants
   static DiscoveryLevels = {
     EXCELLENT: 'excellent',
     GOOD: 'good',
@@ -1224,55 +1077,55 @@ export class ForceTestData {
       id: 1,
       text: 'Bạn có thường xuyên suy ngẫm về các giá trị và niềm tin cốt lõi của bản thân không?',
       options: [
-        { id: 1, text: 'Không bao giờ', selected: false, value: 0 },
-        { id: 2, text: 'Hiếm khi', selected: false, value: 1 },
-        { id: 3, text: 'Thỉnh thoảng', selected: false, value: 2 },
-        { id: 4, text: 'Thường xuyên', selected: true, value: 3 },
-        { id: 5, text: 'Rất thường xuyên', selected: false, value: 4 }
+        {id: 1, text: 'Không bao giờ', selected: false, value: 0},
+        {id: 2, text: 'Hiếm khi', selected: false, value: 1},
+        {id: 3, text: 'Thỉnh thoảng', selected: false, value: 2},
+        {id: 4, text: 'Thường xuyên', selected: true, value: 3},
+        {id: 5, text: 'Rất thường xuyên', selected: false, value: 4}
       ]
     },
     {
       id: 2,
       text: 'Bạn có hiểu rõ về điểm mạnh và điểm yếu của bản thân không?',
       options: [
-        { id: 6, text: 'Không hiểu gì cả', selected: false, value: 0 },
-        { id: 7, text: 'Hiểu rất ít', selected: false, value: 1 },
-        { id: 8, text: 'Hiểu một phần', selected: true, value: 2 },
-        { id: 9, text: 'Hiểu khá rõ', selected: false, value: 3 },
-        { id: 10, text: 'Hiểu rất rõ', selected: false, value: 4 }
+        {id: 6, text: 'Không hiểu gì cả', selected: false, value: 0},
+        {id: 7, text: 'Hiểu rất ít', selected: false, value: 1},
+        {id: 8, text: 'Hiểu một phần', selected: true, value: 2},
+        {id: 9, text: 'Hiểu khá rõ', selected: false, value: 3},
+        {id: 10, text: 'Hiểu rất rõ', selected: false, value: 4}
       ]
     },
     {
       id: 3,
       text: 'Bạn có thể nhận biết và kiểm soát cảm xúc của mình tốt đến mức nào?',
       options: [
-        { id: 11, text: 'Rất kém', selected: false, value: 0 },
-        { id: 12, text: 'Kém', selected: false, value: 1 },
-        { id: 13, text: 'Trung bình', selected: false, value: 2 },
-        { id: 14, text: 'Tốt', selected: true, value: 3 },
-        { id: 15, text: 'Rất tốt', selected: false, value: 4 }
+        {id: 11, text: 'Rất kém', selected: false, value: 0},
+        {id: 12, text: 'Kém', selected: false, value: 1},
+        {id: 13, text: 'Trung bình', selected: false, value: 2},
+        {id: 14, text: 'Tốt', selected: true, value: 3},
+        {id: 15, text: 'Rất tốt', selected: false, value: 4}
       ]
     },
     {
       id: 4,
       text: 'Bạn có mục tiêu rõ ràng cho tương lai của mình không?',
       options: [
-        { id: 16, text: 'Không có mục tiêu nào', selected: false, value: 0 },
-        { id: 17, text: 'Có vài ý tưởng mơ hồ', selected: false, value: 1 },
-        { id: 18, text: 'Có một số mục tiêu cơ bản', selected: true, value: 2 },
-        { id: 19, text: 'Có mục tiêu khá rõ ràng', selected: false, value: 3 },
-        { id: 20, text: 'Có mục tiêu rất rõ ràng và chi tiết', selected: false, value: 4 }
+        {id: 16, text: 'Không có mục tiêu nào', selected: false, value: 0},
+        {id: 17, text: 'Có vài ý tưởng mơ hồ', selected: false, value: 1},
+        {id: 18, text: 'Có một số mục tiêu cơ bản', selected: true, value: 2},
+        {id: 19, text: 'Có mục tiêu khá rõ ràng', selected: false, value: 3},
+        {id: 20, text: 'Có mục tiêu rất rõ ràng và chi tiết', selected: false, value: 4}
       ]
     },
     {
       id: 5,
       text: 'Bạn có thường xuyên tìm hiểu về những sở thích và đam mê mới không?',
       options: [
-        { id: 21, text: 'Không bao giờ', selected: false, value: 0 },
-        { id: 22, text: 'Hiếm khi', selected: false, value: 1 },
-        { id: 23, text: 'Thỉnh thoảng', selected: false, value: 2 },
-        { id: 24, text: 'Thường xuyên', selected: false, value: 3 },
-        { id: 25, text: 'Rất thường xuyên', selected: true, value: 4 }
+        {id: 21, text: 'Không bao giờ', selected: false, value: 0},
+        {id: 22, text: 'Hiếm khi', selected: false, value: 1},
+        {id: 23, text: 'Thỉnh thoảng', selected: false, value: 2},
+        {id: 24, text: 'Thường xuyên', selected: false, value: 3},
+        {id: 25, text: 'Rất thường xuyên', selected: true, value: 4}
       ]
     }
   ];

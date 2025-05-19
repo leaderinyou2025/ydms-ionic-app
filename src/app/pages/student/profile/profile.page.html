@@ -17,6 +17,11 @@
 
     <!--  Bộ sưu tập huy chương, trang gia đình, nhóm lớp  -->
     <ion-list class="mb-2">
+      <ion-item detail="false" routerLink="/{{PageRoutes.NOTIFICATIONS}}">
+        <ion-icon name="mail-unread" slot="start" color="primary" class="text-xl"></ion-icon>
+        <ion-label class="py-2 text-gray-500">{{ TranslateKeys.NOTIFICATIONS_TITLE | translate }}</ion-label>
+        <ion-icon name="chevron-forward" slot="end" class="text-base"></ion-icon>
+      </ion-item>
       <ion-item detail="false" routerLink="/{{PageRoutes.BADGE_COLLECTION}}">
         <ion-icon name="ribbon" slot="start" color="primary" class="text-xl"></ion-icon>
         <ion-label class="py-2 text-gray-500">{{ TranslateKeys.TITLE_BADGE_COLLECTION | translate }}</ion-label>
