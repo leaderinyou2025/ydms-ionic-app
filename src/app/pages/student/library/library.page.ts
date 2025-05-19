@@ -45,8 +45,8 @@ export class LibraryPage implements OnInit {
     // Initialize searchbar configuration
     this.searchbarConfig = {
       placeholder: 'Tìm kiếm video, tài liệu...',
-      type: InputTypes.TEXT,
-      inputmode: InputTypes.TEXT,
+      type: InputTypes.SEARCH,
+      inputmode: InputTypes.SEARCH,
       animated: true,
       showClearButton: true,
       debounce: 300
@@ -105,7 +105,7 @@ export class LibraryPage implements OnInit {
    */
   onResourceSelected(resource: IResource) {
     if (resource && resource.id) {
-      this.router.navigate(['/library/detail', resource.id]);
+      this.router.navigateByUrl(`${PageRoutes.LIBRARY}/${resource.id}`);
     }
   }
 }

@@ -1,8 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
-import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
 
 import { IResource } from '../../interfaces/resource/resource.interface';
 import { ResourceType } from '../../enums/libary/resource-type.enum';
@@ -12,12 +9,7 @@ import { TranslateKeys } from '../../enums/translate-keys';
   selector: 'app-resource-viewer',
   templateUrl: './resource-viewer.component.html',
   styleUrls: ['./resource-viewer.component.scss'],
-  standalone: true,
-  imports: [
-    IonicModule,
-    CommonModule,
-    TranslateModule
-  ]
+  standalone: false,
 })
 export class ResourceViewerComponent implements OnInit, OnChanges {
   @Input() resource?: IResource;
@@ -31,7 +23,8 @@ export class ResourceViewerComponent implements OnInit, OnChanges {
 
   constructor(
     private sanitizer: DomSanitizer
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.processResource();
@@ -69,7 +62,7 @@ export class ResourceViewerComponent implements OnInit, OnChanges {
    */
   isPdfDocument(): boolean {
     return this.resource?.type === ResourceType.DOCUMENT &&
-           (this.resource?.fileType === 'pdf' || this.resource?.resourceUrl?.endsWith('.pdf'));
+      (this.resource?.fileType === 'pdf' || this.resource?.resourceUrl?.endsWith('.pdf'));
   }
 
   /**

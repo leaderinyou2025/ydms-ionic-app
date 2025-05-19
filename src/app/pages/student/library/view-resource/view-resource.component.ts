@@ -1,19 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { IHeaderAnimation, IHeaderAnimeImage, IHeaderSearchbar } from '../../../../shared/interfaces/header/header';
+import { ActivatedRoute } from '@angular/router';
+
 import { IResource } from '../../../../shared/interfaces/resource/resource.interface';
+import { IHeaderAnimation, IHeaderAnimeImage, IHeaderSearchbar } from '../../../../shared/interfaces/header/header';
 import { ResourceService } from '../../../../services/resource/resource.service';
-import { TranslateKeys } from '../../../../shared/enums/translate-keys';
 import { InputTypes } from '../../../../shared/enums/input-types';
+import { TranslateKeys } from '../../../../shared/enums/translate-keys';
+import { PageRoutes } from '../../../../shared/enums/page-routes';
+
 
 @Component({
-  selector: 'app-resource-detail',
-  templateUrl: './resource-detail.page.html',
-  styleUrls: ['./resource-detail.page.scss'],
-  standalone: false
-
+  selector: 'app-view-resource',
+  templateUrl: './view-resource.component.html',
+  styleUrls: ['./view-resource.component.scss'],
+  standalone: false,
 })
-export class ResourceDetailPage implements OnInit {
+export class ViewResourceComponent implements OnInit {
+
   resource?: IResource;
   isLoading: boolean = true;
 
@@ -24,12 +27,13 @@ export class ResourceDetailPage implements OnInit {
   animeImage!: IHeaderAnimeImage;
 
   protected readonly TranslateKeys = TranslateKeys;
+  protected readonly PageRoutes = PageRoutes;
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private resourceService: ResourceService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.initHeader();
@@ -42,7 +46,7 @@ export class ResourceDetailPage implements OnInit {
   private initHeader(): void {
     // Initialize searchbar configuration
     this.searchbarConfig = {
-      placeholder:"Tìm kiếm video, tài liệu...",
+      placeholder: 'Tìm kiếm video, tài liệu...',
       type: InputTypes.TEXT,
       inputmode: InputTypes.TEXT,
       animated: true,
@@ -94,12 +98,5 @@ export class ResourceDetailPage implements OnInit {
         }
       });
     }
-  }
-
-  /**
-   * Navigate back to the resource list
-   */
-  onBackToList(): void {
-    this.router.navigate(['/library']);
   }
 }

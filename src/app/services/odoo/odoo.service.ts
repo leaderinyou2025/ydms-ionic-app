@@ -39,7 +39,7 @@ export class OdooService {
     private translate: TranslateService,
     private localStorageService: LocalStorageService,
   ) {
-    this.lang = this.localStorageService.get<string>(StorageKey.LANGUAGE) === LanguageKeys.VN ? 'vi_VN' : 'en-US';
+    // this.lang = this.localStorageService.get<string>(StorageKey.LANGUAGE) === LanguageKeys.VN ? 'vi_VN' : 'en-US';
   }
 
   /**

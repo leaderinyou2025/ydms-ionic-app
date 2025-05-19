@@ -14,13 +14,7 @@ import { TranslateKeys } from '../../enums/translate-keys';
   selector: 'app-resource-list',
   templateUrl: './resource-list.component.html',
   styleUrls: ['./resource-list.component.scss'],
-  standalone: true,
-  imports: [
-    IonicModule,
-    CommonModule,
-    FormsModule,
-    TranslateModule
-  ]
+  standalone: false,
 })
 export class ResourceListComponent implements OnInit, OnChanges {
   @Input() searchTerm: string = '';

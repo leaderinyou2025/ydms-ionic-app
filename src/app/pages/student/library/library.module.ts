@@ -6,11 +6,14 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { LibraryPage } from './library.page';
 import { SharedModule } from '../../../shared/shared.module';
-import { ResourceListComponent } from '../../../shared/components/resource-list/resource-list.component';
 import { LibraryPageRoutingModule } from './library-routing.module';
+import { ViewResourceComponent } from './view-resource/view-resource.component';
 
 @NgModule({
-  declarations: [LibraryPage],
+  declarations: [
+    LibraryPage,
+    ViewResourceComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -18,7 +21,7 @@ import { LibraryPageRoutingModule } from './library-routing.module';
     TranslateModule,
     LibraryPageRoutingModule,
     SharedModule,
-    ResourceListComponent,
   ]
 })
-export class LibraryPageModule {}
+export class LibraryPageModule {
+}

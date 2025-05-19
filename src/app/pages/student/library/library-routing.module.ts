@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { LibraryPage } from './library.page';
+import { ViewResourceComponent } from './view-resource/view-resource.component';
 
 const routes: Routes = [
   {
@@ -9,8 +10,8 @@ const routes: Routes = [
     component: LibraryPage
   },
   {
-    path: 'detail/:id',
-    loadChildren: () => import('./resource-detail/resource-detail.module').then(m => m.ResourceDetailPageModule)
+    path: ':id',
+    component: ViewResourceComponent,
   }
 ];
 
@@ -18,4 +19,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class LibraryPageRoutingModule {}
+export class LibraryPageRoutingModule {
+}

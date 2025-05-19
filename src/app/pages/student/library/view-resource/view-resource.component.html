@@ -1,0 +1,10 @@
+<app-header
+  [pageTitle]="TranslateKeys.RESOURCE_LIBRARY"
+  [backgroundColor]="'#9c27b0'"
+  defaultBackHref="/{{PageRoutes.LIBRARY}}"></app-header>
+
+<ion-content class="bg-white">
+  <div class="h-full">
+    <app-resource-viewer [resource]="resource"></app-resource-viewer>
+  </div>
+</ion-content>
