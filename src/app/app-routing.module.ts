@@ -20,7 +20,7 @@ const routes: Routes = [
   },
   {
     path: 'profile',
-    loadChildren: () => import('./pages/student/profile/profile.module').then(m => m.ProfilePageModule),
+    loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfilePageModule),
     canActivate: [AuthGuard],
   },
   {
@@ -40,7 +40,7 @@ const routes: Routes = [
   },
   {
     path: 'badge-collection',
-    loadChildren: () => import('./pages/student/badge-collection/badge-collection.module').then( m => m.BadgeCollectionPageModule)
+    loadChildren: () => import('./pages/student/badge-collection/badge-collection.module').then(m => m.BadgeCollectionPageModule)
   },
   {
     path: 'family-group',
@@ -60,7 +60,7 @@ const routes: Routes = [
   },
   {
     path: 'friends',
-    loadChildren: () => import('./pages/student/friends/friends.module').then( m => m.FriendsPageModule)
+    loadChildren: () => import('./pages/student/friends/friends.module').then(m => m.FriendsPageModule)
   },
   {
     path: 'chatbot',
@@ -72,17 +72,24 @@ const routes: Routes = [
   },
   {
     path: 'notifications',
-    loadChildren: () => import('./pages/notifications/notifications.module').then( m => m.NotificationsPageModule),
+    loadChildren: () => import('./pages/notifications/notifications.module').then(m => m.NotificationsPageModule),
     canActivate: [AuthGuard],
   },
   {
     path: 'friends',
-    loadChildren: () => import('./pages/student/friends/friends.module').then( m => m.FriendsPageModule)
+    loadChildren: () => import('./pages/student/friends/friends.module').then(m => m.FriendsPageModule)
   },
   {
     path: 'library',
-    loadChildren: () => import('./pages/student/library/library.module').then( m => m.LibraryPageModule)
-  }
+    loadChildren: () => import('./pages/student/library/library.module').then(m => m.LibraryPageModule)
+  },
+  {
+    path: 'family-actions',
+    loadChildren: () => import('./pages/parent/family-actions/family-actions.module').then(m => m.FamilyActionsPageModule)
+  },  {
+    path: 'expert-guide',
+    loadChildren: () => import('./pages/teacher/expert-guide/expert-guide.module').then( m => m.ExpertGuidePageModule)
+  },
 
 ];
 

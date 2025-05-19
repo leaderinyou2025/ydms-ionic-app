@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { FamilyGroupPageRoutingModule } from './family-group-routing.module';
+import { FamilyActionsPageRoutingModule } from './family-actions-routing.module';
 
-import { FamilyGroupPage } from './family-group.page';
+import { FamilyActionsPage } from './family-actions.page';
 import { SharedModule } from '../../../shared/shared.module';
 
 @NgModule({
@@ -14,9 +14,9 @@ import { SharedModule } from '../../../shared/shared.module';
         CommonModule,
         FormsModule,
         IonicModule,
-        FamilyGroupPageRoutingModule,
+        FamilyActionsPageRoutingModule,
         SharedModule
     ],
-  declarations: [FamilyGroupPage]
+  declarations: [FamilyActionsPage]
 })
-export class FamilyGroupPageModule {}
+export class FamilyActionsPageModule {}
