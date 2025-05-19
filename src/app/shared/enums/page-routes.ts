@@ -23,9 +23,11 @@ export enum PageRoutes {
   RANK = 'rank',
   NOTIFICATIONS = 'notifications',
   LIBRARY = 'library',
-  PARENT_DASHBOARD = 'parent-database',
+  PARENT_DASHBOARD = 'parent-dashboard',
   TEACHER_DASHBOARD = 'teacher-dashboard',
   FAMILY_CONFLICT_SURVEY = 'family-conflict-survey',
   FAMILY_COMMUNICATION_QUALITY_SURVEY = 'family-communication-quality-survey',
   SELF_DISCOVERY_SURVEY = 'self-discovery-survey',
+  FAMILY_ACTIONS = 'family-actions',
+  EXPERT_GUIDE = 'expert-guide',
 }

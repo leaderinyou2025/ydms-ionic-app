@@ -132,10 +132,13 @@ export class LoginPage implements OnInit, OnDestroy {
           // Sync user firebase device token to server
           this.pushNotificationService.updateUserFirebaseToken();
 
-          // TODO: Check user role and redirect to home page
-          console.error('Navigation to home');
-          this.navCtrl.navigateRoot(`/${PageRoutes.HOME}`, {replaceUrl: true}).finally(() => loading?.dismiss());
-          return;
+          // Check user role and redirect to home page
+          this.authService.getAuthData().then(authData => {
+            this.navCtrl.navigateRoot(
+              `/${authData?.is_teacher ? PageRoutes.TEACHER_DASHBOARD : (authData?.is_parent ? PageRoutes.PARENT_DASHBOARD : PageRoutes.HOME)}`,
+              {replaceUrl: true}).finally(() => loading?.dismiss()
+            );
+          });
         }
       }
 
@@ -235,8 +238,13 @@ export class LoginPage implements OnInit, OnDestroy {
       // Sync user firebase device token to server
       await this.pushNotificationService.updateUserFirebaseToken();
 
-      // TODO: Login success check role to redirect home page
-      await this.navCtrl.navigateRoot(`/${PageRoutes.HOME}`, {replaceUrl: true});
+      // Login success check role to redirect home page
+      this.authService.getAuthData().then(authData => {
+        this.navCtrl.navigateRoot(
+          `/${authData?.is_teacher ? PageRoutes.TEACHER_DASHBOARD : (authData?.is_parent ? PageRoutes.PARENT_DASHBOARD : PageRoutes.HOME)}`,
+          {replaceUrl: true}).finally(() => loading?.dismiss()
+        );
+      });
     } catch (e: any) {
       console.error(e?.message);
       this.loadingController.getTop().then(loading => loading?.dismiss());

@@ -185,6 +185,8 @@ export enum TranslateKeys {
   TITLE_FAILED_SOUND = 'TITLE.failed_sound',
   TITLE_MUSIC = 'TITLE.music',
   TITLE_NOTIFICATION = 'TITLE.notification',
+  EXPERT_GUIDE = 'TITLE.expert_guide',
+  TITLE_SHARE = 'TITLE.share',
   TITLE_ON = 'TITLE.on',
   TITLE_OFF = 'TITLE.off',
   TITLE_SHOW = 'TITLE.show',
@@ -217,6 +219,7 @@ export enum TranslateKeys {
   TITLE_TYPE_MESSAGE = 'TITLE.type_message',
   TITLE_POINTS = 'TITLE.points',
   TITLE_LOADING_MORE = 'TITLE.loading_more',
+  TITLE_ACTIONS = 'TITLE.actions',
 
   // VALIDATE
   VALIDATE_PHONE_REQUIRED = 'VALIDATE.phone_required',

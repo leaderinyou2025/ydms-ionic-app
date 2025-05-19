@@ -1,26 +1,79 @@
 <ion-footer *ngIf="!isKeyboardShowing">
   <ion-toolbar class="flex items-center h-auto bg-white border-t border-gray-200">
     <div class="flex justify-between items-center h-full py-2 ion-padding-start ion-padding-end">
-      <a [routerLink]="'/' + PageRoutes.HOME" routerLinkActive="active" class="flex flex-col items-center justify-center text-gray-500">
-        <ion-img src="/assets/icons/footer/ico_home.svg" class="w-8 h-8"></ion-img>
-        <span class="pt-1" [class.text-blue-500]="isActive(PageRoutes.HOME)">{{ TranslateKeys.TITLE_HOME | translate }}</span>
-      </a>
-      <a [routerLink]="'/' + PageRoutes.CHATBOT" routerLinkActive="active" class="flex flex-col items-center justify-center text-gray-500">
-        <ion-img src="/assets/icons/footer/ico_chatbot.svg" class="w-8 h-8"></ion-img>
-        <span class="pt-1" [class.text-blue-500]="isActive(PageRoutes.CHATBOT)">{{ TranslateKeys.TITLE_CHATBOT | translate }}</span>
-      </a>
-      <a [routerLink]="'/' + PageRoutes.RANK" routerLinkActive="active" class="flex flex-col items-center justify-center text-gray-500">
-        <ion-img src="/assets/icons/footer/ico_achievement.svg" class="w-8 h-8"></ion-img>
-        <span class="pt-1" [class.text-blue-500]="isActive(PageRoutes.RANK)">{{ TranslateKeys.TITLE_RANK | translate }}</span>
-      </a>
-      <a [routerLink]="'/' + PageRoutes.FRIENDS" routerLinkActive="active" class="flex flex-col items-center justify-center text-gray-500" *ngIf="userRole === UserRoles.STUDENT">
-        <ion-img src="/assets/icons/footer/ico_friends.svg" class="w-8 h-8"></ion-img>
-        <span class="pt-1" [class.text-blue-500]="isActive(PageRoutes.FRIENDS)">{{ TranslateKeys.TITLE_FRIENDS | translate }}</span>
-      </a>
-      <a [routerLink]="'/' + PageRoutes.PROFILE" routerLinkActive="active" class="flex flex-col items-center justify-center text-gray-500">
-        <ion-img src="/assets/icons/footer/ico_more.svg" class="w-8 h-8"></ion-img>
-        <span class="pt-1" [class.text-blue-500]="isActive(PageRoutes.PROFILE)">{{ TranslateKeys.TITLE_MENU | translate }}</span>
-      </a>
+      <!--   Student   -->
+      <ng-container *ngIf="userRole === UserRoles.STUDENT">
+        <a [routerLink]="'/' + PageRoutes.HOME" routerLinkActive="active" class="flex flex-col items-center justify-center text-gray-500">
+          <ion-img src="/assets/icons/footer/ico_home.svg" class="w-8 h-8"></ion-img>
+          <span class="pt-1" [class.text-blue-500]="isActive(PageRoutes.HOME)">{{ TranslateKeys.TITLE_HOME | translate }}</span>
+        </a>
+        <a [routerLink]="'/' + PageRoutes.CHATBOT" routerLinkActive="active" class="flex flex-col items-center justify-center text-gray-500">
+          <ion-img src="/assets/icons/footer/ico_chatbot.svg" class="w-8 h-8"></ion-img>
+          <span class="pt-1" [class.text-blue-500]="isActive(PageRoutes.CHATBOT)">{{ TranslateKeys.TITLE_CHATBOT | translate }}</span>
+        </a>
+        <a [routerLink]="'/' + PageRoutes.RANK" routerLinkActive="active" class="flex flex-col items-center justify-center text-gray-500">
+          <ion-img src="/assets/icons/footer/ico_achievement.svg" class="w-8 h-8"></ion-img>
+          <span class="pt-1" [class.text-blue-500]="isActive(PageRoutes.RANK)">{{ TranslateKeys.TITLE_RANK | translate }}</span>
+        </a>
+        <a [routerLink]="'/' + PageRoutes.FRIENDS" routerLinkActive="active" class="flex flex-col items-center justify-center text-gray-500" *ngIf="userRole === UserRoles.STUDENT">
+          <ion-img src="/assets/icons/footer/ico_friends.svg" class="w-8 h-8"></ion-img>
+          <span class="pt-1" [class.text-blue-500]="isActive(PageRoutes.FRIENDS)">{{ TranslateKeys.TITLE_FRIENDS | translate }}</span>
+        </a>
+        <a [routerLink]="'/' + PageRoutes.PROFILE" routerLinkActive="active" class="flex flex-col items-center justify-center text-gray-500">
+          <ion-img src="/assets/icons/footer/ico_more.svg" class="w-8 h-8"></ion-img>
+          <span class="pt-1" [class.text-blue-500]="isActive(PageRoutes.PROFILE)">{{ TranslateKeys.TITLE_MENU | translate }}</span>
+        </a>
+      </ng-container>
+
+      <!--   Parent   -->
+      <ng-container *ngIf="userRole === UserRoles.PARENT">
+        <a [routerLink]="'/' + PageRoutes.PARENT_DASHBOARD" routerLinkActive="active" class="flex flex-col items-center justify-center text-gray-500">
+          <ion-img src="/assets/icons/footer/ico_home.svg" class="w-8 h-8"></ion-img>
+          <span class="pt-1" [class.text-blue-500]="isActive(PageRoutes.PARENT_DASHBOARD)">{{ TranslateKeys.TITLE_HOME | translate }}</span>
+        </a>
+        <a [routerLink]="'/' + PageRoutes.FAMILY_ACTIONS" routerLinkActive="active" class="flex flex-col items-center justify-center text-gray-500">
+          <ion-img src="/assets/icons/footer/icon_home_idea.svg" class="w-8 h-8"></ion-img>
+          <span class="pt-1" [class.text-blue-500]="isActive(PageRoutes.FAMILY_ACTIONS)">{{ TranslateKeys.TITLE_ACTIONS | translate }}</span>
+        </a>
+        <a [routerLink]="'/' + PageRoutes.NOTIFICATIONS" routerLinkActive="active" class="flex flex-col items-center justify-center text-gray-500">
+          <ion-img src="/assets/icons/footer/ico_notificationsl.svg" class="w-8 h-8"></ion-img>
+          <span class="pt-1" [class.text-blue-500]="isActive(PageRoutes.NOTIFICATIONS)">{{ TranslateKeys.TITLE_NOTIFICATION | translate }}</span>
+        </a>
+        <a [routerLink]="'/' + PageRoutes.FAMILY_GROUP" routerLinkActive="active" class="flex flex-col items-center justify-center text-gray-500">
+          <ion-img src="/assets/icons/footer/ico_share_round.svg" class="w-8 h-8"></ion-img>
+          <span class="pt-1" [class.text-blue-500]="isActive(PageRoutes.FAMILY_GROUP)">{{ TranslateKeys.TITLE_SHARE | translate }}</span>
+        </a>
+        <a [routerLink]="'/' + PageRoutes.PROFILE" routerLinkActive="active" class="flex flex-col items-center justify-center text-gray-500">
+          <ion-img src="/assets/icons/footer/ico_more.svg" class="w-8 h-8"></ion-img>
+          <span class="pt-1" [class.text-blue-500]="isActive(PageRoutes.PROFILE)">{{ TranslateKeys.TITLE_MENU | translate }}</span>
+        </a>
+      </ng-container>
+
+      <!--   Teacher   -->
+      <ng-container *ngIf="userRole === UserRoles.TEACHER">
+        <a [routerLink]="'/' + PageRoutes.TEACHER_DASHBOARD" routerLinkActive="active" class="flex flex-col items-center justify-center text-gray-500">
+          <ion-img src="/assets/icons/footer/ico_home.svg" class="w-8 h-8"></ion-img>
+          <span class="pt-1" [class.text-blue-500]="isActive(PageRoutes.TEACHER_DASHBOARD)">{{ TranslateKeys.TITLE_HOME | translate }}</span>
+        </a>
+        <a [routerLink]="'/' + PageRoutes.CLASS_GROUP" routerLinkActive="active" class="flex flex-col items-center justify-center text-gray-500">
+          <ion-img src="/assets/icons/footer/icon_classroom_activity.svg" class="w-8 h-8"></ion-img>
+          <span class="pt-1" [class.text-blue-500]="isActive(PageRoutes.CLASS_GROUP)">{{ TranslateKeys.TITLE_ACTIONS | translate }}</span>
+        </a>
+        <a [routerLink]="'/' + PageRoutes.NOTIFICATIONS" routerLinkActive="active" class="flex flex-col items-center justify-center text-gray-500">
+          <ion-img src="/assets/icons/footer/ico_notificationsl.svg" class="w-8 h-8"></ion-img>
+          <span class="pt-1" [class.text-blue-500]="isActive(PageRoutes.NOTIFICATIONS)">{{ TranslateKeys.TITLE_NOTIFICATION | translate }}</span>
+        </a>
+        <a [routerLink]="'/' + PageRoutes.EXPERT_GUIDE" routerLinkActive="active" class="flex flex-col items-center justify-center text-gray-500">
+          <ion-img src="/assets/icons/footer/ico_review.svg" class="w-8 h-8"></ion-img>
+          <span class="pt-1" [class.text-blue-500]="isActive(PageRoutes.EXPERT_GUIDE)">{{ TranslateKeys.EXPERT_GUIDE | translate }}</span>
+        </a>
+        <a [routerLink]="'/' + PageRoutes.PROFILE" routerLinkActive="active" class="flex flex-col items-center justify-center text-gray-500">
+          <ion-img src="/assets/icons/footer/ico_more.svg" class="w-8 h-8"></ion-img>
+          <span class="pt-1" [class.text-blue-500]="isActive(PageRoutes.PROFILE)">{{ TranslateKeys.TITLE_MENU | translate }}</span>
+        </a>
+      </ng-container>
+
+
     </div>
   </ion-toolbar>
 </ion-footer>
