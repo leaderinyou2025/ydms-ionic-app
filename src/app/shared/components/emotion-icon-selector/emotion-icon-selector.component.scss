@@ -1,0 +1,42 @@
+/* Swiper custom styles */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #22aff7;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #22aff7;
+}
+
+/* Custom height for swiper container */
+.h-70 {
+  height: 280px;
+}
+
+/* Custom width and height for emotion icon wrapper */
+.w-30 {
+  width: 120px;
+}
+
+.h-30 {
+  height: 120px;
+}
+
+/* Ion button styles */
+ion-button {
+  --background: #22aff7;
+  --background-activated: #1d96d4;
+  --background-focused: #1d96d4;
+  --background-hover: #1d96d4;
+  --border-radius: 8px;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --padding-top: 16px;
+  --padding-bottom: 16px;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.font-comic-sans {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+}
