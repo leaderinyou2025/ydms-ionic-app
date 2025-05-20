@@ -415,5 +415,14 @@
   },
   "CAPTION": {
     "chatbot": "How are you feeling today? Feel free to share with me!"
+  },
+  "AREA_OF_EXPERTISE": {
+    "emotion": "Emotion",
+    "conflict": "Reducing Family Conflicts",
+    "communication": "Improving Communication",
+    "discovery": "Self Discovery"
+  },
+  "ACHIEVEMENT": {
+    "badge_no_achievements_yet": "Chưa có huy hiệu nào trong danh mục này"
   }
 }

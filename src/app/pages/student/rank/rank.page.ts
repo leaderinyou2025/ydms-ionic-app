@@ -3,10 +3,9 @@ import { SegmentValue } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 
 import { TranslateKeys } from '../../../shared/enums/translate-keys';
-import { IRankItem } from '../../../shared/interfaces/rank/rank.interfaces';
-import { IAchievementCategory } from '../../../shared/interfaces/rank/achievement.interfaces';
 import { RankService } from '../../../services/rank/rank.service';
 import { IHeaderAnimation, IHeaderAnimeImage, IHeaderSegment } from '../../../shared/interfaces/header/header';
+import { IAchievement, IBadge, ILeadership } from '../../../shared/interfaces/rank/rank.interfaces';
 
 @Component({
   selector: 'app-rank',
@@ -17,9 +16,9 @@ import { IHeaderAnimation, IHeaderAnimeImage, IHeaderSegment } from '../../../sh
 export class RankPage implements OnInit, AfterViewInit, OnDestroy {
 
   isLoading: boolean = false;
-  rankList: IRankItem[] = [];
-  userRank: IRankItem | undefined;
-  achievements: IAchievementCategory[] = [];
+  rankList: ILeadership[] = [];
+  userRank: ILeadership | undefined;
+  achievements: IBadge[] = [];
 
   activeTab!: 'rank' | 'achievements';
   segment!: IHeaderSegment;
@@ -46,6 +45,11 @@ export class RankPage implements OnInit, AfterViewInit, OnDestroy {
     this.loadAchievements();
   }
 
+  ionViewWillEnter() {
+    this.loadRankData();
+    this.loadAchievements();
+  }
+
   async loadRankData() {
     this.isLoading = true;
     try {
@@ -53,15 +57,10 @@ export class RankPage implements OnInit, AfterViewInit, OnDestroy {
       const rankList = await this.rankService.fetchRankList();
 
       // Get current user rank
-      const currentUserRank = await this.rankService.fetchCurrentUserRank();
+      const currentUserRank = await this.rankService.fetchCurrentUserRank()
 
       // Process data
-      this.rankList = rankList.map((item, index) => ({
-        ...item,
-        position: index + 1,
-        isCurrentUser: item.userId === currentUserRank?.userId
-      }));
-
+      this.rankList = rankList;
       this.userRank = currentUserRank;
     } catch (error) {
       console.error('Error loading rank data:', error);
@@ -145,7 +144,7 @@ export class RankPage implements OnInit, AfterViewInit, OnDestroy {
    * Check if fixed user rank should be displayed at the bottom
    */
   shouldShowFixedUserRank(): boolean {
-    const currentUser = this.getCurrentUserRank();
+    const currentUser = this.userRank;
     if (!currentUser) return false;
 
     // If user is already visible in the list, hide fixed current user
@@ -154,22 +153,7 @@ export class RankPage implements OnInit, AfterViewInit, OnDestroy {
     }
 
     // Show if position is in the list but not currently visible
-    return currentUser.position >= 4; // Only show for users not in top 3
-  }
-
-  /**
-   * Get current user rank information
-   */
-  getCurrentUserRank(): IRankItem | undefined {
-    // Find current user in the list
-    const currentUser = this.rankList.find(item => item.isCurrentUser);
-
-    // If not found, return userRank (if available)
-    if (!currentUser && this.userRank) {
-      return this.userRank;
-    }
-
-    return currentUser;
+    return currentUser.ranking >= 4; // Only show for users not in top 3
   }
 
   /**
