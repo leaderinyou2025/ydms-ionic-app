@@ -171,6 +171,16 @@ export enum TranslateKeys {
   TITLE_EMOTIONAL_SURVEY_HISTORY = 'TITLE.emotional_survey_history',
   TITLE_EMOTIONAL_SURVEY_DETAIL = 'TITLE.emotional_survey_detail',
 
+  // FAMILY DIALOGUE SESSION
+  TITLE_FAMILY_DIALOGUE_SESSION = 'TITLE.family_dialogue_session',
+  TITLE_FAMILY_DIALOGUE_SESSION_HISTORY = 'TITLE.family_dialogue_session_history',
+  TITLE_FAMILY_DIALOGUE_SESSION_DETAIL = 'TITLE.family_dialogue_session_detail',
+  TITLE_FAMILY_DIALOGUE_QUESTIONS = 'TITLE.family_dialogue_questions',
+  TITLE_SUGGESTED_QUESTIONS = 'TITLE.suggested_questions',
+  TITLE_PARENT_QUESTIONS = 'TITLE.parent_questions',
+  TITLE_NO_FAMILY_DIALOGUE_SESSION_HISTORY = 'TITLE.no_family_dialogue_session_history',
+  TITLE_ANSWER_QUESTIONS = 'TITLE.answer_questions',
+
   // TITLE
   TITLE_PHONE = 'TITLE.phone',
   TITLE_ACCOUNT = 'TITLE.account',
