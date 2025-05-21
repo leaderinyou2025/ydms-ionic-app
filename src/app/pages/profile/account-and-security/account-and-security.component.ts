@@ -11,6 +11,7 @@ import { PageRoutes } from '../../../shared/enums/page-routes';
 import { Theme } from '../../../shared/enums/theme';
 import { IAuthData } from '../../../shared/interfaces/auth/auth-data';
 import { NativePlatform } from '../../../shared/enums/native-platform';
+import { CommonConstants } from '../../../shared/classes/common-constants';
 
 @Component({
   selector: 'app-account-and-security',
@@ -41,6 +42,24 @@ export class AccountAndSecurityComponent implements OnInit {
   ngOnInit() {
     this.authService.getAuthData().then(authData => this.authData = authData);
     this.loadAppLockStatus();
+  }
+
+  /**
+   * Get user avatar image
+   */
+  public getUserAvatarImage(): string | undefined {
+    if (!this.authData) return;
+    if (this.authData.is_teenager) {
+      if (!this.authData.avatar_128) return '/assets/images/avatar/conan_no_set.png';
+      const prefix = CommonConstants.detectMimeType(this.authData.avatar_128);
+      if (!prefix) return '/assets/images/avatar/conan_no_set.png';
+      return prefix + this.authData.avatar_128;
+    } else {
+      if (!this.authData.image_128) return '/assets/icons/svg/avatar.svg';
+      const prefix = CommonConstants.detectMimeType(this.authData.image_128);
+      if (!prefix) return '/assets/icons/svg/avatar.svg';
+      return prefix + this.authData.image_128;
+    }
   }
 
   /**

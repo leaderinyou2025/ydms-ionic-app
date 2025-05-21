@@ -12,7 +12,7 @@ import { OrderBy } from '../../shared/enums/order-by';
 })
 export class LiyYdmsAvatarService {
 
-  private liyYdmsAvatarFields = ['name', 'tags', 'image_256'];
+  private liyYdmsAvatarFields = ['name', 'tags', 'image_512'];
 
   constructor(
     private odooService: OdooService,
@@ -33,11 +33,20 @@ export class LiyYdmsAvatarService {
       avatarAssets.push({
         id: avatar.id,
         name: avatar.name,
-        resource_url: `${CommonConstants.detectMimeType(avatar.image_256)}${avatar.image_256}`,
-        resource_string: avatar.image_256
+        resource_url: `${CommonConstants.detectMimeType(avatar.image_512)}${avatar.image_512}`,
+        resource_string: avatar.image_512
       });
     }
 
     return avatarAssets;
+  }
+
+  /**
+   * Get avatar image by id
+   * @param id
+   */
+  public async getImageById(id: number): Promise<ILiyYdmsAvatar | undefined> {
+    const avatars = await this.odooService.read<ILiyYdmsAvatar>(ModelName.AVATAR, [id], this.liyYdmsAvatarFields);
+    return avatars?.[0];
   }
 }

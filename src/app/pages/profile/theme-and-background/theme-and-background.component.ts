@@ -5,7 +5,6 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { ThemeService } from '../../../services/theme/theme.service';
 import { AuthService } from '../../../services/auth/auth.service';
-import { ForceTestData } from '../../../shared/classes/force-test-data';
 import { TextZoomService } from '../../../services/text-zoom/text-zoom.service';
 import { PageRoutes } from '../../../shared/enums/page-routes';
 import { TranslateKeys } from '../../../shared/enums/translate-keys';
@@ -16,6 +15,7 @@ import { TextZoomSize } from '../../../shared/enums/text-zoom-size';
 import { WallpaperService } from '../../../services/wallpaper/wallpaper.service';
 import { IAssetsResource } from '../../../shared/interfaces/settings/assets-resource';
 import { IThemeSettings } from '../../../shared/interfaces/settings/theme-settings';
+import { IRelatedField } from '../../../shared/interfaces/base/related-field';
 
 @Component({
   selector: 'app-theme-and-background',
@@ -27,7 +27,9 @@ export class ThemeAndBackgroundComponent implements OnInit {
 
   themeSettings!: IThemeSettings;
   selectedBackground!: IAssetsResource | undefined;
-  selectedAvatar!: IAssetsResource | undefined;
+  selectedAvatar!: IRelatedField | undefined;
+
+  private changeThemeSetting!: boolean;
 
   protected readonly PageRoutes = PageRoutes;
   protected readonly TranslateKeys = TranslateKeys;
@@ -53,6 +55,10 @@ export class ThemeAndBackgroundComponent implements OnInit {
     this.loadCurrentWallpaper();
   }
 
+  ionViewDidLeave() {
+    if (this.changeThemeSetting) this.authService.saveAppSettings();
+  }
+
   /**
    * onClickSwitchTheme
    */
@@ -63,7 +69,8 @@ export class ThemeAndBackgroundComponent implements OnInit {
         cssClass: this.themeSettings.theme_model === Theme.LIGHT ? StyleClass.SELECTED_BUTTON : '',
         handler: () => {
           this.themeSettings.theme_model = Theme.LIGHT;
-          this.themeService.enableLight(false);
+          this.themeService.enableLight();
+          this.changeThemeSetting = true;
         },
       },
       {
@@ -71,7 +78,8 @@ export class ThemeAndBackgroundComponent implements OnInit {
         cssClass: this.themeSettings.theme_model === Theme.DARK ? StyleClass.SELECTED_BUTTON : '',
         handler: () => {
           this.themeSettings.theme_model = Theme.DARK;
-          this.themeService.enableDark(false);
+          this.themeService.enableDark();
+          this.changeThemeSetting = true;
         },
       },
       {
@@ -79,7 +87,8 @@ export class ThemeAndBackgroundComponent implements OnInit {
         cssClass: this.themeSettings.theme_model === Theme.SYSTEM ? StyleClass.SELECTED_BUTTON : '',
         handler: () => {
           this.themeSettings.theme_model = Theme.SYSTEM;
-          this.themeService.useSystemTheme(false);
+          this.themeService.useSystemTheme();
+          this.changeThemeSetting = true;
         },
       },
       {
@@ -100,7 +109,8 @@ export class ThemeAndBackgroundComponent implements OnInit {
         cssClass: this.themeSettings.text_size === TextZoomSize.SMALL ? StyleClass.SELECTED_BUTTON : '',
         handler: () => {
           this.themeSettings.text_size = TextZoomSize.SMALL;
-          this.textZoomService.setZoom(this.themeSettings.text_size, false);
+          this.textZoomService.setZoom(this.themeSettings.text_size);
+          this.changeThemeSetting = true;
         },
       },
       {
@@ -108,7 +118,8 @@ export class ThemeAndBackgroundComponent implements OnInit {
         cssClass: this.themeSettings.text_size === TextZoomSize.MEDIUM ? StyleClass.SELECTED_BUTTON : '',
         handler: () => {
           this.themeSettings.text_size = TextZoomSize.MEDIUM;
-          this.textZoomService.setZoom(this.themeSettings.text_size, false);
+          this.textZoomService.setZoom(this.themeSettings.text_size);
+          this.changeThemeSetting = true;
         },
       },
       {
@@ -116,7 +127,8 @@ export class ThemeAndBackgroundComponent implements OnInit {
         cssClass: this.themeSettings.text_size === TextZoomSize.LARGE ? StyleClass.SELECTED_BUTTON : '',
         handler: () => {
           this.themeSettings.text_size = TextZoomSize.LARGE;
-          this.textZoomService.setZoom(this.themeSettings.text_size, false);
+          this.textZoomService.setZoom(this.themeSettings.text_size);
+          this.changeThemeSetting = true;
         },
       },
       {
@@ -124,7 +136,8 @@ export class ThemeAndBackgroundComponent implements OnInit {
         cssClass: this.themeSettings.text_size === TextZoomSize.BIG_SIZE ? StyleClass.SELECTED_BUTTON : '',
         handler: () => {
           this.themeSettings.text_size = TextZoomSize.BIG_SIZE;
-          this.textZoomService.setZoom(this.themeSettings.text_size, false);
+          this.textZoomService.setZoom(this.themeSettings.text_size);
+          this.changeThemeSetting = true;
         },
       },
       {

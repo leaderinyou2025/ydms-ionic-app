@@ -16,9 +16,15 @@
       <ion-icon *ngIf="themeSettings.theme_model === Theme.DARK" name="moon" slot="start" color="primary" class="text-xl"></ion-icon>
       <ion-label class="py-2">
         {{ TranslateKeys.TITLE_THEME | translate }}<br>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="themeSettings.theme_model === Theme.LIGHT">{{ TranslateKeys.TITLE_THEME_LIGHT | translate }}</span>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="themeSettings.theme_model === Theme.DARK">{{ TranslateKeys.TITLE_THEME_DARK | translate }}</span>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="themeSettings.theme_model === Theme.SYSTEM">{{ TranslateKeys.TITLE_THEME_SYSTEM | translate }}</span>
+        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="themeSettings.theme_model === Theme.LIGHT">
+          {{ TranslateKeys.TITLE_THEME_LIGHT | translate }}
+        </span>
+        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="themeSettings.theme_model === Theme.DARK">
+          {{ TranslateKeys.TITLE_THEME_DARK | translate }}
+        </span>
+        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="themeSettings.theme_model === Theme.SYSTEM">
+          {{ TranslateKeys.TITLE_THEME_SYSTEM | translate }}
+        </span>
       </ion-label>
       <ion-icon name="chevron-forward" slot="end" class="text-base"></ion-icon>
     </ion-item>
@@ -28,10 +34,18 @@
       <ion-icon name="text" slot="start" color="primary" class="text-xl"></ion-icon>
       <ion-label class="py-2">
         {{ TranslateKeys.TITLE_TEXT_SIZE | translate }}<br>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="themeSettings.text_size === TextZoomSize.SMALL">{{ TranslateKeys.TITLE_TEXT_SIZE_SMALL | translate }}</span>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="themeSettings.text_size === TextZoomSize.MEDIUM">{{ TranslateKeys.TITLE_TEXT_SIZE_MEDIUM | translate }}</span>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="themeSettings.text_size === TextZoomSize.LARGE">{{ TranslateKeys.TITLE_TEXT_SIZE_LARGE | translate }}</span>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="themeSettings.text_size === TextZoomSize.BIG_SIZE">{{ TranslateKeys.TITLE_TEXT_SIZE_BIG_SIZE | translate }}</span>
+        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="themeSettings.text_size === TextZoomSize.SMALL">
+          {{ TranslateKeys.TITLE_TEXT_SIZE_SMALL | translate }}
+        </span>
+        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="themeSettings.text_size === TextZoomSize.MEDIUM">
+          {{ TranslateKeys.TITLE_TEXT_SIZE_MEDIUM | translate }}
+        </span>
+        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="themeSettings.text_size === TextZoomSize.LARGE">
+          {{ TranslateKeys.TITLE_TEXT_SIZE_LARGE | translate }}
+        </span>
+        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="themeSettings.text_size === TextZoomSize.BIG_SIZE">
+          {{ TranslateKeys.TITLE_TEXT_SIZE_BIG_SIZE | translate }}
+        </span>
       </ion-label>
       <ion-icon name="chevron-forward" slot="end" class="text-base"></ion-icon>
     </ion-item>

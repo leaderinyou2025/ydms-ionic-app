@@ -3,10 +3,10 @@
     <div class="swiper-slide flex flex-wrap items-center justify-center pb-5" *ngFor="let img of wallpapers">
       <div class="w-[90%] text-center mb-10">
         <ion-button shape="round" size="small"
-                    [fill]="img.id === selectedValue?.id ? 'solid' : 'outline'"
+                    [fill]="img.id === selectedValue ? 'solid' : 'outline'"
                     [color]="IonicColors.PRIMARY" (click)="selectWallpaper(img)">
-          <label *ngIf="img.id === selectedValue?.id">{{ TranslateKeys.BUTTON_CURRENT | translate }}</label>
-          <label *ngIf="img.id !== selectedValue?.id">{{ TranslateKeys.BUTTON_SET_AS_CURRENT | translate }}</label>
+          <label *ngIf="img.id === selectedValue">{{ TranslateKeys.BUTTON_CURRENT | translate }}</label>
+          <label *ngIf="img.id !== selectedValue">{{ TranslateKeys.BUTTON_SET_AS_CURRENT | translate }}</label>
         </ion-button>
       </div>
       <ion-img alt="" class="w-[90%] rounded-xl overflow-hidden"

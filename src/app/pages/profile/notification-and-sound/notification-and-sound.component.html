@@ -10,7 +10,7 @@
 <ion-content class="custom-page-bg-light" [fullscreen]="true" (pointerdown)="soundService.stopBackground()">
   <!-- Thông báo   -->
   <ion-list class="my-2" *ngIf="notificationSettings">
-    <ion-item lines="none" detail="false">
+    <ion-item detail="false">
       <ion-icon name="notifications-off" slot="start" class="text-xl text-gray-600 dark:text-gray-400" *ngIf="!notificationSettings.enabled"></ion-icon>
       <ion-icon name="notifications" slot="start" color="primary" class="text-xl" *ngIf="notificationSettings.enabled"></ion-icon>
       <ion-label class="py-2">
@@ -23,13 +23,24 @@
                   [checked]="notificationSettings.enabled"></ion-toggle>
     </ion-item>
 
+    <ion-item lines="none" detail="false" *ngIf="soundSettings">
+      <ion-icon name="volume-high" slot="start" color="primary" class="text-xl" *ngIf="soundSettings?.enabled"></ion-icon>
+      <ion-icon name="volume-mute" slot="start" color="danger" class="text-xl" *ngIf="!soundSettings?.enabled"></ion-icon>
+      <ion-label class="py-2">
+        {{ TranslateKeys.TITLE_SOUND_EFFECT | translate }}<br>
+        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="soundSettings.enabled">{{ TranslateKeys.TITLE_ON | translate }}</span>
+        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="!soundSettings.enabled">{{ TranslateKeys.TITLE_OFF | translate }}</span>
+      </ion-label>
+      <ion-toggle mode="ios" slot="end" [enableOnOffLabels]="true"
+                  (ionChange)="onSwitchSoundEnable($event)"
+                  [checked]="soundSettings.enabled"></ion-toggle>
+    </ion-item>
   </ion-list>
 
   <!--  Âm thanh nền  -->
-  <ion-list class="my-2" *ngIf="soundSettings">
-    <ion-item detail="false">
-      <ion-icon name="volume-high" slot="start" color="primary" class="text-xl" *ngIf="soundSettings.background?.enabled"></ion-icon>
-      <ion-icon name="volume-mute" slot="start" color="danger" class="text-xl" *ngIf="!soundSettings.background?.enabled"></ion-icon>
+  <ion-list class="my-2" *ngIf="soundSettings && soundSettings?.enabled">
+    <ion-item detail="false" lines="{{soundSettings.background?.enabled ? '' : 'none'}}">
+      <ion-icon name="headset" slot="start" color="primary" class="text-xl"></ion-icon>
       <ion-label class="py-2">
         {{ TranslateKeys.TITLE_BACKGROUND_SOUND | translate }}<br>
         <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="soundSettings.background?.enabled">{{ TranslateKeys.TITLE_ON | translate }}</span>
@@ -48,105 +59,11 @@
         <ion-icon name="volume-high" slot="end" color="primary" class="text-xl"></ion-icon>
       </ion-item>
       <!--   Nhạc chuông   -->
-      <ion-item lines="none" detail="false" (click)="onSwitchBackgroundMusic($event)">
+      <ion-item lines="none" detail="false" (click)="onSwitchBackgroundMusic()">
         <ion-icon name="musical-notes" slot="start" color="primary" class="text-xl"></ion-icon>
-        <ion-label class="py-2 italic text-gray-800 dark:text-gray-50"> Pikachu</ion-label>
+        <ion-label class="py-2 italic text-gray-800 dark:text-gray-50"> {{ soundSettings.background?.sound?.name }}</ion-label>
         <ion-icon name="chevron-forward" slot="end" class="text-base"></ion-icon>
       </ion-item>
     </ng-container>
-  </ion-list>
-
-  <!--  Âm thanh hiệu ứng khác  -->
-  <ion-list class="my-2" *ngIf="soundSettings">
-    <!--  Ấn nút  -->
-    <ion-item detail="false">
-      <ion-icon name="disc" slot="start" color="primary" class="text-xl" *ngIf="soundSettings.touch?.enabled"></ion-icon>
-      <ion-icon name="disc" slot="start" class="text-xl text-gray-600 dark:text-gray-400" *ngIf="!soundSettings.touch?.enabled"></ion-icon>
-      <ion-label class="py-2">
-        {{ TranslateKeys.TITLE_TOUCH_SOUND | translate }}<br>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="soundSettings.touch?.enabled">{{ TranslateKeys.TITLE_ON | translate }}</span>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="!soundSettings.touch?.enabled">{{ TranslateKeys.TITLE_OFF | translate }}</span>
-      </ion-label>
-      <ion-toggle mode="ios" slot="end" [enableOnOffLabels]="true"
-                  [checked]="soundSettings.touch?.enabled" (ionChange)="onSwitchEffects($event, SoundKeys.TOUCH)"></ion-toggle>
-    </ion-item>
-
-    <!--  Thông báo  -->
-    <ion-item detail="false">
-      <ion-icon name="megaphone" slot="start" color="primary" class="text-xl" *ngIf="soundSettings.notification?.enabled"></ion-icon>
-      <ion-icon name="megaphone" slot="start" class="text-xl text-gray-600 dark:text-gray-400" *ngIf="!soundSettings.notification?.enabled"></ion-icon>
-      <ion-label class="py-2">
-        {{ TranslateKeys.TITLE_NOTIFICATION_SOUND | translate }}<br>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="soundSettings.notification?.enabled">{{ TranslateKeys.TITLE_ON | translate }}</span>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="!soundSettings.notification?.enabled">{{ TranslateKeys.TITLE_OFF | translate }}</span>
-      </ion-label>
-      <ion-toggle mode="ios" slot="end" [enableOnOffLabels]="true"
-                  [checked]="soundSettings.notification?.enabled" (ionChange)="onSwitchEffects($event, SoundKeys.NOTIFICATION)"></ion-toggle>
-    </ion-item>
-
-    <!--  Âm tải lại  -->
-    <ion-item detail="false">
-      <ion-icon name="reload" slot="start" color="primary" class="text-xl" *ngIf="soundSettings.reload?.enabled"></ion-icon>
-      <ion-icon name="reload" slot="start" class="text-xl text-gray-600 dark:text-gray-400" *ngIf="!soundSettings.reload?.enabled"></ion-icon>
-      <ion-label class="py-2">
-        {{ TranslateKeys.TITLE_RELOAD_SOUND | translate }}<br>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="soundSettings.reload?.enabled">{{ TranslateKeys.TITLE_ON | translate }}</span>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="!soundSettings.reload?.enabled">{{ TranslateKeys.TITLE_OFF | translate }}</span>
-      </ion-label>
-      <ion-toggle mode="ios" slot="end" [enableOnOffLabels]="true"
-                  [checked]="soundSettings.reload?.enabled" (ionChange)="onSwitchEffects($event, SoundKeys.RELOAD)"></ion-toggle>
-    </ion-item>
-
-    <!--  Âm chờ tải  -->
-    <ion-item detail="false">
-      <ion-icon name="hourglass" slot="start" color="primary" class="text-xl" *ngIf="soundSettings.loading?.enabled"></ion-icon>
-      <ion-icon name="hourglass" slot="start" class="text-xl text-gray-600 dark:text-gray-400" *ngIf="!soundSettings.loading?.enabled"></ion-icon>
-      <ion-label class="py-2">
-        {{ TranslateKeys.TITLE_LOADING_SOUND | translate }}<br>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="soundSettings.loading?.enabled">{{ TranslateKeys.TITLE_ON | translate }}</span>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="!soundSettings.loading?.enabled">{{ TranslateKeys.TITLE_OFF | translate }}</span>
-      </ion-label>
-      <ion-toggle mode="ios" slot="end" [enableOnOffLabels]="true"
-                  [checked]="soundSettings.loading?.enabled" (ionChange)="onSwitchEffects($event, SoundKeys.LOADING)"></ion-toggle>
-    </ion-item>
-
-    <!--  Âm tin nhắn  -->
-    <ion-item detail="false">
-      <ion-icon name="chatbubbles" slot="start" color="primary" class="text-xl" *ngIf="soundSettings.message?.enabled"></ion-icon>
-      <ion-icon name="chatbubbles" slot="start" class="text-xl text-gray-600 dark:text-gray-400" *ngIf="!soundSettings.message?.enabled"></ion-icon>
-      <ion-label class="py-2">
-        {{ TranslateKeys.TITLE_MESSAGE_SOUND | translate }}<br>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="soundSettings.message?.enabled">{{ TranslateKeys.TITLE_ON | translate }}</span>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="!soundSettings.message?.enabled">{{ TranslateKeys.TITLE_OFF | translate }}</span>
-      </ion-label>
-      <ion-toggle mode="ios" slot="end" [enableOnOffLabels]="true"
-                  [checked]="soundSettings.message?.enabled" (ionChange)="onSwitchEffects($event, SoundKeys.MESSAGE)"></ion-toggle>
-    </ion-item>
-
-    <!--  Âm thanh thành công  -->
-    <ion-item detail="false">
-      <ion-icon name="thumbs-up" slot="start" color="primary" class="text-xl" *ngIf="soundSettings.success?.enabled"></ion-icon>
-      <ion-icon name="thumbs-up" slot="start" class="text-xl text-gray-600 dark:text-gray-400" *ngIf="!soundSettings.success?.enabled"></ion-icon>
-      <ion-label class="py-2">
-        {{ TranslateKeys.TITLE_SUCCESS_SOUND | translate }}<br>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="soundSettings.success?.enabled">{{ TranslateKeys.TITLE_ON | translate }}</span>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="!soundSettings.success?.enabled">{{ TranslateKeys.TITLE_OFF | translate }}</span>
-      </ion-label>
-      <ion-toggle mode="ios" slot="end" [enableOnOffLabels]="true"
-                  [checked]="soundSettings.success?.enabled" (ionChange)="onSwitchEffects($event, SoundKeys.SUCCESS)"></ion-toggle>
-    </ion-item>
-
-    <!--  Âm thanh thất bại  -->
-    <ion-item lines="none" detail="false">
-      <ion-icon name="thumbs-down" slot="start" color="primary" class="text-xl" *ngIf="soundSettings.failed?.enabled"></ion-icon>
-      <ion-icon name="thumbs-down" slot="start" class="text-xl text-gray-600 dark:text-gray-400" *ngIf="!soundSettings.failed?.enabled"></ion-icon>
-      <ion-label class="py-2">
-        {{ TranslateKeys.TITLE_FAILED_SOUND | translate }}<br>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="soundSettings.failed?.enabled">{{ TranslateKeys.TITLE_ON | translate }}</span>
-        <span class="text-sm text-gray-500 italic dark:text-gray-400" *ngIf="!soundSettings.failed?.enabled">{{ TranslateKeys.TITLE_OFF | translate }}</span>
-      </ion-label>
-      <ion-toggle mode="ios" slot="end" [enableOnOffLabels]="true"
-                  [checked]="soundSettings.failed?.enabled" (ionChange)="onSwitchEffects($event, SoundKeys.FAILED)"></ion-toggle>
-    </ion-item>
   </ion-list>
 </ion-content>

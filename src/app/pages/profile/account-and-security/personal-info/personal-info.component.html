@@ -7,7 +7,129 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="custom-page-bg-light" [fullscreen]="true">
-  <!-- TODO: Hiển thị thông tin cá nhân -->
-  <!-- TODO: Chức năng hiển thị form chỉnh sửa thông tin cá nhân -->
+<ion-content class="custom-page-bg-light ion-padding" [fullscreen]="true">
+  <div class="w-full px-3 py-4 rounded-xl bg-gray-300 dark:bg-gray-800" *ngIf="authData && profileForm">
+    <form class="profile-form" [formGroup]="profileForm" (submit)="onClickUpdate()">
+      <ion-grid>
+        <ion-row>
+          <!--   Avatar for student   -->
+          <ion-col size="12" class="ion-text-center" *ngIf="avatar">
+            <ion-img class="w-80 h-auto mx-auto"
+                     (click)="onClickSettingAvatar()"
+                     src="{{avatar.image_url ?? CommonConstants.detectMimeType(avatar.image_512) + avatar.image_512}}"></ion-img>
+          </ion-col>
+
+          <!--   Avatar for parent / teacher    -->
+          <ion-col size="12" class="ion-text-center" *ngIf="!avatar">
+            <div class="mx-auto w-64 h-64 min-w-64 min-h-64 rounded-full overflow-hidden border">
+              <ion-img class="min-w-full min-h-full bg-gray-500" (click)="onClickChangeUserImage()" [src]="userImage"></ion-img>
+            </div>
+          </ion-col>
+
+          <!--    Nickname      -->
+          <ion-col size="12" class="pb-3" *ngIf="authData.is_teenager">
+            <ion-label>{{ TranslateKeys.RANK_NICKNAME | translate }}<span class="text-red-600 ps-1">*</span></ion-label>
+            <ion-input formControlName="nickname" type="text" inputmode="text" required="required"></ion-input>
+            <div *ngIf="hasError('nickname', 'required')" class="error-text text-red-600 text-sm pt-2 ps-1">
+              {{ TranslateKeys.VALIDATE_NICKNAME_REQUIRED | translate }}
+            </div>
+          </ion-col>
+
+          <!--     Name     -->
+          <ion-col size="12" class="pb-3" *ngIf="!authData.is_teenager">
+            <ion-label>{{ TranslateKeys.TITLE_NAME | translate }}<span class="text-red-600 ps-1">*</span></ion-label>
+            <ion-input formControlName="name" type="text" inputmode="text" required="required"></ion-input>
+            <div *ngIf="hasError('name', 'required')" class="error-text text-red-600 text-sm pt-2 ps-1">
+              {{ TranslateKeys.VALIDATE_NAME_REQUIRED | translate }}
+            </div>
+          </ion-col>
+
+          <!--    Email      -->
+          <ion-col size="12" class="pb-3">
+            <ion-label>{{ TranslateKeys.TITLE_EMAIL | translate }}<span class="text-red-600 ps-1">*</span></ion-label>
+            <ion-input formControlName="email" type="email" inputmode="email" required="required"></ion-input>
+            <div *ngIf="hasError('email', 'required')" class="error-text text-red-600 text-sm pt-2 ps-1">
+              {{ TranslateKeys.VALIDATE_EMAIL_REQUIRED | translate }}
+            </div>
+            <div *ngIf="hasError('email', 'email')" class="error-text text-red-600 text-sm pt-2 ps-1">
+              {{ TranslateKeys.VALIDATE_EMAIL_FORMAT | translate }}
+            </div>
+          </ion-col>
+
+          <!--    Phone      -->
+          <ion-col size="12" class="pb-3">
+            <ion-label>{{ TranslateKeys.TITLE_PHONE | translate }}</ion-label>
+            <ion-input formControlName="phone" type="tel" inputmode="tel"></ion-input>
+          </ion-col>
+
+          <!--     Gender     -->
+          <ion-col size="12" class="pb-3">
+            <ion-label>{{ TranslateKeys.TITLE_GENDER | translate }}</ion-label>
+            <ion-select formControlName="gender" class="border overflow-hidden" interface="action-sheet">
+              <ion-select-option value="male">{{ TranslateKeys.TITLE_MALE | translate }}</ion-select-option>
+              <ion-select-option value="female">{{ TranslateKeys.TITLE_FEMALE | translate }}</ion-select-option>
+              <ion-select-option value="other">{{ TranslateKeys.TITLE_OTHER| translate }}</ion-select-option>
+            </ion-select>
+          </ion-col>
+
+          <!--     Birthday     -->
+          <ion-col size="12" class="pb-3">
+            <ion-label>{{ TranslateKeys.TITLE_BIRTHDAY | translate }}</ion-label>
+            <app-select-datetime [default]="authData.dob || false" [maxYear]="maxYear"
+                                 (selectedDatetime)="onSelectDateOfBirth($event)">
+            </app-select-datetime>
+          </ion-col>
+
+          <!--     State     -->
+          <ion-col size="12" class="pb-3">
+            <ion-label>{{ TranslateKeys.TITLE_STATE | translate }}</ion-label>
+            <ion-select formControlName="state_id" class="border rounded-md" interface="action-sheet" (ionChange)="onSelectState($event)">
+              <ng-container *ngIf="stateList">
+                <ion-select-option *ngFor="let state of stateList" [value]="state.id">
+                  {{ state.name }}
+                </ion-select-option>
+              </ng-container>
+            </ion-select>
+          </ion-col>
+
+          <!--    District      -->
+          <ion-col size="12" class="pb-3">
+            <ion-label>{{ TranslateKeys.TITLE_DISTRICT | translate }}</ion-label>
+            <ion-select formControlName="district_id" class="border overflow-hidden" interface="action-sheet" (ionChange)="onSelectDistrict($event)">
+              <ng-container *ngIf="districtList">
+                <ion-select-option *ngFor="let district of districtList" [value]="district.id">
+                  {{ district.name }}
+                </ion-select-option>
+              </ng-container>
+            </ion-select>
+          </ion-col>
+
+          <!--     Precint     -->
+          <ion-col size="12" class="pb-3">
+            <ion-label>{{ TranslateKeys.TITLE_PRECINT | translate }}</ion-label>
+            <ion-select formControlName="precint_id" class="border overflow-hidden" interface="action-sheet">
+              <ng-container *ngIf="districtList">
+                <ion-select-option *ngFor="let precint of precintList" [value]="precint.id">
+                  {{ precint.name }}
+                </ion-select-option>
+              </ng-container>
+            </ion-select>
+          </ion-col>
+
+          <!--     Street     -->
+          <ion-col size="12" class="pb-3">
+            <ion-label>{{ TranslateKeys.TITLE_STREET | translate }}</ion-label>
+            <ion-textarea formControlName="street" class="w-full px-3 border" rows="2"></ion-textarea>
+          </ion-col>
+
+          <!--     Submit button     -->
+          <ion-col size="12" class="ion-text-center">
+            <ion-button expand="block" type="submit" color="primary">
+              {{ TranslateKeys.BUTTON_UPDATE |  translate }}
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </div>
 </ion-content>

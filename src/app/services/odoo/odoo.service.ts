@@ -14,7 +14,7 @@ import { RequestPayload } from '../../shared/classes/request-payload';
 import { environment } from '../../../environments/environment';
 import { CommonConstants } from '../../shared/classes/common-constants';
 import { OrderBy } from '../../shared/enums/order-by';
-import { RelatedField } from '../../shared/interfaces/base/related-field';
+import { IRelatedField } from '../../shared/interfaces/base/related-field';
 import { TranslateKeys } from '../../shared/enums/translate-keys';
 import { StyleClass } from '../../shared/enums/style-class';
 import { IAuthData } from '../../shared/interfaces/auth/auth-data';
@@ -104,14 +104,14 @@ export class OdooService {
     offset: number = 0,
     limit: number = 0,
     order?: OrderBy
-  ): Promise<Array<RelatedField>> {
+  ): Promise<Array<IRelatedField>> {
     if (!model) return [];
 
     const kwArgs: IKwArgs = {limit: limit || this.maximumLimitRecords};
     if (offset > 0) kwArgs.offset = offset;
     if (order) kwArgs.order = order;
 
-    let results: Array<RelatedField> = await this.callKw(model, OdooMethodName.SEARCH, [args], kwArgs);
+    let results: Array<IRelatedField> = await this.callKw(model, OdooMethodName.SEARCH, [args], kwArgs);
     return results?.length ? results : [];
   }
 

@@ -297,7 +297,20 @@
     "suggested_questions": "Suggested Questions",
     "parent_questions": "Questions from Parents",
     "no_family_dialogue_session_history": "No family dialogue session history available",
-    "answer_questions": "Submit Answers"
+    "answer_questions": "Submit Answers",
+    "name": "Name",
+    "gender": "Gender",
+    "male": "Male",
+    "female": "Female",
+    "other": "Other",
+    "state": "State",
+    "district": "District",
+    "precint": "Precint",
+    "street": "Street",
+    "setup_nickname": "Setup your nickname",
+    "image": "Image",
+    "take_new_image": "Take an image",
+    "select_gallery": "Select from your gallery"
   },
   "VALIDATE": {
     "phone_required": "Please input your phone number.",
@@ -306,7 +319,11 @@
     "new_password_required": "Please input your new password.",
     "confirm_password_required": "Please confirm your new password.",
     "password_min_length": "Password must be at least 8 characters long.",
-    "passwords_not_match": "Passwords do not match."
+    "passwords_not_match": "Passwords do not match.",
+    "nickname_required": "Please input your Nickname.",
+    "name_required": "Please input your name.",
+    "email_required": "Please input your email address.",
+    "email_format": "Invalid email address."
   },
   "ALERT": {
     "default_header": "Notification",
@@ -314,7 +331,8 @@
     "error_system_header": "System error",
     "access_permission_notification_alert": "Please allow the app to display notifications to receive the latest updates.",
     "confirm_logout_alert": "Are you sure you want to log out?",
-    "app_update_successful": "App update successful. You are now running the latest version."
+    "app_update_successful": "App update successful. You are now running the latest version.",
+    "access_permission_gallery_alert": "Please allow the app to access your photo library and use your camera."
   },
   "BUTTON_TITLES": {
     "confirm": "Confirm",
@@ -346,7 +364,9 @@
     "password_changed_success": "Password changed successfully.",
     "task_complete_success": "Task completed successfully!",
     "task_complete_error": "Could not complete the task. Please try again.",
-    "answer_all_questions": "Please answer all questions before submitting."
+    "answer_all_questions": "Please answer all questions before submitting.",
+    "update_failed": "An error occurred while updating data. Please try again later.",
+    "update_success": "Data update successful."
   },
   "ERROR": {
     "network": "Network error. Please check your internet connection.",

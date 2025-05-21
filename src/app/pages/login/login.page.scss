@@ -20,6 +20,8 @@ ion-content {
   ion-select.switch-lang {
     min-height: 30px;
     width: 30px;
+    --background: transparent;
+    background: transparent;
   }
 
   ion-select.switch-lang::part(text),
@@ -34,4 +36,8 @@ ion-content {
     background-size: cover;
     top: calc(env(safe-area-inset-top) + 12px);
   }
+}
+
+:host-context(.dark) {
+  --ion-item-background: #ffffff;
 }

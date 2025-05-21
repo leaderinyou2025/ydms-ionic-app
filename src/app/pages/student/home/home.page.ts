@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { NavigationExtras, Router } from '@angular/router';
+import { AlertButton, AlertController, AlertInput, ToastButton, ToastController, ToastOptions } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { AnimationOptions } from 'ngx-lottie';
 
 import { AuthService } from '../../../services/auth/auth.service';
@@ -7,7 +9,16 @@ import { TranslateKeys } from '../../../shared/enums/translate-keys';
 import { StatusItemType } from '../../../shared/enums/home/status-item-type.enum';
 import { ForceTestData } from '../../../shared/classes/force-test-data';
 import { ICharacter, IProgress, IStatusItem, ITask, } from '../../../shared/interfaces/home/home.interfaces';
-import { OdooService } from '../../../services/odoo/odoo.service';
+import { IAuthData } from '../../../shared/interfaces/auth/auth-data';
+import { BtnRoles } from '../../../shared/enums/btn-roles';
+import { IonicIcons } from '../../../shared/enums/ionic-icons';
+import { Position } from '../../../shared/enums/position';
+import { NativePlatform } from '../../../shared/enums/native-platform';
+import { StyleClass } from '../../../shared/enums/style-class';
+import { IonicColors } from '../../../shared/enums/ionic-colors';
+import { PageRoutes } from '../../../shared/enums/page-routes';
+import { LiyYdmsAvatarService } from '../../../services/models/iliy-ydms-avatar.service';
+import { CommonConstants } from '../../../shared/classes/common-constants';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +29,7 @@ import { OdooService } from '../../../services/odoo/odoo.service';
 export class HomePage implements OnInit {
 
   protected readonly TranslateKeys = TranslateKeys;
+  protected readonly PageRoutes = PageRoutes;
 
   // Animation option
   options: AnimationOptions = {
@@ -27,8 +39,9 @@ export class HomePage implements OnInit {
   };
 
   // User setting background and avatar
+  authData?: IAuthData;
   background!: string;
-  avatar!: string;
+  avatar?: string;
 
   /**
    * Character information
@@ -60,30 +73,67 @@ export class HomePage implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private odooService: OdooService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private alertController: AlertController,
+    private translate: TranslateService,
+    private router: Router,
+    private liyYdmsAvatarService: LiyYdmsAvatarService,
   ) {
   }
 
   async ngOnInit() {
-    await this.loadHomeData();
     await this.authService.loadUserProfile();
   }
 
-  ionViewWillEnter() {
-    this.loadConfigAvatarAndBackground();
+  async ionViewDidEnter() {
+    if (this.authData) {
+      this.handleRefresh();
+    } else {
+      await this.loadHomeData();
+    }
+  }
+
+  /**
+   * On click open dialog to setting nickname
+   */
+  public onClickOpenSetNicknameDialog(): void {
+    const nicknameInput: AlertInput = {
+      type: 'text',
+      name: 'nickname',
+      placeholder: this.translate.instant(TranslateKeys.RANK_NICKNAME),
+    };
+    const buttons: Array<AlertButton> = [
+      {text: this.translate.instant(TranslateKeys.BUTTON_CANCEL)},
+      {
+        text: this.translate.instant(TranslateKeys.BUTTON_OK),
+        handler: (alertData) => this.updateUserNickname(alertData?.nickname)
+      },
+    ];
+    this.alertController.create({
+      header: this.translate.instant(TranslateKeys.TITLE_SETUP_NICKNAME),
+      inputs: [nicknameInput],
+      buttons: buttons,
+    }).then(alert => alert.present());
+  }
+
+  /**
+   * On click open setting avatar
+   */
+  public onClickSettingAvatar(): void {
+    const navigationExtras: NavigationExtras = {state: {isBackground: false}};
+    this.router.navigateByUrl(`${PageRoutes.PROFILE}/${PageRoutes.AVATAR_BACKGROUND}`, navigationExtras);
   }
 
   /**
    * Reload data
    * @param event
    */
-  public handleRefresh(event: CustomEvent): void {
+  public handleRefresh(event?: CustomEvent): void {
     setTimeout(async () => {
       await this.authService.loadUserProfile();
       await this.loadHomeData();
-      await (event.target as HTMLIonRefresherElement).complete();
-    }, 1000);
+      if (event) await (event.target as HTMLIonRefresherElement).complete();
+    }, 500);
   }
 
   /**
@@ -91,83 +141,20 @@ export class HomePage implements OnInit {
    */
   private async loadHomeData(): Promise<void> {
     try {
-      await Promise.all([
-        this.loadUserProfileData(),
-        this.loadTasksAndProgress()
-      ]);
+      await Promise.all([this.loadUserProfileData(), this.loadTasksAndProgress()]);
     } catch (error) {
       console.error('Error loading home data:', error);
-      // Show error toast
-      const toast = await this.toastController.create({
-        message: 'Failed to load data. Please try again.',
-        duration: 3000,
-        position: 'bottom'
-      });
-      toast.present();
     }
   }
 
   /**
-   * Load student profile data including character and status items
+   * Load student profile data
    */
   private async loadUserProfileData(): Promise<void> {
-    const authData = await this.authService.getAuthData();
-    if (!authData?.id) return;
+    this.authData = await this.authService.getAuthData();
+    if (!this.authData) return;
 
-    // Get student home profile data
-    // const profileData = await this.odooService.read(
-    //   ModelName.STUDENT_HOME_PROFILE,
-    //   [authData.id],
-    //   [
-    //     // Character fields
-    //     'character_name',
-    //     'character_image',
-    //     'character_alt_text',
-    //     // Status fields
-    //     'badge_count',
-    //     'rank',
-    //     'mission_count',
-    //     'friendly_points'
-    //   ]
-    // );
-    //
-    // if (profileData?.length) {
-    //   const profile = profileData[0];
-    //
-    //   // Set character data
-    //   this.character = {
-    //     name: profile.character_name,
-    //     imagePath: profile.character_image,
-    //     altText: profile.character_alt_text
-    //   };
-    //
-    //   // Set status items
-    //   this.statusItems = [
-    //     {
-    //       type: StatusItemType.BADGE,
-    //       value: profile.badge_count,
-    //       label: 'Huy hiệu',
-    //     },
-    //     {
-    //       type: StatusItemType.RANK,
-    //       value: profile.rank,
-    //       label: 'Xếp hạng',
-    //     },
-    //     {
-    //       type: StatusItemType.MISSION,
-    //       value: profile.mission_count,
-    //       label: 'Nhiệm vụ',
-    //     },
-    //     {
-    //       type: StatusItemType.FRIENDLY,
-    //       value: profile.friendly_points,
-    //       label: 'Thân thiện',
-    //     }
-    //   ];
-    // }
-
-    // Force test data
-    this.character = ForceTestData.character;
+    this.loadConfigAvatarAndBackground();
     this.statusItems = ForceTestData.statusItems;
   }
 
@@ -178,50 +165,8 @@ export class HomePage implements OnInit {
     const authData = await this.authService.getAuthData();
     if (!authData?.id) return;
 
-    // Get student tasks and progress
-    // const userData = await this.odooService.read(
-    //   ModelName.STUDENT_HOME_TASK,
-    //   [authData.id],
-    //   [
-    //     'tasks',
-    //     'completed_tasks',
-    //     'total_tasks'
-    //   ]
-    // );
-    //
-    // if (userData?.length) {
-    //   const user = userData[0];
-    //
-    //   // Set progress data
-    //   const completed = user.completed_tasks || 0;
-    //   const total = user.total_tasks || 0;
-    //
-    //   this.progress = {
-    //     completed,
-    //     total,
-    //     value: total > 0 ? completed / total : 0,
-    //   };
-    //
-    //   // Get task details if available
-    //   if (user.tasks?.length) {
-    //     const taskDetails = await this.odooService.read(
-    //       ModelName.TASKS,
-    //       user.tasks,
-    //       ['id', 'description', 'points']
-    //     );
-    //
-    //     if (taskDetails?.length) {
-    //       this.tasks = taskDetails;
-    //     }
-    //   }
-    // }
-
     // Force test data
-    this.progress = {
-      completed: 1,
-      total: 3,
-      value: 0.33,
-    };
+    this.progress = {completed: 1, total: 3, value: 0.33};
     this.tasks = ForceTestData.tasks;
   }
 
@@ -257,11 +202,76 @@ export class HomePage implements OnInit {
    * Load user setting background and avatar image
    */
   public loadConfigAvatarAndBackground(): void {
+    // Background image
     this.authService.getThemeSettings().then(themeSettings => {
       if (themeSettings?.background?.resource_url)
         this.background = `url(${themeSettings.background.resource_url})`;
-      if (themeSettings?.avatar?.resource_url)
-        this.avatar = themeSettings?.avatar?.resource_url;
-    })
+    });
+
+    // Avatar image
+    this.authService.getAuthData().then(authData => {
+      if (authData?.avatar?.id) {
+        this.liyYdmsAvatarService.getImageById(authData.avatar.id).then(imageData => {
+          const imgType = CommonConstants.detectMimeType(imageData?.image_512 || '');
+          this.avatar = imgType ? `${imgType + imageData?.image_512}` : undefined;
+          authData.avatar_128 = imageData?.image_512;
+          this.authService.setAuthData(authData);
+        });
+      }
+    });
+  }
+
+  /**
+   * Update user nickname for first time
+   * @param nickname
+   * @private
+   */
+  private updateUserNickname(nickname: string): void {
+    if (!nickname) {
+      return this.toastMessage(this.translate.instant(TranslateKeys.VALIDATE_NICKNAME_REQUIRED), true);
+    }
+
+    if (!this.authData) return;
+    this.authData.nickname = nickname;
+    this.authService.setAuthData(this.authData)
+      .then(() => this.authService.saveUserProfile()
+        .then((result) => this.toastMessage(
+          this.translate.instant(result ? TranslateKeys.TOAST_UPDATE_SUCCESS : TranslateKeys.TOAST_UPDATE_FAILED), !result
+        )));
+  }
+
+  /**
+   * toastWarningMessage
+   * @param msg
+   * @param isWarning
+   * @private
+   */
+  private toastMessage(msg: string, isWarning: boolean = false): void {
+    this.toastController.getTop().then(popover => {
+      const closeBtn: ToastButton = {
+        icon: IonicIcons.CLOSE_CIRCLE_OUTLINE,
+        side: Position.END,
+        role: BtnRoles.CANCEL,
+      }
+      const toastOption: ToastOptions = {
+        header: isWarning ? this.translate.instant(TranslateKeys.TOAST_WARNING_HEADER) : this.translate.instant(TranslateKeys.TOAST_SUCCESS_HEADER),
+        message: msg,
+        duration: 5000,
+        buttons: [closeBtn],
+        mode: NativePlatform.IOS,
+        cssClass: `${StyleClass.TOAST_ITEM} ${isWarning ? StyleClass.TOAST_ERROR : StyleClass.TOAST_SUCCESS}`,
+        position: Position.TOP,
+        icon: isWarning ? IonicIcons.WARNING_OUTLINE : IonicIcons.CHECKMARK_CIRCLE_OUTLINE,
+        color: isWarning ? IonicColors.WARNING : IonicColors.SUCCESS,
+        keyboardClose: false
+      }
+
+      if (!popover) {
+        this.toastController.create(toastOption).then(toast => toast.present());
+      } else {
+        // Close current toast before show new toast
+        this.toastController.dismiss().then(() => this.toastController.create(toastOption).then(toast => toast.present()))
+      }
+    });
   }
 }
