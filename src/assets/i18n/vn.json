@@ -21,7 +21,25 @@
     "loading_more_items": "Đang tải thêm..."
   },
   "MESSAGE": {
-    "feature_under_development": "Tính năng đang được phát triển"
+    "feature_under_development": "Tính năng đang được phát triển",
+    "no_challenges": "Bạn chưa tạo thử thách nào. Hãy bắt đầu bằng cách tạo thử thách cải thiện xung đột gia đình đầu tiên!",
+    "no_progress_updates": "Chưa có cập nhật tiến độ nào",
+    "no_active_challenges": "Bạn không có thử thách đang hoạt động nào",
+    "cannot_update_inactive_challenge": "Không thể cập nhật thử thách không hoạt động",
+    "cannot_abandon_inactive_challenge": "Không thể từ bỏ thử thách không hoạt động",
+    "challenge_abandoned": "Đã từ bỏ thử thách thành công",
+    "error_abandoning_challenge": "Lỗi khi từ bỏ thử thách",
+    "enter_progress_notes": "Vui lòng nhập ghi chú tiến độ",
+    "progress_updated": "Đã cập nhật tiến độ thành công",
+    "error_updating_progress": "Lỗi khi cập nhật tiến độ",
+    "enter_custom_goal": "Vui lòng nhập mục tiêu tùy chỉnh",
+    "select_goal": "Vui lòng chọn một mục tiêu",
+    "challenge_created": "Đã tạo thử thách thành công",
+    "error_creating_challenge": "Lỗi khi tạo thử thách",
+    "custom_goal_hint": "Nhập mục tiêu cụ thể sẽ giúp cải thiện xung đột gia đình",
+    "progress_notes_hint": "Mô tả những gì bạn đã làm để tiến bộ và nó đã ảnh hưởng như thế nào đến mối quan hệ gia đình của bạn",
+    "error_loading_data": "Lỗi khi tải dữ liệu",
+    "loading_more": "Đang tải thêm..."
   },
   "NOTIFICATIONS": {
     "title": "Thông báo",
@@ -177,6 +195,7 @@
     "friends": "Bạn bè",
     "total_friends": "Tổng số bạn bè",
     "close_friends": "Thân thiện",
+    "goal_type": "Loại mục tiêu",
     "add_friend": "Thêm bạn bè",
     "search_friends": "Tìm kiếm bạn bè...",
     "rank": "Xếp hạng",
@@ -311,7 +330,16 @@
     "setup_nickname": "Thiết lập nickname",
     "image": "Hình ảnh",
     "take_new_image": "Chụp ảnh mới",
-    "select_gallery": "Chọn từ thư viện"
+    "select_gallery": "Chọn từ thư viện",
+    "family_conflict_improvement_challenge": "Thử thách cải thiện xung đột gia đình",
+    "family_conflict_improvement_challenge_detail": "Chi tiết thử thách",
+    "create_new_challenge": "Tạo thử thách mới",
+    "update_challenge_progress": "Cập nhật tiến độ thử thách",
+    "progress_updates": "Cập nhật tiến độ",
+    "select_goal": "Chọn mục tiêu",
+    "enter_custom_goal": "Nhập mục tiêu tùy chỉnh",
+    "update_progress": "Cập nhật tiến độ",
+    "no_challenges": "Chưa có thử thách nào"
   },
   "VALIDATE": {
     "phone_required": "Vui lòng nhập vào số điện thoại.",
@@ -333,7 +361,9 @@
     "access_permission_notification_alert": "Vui lòng cho phép ứng dụng có quyền hiển thị thông báo để nhận được các thông tin cập nhật mới nhất. Xin cảm ơn!",
     "confirm_logout_alert": "Bạn có chắc chắn muốn đăng xuất?",
     "app_update_successful": "Cập nhật ứng dụng thành công. Bạn đã sử dụng phiên bản mới nhất.",
-    "access_permission_gallery_alert": "Vui lòng cho phép ứng dụng truy cập thư viện ảnh và sử dụng máy ảnh của bạn."
+    "access_permission_gallery_alert": "Vui lòng cho phép ứng dụng truy cập thư viện ảnh và sử dụng máy ảnh của bạn.",
+    "confirm_header": "Xác nhận",
+    "confirm_abandon_challenge": "Bạn có chắc chắn muốn từ bỏ thử thách này không? Hành động này không thể hoàn tác."
   },
   "BUTTON_TITLES": {
     "confirm": "Xác nhận",
@@ -351,7 +381,13 @@
     "create_new_survey": "Tạo khảo sát mới",
     "create_first_survey": "Tạo khảo sát đầu tiên",
     "select": "Chọn",
-    "share": "Chia sẻ"
+    "share": "Chia sẻ",
+    "create_challenge": "Tạo thử thách",
+    "update_progress": "Cập nhật",
+    "abandon_challenge": "Từ bỏ",
+    "create": "Tạo",
+    "remove": "Bỏ",
+    "save": "Lưu"
   },
   "TOAST": {
     "error_header": "Lỗi",
@@ -412,5 +448,26 @@
   },
   "CAPTION": {
     "chatbot": "Hôm nay bạn cảm thấy thế nào? Chia sẻ với mình nhé!"
+  },
+  "LABEL": {
+    "progress": "Tiến độ",
+    "current_progress": "Tiến độ hiện tại",
+    "new_progress": "Tiến độ mới",
+    "started_on": "Bắt đầu vào",
+    "completed_on": "Hoàn thành vào",
+    "badge_earned": "Huy hiệu đạt được",
+    "progress_notes": "Ghi chú tiến độ",
+    "predefined_goals": "Mục tiêu có sẵn",
+    "custom_goal": "Mục tiêu tùy chỉnh",
+    "goal_title": "Tiêu đề mục tiêu"
+  },
+  "PLACEHOLDER": {
+    "enter_goal": "Nhập mục tiêu tùy chỉnh của bạn tại đây...",
+    "enter_progress_notes": "Mô tả tiến độ của bạn tại đây..."
+  },
+  "STATUS": {
+    "active": "Đang hoạt động",
+    "completed": "Đã hoàn thành",
+    "abandoned": "Đã từ bỏ"
   }
 }
