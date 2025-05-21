@@ -1,0 +1,96 @@
+<app-header
+  [pageTitle]="TranslateKeys.TITLE_FAMILY_CONFLICT_IMPROVEMENT_CHALLENGE_DETAIL"
+  [defaultBackHref]="'/' + PageRoutes.FAMILY_CONFLICT_IMPROVEMENT_CHALLENGE"
+  backgroundColor="linear-gradient(to bottom, #9333ea, #4c1d95)"
+>
+</app-header>
+
+<ion-content [fullscreen]="true" class="font-comic-sans">
+  <!-- Loading spinner -->
+  <ion-spinner *ngIf="isLoading" name="crescent"
+               class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></ion-spinner>
+
+  <!-- Challenge detail -->
+  <div *ngIf="!isLoading && challengeDetail" class="p-4">
+    <!-- Challenge header -->
+    <div class="bg-white rounded-xl shadow-md p-4 mb-4 relative">
+      <!-- Status chip positioned at top-right corner -->
+      <ion-badge [color]="getStatusColor(challengeDetail.status)" class="status-chip px-3 py-1 rounded-full absolute top-2 right-1 z-10">
+        {{ getStatusText(challengeDetail.status) }}
+      </ion-badge>
+      <div class="flex justify-between items-center mb-2">
+        <h1 class="text-xl font-semibold pt-3">{{ challengeDetail.title }}</h1>
+      </div>
+
+      <div class="text-gray-500 mb-3">
+        {{ TranslateKeys.LABEL_STARTED_ON | translate }}: {{ challengeDetail.date | date:'mediumDate' }}
+      </div>
+
+      <div *ngIf="challengeDetail.description" class="text-gray-700 mb-4">
+        {{ challengeDetail.description }}
+      </div>
+
+      <!-- Progress section -->
+      <div class="mb-4">
+        <div class="flex justify-between text-sm mb-1">
+          <span class="text-gray-600">{{ TranslateKeys.LABEL_PROGRESS | translate }}</span>
+          <span class="font-bold">{{ challengeDetail.progress }}%</span>
+        </div>
+        <ion-progress-bar [value]="challengeDetail.progress / 100"
+                         [color]="challengeDetail.progress === 100 ? 'success' : 'primary'"
+                         class="h-2 rounded-full"></ion-progress-bar>
+      </div>
+
+      <!-- Completion date (if completed) -->
+      <div *ngIf="challengeDetail.completionDate" class="text-gray-700 mb-3">
+        {{ TranslateKeys.LABEL_COMPLETED_ON | translate }}: {{ challengeDetail.completionDate | date:'mediumDate' }}
+      </div>
+
+      <!-- Badge earned (if completed) -->
+      <div *ngIf="challengeDetail.badgeEarned" class="flex items-center mt-3 p-3 bg-yellow-50 rounded-lg">
+        <ion-icon name="ribbon" class="text-3xl text-yellow-500 mr-3"></ion-icon>
+        <div>
+          <div class="text-sm font-bold text-gray-700">{{ TranslateKeys.LABEL_BADGE_EARNED | translate }}</div>
+          <div class="text-lg text-yellow-700">{{ challengeDetail.badgeEarned }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress updates -->
+    <div class="bg-white rounded-xl shadow-md p-4 mb-4">
+      <h2 class="text-lg font-bold text-blue-800 mb-3">{{ TranslateKeys.TITLE_PROGRESS_UPDATES | translate }}</h2>
+
+      <div *ngIf="challengeDetail.progressUpdates.length === 0" class="text-gray-500 text-center py-4">
+        {{ TranslateKeys.MESSAGE_NO_PROGRESS_UPDATES | translate }}
+      </div>
+
+      <div *ngFor="let update of challengeDetail.progressUpdates" class="mb-4 pb-4 border-b border-gray-200 last:border-0">
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-gray-500">{{ update.date | date:'mediumDate' }}</span>
+          <ion-badge color="primary" class="px-2 py-1 rounded-full">{{ update.progress }}%</ion-badge>
+        </div>
+        <p class="text-gray-700">{{ update.notes }}</p>
+      </div>
+    </div>
+
+    <!-- Action buttons moved to footer -->
+  </div>
+</ion-content>
+
+<!-- Footer buttons -->
+<ion-footer *ngIf="!isLoading && challengeDetail && challengeDetail.status === ChallengeStatus.ACTIVE">
+  <ion-toolbar>
+    <div class="flex justify-between px-4 py-2">
+      <ion-button (click)="updateProgress()"
+                  class="w-1/2 mr-2 uppercase rounded-lg shadow-md"
+                  color="primary">
+        {{ TranslateKeys.BUTTON_UPDATE_PROGRESS | translate }}
+      </ion-button>
+      <ion-button (click)="abandonChallenge()"
+                  class="w-1/2 ml-2 uppercase rounded-lg shadow-md"
+                  color="medium">
+        {{ TranslateKeys.BUTTON_ABANDON_CHALLENGE | translate }}
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

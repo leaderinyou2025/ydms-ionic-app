@@ -21,7 +21,25 @@
     "loading_more_items": "Loading more items..."
   },
   "MESSAGE": {
-    "feature_under_development": "This feature is under development"
+    "feature_under_development": "This feature is under development",
+    "no_challenges": "You haven't created any challenges yet. Start by creating your first family conflict improvement challenge!",
+    "no_progress_updates": "No progress updates yet",
+    "no_active_challenges": "You don't have any active challenges",
+    "cannot_update_inactive_challenge": "Cannot update an inactive challenge",
+    "cannot_abandon_inactive_challenge": "Cannot abandon an inactive challenge",
+    "challenge_abandoned": "Challenge abandoned successfully",
+    "error_abandoning_challenge": "Error abandoning challenge",
+    "enter_progress_notes": "Please enter progress notes",
+    "progress_updated": "Progress updated successfully",
+    "error_updating_progress": "Error updating progress",
+    "enter_custom_goal": "Please enter a custom goal",
+    "select_goal": "Please select a goal",
+    "challenge_created": "Challenge created successfully",
+    "error_creating_challenge": "Error creating challenge",
+    "custom_goal_hint": "Enter a specific goal that will help improve family conflicts",
+    "progress_notes_hint": "Describe what you've done to make progress and how it has affected your family relationships",
+    "error_loading_data": "Error loading data",
+    "loading_more": "Loading more..."
   },
   "NOTIFICATIONS": {
     "title": "Notifications",
@@ -179,6 +197,7 @@
     "close_friends": "Close friends",
     "add_friend": "Add friend",
     "search_friends": "Search friends...",
+    "goal_type": "Goal Type",
     "daily_emotion_journal": "Daily Emotion Journal",
     "calendar": "Calendar",
     "history": "History",
@@ -310,7 +329,16 @@
     "setup_nickname": "Setup your nickname",
     "image": "Image",
     "take_new_image": "Take an image",
-    "select_gallery": "Select from your gallery"
+    "select_gallery": "Select from your gallery",
+    "family_conflict_improvement_challenge": "Family Conflict Improvement Challenge",
+    "family_conflict_improvement_challenge_detail": "Challenge Details",
+    "create_new_challenge": "Create New Challenge",
+    "update_challenge_progress": "Update Challenge Progress",
+    "progress_updates": "Progress Updates",
+    "select_goal": "Select a Goal",
+    "enter_custom_goal": "Enter Custom Goal",
+    "update_progress": "Update Progress",
+    "no_challenges": "No Challenges Yet"
   },
   "VALIDATE": {
     "phone_required": "Please input your phone number.",
@@ -332,7 +360,9 @@
     "access_permission_notification_alert": "Please allow the app to display notifications to receive the latest updates.",
     "confirm_logout_alert": "Are you sure you want to log out?",
     "app_update_successful": "App update successful. You are now running the latest version.",
-    "access_permission_gallery_alert": "Please allow the app to access your photo library and use your camera."
+    "access_permission_gallery_alert": "Please allow the app to access your photo library and use your camera.",
+    "confirm_header": "Confirm",
+    "confirm_abandon_challenge": "Are you sure you want to abandon this challenge? This action cannot be undone."
   },
   "BUTTON_TITLES": {
     "confirm": "Confirm",
@@ -350,7 +380,13 @@
     "create_new_survey": "Create New Survey",
     "create_first_survey": "Create Your First Survey",
     "select": "Select",
-    "share": "Share"
+    "share": "Share",
+    "create_challenge": "Create Challenge",
+    "update_progress": "Update",
+    "abandon_challenge": "Abandon",
+    "create": "Create",
+    "remove": "Remove",
+    "save": "Save"
   },
   "TOAST": {
     "error_header": "Error",
@@ -411,5 +447,26 @@
   },
   "CAPTION": {
     "chatbot": "How are you feeling today? Feel free to share with me!"
+  },
+  "LABEL": {
+    "progress": "Progress",
+    "current_progress": "Current Progress",
+    "new_progress": "New Progress",
+    "started_on": "Started on",
+    "completed_on": "Completed on",
+    "badge_earned": "Badge Earned",
+    "progress_notes": "Progress Notes",
+    "predefined_goals": "Predefined Goals",
+    "custom_goal": "Custom Goal",
+    "goal_title": "Goal Title"
+  },
+  "PLACEHOLDER": {
+    "enter_goal": "Enter your custom goal here...",
+    "enter_progress_notes": "Describe your progress here..."
+  },
+  "STATUS": {
+    "active": "Active",
+    "completed": "Completed",
+    "abandoned": "Abandoned"
   }
 }

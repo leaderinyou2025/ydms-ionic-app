@@ -1452,6 +1452,244 @@ export class ForceTestData {
     }
   }
 
+  /**
+   * Family Conflict Improvement Challenge Data
+   */
+
+    // Challenge status constants
+  static ChallengeStatuses = {
+    ACTIVE: 'active',
+    COMPLETED: 'completed',
+    ABANDONED: 'abandoned'
+  };
+
+  // Mock data for family conflict improvement challenge goals
+  static familyConflictImprovementChallengeGoals = [
+    {
+      id: 1,
+      title: 'Cải thiện giao tiếp với cha mẹ',
+      description: 'Thực hành giao tiếp rõ ràng và tôn trọng với cha mẹ để giảm hiểu lầm.'
+    },
+    {
+      id: 2,
+      title: 'Giảm tranh cãi với anh chị em',
+      description: 'Học cách thỏa hiệp và tìm giải pháp hòa bình cho bất đồng với anh chị em.'
+    },
+    {
+      id: 3,
+      title: 'Biểu đạt cảm xúc phù hợp',
+      description: 'Học cách biểu đạt cảm xúc một cách lành mạnh mà không làm leo thang xung đột.'
+    },
+    {
+      id: 4,
+      title: 'Thực hành lắng nghe chủ động',
+      description: 'Cải thiện kỹ năng lắng nghe để hiểu rõ hơn quan điểm của các thành viên trong gia đình.'
+    },
+    {
+      id: 5,
+      title: 'Phát triển kỹ năng giải quyết xung đột',
+      description: 'Học và thực hành các kỹ thuật giải quyết xung đột một cách hòa bình.'
+    }
+  ];
+
+  // Mock data for family conflict improvement challenge history
+  static familyConflictImprovementChallengeHistory = [
+    {
+      id: 1,
+      date: new Date(2024, 9, 15),
+      title: 'Cải thiện giao tiếp với cha mẹ',
+      status: ForceTestData.ChallengeStatuses.COMPLETED,
+      progress: 100,
+      goalId: 1,
+      completionDate: new Date(2024, 9, 30),
+      badgeEarned: 'Sao Giao Tiếp'
+    },
+    {
+      id: 2,
+      date: new Date(2024, 10, 5),
+      title: 'Giảm tranh cãi với anh chị em',
+      status: ForceTestData.ChallengeStatuses.ACTIVE,
+      progress: 65,
+      goalId: 2
+    },
+    {
+      id: 3,
+      date: new Date(2024, 7, 1),
+      title: 'Biểu đạt cảm xúc phù hợp',
+      status: ForceTestData.ChallengeStatuses.ABANDONED,
+      progress: 30,
+      goalId: 3
+    },
+    {
+      id: 4,
+      date: new Date(2024, 8, 20),
+      title: 'Thực hành lắng nghe chủ động',
+      status: ForceTestData.ChallengeStatuses.COMPLETED,
+      progress: 100,
+      customGoal: 'Lắng nghe không ngắt lời trong các cuộc thảo luận gia đình',
+      completionDate: new Date(2024, 9, 10),
+      badgeEarned: 'Chuyên Gia Lắng Nghe'
+    },
+    {
+      id: 5,
+      date: new Date(2024, 11, 10),
+      title: 'Phát triển kỹ năng giải quyết xung đột',
+      status: ForceTestData.ChallengeStatuses.ACTIVE,
+      progress: 45,
+      goalId: 5
+    },
+    {
+      id: 6,
+      date: new Date(2024, 6, 15),
+      title: 'Tạo không gian riêng tư cho mỗi thành viên',
+      status: ForceTestData.ChallengeStatuses.COMPLETED,
+      progress: 100,
+      customGoal: 'Tôn trọng không gian riêng tư của mỗi thành viên trong gia đình',
+      completionDate: new Date(2024, 7, 20),
+      badgeEarned: 'Người Xây Dựng Hòa Bình'
+    }
+  ];
+
+  // Mock data for family conflict improvement challenge progress updates
+  static getFamilyConflictImprovementChallengeProgressUpdates(challengeId: number) {
+    switch (challengeId) {
+      case 1: // Completed challenge
+        return [
+          {
+            id: 1,
+            date: new Date(2023, 9, 18),
+            progress: 25,
+            notes: 'Đã bắt đầu thực hành lắng nghe chủ động khi nói chuyện với cha mẹ. Tôi cố gắng không ngắt lời và đặt câu hỏi để hiểu rõ hơn.'
+          },
+          {
+            id: 2,
+            date: new Date(2023, 9, 22),
+            progress: 50,
+            notes: 'Cha mẹ nhận thấy sự thay đổi trong cách tôi giao tiếp. Chúng tôi đã có những cuộc trò chuyện sâu sắc hơn về trường học và tương lai.'
+          },
+          {
+            id: 3,
+            date: new Date(2023, 9, 26),
+            progress: 75,
+            notes: 'Đã giải quyết được một số hiểu lầm cũ thông qua giao tiếp cởi mở. Cảm thấy mối quan hệ với cha mẹ đang cải thiện rõ rệt.'
+          },
+          {
+            id: 4,
+            date: new Date(2023, 9, 30),
+            progress: 100,
+            notes: 'Hoàn thành thử thách! Giờ đây tôi có thể nói chuyện với cha mẹ về hầu hết mọi vấn đề mà không cảm thấy lo lắng hay phán xét.'
+          }
+        ];
+      case 2: // Active challenge
+        return [
+          {
+            id: 1,
+            date: new Date(2023, 10, 8),
+            progress: 25,
+            notes: 'Bắt đầu thực hành kiểm soát cảm xúc khi tranh cãi với em gái. Cố gắng không nâng cao giọng.'
+          },
+          {
+            id: 2,
+            date: new Date(2023, 10, 15),
+            progress: 50,
+            notes: 'Đã học cách thỏa hiệp về việc sử dụng không gian chung. Chúng tôi đã tạo ra một lịch trình để chia sẻ khu vực học tập.'
+          },
+          {
+            id: 3,
+            date: new Date(2023, 11, 1),
+            progress: 65,
+            notes: 'Tiếp tục cải thiện. Số lần tranh cãi đã giảm đáng kể. Đang học cách tôn trọng ý kiến khác biệt.'
+          }
+        ];
+      case 3: // Abandoned challenge
+        return [
+          {
+            id: 1,
+            date: new Date(2023, 7, 5),
+            progress: 15,
+            notes: 'Đang cố gắng nhận biết cảm xúc trước khi phản ứng. Vẫn còn khó khăn khi bị kích động.'
+          },
+          {
+            id: 2,
+            date: new Date(2023, 7, 15),
+            progress: 30,
+            notes: 'Đã học một số kỹ thuật thở để kiểm soát cảm xúc, nhưng vẫn khó áp dụng trong tình huống thực tế.'
+          }
+        ];
+      case 4: // Completed challenge with custom goal
+        return [
+          {
+            id: 1,
+            date: new Date(2023, 8, 23),
+            progress: 25,
+            notes: 'Bắt đầu thực hành lắng nghe không ngắt lời trong các cuộc họp gia đình. Khó khăn nhưng đang cố gắng.'
+          },
+          {
+            id: 2,
+            date: new Date(2023, 8, 30),
+            progress: 50,
+            notes: 'Đã cải thiện kỹ năng lắng nghe. Gia đình nhận thấy tôi ít ngắt lời hơn và chú ý hơn.'
+          },
+          {
+            id: 3,
+            date: new Date(2023, 9, 5),
+            progress: 75,
+            notes: 'Gần như đã thành thói quen. Tôi nhận ra mình hiểu rõ hơn về quan điểm của người khác khi thực sự lắng nghe.'
+          },
+          {
+            id: 4,
+            date: new Date(2023, 9, 10),
+            progress: 100,
+            notes: 'Hoàn thành thử thách! Giờ đây tôi có thể kiên nhẫn lắng nghe mà không ngắt lời, ngay cả khi không đồng ý với người nói.'
+          }
+        ];
+      case 5: // Active challenge
+        return [
+          {
+            id: 1,
+            date: new Date(2023, 11, 15),
+            progress: 25,
+            notes: 'Đã đọc về các kỹ thuật giải quyết xung đột và bắt đầu áp dụng phương pháp "thắng-thắng" trong các cuộc tranh luận gia đình.'
+          },
+          {
+            id: 2,
+            date: new Date(2023, 11, 25),
+            progress: 45,
+            notes: 'Đã thành công trong việc hòa giải một cuộc tranh cãi giữa các thành viên gia đình. Cảm thấy tự tin hơn về kỹ năng này.'
+          }
+        ];
+      case 6: // Completed challenge with custom goal
+        return [
+          {
+            id: 1,
+            date: new Date(2023, 6, 20),
+            progress: 25,
+            notes: 'Đã thảo luận với gia đình về việc tôn trọng không gian riêng tư. Chúng tôi đã đồng ý về một số quy tắc cơ bản.'
+          },
+          {
+            id: 2,
+            date: new Date(2023, 7, 1),
+            progress: 50,
+            notes: 'Đã tạo ra các biển báo "Xin đừng làm phiền" và thống nhất về thời gian yên tĩnh cho mỗi người.'
+          },
+          {
+            id: 3,
+            date: new Date(2023, 7, 10),
+            progress: 75,
+            notes: 'Mọi người đang tôn trọng không gian của nhau tốt hơn. Số lần xung đột về vấn đề riêng tư đã giảm đáng kể.'
+          },
+          {
+            id: 4,
+            date: new Date(2023, 7, 20),
+            progress: 100,
+            notes: 'Hoàn thành thử thách! Gia đình chúng tôi giờ đây có sự cân bằng tốt giữa thời gian chung và không gian riêng tư.'
+          }
+        ];
+      default:
+        return [];
+    }
+  }
+
   static getResultTextFromDiscoveryLevel(discoveryLevel: string): string {
     switch (discoveryLevel) {
       case ForceTestData.DiscoveryLevels.EXCELLENT:

@@ -1,0 +1,26 @@
+// Custom styles for family conflict improvement challenge detail component
+.font-comic-sans {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+}
+
+ion-button {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  text-transform: uppercase;
+  --border-radius: 8px;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+// Custom progress bar styling
+ion-progress-bar {
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+// Status chip styling
+.status-chip {
+  font-size: 0.75rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  min-width: 70px;
+  text-align: center;
+}

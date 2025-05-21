@@ -1,0 +1,98 @@
+<app-header
+  [pageTitle]="TranslateKeys.TITLE_CREATE_NEW_CHALLENGE"
+  [defaultBackHref]="'/' + PageRoutes.FAMILY_CONFLICT_IMPROVEMENT_CHALLENGE"
+  backgroundColor="linear-gradient(to bottom, #9333ea, #4c1d95)"
+>
+</app-header>
+
+<ion-content [fullscreen]="true" class="pb-20" style="font-family: 'Comic Sans MS', cursive, sans-serif;">
+  <!-- Loading spinner -->
+  <ion-spinner *ngIf="isLoading" name="crescent"
+               class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></ion-spinner>
+
+  <!-- Challenge creation form -->
+  <div *ngIf="!isLoading" class="p-4">
+    <div class="bg-white rounded-xl shadow-md p-4 mb-4">
+      <h1 class="text-xl font-semibold">{{ TranslateKeys.TITLE_CREATE_NEW_CHALLENGE | translate }}</h1>
+
+      <!-- Goal type selection -->
+      <div class="mb-6">
+        <h2 class="text-lg font-bold text-gray-700 mb-3">{{ TranslateKeys.TITLE_GOAL_TYPE | translate }}</h2>
+        <ion-segment [(ngModel)]="useCustomGoal" (ionChange)="toggleGoalType()" class="rounded-lg overflow-hidden bg-gray-100 shadow-sm">
+          <ion-segment-button [value]="false" class="min-h-[44px] font-medium">
+            <ion-label>{{ TranslateKeys.LABEL_PREDEFINED_GOALS | translate }}</ion-label>
+          </ion-segment-button>
+          <ion-segment-button [value]="true" class="min-h-[44px] font-medium">
+            <ion-label>{{ TranslateKeys.LABEL_CUSTOM_GOAL | translate }}</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+
+      <!-- Goal content container -->
+      <div class="min-h-[300px] relative mb-6">
+        <!-- Predefined goals -->
+        <div [hidden]="useCustomGoal" class="transition-all duration-300 ease-in-out"
+             [ngClass]="{'opacity-0 absolute pointer-events-none translate-y-2 w-full': useCustomGoal, 'opacity-100 translate-y-0': !useCustomGoal}">
+          <h2 class="text-lg font-bold text-gray-700 mb-3">{{ TranslateKeys.TITLE_SELECT_GOAL | translate }}</h2>
+
+          <ion-radio-group [value]="selectedGoalId">
+            <ion-card *ngFor="let goal of challengeGoals"
+                      class="m-0 mb-4 rounded-lg overflow-hidden cursor-pointer border border-gray-200 transition-all duration-200 ease-in-out shadow-md"
+                      [ngClass]="{'selected': selectedGoalId === goal.id}"
+                      (click)="selectGoal(goal.id || 0)">
+              <ion-item lines="none" class="py-3">
+                <ion-radio slot="start" [value]="goal.id" class="mr-2"></ion-radio>
+                <ion-label class="ion-text-wrap">
+                  <h3 class="font-bold text-blue-800">{{ goal.title }}</h3>
+                  <p class="text-gray-600 text-sm mt-1">{{ goal.description }}</p>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+          </ion-radio-group>
+        </div>
+
+        <!-- Custom goal -->
+        <div [hidden]="!useCustomGoal" class="transition-all duration-300 ease-in-out"
+             [ngClass]="{'opacity-0 absolute pointer-events-none translate-y-2 w-full': !useCustomGoal, 'opacity-100 translate-y-0': useCustomGoal}">
+          <h2 class="text-lg font-bold text-gray-700 mb-3">{{ TranslateKeys.TITLE_ENTER_CUSTOM_GOAL | translate }}</h2>
+
+          <ion-item lines="none" class="rounded-lg mb-3 border border-gray-200 bg-gray-50">
+            <ion-label position="stacked">{{ TranslateKeys.LABEL_GOAL_TITLE | translate }}</ion-label>
+            <ion-textarea
+              [(ngModel)]="customGoal"
+              placeholder="{{ TranslateKeys.PLACEHOLDER_ENTER_GOAL | translate }}"
+              rows="4"
+              class="w-full"
+              autoGrow="true"
+            ></ion-textarea>
+          </ion-item>
+
+          <p class="text-sm text-gray-500 px-2">
+            {{ TranslateKeys.MESSAGE_CUSTOM_GOAL_HINT | translate }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</ion-content>
+
+<!-- Action buttons in footer -->
+<ion-footer class="ion-no-border bg-white shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
+  <ion-toolbar class="bg-white border-0 min-h-[70px]">
+    <div class="flex justify-between p-4">
+      <ion-button (click)="navigateBack()"
+                  class="w-1/2 mr-2 uppercase rounded-lg shadow-md"
+                  style="font-family: 'Comic Sans MS', cursive, sans-serif;"
+                  color="medium">
+        {{ 'BUTTON.cancel' | translate }}
+      </ion-button>
+      <ion-button (click)="createChallenge()"
+                  class="w-1/2 ml-2 uppercase rounded-lg shadow-md"
+                  style="font-family: 'Comic Sans MS', cursive, sans-serif;"
+                  color="primary">
+        {{ TranslateKeys.BUTTON_CREATE | translate }}
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

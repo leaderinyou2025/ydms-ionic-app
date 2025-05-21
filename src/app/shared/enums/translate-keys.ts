@@ -407,4 +407,61 @@ export enum TranslateKeys {
 
   // CAPTION
   CAPTION_CHATBOT = 'CAPTION.chatbot',
+
+  // FAMILY CONFLICT IMPROVEMENT CHALLENGE
+  TITLE_FAMILY_CONFLICT_IMPROVEMENT_CHALLENGE = 'TITLE.family_conflict_improvement_challenge',
+  TITLE_FAMILY_CONFLICT_IMPROVEMENT_CHALLENGE_DETAIL = 'TITLE.family_conflict_improvement_challenge_detail',
+  TITLE_CREATE_NEW_CHALLENGE = 'TITLE.create_new_challenge',
+  TITLE_UPDATE_CHALLENGE_PROGRESS = 'TITLE.update_challenge_progress',
+  TITLE_PROGRESS_UPDATES = 'TITLE.progress_updates',
+  TITLE_GOAL_TYPE = 'TITLE.goal_type',
+  TITLE_SELECT_GOAL = 'TITLE.select_goal',
+  TITLE_ENTER_CUSTOM_GOAL = 'TITLE.enter_custom_goal',
+  TITLE_UPDATE_PROGRESS = 'TITLE.update_progress',
+  TITLE_NO_CHALLENGES = 'TITLE.no_challenges',
+
+  LABEL_PROGRESS = 'LABEL.progress',
+  LABEL_CURRENT_PROGRESS = 'LABEL.current_progress',
+  LABEL_NEW_PROGRESS = 'LABEL.new_progress',
+  LABEL_STARTED_ON = 'LABEL.started_on',
+  LABEL_COMPLETED_ON = 'LABEL.completed_on',
+  LABEL_BADGE_EARNED = 'LABEL.badge_earned',
+  LABEL_PROGRESS_NOTES = 'LABEL.progress_notes',
+  LABEL_PREDEFINED_GOALS = 'LABEL.predefined_goals',
+  LABEL_CUSTOM_GOAL = 'LABEL.custom_goal',
+  LABEL_GOAL_TITLE = 'LABEL.goal_title',
+
+  BUTTON_UPDATE_PROGRESS = 'BUTTON_TITLES.update_progress',
+  BUTTON_ABANDON_CHALLENGE = 'BUTTON_TITLES.abandon_challenge',
+  BUTTON_CREATE = 'BUTTON_TITLES.create',
+
+  MESSAGE_NO_CHALLENGES = 'MESSAGE.no_challenges',
+  MESSAGE_NO_PROGRESS_UPDATES = 'MESSAGE.no_progress_updates',
+  MESSAGE_NO_ACTIVE_CHALLENGES = 'MESSAGE.no_active_challenges',
+  MESSAGE_CANNOT_UPDATE_INACTIVE_CHALLENGE = 'MESSAGE.cannot_update_inactive_challenge',
+  MESSAGE_CANNOT_ABANDON_INACTIVE_CHALLENGE = 'MESSAGE.cannot_abandon_inactive_challenge',
+  MESSAGE_CHALLENGE_ABANDONED = 'MESSAGE.challenge_abandoned',
+  MESSAGE_ERROR_ABANDONING_CHALLENGE = 'MESSAGE.error_abandoning_challenge',
+  MESSAGE_ENTER_PROGRESS_NOTES = 'MESSAGE.enter_progress_notes',
+  MESSAGE_PROGRESS_UPDATED = 'MESSAGE.progress_updated',
+  MESSAGE_ERROR_UPDATING_PROGRESS = 'MESSAGE.error_updating_progress',
+  MESSAGE_ENTER_CUSTOM_GOAL = 'MESSAGE.enter_custom_goal',
+  MESSAGE_SELECT_GOAL = 'MESSAGE.select_goal',
+  MESSAGE_CHALLENGE_CREATED = 'MESSAGE.challenge_created',
+  MESSAGE_ERROR_CREATING_CHALLENGE = 'MESSAGE.error_creating_challenge',
+  MESSAGE_CUSTOM_GOAL_HINT = 'MESSAGE.custom_goal_hint',
+  MESSAGE_PROGRESS_NOTES_HINT = 'MESSAGE.progress_notes_hint',
+  MESSAGE_ERROR_LOADING_DATA = 'MESSAGE.error_loading_data',
+  MESSAGE_LOADING_MORE = 'MESSAGE.loading_more',
+
+  PLACEHOLDER_ENTER_GOAL = 'PLACEHOLDER.enter_goal',
+  PLACEHOLDER_ENTER_PROGRESS_NOTES = 'PLACEHOLDER.enter_progress_notes',
+
+  // Challenge status texts
+  STATUS_ACTIVE = 'STATUS.active',
+  STATUS_COMPLETED = 'STATUS.completed',
+  STATUS_ABANDONED = 'STATUS.abandoned',
+
+  ALERT_CONFIRM_HEADER = 'ALERT.confirm_header',
+  ALERT_CONFIRM_ABANDON_CHALLENGE = 'ALERT.confirm_abandon_challenge',
 }
