@@ -18,6 +18,7 @@ import { AvatarBackgroundComponent } from './theme-and-background/avatar-backgro
 import { PersonalInfoComponent } from './account-and-security/personal-info/personal-info.component';
 import { AppLockSettingsComponent } from './account-and-security/app-lock-settings/app-lock-settings.component';
 import { ChangePasswordComponent } from './account-and-security/change-password/change-password.component';
+import { SelectBackgroundSoundComponent } from './notification-and-sound/select-background-sound/select-background-sound.component';
 
 @NgModule({
   imports: [
@@ -42,6 +43,7 @@ import { ChangePasswordComponent } from './account-and-security/change-password/
     PersonalInfoComponent,
     AppLockSettingsComponent,
     ChangePasswordComponent,
+    SelectBackgroundSoundComponent,
   ]
 })
 export class ProfilePageModule {

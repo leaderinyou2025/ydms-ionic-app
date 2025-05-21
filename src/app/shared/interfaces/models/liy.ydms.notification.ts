@@ -1,11 +1,11 @@
-import { RelatedField } from '../base/related-field';
+import { IRelatedField } from '../base/related-field';
 import { IBase } from '../base/base';
 import { NotificationTypes } from '../../enums/notification-type';
 
 export interface ILiyYdmsNotification extends IBase {
   description: string;
   body: string;
-  sender_id: RelatedField;
+  sender_id: IRelatedField;
   recipient_ids: Array<number>;
   state: boolean;
   type?: NotificationTypes;

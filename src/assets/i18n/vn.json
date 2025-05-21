@@ -158,6 +158,7 @@
     "background": "Hình nền",
     "default": "Mặc định",
     "background_sound": "Âm thanh nhạc nền",
+    "sound_effect": "Âm thanh hiệu ứng",
     "music": "Âm nhạc",
     "notification": "Thông báo",
     "share": "Chia sẻ",
@@ -225,7 +226,17 @@
     "discovery_level": "Mức độ khám phá",
     "self_discovery_survey_questions": "Câu hỏi khảo sát khám phá bản thân",
     "discovery_points": "Điểm",
-    "no_self_discovery_survey_history": "Chưa có lịch sử khảo sát khám phá bản thân"
+    "no_self_discovery_survey_history": "Chưa có lịch sử khảo sát khám phá bản thân",
+    "name": "Tên",
+    "gender":"Giới tính",
+    "male": "Nam",
+    "female": "Nữ",
+    "other": "Khác",
+    "state": "Tỉnh/Tp",
+    "district": "Quận/Huyện",
+    "precint": "Phường/Xã",
+    "street": "Địa chỉ nhà",
+    "setup_nickname": "Thiết lập nickname"
   },
   "VALIDATE": {
     "phone_required": "Vui lòng nhập vào số điện thoại.",
@@ -234,7 +245,11 @@
     "new_password_required": "Vui lòng nhập vào mật khẩu mới.",
     "confirm_password_required": "Vui lòng xác nhận mật khẩu mới.",
     "password_min_length": "Mật khẩu phải có ít nhất 8 ký tự.",
-    "passwords_not_match": "Mật khẩu xác nhận không khớp."
+    "passwords_not_match": "Mật khẩu xác nhận không khớp.",
+    "nickname_required": "Vui lòng nhập vào Nickname.",
+    "name_required": "Vui lòng nhập vào họ tên của bạn.",
+    "email_required": "Vui lòng nhập vào địa chỉ email",
+    "email_format": "Địa chỉ email không chính xác."
   },
   "ALERT": {
     "default_header": "Thông báo",
@@ -272,7 +287,9 @@
     "password_changed_success": "Đổi mật khẩu thành công.",
     "task_complete_success": "Nhiệm vụ hoàn thành thành công!",
     "task_complete_error": "Không thể hoàn thành nhiệm vụ. Vui lòng thử lại.",
-    "answer_all_questions": "Vui lòng trả lời tất cả các câu hỏi trước khi gửi."
+    "answer_all_questions": "Vui lòng trả lời tất cả các câu hỏi trước khi gửi.",
+    "update_failed": "Có lỗi sảy ra khi cập nhật thông tin. Vui long thử lại sau.",
+    "update_success": "Cập nhật thông tin thành công."
   },
   "ERROR": {
     "network": "Lỗi mạng. Vui lòng kiểm tra kết nối mạng của bạn và thử lại.",

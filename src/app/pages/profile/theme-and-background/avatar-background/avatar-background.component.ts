@@ -15,7 +15,7 @@ import { IAssetsResource } from '../../../../shared/interfaces/settings/assets-r
 export class AvatarBackgroundComponent implements OnInit {
 
   wallpapers!: Array<IAssetsResource>;
-  selectedValue!: IAssetsResource | undefined;
+  selectedValue!: number | undefined;
   isBackground!: boolean;
 
   protected readonly TranslateKeys = TranslateKeys;
@@ -38,7 +38,7 @@ export class AvatarBackgroundComponent implements OnInit {
    * @param selectItem
    */
   public async selectWallpaper(selectItem: IAssetsResource) {
-    this.selectedValue = selectItem;
+    this.selectedValue = selectItem?.id;
     if (this.isBackground) {
       await this.wallpaperService.setSelectedBackgroundImage(selectItem);
     } else {
@@ -53,10 +53,10 @@ export class AvatarBackgroundComponent implements OnInit {
   private loadWallpapers(): void {
     if (this.isBackground) {
       this.wallpaperService.getBackgroundWallpapers().subscribe(images => this.wallpapers = images);
-      this.wallpaperService.getSelectedBackgroundImage().then(image => this.selectedValue = image);
+      this.wallpaperService.getSelectedBackgroundImage().then(image => this.selectedValue = image?.id);
     } else {
       this.wallpaperService.getAvatarWallpapers().then(images => this.wallpapers = images);
-      this.wallpaperService.getSelectedAvatar().then(image => this.selectedValue = image);
+      this.wallpaperService.getSelectedAvatar().then(image => this.selectedValue = image?.id);
     }
   }
 }

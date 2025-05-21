@@ -26,6 +26,8 @@ import { IonicColors } from '../../shared/enums/ionic-colors';
 import { CommonConstants } from '../../shared/classes/common-constants';
 import { PageRoutes } from '../../shared/enums/page-routes';
 import { LanguageKeys } from '../../shared/enums/language-keys';
+import { ThemeService } from '../../services/theme/theme.service';
+import { TextZoomService } from '../../services/text-zoom/text-zoom.service';
 
 @Component({
   selector: 'app-login',
@@ -74,7 +76,9 @@ export class LoginPage implements OnInit, OnDestroy {
     private pushNotificationService: PushNotificationService,
     private networkService: NetworkService,
     private soundService: SoundService,
-    private biometricService: BiometricService
+    private biometricService: BiometricService,
+    private themeService: ThemeService,
+    private textZoomService: TextZoomService,
   ) {
   }
 
@@ -186,6 +190,8 @@ export class LoginPage implements OnInit, OnDestroy {
       password: new FormControl('', [Validators.required]),
       remember: new FormControl(true, []),
     });
+    this.textZoomService.initZoom();
+    this.themeService.loadTheme();
   }
 
   /**
@@ -224,6 +230,9 @@ export class LoginPage implements OnInit, OnDestroy {
 
       // Preload user music
       await this.soundService.loadUserSounds();
+      this.textZoomService.initZoom();
+      this.themeService.loadTheme();
+
 
       // Remember account handle
       if (this.loginForm.value.remember) {

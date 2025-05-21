@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 import { AuthService } from '../../../services/auth/auth.service';
 import { SoundService } from '../../../services/sound/sound.service';
@@ -8,6 +9,8 @@ import { Theme } from '../../../shared/enums/theme';
 import { ISoundSettings } from '../../../shared/interfaces/settings/sound-settings';
 import { INotificationSettings } from '../../../shared/interfaces/settings/notification-settings';
 import { SoundKeys } from '../../../shared/enums/sound-keys';
+import { SelectBackgroundSoundComponent } from './select-background-sound/select-background-sound.component';
+import { NativePlatform } from '../../../shared/enums/native-platform';
 
 @Component({
   selector: 'app-notification-and-sound',
@@ -20,7 +23,8 @@ export class NotificationAndSoundComponent implements OnInit {
   soundSettings!: ISoundSettings | undefined;
   notificationSettings!: INotificationSettings | undefined;
 
-  private isChangeSettings!: boolean;
+  private isChangeSoundSettings!: boolean;
+  private isChangeNotificationSettings!: boolean;
 
   protected readonly TranslateKeys = TranslateKeys;
   protected readonly PageRoutes = PageRoutes;
@@ -30,6 +34,7 @@ export class NotificationAndSoundComponent implements OnInit {
   constructor(
     public soundService: SoundService,
     private authService: AuthService,
+    private modalController: ModalController,
   ) {
   }
 
@@ -38,12 +43,12 @@ export class NotificationAndSoundComponent implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.isChangeSettings = false;
+    this.isChangeSoundSettings = false;
+    this.isChangeNotificationSettings = false;
   }
 
-  ionViewWillLeave() {
-    if (!this.isChangeSettings) return;
-    this.saveUserSettings();
+  async ionViewWillLeave() {
+    await this.saveUserSettings();
   }
 
   /**
@@ -52,7 +57,16 @@ export class NotificationAndSoundComponent implements OnInit {
    */
   public onSwitchNotificationEnable(event: CustomEvent) {
     if (this.notificationSettings) this.notificationSettings.enabled = event.detail.checked;
-    this.isChangeSettings = true;
+    this.isChangeNotificationSettings = true;
+  }
+
+  /**
+   * onSwitchSoundEnable
+   * @param event
+   */
+  public onSwitchSoundEnable(event: CustomEvent) {
+    if (this.soundSettings) this.soundSettings.enabled = event.detail.checked;
+    this.isChangeSoundSettings = true;
   }
 
   /**
@@ -61,7 +75,7 @@ export class NotificationAndSoundComponent implements OnInit {
    */
   public onSwitchBackgroundEnable(event: CustomEvent) {
     if (this.soundSettings?.background) this.soundSettings.background.enabled = event.detail.checked;
-    this.isChangeSettings = true;
+    this.isChangeSoundSettings = true;
   }
 
   /**
@@ -71,16 +85,23 @@ export class NotificationAndSoundComponent implements OnInit {
   public onChangeBackgroundVolume(event: CustomEvent) {
     this.soundService.setVolume(SoundKeys.BACKGROUND, event.detail.value);
     this.soundService.playBackground();
-    this.isChangeSettings = true;
+    this.isChangeSoundSettings = true;
     if (this.soundSettings?.background) this.soundSettings.background.volume = +event.detail.value;
   }
 
   /**
    * onSwitchBackgroundMusic
-   * @param event
    */
-  public onSwitchBackgroundMusic(event: any) {
-    // TODO: Show list music and process change
+  public onSwitchBackgroundMusic() {
+    this.modalController.create({
+      component: SelectBackgroundSoundComponent,
+      mode: NativePlatform.IOS,
+      initialBreakpoint: 0.8,
+      breakpoints: [0, 0.8],
+      componentProps: {volume: this.soundSettings?.background?.volume}
+    }).then(modal => {
+      modal.present();
+    });
   }
 
   /**
@@ -108,13 +129,14 @@ export class NotificationAndSoundComponent implements OnInit {
    * Save sound and notification setting to user
    * @private
    */
-  private saveUserSettings() {
-    this.authService.getUserSettings().then(userSettings => {
-      if (userSettings && this.soundSettings && this.notificationSettings) {
-        userSettings.sound = this.soundSettings;
-        userSettings.notification = this.notificationSettings;
-        this.authService.setUserSettings(userSettings, false);
-      }
-    });
+  private async saveUserSettings() {
+    if (this.soundSettings && this.isChangeSoundSettings)
+      await this.authService.setSoundSettings(this.soundSettings);
+
+    if (this.notificationSettings && this.isChangeNotificationSettings)
+      await this.authService.setNotificationSettings(this.notificationSettings);
+
+    if (this.isChangeSoundSettings || this.isChangeNotificationSettings)
+      await this.authService.saveAppSettings();
   }
 }

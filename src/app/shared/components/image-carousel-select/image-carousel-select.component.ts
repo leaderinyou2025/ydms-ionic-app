@@ -14,7 +14,7 @@ import { IAssetsResource } from '../../interfaces/settings/assets-resource';
 export class ImageCarouselSelectComponent implements OnInit {
 
   @Input() wallpapers: IAssetsResource[] = [];
-  @Input() selectedValue!: IAssetsResource | undefined;
+  @Input() selectedValue!: number | undefined;
   @Output() selectedWallpaper = new EventEmitter<IAssetsResource>();
 
   constructor() {
@@ -38,7 +38,7 @@ export class ImageCarouselSelectComponent implements OnInit {
    * @param wallpaper
    */
   public selectWallpaper(wallpaper: IAssetsResource): void {
-    if (this.selectedValue?.id === wallpaper.id) return;
+    if (this.selectedValue === wallpaper.id) return;
     this.selectedWallpaper.emit(wallpaper)
   }
 

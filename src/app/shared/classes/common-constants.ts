@@ -4,6 +4,9 @@ import { Device } from '@capacitor/device';
 
 import { IBase } from '../interfaces/base/base';
 import { environment } from '../../../environments/environment';
+import { IAssetsResource } from '../interfaces/settings/assets-resource';
+import { AssetResourceCategory } from '../enums/asset-resource-category';
+import { SoundKeys } from '../enums/sound-keys';
 
 export class CommonConstants {
 
@@ -11,6 +14,35 @@ export class CommonConstants {
    * Device ID
    */
   public static deviceId: string = '';
+
+  /**
+   * Background image gallery
+   */
+  static background_images: Array<IAssetsResource> = [
+    {id: 1, resource_url: 'assets/images/background/pexels-eugene-golovesov-1810803-30980499.jpg', name: 'Nụ thường xuân'},
+    {id: 2, resource_url: 'assets/images/background/beach-5234306_1920.jpg', name: 'Biển Đông'},
+    {id: 3, resource_url: 'assets/images/background/bananas-7840213_1920.jpg', name: 'Chuối vườn nhà'},
+    {id: 4, resource_url: 'assets/images/background/santa-claus-6845491_1920.jpg', name: 'Ông già Noel'},
+    {id: 5, resource_url: 'assets/images/background/city-7629244_1920.jpg', name: 'Thành phố phồn hoa'},
+    {id: 6, resource_url: 'assets/images/background/pexels-rahulp9800-1212487.jpg', name: 'Cúc họa mi'},
+  ];
+
+  /**
+   * Background sound gallery
+   */
+  static sound_gallery: Array<IAssetsResource> = [
+    {id: 1, resource_url: '/assets/sounds/touch.mp3', name: 'touch', category: AssetResourceCategory.EFFECT, key: SoundKeys.TOUCH},
+    {id: 2, resource_url: '/assets/sounds/reload.mp3', name: 'reload', category: AssetResourceCategory.EFFECT, key: SoundKeys.RELOAD},
+    {id: 3, resource_url: '/assets/sounds/loading.mp3', name: 'loading', category: AssetResourceCategory.EFFECT, key: SoundKeys.LOADING},
+    {id: 4, resource_url: '/assets/sounds/message.mp3', name: 'message', category: AssetResourceCategory.EFFECT, key: SoundKeys.MESSAGE},
+    {id: 5, resource_url: '/assets/sounds/notification.mp3', name: 'notification', category: AssetResourceCategory.EFFECT, key: SoundKeys.NOTIFICATION},
+    {id: 6, resource_url: '/assets/sounds/success.mp3', name: 'success', category: AssetResourceCategory.EFFECT, key: SoundKeys.SUCCESS},
+    {id: 7, resource_url: '/assets/sounds/fail.mp3', name: 'success', category: AssetResourceCategory.EFFECT, key: SoundKeys.FAILED},
+    {id: 8, resource_url: '/assets/sounds/error.mp3', name: 'error', category: AssetResourceCategory.EFFECT, key: SoundKeys.ERROR},
+    {id: 9, resource_url: '/assets/sounds/background-default.mp3', name: 'Cuộc sống tươi đẹp', category: AssetResourceCategory.BACKGROUND},
+    {id: 10, resource_url: '/assets/sounds/background-music-soft-calm.mp3', name: 'Lạc quan mới', category: AssetResourceCategory.BACKGROUND},
+    {id: 11, resource_url: '/assets/sounds/background-music-soft-corporate.mp3', name: 'Nhịp điệu ngày mới', category: AssetResourceCategory.BACKGROUND},
+  ];
 
   /**
    * Prefix to show base64 image
@@ -25,7 +57,7 @@ export class CommonConstants {
       if (b64.indexOf(key) === 0) return CommonConstants.signaturesMineTypes[key];
     }
     return undefined;
-  }
+  };
 
   /**
    * Load device identifier

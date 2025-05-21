@@ -25,18 +25,17 @@ export class TextZoomService {
     this.authService.getThemeSettings().then(themeSettings => {
       const zoom = themeSettings?.text_size || TextZoomSize.MEDIUM;
       this.currentZoom = zoom;
-      this.setZoom(zoom as TextZoomSize, false);
+      this.setZoom(zoom as TextZoomSize);
     });
   }
 
   /**
    * setZoom
    * @param size
-   * @param isSyncServer
    */
-  public async setZoom(size: TextZoomSize, isSyncServer: boolean = true) {
+  public async setZoom(size: TextZoomSize) {
     this.currentZoom = size;
-    if (isSyncServer) this.saveTextZoomUserThemeSettings(size);
+    this.saveTextZoomUserThemeSettings(size);
 
     if (this.platform.is(NativePlatform.MOBILEWEB)) {
       // PWA platform

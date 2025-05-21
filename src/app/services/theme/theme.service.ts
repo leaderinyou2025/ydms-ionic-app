@@ -22,40 +22,35 @@ export class ThemeService {
   public loadTheme() {
     this.getTheme().then(theme => {
       if (theme === Theme.DARK) {
-        this.enableDark(false);
-      } else if (theme === Theme.LIGHT) {
-        this.enableLight(false);
+        this.enableDark();
       } else {
-        this.useSystemTheme(false);
+        this.enableLight();
       }
     });
   }
 
   /**
    * Enable dark mode
-   * @param isSyncServer
    */
-  public enableDark(isSyncServer: boolean = true) {
+  public enableDark() {
     document.documentElement.classList.add(Theme.DARK);
-    if (isSyncServer) this.saveUserThemeSettings(Theme.DARK);
+    this.saveUserThemeSettings(Theme.DARK);
   }
 
   /**
    * Enable light mode
-   * @param isSyncServer
    */
-  public enableLight(isSyncServer: boolean = true) {
+  public enableLight() {
     document.documentElement.classList.remove(Theme.DARK);
-    if (isSyncServer) this.saveUserThemeSettings(Theme.LIGHT);
+    this.saveUserThemeSettings(Theme.LIGHT);
   }
 
   /**
    * Use system theme
-   * @param isSyncServer
    */
-  public useSystemTheme(isSyncServer: boolean = true) {
-    this.prefersDark.matches ? this.enableDark(isSyncServer) : this.enableLight(isSyncServer);
-    if (isSyncServer) this.saveUserThemeSettings(Theme.SYSTEM);
+  public useSystemTheme() {
+    this.prefersDark.matches ? this.enableDark() : this.enableLight();
+    this.saveUserThemeSettings(Theme.SYSTEM);
   }
 
   /**
@@ -63,7 +58,7 @@ export class ThemeService {
    */
   public async getTheme(): Promise<Theme> {
     const themeSettings = await this.authService.getThemeSettings();
-    return themeSettings?.theme_model || Theme.SYSTEM;
+    return themeSettings?.theme_model || Theme.LIGHT;
   }
 
   /**

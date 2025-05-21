@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Howl } from 'howler';
-
-import { OdooService, SearchDomain } from '../odoo/odoo.service';
 import { AuthService } from '../auth/auth.service';
 import { ISoundConfig } from '../../shared/interfaces/settings/sound-settings';
 import { SoundKeys } from '../../shared/enums/sound-keys';
-import { HttpClientService } from '../http-client/http-client.service';
-import { OrderBy } from '../../shared/enums/order-by';
+import { CommonConstants } from '../../shared/classes/common-constants';
 import { IAssetsResource } from '../../shared/interfaces/settings/assets-resource';
-import { ForceTestData } from '../../shared/classes/force-test-data';
+import { AssetResourceCategory } from '../../shared/enums/asset-resource-category';
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +16,18 @@ export class SoundService {
   private audioUnlocked = false;
 
   constructor(
-    private odooService: OdooService,
-    private httpClientService: HttpClientService,
     private authService: AuthService,
   ) {
     this.unlockAudioOnFirstGesture();
+  }
+
+  /**
+   * Set background sound
+   * @param sound
+   */
+  public setBackgroundSound(sound: Howl) {
+    if (!sound) return;
+    this.sounds[SoundKeys.BACKGROUND] = sound;
   }
 
   /**
@@ -38,7 +42,6 @@ export class SoundService {
           volume: soundConfig.volume || 0.5,
           loop: name === SoundKeys.BACKGROUND,
           preload: true,
-          // html5: true,
         });
       }
     }
@@ -48,7 +51,11 @@ export class SoundService {
    * Play background music
    */
   public playBackground(): void {
-    this.playEffect(SoundKeys.BACKGROUND);
+    this.authService.getSoundSettings().then(settings => {
+      if (settings?.background?.enabled && settings?.background?.sound?.resource_url) {
+        this.playEffect(SoundKeys.BACKGROUND);
+      }
+    });
   }
 
   /**
@@ -61,21 +68,25 @@ export class SoundService {
   /**
    * Play music by name
    */
-  public playEffect(name: string): void {
-    const sound = this.sounds[name];
-    if (!sound) {
-      console.warn(`[SoundService] Sound effect "${name}" not found`);
-      return;
-    }
+  public playEffect(name: SoundKeys): void {
+    this.authService.getSoundSettings().then(settings => {
+      if (settings?.enabled) {
+        const sound = this.sounds[name];
+        if (!sound) {
+          console.warn(`[SoundService] Sound effect "${name}" not found`);
+          return;
+        }
 
-    if (!this.audioUnlocked && Howler.ctx.state === 'suspended') {
-      Howler.ctx.resume().then(() => {
-        this.audioUnlocked = true;
-        sound.play();
-      });
-    } else {
-      sound.play();
-    }
+        if (!this.audioUnlocked && Howler.ctx.state === 'suspended') {
+          Howler.ctx.resume().then(() => {
+            this.audioUnlocked = true;
+            sound.play();
+          });
+        } else {
+          sound.play();
+        }
+      }
+    });
   }
 
   /**
@@ -112,46 +123,14 @@ export class SoundService {
   }
 
   /**
-   * Load sound list from server
-   */
-  public async getSoundList(
-    searchDomain: SearchDomain = [],
-    offset: number = 0,
-    limit: number = 20,
-    order?: OrderBy
-  ): Promise<Array<IAssetsResource>> {
-    // TODO: Call API to load new audio list
-    // Download and cache index source uri
-    return ForceTestData.background_sounds;
-  }
-
-  /**
-   * Load user sound config
-   * @private
-   */
-  private async loadSoundConfig(): Promise<{ [key: string]: ISoundConfig }> {
-    const soundSettings = await this.authService.getSoundSettings();
-    if (!soundSettings) return {};
-
-    const results: { [key: string]: ISoundConfig } = {};
-    for (const key in soundSettings) {
-      const value = soundSettings[key].sound;
-      if (!value) continue;
-      value.volume = soundSettings[key].volume;
-      results[key] = value;
-    }
-
-    return results;
-  }
-
-  /**
    * Đảm bảo AudioContext được khởi động sau tương tác người dùng
    */
-  private unlockAudioOnFirstGesture(): void {
+  public unlockAudioOnFirstGesture(): void {
     const resumeAudio = () => {
       if (Howler.ctx && Howler.ctx.state === 'suspended') {
         Howler.ctx.resume().then(() => {
           this.audioUnlocked = true;
+          this.playBackground();
           console.log('[SoundService] AudioContext resumed!');
         });
       }
@@ -163,5 +142,40 @@ export class SoundService {
     document.body.addEventListener('click', resumeAudio, {once: true});
     document.body.addEventListener('touchstart', resumeAudio, {once: true});
     document.body.addEventListener('keydown', resumeAudio, {once: true});
+  }
+
+  /**
+   * Get list background sound
+   */
+  public getBackgroundSoundGallery(): Array<IAssetsResource> {
+    return CommonConstants.sound_gallery.filter(u => u['category'] === AssetResourceCategory.BACKGROUND);
+  }
+
+  /**
+   * Load user sound config
+   * @private
+   */
+  private async loadSoundConfig(): Promise<{ [key: string]: ISoundConfig }> {
+    const results: { [key: string]: ISoundConfig } = {};
+    for (const sound of CommonConstants.sound_gallery) {
+      const key: string = sound['key'];
+      if (!key) continue;
+      results[key] = {id: sound.id, name: sound.name, resource_url: sound.resource_url, volume: 1};
+    }
+
+    const soundSettings = await this.authService.getSoundSettings();
+    if (!soundSettings) return results;
+
+    // Load background sound
+    if (soundSettings.background?.sound) {
+      results[SoundKeys.BACKGROUND] = {
+        id: soundSettings.background.sound.id,
+        name: soundSettings.background.sound.name,
+        resource_url: soundSettings.background.sound.resource_url,
+        volume: soundSettings.background.volume,
+      }
+    }
+
+    return results;
   }
 }

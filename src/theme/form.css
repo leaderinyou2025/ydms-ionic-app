@@ -32,32 +32,36 @@ input:where(:not([type])),
 [type='week'],
 [multiple],
 textarea,
-select {
+select,
+ion-select,
+ion-textarea {
   --padding-start: 0.85rem;
   --padding-end: 0.3rem;
-  border-radius: 0.3rem;
+  --background: var(--ion-item-background, var(--ion-background-color, #fff));
+  background: var(--ion-item-background, var(--ion-background-color, #fff));
+}
+
+ion-input[type='text'],
+ion-input[type='email'],
+ion-input[type='url'],
+ion-input[type='password'],
+ion-input[type='number'],
+ion-input[type='date'],
+ion-input[type='datetime-local'],
+ion-input[type='month'],
+ion-input[type='tel'],
+ion-input[type='time'],
+ion-input[type='week'],
+ion-select,
+ion-textarea {
+  --border-color: #6b7280;
+  border-color: #6b7280;
+  --border-width: 1px;
+  border-radius: 0.5rem;
+  --border-radius: 0.5rem;
+  overflow: hidden;
 }
 
 .ion-touched.ion-invalid {
-  border-color: var(--ion-color-danger);
-}
-
-.dark {
-  [type='text'],
-  input:where(:not([type])),
-  [type='email'],
-  [type='url'],
-  [type='password'],
-  [type='number'],
-  [type='date'],
-  [type='datetime-local'],
-  [type='month'],
-  [type='tel'],
-  [type='time'],
-  [type='week'],
-  [multiple],
-  textarea,
-  select {
-    background: transparent;
-  }
+  border-color: var(--ion-color-danger) !important;
 }

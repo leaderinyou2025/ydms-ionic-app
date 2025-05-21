@@ -17,14 +17,26 @@
   </ion-refresher>
 
   <!-- Main Character -->
-  <div class="flex flex-col items-center my-5">
-    <div class="relative mb-8" *ngIf="avatar">
-      <ion-img [src]="avatar" [alt]="character.altText || character.name"></ion-img>
+  <div class="flex flex-col items-center my-5" *ngIf="authData">
+    <div class="relative mb-8" (click)="onClickSettingAvatar()">
+      <ion-img *ngIf="avatar" [src]="avatar" alt="avatar"></ion-img>
+      <ion-img *ngIf="!avatar" src="/assets/images/avatar/conan_no_set.png" alt="avatar"></ion-img>
     </div>
     <div class="flex items-center">
       <div class="relative">
-        <span class="text-2xl text-teal-500 italic z-10">{{ character.name }}</span>
-        <ng-lottie class="absolute right-[-20px] top-[-46px]" [options]="options" style="width: 80px; height: 80px;"></ng-lottie>
+        <!--   Nickname and animation     -->
+        <ng-container *ngIf="authData.nickname">
+          <span class="text-2xl text-teal-500 italic z-10">{{ authData.nickname }}</span>
+          <ng-lottie class="absolute right-[-20px] top-[-46px]" [options]="options" style="width: 80px; height: 80px;"></ng-lottie>
+        </ng-container>
+
+        <!--    Chưa thiết lập nickname    -->
+        <ng-container *ngIf="!authData.nickname">
+          <span class="text-2xl text-teal-500 italic z-10" (click)="onClickOpenSetNicknameDialog()">
+            {{ TranslateKeys.TITLE_NOT_SET_NICKNAME | translate }}
+          </span>
+          <ion-icon (click)="onClickOpenSetNicknameDialog()" class="absolute right-[-25px] bottom-2 text-base" color="primary" name="settings"></ion-icon>
+        </ng-container>
       </div>
     </div>
   </div>

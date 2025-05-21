@@ -175,6 +175,7 @@ export enum TranslateKeys {
   TITLE_AVATAR = 'TITLE.avatar',
   TITLE_BACKGROUND = 'TITLE.background',
   TITLE_DEFAULT = 'TITLE.default',
+  TITLE_SOUND_EFFECT = 'TITLE.sound_effect',
   TITLE_BACKGROUND_SOUND = 'TITLE.background_sound',
   TITLE_TOUCH_SOUND = 'TITLE.touch_sound',
   TITLE_NOTIFICATION_SOUND = 'TITLE.notification_sound',
@@ -220,6 +221,16 @@ export enum TranslateKeys {
   TITLE_POINTS = 'TITLE.points',
   TITLE_LOADING_MORE = 'TITLE.loading_more',
   TITLE_ACTIONS = 'TITLE.actions',
+  TITLE_NAME = 'TITLE.name',
+  TITLE_GENDER = 'TITLE.gender',
+  TITLE_MALE = 'TITLE.male',
+  TITLE_FEMALE = 'TITLE.female',
+  TITLE_OTHER = 'TITLE.other',
+  TITLE_STATE = 'TITLE.state',
+  TITLE_DISTRICT = 'TITLE.district',
+  TITLE_PRECINT = 'TITLE.precint',
+  TITLE_STREET = 'TITLE.street',
+  TITLE_SETUP_NICKNAME = 'TITLE.setup_nickname',
 
   // VALIDATE
   VALIDATE_PHONE_REQUIRED = 'VALIDATE.phone_required',
@@ -229,6 +240,10 @@ export enum TranslateKeys {
   VALIDATE_CONFIRM_PASS_REQUIRED = 'VALIDATE.confirm_password_required',
   VALIDATE_PASS_MIN_LENGTH = 'VALIDATE.password_min_length',
   VALIDATE_PASS_MATCH = 'VALIDATE.passwords_not_match',
+  VALIDATE_NICKNAME_REQUIRED = 'VALIDATE.nickname_required',
+  VALIDATE_NAME_REQUIRED = 'VALIDATE.name_required',
+  VALIDATE_EMAIL_REQUIRED = 'VALIDATE.email_required',
+  VALIDATE_EMAIL_FORMAT = 'VALIDATE.email_format',
 
   // ALERT
   ALERT_DEFAULT_HEADER = 'ALERT.default_header',
@@ -265,7 +280,8 @@ export enum TranslateKeys {
   TOAST_CHANGE_PASS_SUCCESS = 'TOAST.password_changed_success',
   TOAST_TASK_COMPLETE_SUCCESS = 'TOAST.task_complete_success',
   TOAST_TASK_COMPLETE_ERROR = 'TOAST.task_complete_error',
-  TOAST_ANSWER_ALL_QUESTIONS = 'TOAST.answer_all_questions',
+  TOAST_UPDATE_FAILED = 'TOAST.update_failed',
+  TOAST_UPDATE_SUCCESS = 'TOAST.update_success',
 
   // ERROR
   ERROR_NETWORK = 'ERROR.network',

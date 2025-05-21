@@ -13,19 +13,26 @@
     <ion-item lines="none" detail="false" routerLink="/{{PageRoutes.PROFILE}}/{{PageRoutes.PERSONAL_INFO}}"
               class="m-3 border border-solid border-gray-400 rounded-2xl dark:border-gray-200">
       <ion-avatar aria-hidden="true" slot="start">
-        <img alt="Silhouette of a person's head" [src]="authData.avatar" *ngIf="authData.avatar"/>
-        <img alt="Silhouette of a person's head" src="../../../../assets/icons/svg/avatar.svg" *ngIf="!authData.avatar"/>
+        <img alt="Silhouette of a person's head" [src]="getUserAvatarImage()"/>
       </ion-avatar>
-      <ion-label class="py-2">
+
+      <!--    Student    -->
+      <ion-label class="py-2" *ngIf="authData.is_teenager">
         <ng-container *ngIf="authData.nickname">{{ authData.nickname }}<br></ng-container>
         <ng-container *ngIf="!authData.nickname">{{ TranslateKeys.TITLE_NOT_SET_NICKNAME | translate }}<br></ng-container>
         <span class="text-sm text-gray-500 italic dark:text-gray-400"> {{ TranslateKeys.TITLE_PERSONAL_INFO | translate }}</span>
+      </ion-label>
+
+      <!--    Parent / Teacher    -->
+      <ion-label *ngIf="!authData.is_teenager">
+        <ng-container>{{ authData.name }}<br></ng-container>
+        <span class="text-sm text-gray-500 italic dark:text-gray-400">{{ TranslateKeys.TITLE_VIEW_PROFILE_PAGE | translate }}</span>
       </ion-label>
       <ion-icon name="chevron-forward" slot="end" class="text-base"></ion-icon>
     </ion-item>
 
     <!--  Phone  -->
-    <ion-item detail="false">
+    <ion-item detail="false" routerLink="/{{PageRoutes.PROFILE}}/{{PageRoutes.PERSONAL_INFO}}">
       <ion-icon name="call" slot="start" color="primary" class="text-xl"></ion-icon>
       <ion-label class="py-2">
         {{ TranslateKeys.TITLE_PHONE | translate }}<br>
@@ -35,7 +42,7 @@
     </ion-item>
 
     <!--  Mail  -->
-    <ion-item detail="false">
+    <ion-item detail="false" routerLink="/{{PageRoutes.PROFILE}}/{{PageRoutes.PERSONAL_INFO}}">
       <ion-icon name="mail" slot="start" color="primary" class="text-xl"></ion-icon>
       <ion-label class="py-2">
         {{ TranslateKeys.TITLE_EMAIL | translate }}<br>
@@ -45,7 +52,7 @@
     </ion-item>
 
     <!--  Birthday  -->
-    <ion-item lines="none" detail="false">
+    <ion-item lines="none" detail="false" routerLink="/{{PageRoutes.PROFILE}}/{{PageRoutes.PERSONAL_INFO}}">
       <ion-icon name="calendar" slot="start" color="primary" class="text-xl"></ion-icon>
       <ion-label class="py-2">
         {{ TranslateKeys.TITLE_BIRTHDAY | translate }}<br>

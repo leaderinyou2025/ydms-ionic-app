@@ -2,14 +2,8 @@ import { IAssetsResource } from './assets-resource';
 import { IDictionary } from '../base/dictionary';
 
 export interface ISoundSettings extends IDictionary<any> {
+  enabled?: boolean;
   background?: ISoundSetting,
-  touch?: ISoundSetting,
-  reload?: ISoundSetting,
-  loading?: ISoundSetting,
-  notification?: ISoundSetting,
-  message?: ISoundSetting,
-  success?: ISoundSetting,
-  failed?: ISoundSetting
 }
 
 export interface ISoundSetting {

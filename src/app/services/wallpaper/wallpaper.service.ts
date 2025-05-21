@@ -5,6 +5,8 @@ import { AuthService } from '../auth/auth.service';
 import { LiyYdmsAvatarService } from '../models/iliy-ydms-avatar.service';
 import { ForceTestData } from '../../shared/classes/force-test-data';
 import { IAssetsResource } from '../../shared/interfaces/settings/assets-resource';
+import { IRelatedField } from '../../shared/interfaces/base/related-field';
+import { CommonConstants } from '../../shared/classes/common-constants';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +23,7 @@ export class WallpaperService {
    * Load background images from server
    */
   public getBackgroundWallpapers(): Observable<IAssetsResource[]> {
-    const images = ForceTestData.background_images;
+    const images = CommonConstants.background_images;
     return of(images);
   }
 
@@ -50,15 +52,16 @@ export class WallpaperService {
     if (!themeSetting) return;
     themeSetting.background = image;
     await this.authService.setThemeSettings(themeSetting);
+    await this.authService.saveAppSettings();
   }
 
   /**
    * Get selected avatar image from storage
    */
-  public async getSelectedAvatar(): Promise<IAssetsResource | undefined> {
-    const themeSetting = await this.authService.getThemeSettings();
-    if (!themeSetting) return;
-    return themeSetting.avatar;
+  public async getSelectedAvatar(): Promise<IRelatedField | undefined> {
+    const authData = await this.authService.getAuthData();
+    if (!authData) return;
+    return authData.avatar;
   }
 
   /**
@@ -68,7 +71,9 @@ export class WallpaperService {
   public async setSelectedAvatar(avatar: IAssetsResource): Promise<void> {
     const themeSetting = await this.authService.getThemeSettings();
     if (!themeSetting) return;
-    themeSetting.avatar = avatar;
-    await this.authService.setThemeSettings(themeSetting, true);
+    themeSetting.avatar = {id: avatar.id, name: avatar.name || ''};
+    await this.authService.setThemeSettings(themeSetting);
+    await this.authService.saveAppSettings();
+    await this.authService.saveUserAvatar();
   }
 }
