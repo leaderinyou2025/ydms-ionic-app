@@ -214,6 +214,8 @@ export class HomePage implements OnInit {
         this.liyYdmsAvatarService.getImageById(authData.avatar.id).then(imageData => {
           const imgType = CommonConstants.detectMimeType(imageData?.image_512 || '');
           this.avatar = imgType ? `${imgType + imageData?.image_512}` : undefined;
+          authData.avatar_128 = imageData?.image_512;
+          this.authService.setAuthData(authData);
         });
       }
     });

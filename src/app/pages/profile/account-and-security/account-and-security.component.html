@@ -12,7 +12,8 @@
   <ion-list class="my-2" *ngIf="authData">
     <ion-item lines="none" detail="false" routerLink="/{{PageRoutes.PROFILE}}/{{PageRoutes.PERSONAL_INFO}}"
               class="m-3 border border-solid border-gray-400 rounded-2xl dark:border-gray-200">
-      <ion-avatar aria-hidden="true" slot="start">
+
+      <ion-avatar aria-hidden="true" slot="start" class="border">
         <img alt="Silhouette of a person's head" [src]="getUserAvatarImage()"/>
       </ion-avatar>
 

@@ -44,8 +44,14 @@ export class SelectBackgroundSoundComponent implements OnInit {
    * @param item
    */
   playSound(item: ISoundResource) {
-    // Dừng âm thanh hiện tại nếu có
     if (this.sound) {
+      if (this.selectedSound?.id === item.id && !this.playing) {
+        this.playing = true;
+        this.sound.play();
+        return;
+      }
+
+      // Dừng âm thanh hiện tại nếu có
       this.sound.stop();
       this.playing = false;
       if (this.selectedSound) {
@@ -61,6 +67,7 @@ export class SelectBackgroundSoundComponent implements OnInit {
     this.sound = new Howl({
       src: [item.resource_url],
       html5: true,
+      volume: this.volume || 1,
       onplay: () => {
         this.playing = true;
         item.duration = this.sound!.duration();
@@ -83,9 +90,14 @@ export class SelectBackgroundSoundComponent implements OnInit {
   /**
    * Pause sound
    */
-  stopSound() {
-    if (this.sound) this.sound.stop();
-    this.selectedSound = undefined;
+  stopSound(isPause: boolean = false) {
+    if (!this.sound) return;
+    if (!isPause) {
+      this.sound.stop();
+      this.selectedSound = undefined;
+    } else {
+      this.sound.pause();
+    }
     this.playing = false;
   }
 

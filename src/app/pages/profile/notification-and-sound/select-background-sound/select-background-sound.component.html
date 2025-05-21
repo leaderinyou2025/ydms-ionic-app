@@ -1,14 +1,14 @@
 <ion-content class="ion-padding-top ion-padding-bottom">
   <ion-list *ngIf="backgroundSounds">
     <ion-item *ngFor="let item of backgroundSounds; let i = index;" lines="{{i === (backgroundSounds.length - 1) ? 'none' : ''}}">
-      <ion-icon name="musical-note" color="primary" class="text-2xl" slot="start"></ion-icon>
-      <ion-label [color]="selectedSound?.id === item.id ? 'danger' : ''" (click)="playSound(item)">
-        <h2>{{ item.name }}</h2>
-        <p class="italic">{{ item.currentTime || '0:00' }} / {{ item.durationTime || '0:00' }}</p>
+      <ion-icon name="musical-note" color="primary" class="text-2xl" slot="start" (click)="playSound(item)"></ion-icon>
+      <ion-label [color]="selectedSound?.id === item.id ? 'danger' : ''">
+        <h2 (click)="playSound(item)">{{ item.name }}</h2>
+        <p class="italic" (click)="playSound(item)">{{ item.currentTime || '0:00' }} / {{ item.durationTime || '0:00' }}</p>
         <ion-range min="0" [max]="item.duration || 0" [(ngModel)]="item.progress" (ionChange)="onProgressChange($event, item)" [disabled]="selectedSound?.id !== item.id || !playing"></ion-range>
       </ion-label>
       <ion-icon *ngIf="!playing || selectedSound?.id !== item.id" name="play" color="primary" class="text-2xl" slot="end" (click)="playSound(item)"></ion-icon>
-      <ion-icon *ngIf="selectedSound?.id === item.id && playing" name="pause" color="primary" class="text-2xl" slot="end" (click)="stopSound()"></ion-icon>
+      <ion-icon *ngIf="selectedSound?.id === item.id && playing" name="pause" color="primary" class="text-2xl" slot="end" (click)="stopSound(true)"></ion-icon>
     </ion-item>
   </ion-list>
 </ion-content>
