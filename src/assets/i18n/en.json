@@ -289,7 +289,15 @@
     "no_self_discovery_survey_history": "No self discovery survey history yet",
     "emotional_survey": "Emotional Survey",
     "emotional_survey_history": "Survey History",
-    "emotional_survey_detail": "Survey Detail"
+    "emotional_survey_detail": "Survey Detail",
+    "family_dialogue_session": "Family Dialogue Session",
+    "family_dialogue_session_history": "Family Dialogue History",
+    "family_dialogue_session_detail": "Dialogue Session Detail",
+    "family_dialogue_questions": "Dialogue Questions",
+    "suggested_questions": "Suggested Questions",
+    "parent_questions": "Questions from Parents",
+    "no_family_dialogue_session_history": "No family dialogue session history available",
+    "answer_questions": "Submit Answers"
   },
   "VALIDATE": {
     "phone_required": "Please input your phone number.",

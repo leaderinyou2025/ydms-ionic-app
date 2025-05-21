@@ -13,18 +13,10 @@ import { ILiyYdmsNotification } from '../interfaces/models/liy.ydms.notification
 import { IFriend } from '../interfaces/friend/friend';
 import { IRankItem } from '../interfaces/rank/rank.interfaces';
 import { IAchievementCategory } from '../interfaces/rank/achievement.interfaces';
-import {
-  IFamilyConflictSurveyHistory,
-  IFamilyConflictSurveyQuestion,
-} from '../interfaces/family-conflict-survey/family-conflict-survey.interfaces';
-import {
-  IFamilyCommunicationQualitySurveyHistory,
-  IFamilyCommunicationQualitySurveyQuestion,
-} from '../interfaces/family-communication-quality-survey/family-communication-quality-survey.interfaces';
-import {
-  ISelfDiscoverySurveyHistory,
-  ISelfDiscoverySurveyQuestion,
-} from '../interfaces/self-discovery-survey/self-discovery-survey.interfaces';
+import { IFamilyConflictSurveyHistory, IFamilyConflictSurveyQuestion } from '../interfaces/family-conflict-survey/family-conflict-survey.interfaces';
+import { IFamilyCommunicationQualitySurveyHistory, IFamilyCommunicationQualitySurveyQuestion } from '../interfaces/family-communication-quality-survey/family-communication-quality-survey.interfaces';
+import { ISelfDiscoverySurveyHistory, ISelfDiscoverySurveyQuestion } from '../interfaces/self-discovery-survey/self-discovery-survey.interfaces';
+import { IFamilyDialogueSessionHistory, IFamilyDialogueSessionDetail, IFamilyDialogueSessionQuestion } from '../interfaces/family-dialogue-session/family-dialogue-session.interfaces';
 import { EmotionType } from '../enums/personal-diary/personal-diary.enum';
 import {
   IEmotionSuggestion,
@@ -43,6 +35,123 @@ import {
 import { UserRoles } from '../enums/user-roles';
 
 export class ForceTestData {
+
+  // Mock data for family dialogue sessions
+  static familyDialogueSessions: IFamilyDialogueSessionHistory[] = [
+    {
+      id: 1,
+      date: new Date(2023, 10, 15),
+      title: 'Buổi đối thoại gia đình tháng 11',
+      description: 'Chia sẻ về trải nghiệm học tập và mối quan hệ với bạn bè',
+      status: 'completed'
+    },
+    {
+      id: 2,
+      date: new Date(2023, 9, 10),
+      title: 'Buổi đối thoại gia đình tháng 10',
+      description: 'Trao đổi về kế hoạch học tập và mục tiêu cá nhân',
+      status: 'completed'
+    },
+    {
+      id: 3,
+      date: new Date(2023, 8, 5),
+      title: 'Buổi đối thoại gia đình tháng 9',
+      description: 'Chia sẻ về sở thích và hoạt động ngoại khóa',
+      status: 'completed'
+    },
+    {
+      id: 4,
+      date: new Date(),
+      title: 'Buổi đối thoại gia đình tháng 12',
+      description: 'Trao đổi về kế hoạch cho kỳ nghỉ đông sắp tới',
+      status: 'pending'
+    }
+  ];
+
+  // Mock data for family dialogue session questions
+  static familyDialogueSessionQuestions: IFamilyDialogueSessionQuestion[] = [
+    {
+      id: 1,
+      text: 'Con đã học được điều gì mới trong tháng qua?',
+      type: 'suggested',
+      answer: 'Con đã học được cách giải các bài toán phức tạp hơn và cải thiện kỹ năng viết văn. Con cũng tham gia vào câu lạc bộ khoa học và làm một dự án nhỏ về năng lượng tái tạo.'
+    },
+    {
+      id: 2,
+      text: 'Con có gặp khó khăn gì trong việc học không?',
+      type: 'suggested',
+      answer: 'Con gặp một chút khó khăn với môn Tiếng Anh, đặc biệt là phần ngữ pháp. Con đang cố gắng dành thêm thời gian để luyện tập.'
+    },
+    {
+      id: 3,
+      text: 'Con có kế hoạch gì cho kỳ nghỉ sắp tới?',
+      type: 'parent',
+      answer: 'Con muốn đọc thêm sách và cải thiện kỹ năng vẽ. Con cũng muốn dành thời gian giúp bố mẹ việc nhà nhiều hơn.'
+    },
+    {
+      id: 4,
+      text: 'Con có hài lòng với kết quả học tập hiện tại không?',
+      type: 'suggested',
+      answer: 'Con khá hài lòng nhưng vẫn muốn cải thiện thêm môn Toán và Tiếng Anh.'
+    },
+    {
+      id: 5,
+      text: 'Con có gặp khó khăn gì trong việc giao tiếp với bạn bè không?',
+      type: 'suggested',
+      answer: 'Con không gặp nhiều khó khăn, nhưng đôi khi con cảm thấy ngại khi phải nói trước đám đông.'
+    },
+    {
+      id: 6,
+      text: 'Con có dự định gì cho kỳ nghỉ đông sắp tới?',
+      type: 'suggested'
+    },
+    {
+      id: 7,
+      text: 'Con muốn cải thiện điều gì trong học kỳ tới?',
+      type: 'suggested'
+    },
+    {
+      id: 8,
+      text: 'Con có muốn tham gia hoạt động nào cùng gia đình trong kỳ nghỉ không?',
+      type: 'parent'
+    }
+  ];
+
+  /**
+   * Get family dialogue session detail by ID
+   * @param id Session ID
+   */
+  static getFamilyDialogueSessionDetail(id: number): IFamilyDialogueSessionDetail | null {
+    const session = this.familyDialogueSessions.find(s => s.id === id);
+    if (!session) return null;
+
+    let questions: IFamilyDialogueSessionQuestion[] = [];
+
+    if (id === 1) {
+      questions = [
+        this.familyDialogueSessionQuestions[0],
+        this.familyDialogueSessionQuestions[1],
+        this.familyDialogueSessionQuestions[2]
+      ];
+    } else if (id === 4) {
+      questions = [
+        this.familyDialogueSessionQuestions[5],
+        this.familyDialogueSessionQuestions[6],
+        this.familyDialogueSessionQuestions[7]
+      ];
+    } else {
+      questions = [
+        this.familyDialogueSessionQuestions[3],
+        this.familyDialogueSessionQuestions[4]
+      ];
+    }
+
+    return {
+      ...session,
+      questions
+    };
+  }
+
   /**
    * Resource topic thumbnail mapping
    * Maps each resource topic to its default thumbnail image

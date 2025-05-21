@@ -32,4 +32,5 @@ export enum PageRoutes {
   FAMILY_ACTIONS = 'family-actions',
   EXPERT_GUIDE = 'expert-guide',
   EMOTIONAL_SURVEY = 'emotional-survey',
+  FAMILY_DIALOGUE_SESSION = 'family-dialogue-session',
 }
