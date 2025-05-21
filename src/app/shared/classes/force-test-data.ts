@@ -41,6 +41,12 @@ import {
   IEmotionalSurveyQuestion,
 } from '../interfaces/emotional-survey/emotional-survey.interfaces';
 import { UserRoles } from '../enums/user-roles';
+import {
+  IConflictLogEntry,
+  IConflictLogSolution,
+  IConflictLogProgressUpdate,
+  ConflictLogStatus
+} from '../interfaces/conflict-log/conflict-log.interfaces';
 
 export class ForceTestData {
   /**
@@ -606,6 +612,142 @@ export class ForceTestData {
     avatar: null,
     isCurrentUser: true,
   };
+
+  /**
+   * Mock data for conflict logs
+   */
+  static mockConflictLogs: IConflictLogEntry[] = [
+    {
+      id: 1,
+      date: new Date(2024, 10, 25),
+      title: 'Xung đột với bạn cùng lớp về dự án nhóm',
+      description: 'Tôi và bạn cùng lớp có ý kiến khác nhau về cách thực hiện dự án nhóm. Bạn ấy muốn làm theo cách của mình mà không lắng nghe ý kiến của các thành viên khác.',
+      status: ConflictLogStatus.RESOLVED,
+      progress: 100,
+      user: ForceTestData.authData
+    },
+    {
+      id: 2,
+      date: new Date(2024, 10, 20),
+      title: 'Mâu thuẫn với em gái về việc sử dụng máy tính',
+      description: 'Em gái thường xuyên sử dụng máy tính của tôi mà không xin phép, dẫn đến một số tài liệu học tập của tôi bị xóa.',
+      status: ConflictLogStatus.IN_PROGRESS,
+      progress: 75,
+      user: ForceTestData.authData
+    },
+    {
+      id: 3,
+      date: new Date(2024, 10, 15),
+      title: 'Bất đồng với bố mẹ về thời gian học tập',
+      description: 'Bố mẹ muốn tôi dành nhiều thời gian hơn cho việc học, trong khi tôi cảm thấy lịch học hiện tại đã quá tải.',
+      status: ConflictLogStatus.IN_PROGRESS,
+      progress: 50,
+      user: ForceTestData.authData
+    },
+    {
+      id: 4,
+      date: new Date(2024, 10, 10),
+      title: 'Xung đột với bạn thân về việc không giữ bí mật',
+      description: 'Bạn thân đã chia sẻ một số thông tin cá nhân của tôi với người khác mà không xin phép, khiến tôi cảm thấy bị phản bội.',
+      status: ConflictLogStatus.NEW,
+      progress: 0,
+      user: ForceTestData.authData
+    },
+    {
+      id: 5,
+      date: new Date(2024, 10, 5),
+      title: 'Mâu thuẫn với thầy giáo về điểm số',
+      description: 'Tôi cảm thấy điểm số mà thầy giáo cho tôi không công bằng so với nỗ lực mà tôi đã bỏ ra.',
+      status: ConflictLogStatus.RESOLVED,
+      progress: 100,
+      user: ForceTestData.authData
+    }
+  ];
+
+  /**
+   * Mock data for conflict log solutions
+   */
+  static mockConflictLogSolutions: IConflictLogSolution[] = [
+    {
+      id: 1,
+      description: 'Tôi đã nói chuyện trực tiếp với bạn cùng lớp và đề xuất một cuộc họp nhóm để mọi người có thể đóng góp ý kiến. Chúng tôi đã thống nhất được phương án làm việc phù hợp với tất cả mọi người.',
+      date: new Date(2024, 10, 26),
+      user: ForceTestData.authData
+    },
+    {
+      id: 2,
+      description: 'Tôi đã nói chuyện với em gái và giải thích tầm quan trọng của việc xin phép trước khi sử dụng đồ của người khác. Chúng tôi đã thỏa thuận về thời gian sử dụng máy tính và cách bảo quản tài liệu.',
+      date: new Date(2024, 10, 21),
+      user: ForceTestData.authData
+    },
+    {
+      id: 3,
+      description: 'Tôi đã lập một kế hoạch học tập chi tiết để chia sẻ với bố mẹ, giúp họ hiểu rõ hơn về lịch trình và khối lượng công việc của tôi.',
+      date: new Date(2024, 10, 16),
+      user: ForceTestData.authData
+    },
+    {
+      id: 5,
+      description: 'Tôi đã gặp riêng thầy giáo sau giờ học để trình bày quan điểm của mình một cách tôn trọng. Thầy đã giải thích cách chấm điểm và đồng ý xem xét lại bài làm của tôi.',
+      date: new Date(2024, 10, 6),
+      user: ForceTestData.authData
+    }
+  ];
+
+  /**
+   * Mock data for conflict log progress updates
+   */
+  static mockConflictLogProgressUpdates: IConflictLogProgressUpdate[] = [
+    {
+      id: 1,
+      description: 'Đã hoàn thành dự án nhóm với sự hợp tác tốt từ tất cả các thành viên.',
+      progress: 100,
+      date: new Date(2024, 10, 28),
+      user: ForceTestData.authData
+    },
+    {
+      id: 2,
+      description: 'Em gái đã bắt đầu xin phép trước khi sử dụng máy tính và cẩn thận hơn với các tài liệu.',
+      progress: 50,
+      date: new Date(2024, 10, 22),
+      user: ForceTestData.authData
+    },
+    {
+      id: 2,
+      description: 'Tình hình đã cải thiện nhiều, em gái luôn xin phép và chúng tôi có thể chia sẻ máy tính một cách hòa thuận.',
+      progress: 75,
+      date: new Date(2024, 10, 25),
+      user: ForceTestData.authData
+    },
+    {
+      id: 3,
+      description: 'Bố mẹ đã xem xét kế hoạch học tập của tôi và đồng ý với một số điểm.',
+      progress: 25,
+      date: new Date(2024, 10, 17),
+      user: ForceTestData.authData
+    },
+    {
+      id: 3,
+      description: 'Chúng tôi đã thảo luận thêm và đạt được thỏa thuận về thời gian học tập và giải trí.',
+      progress: 50,
+      date: new Date(2024, 10, 20),
+      user: ForceTestData.authData
+    },
+    {
+      id: 5,
+      description: 'Thầy giáo đã xem xét lại bài làm và điều chỉnh điểm số.',
+      progress: 75,
+      date: new Date(2024, 10, 7),
+      user: ForceTestData.authData
+    },
+    {
+      id: 5,
+      description: 'Vấn đề đã được giải quyết hoàn toàn, tôi hài lòng với kết quả và hiểu rõ hơn về cách đánh giá của thầy.',
+      progress: 100,
+      date: new Date(2024, 10, 8),
+      user: ForceTestData.authData
+    }
+  ];
 
   static achievementCategories: Array<IAchievementCategory> = [
     {

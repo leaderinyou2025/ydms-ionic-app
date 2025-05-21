@@ -377,4 +377,16 @@ export enum TranslateKeys {
 
   // CAPTION
   CAPTION_CHATBOT = 'CAPTION.chatbot',
+
+  // CONFLICT LOG
+  TITLE_CONFLICT_LOG = 'TITLE.conflict_log',
+  TITLE_CONFLICT_LOG_LIST = 'TITLE.conflict_log_list',
+  TITLE_CONFLICT_LOG_DETAIL = 'TITLE.conflict_log_detail',
+  TITLE_CONFLICT_LOG_FORM = 'TITLE.conflict_log_form',
+  TITLE_CONFLICT_LOG_NEW = 'TITLE.conflict_log_new',
+  TITLE_CONFLICT_LOG_PROGRESS = 'TITLE.conflict_log_progress',
+  TITLE_CONFLICT_LOG_SOLUTION = 'TITLE.conflict_log_solution',
+  TITLE_CONFLICT_LOG_STATUS = 'TITLE.conflict_log_status',
+  TITLE_CONFLICT_LOG_DATE = 'TITLE.conflict_log_date',
+  TITLE_NO_CONFLICT_LOGS = 'TITLE.no_conflict_logs',
 }

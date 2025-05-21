@@ -1,0 +1,80 @@
+<app-header
+  [pageTitle]="TranslateKeys.TITLE_CONFLICT_LOG"
+  backgroundColor="linear-gradient(to bottom, #3b82f6, #1e40af)"
+  [animeImage]="animeImage">
+</app-header>
+
+<ion-content [fullscreen]="true" class="font-comic-sans custom-page-bg-light">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content
+      pullingText="{{ TranslateKeys.PULL_TO_REFRESH | translate }}"
+      refreshingText="{{ TranslateKeys.REFRESHING | translate }}">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Conflict logs list -->
+  <div class="px-4 py-2">
+    <ng-container *ngIf="!isLoading">
+      <!-- Empty state -->
+      <div *ngIf="conflictLogs.length === 0" class="flex flex-col items-center justify-center py-12">
+        <span class="text-5xl text-gray-400 mb-4">📝</span>
+        <p class="text-gray-500 dark:text-gray-400 text-center italic">{{ TranslateKeys.TITLE_NO_CONFLICT_LOGS | translate }}</p>
+        <ion-button class="mt-4" (click)="navigateToNewLog()">
+          <ion-icon class="text-blue-500" name="add-circle-outline" slot="start"></ion-icon>
+          {{ 'BUTTON_TITLES.create_new_log' | translate }}
+        </ion-button>
+      </div>
+
+      <!-- Logs list -->
+      <div *ngIf="conflictLogs.length > 0">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200">
+            {{ 'TITLE.conflict_log_list' | translate }}
+          </h2>
+          <ion-button fill="clear" (click)="navigateToNewLog()">
+            <ion-icon name="add-circle-outline" slot="icon-only" style="font-size: 32px;"></ion-icon>
+          </ion-button>
+        </div>
+        <div class="overflow-auto max-h-[calc(100vh-175px)]">
+          <ion-list class="rounded-lg">
+            <ion-item *ngFor="let log of conflictLogs" detail="true" button (click)="navigateToDetail(log.id)" class="mb-2 rounded-lg shadow-sm">
+              <ion-label class="py-2">
+                <div class="flex items-center">
+                  <ion-icon [name]="getStatusIcon(log.status)" [class]="getStatusColor(log.status)" class="mr-2"></ion-icon>
+                  <h2 class="font-semibold text-gray-800 dark:text-gray-200">{{ log.title }}</h2>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1 line-clamp-2">{{ log.description }}</p>
+                <div class="flex justify-between items-center mt-2">
+                  <span class="text-xs text-gray-500 dark:text-gray-400">{{ formatDate(log.date) }}</span>
+                  <div *ngIf="log.status !== ConflictLogStatus.NEW" class="flex items-center">
+                    <div class="w-20 h-2 bg-gray-200 rounded-full overflow-hidden">
+                      <div class="h-full bg-blue-500" [style.width.%]="log.progress"></div>
+                    </div>
+                    <span class="text-xs text-gray-500 ml-2">{{ log.progress }}%</span>
+                  </div>
+                </div>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Loading skeleton -->
+    <div *ngIf="isLoading">
+      <ion-skeleton-text animated style="width: 60%; height: 25px; margin-bottom: 10px;"></ion-skeleton-text>
+      <ion-list>
+        <ion-item *ngFor="let i of [1,2,3,4,5]">
+          <ion-label>
+            <ion-skeleton-text animated style="width: 80%; height: 20px;"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 90%; height: 15px;"></ion-skeleton-text>
+            <div class="flex justify-between">
+              <ion-skeleton-text animated style="width: 30%; height: 15px;"></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 30%; height: 15px;"></ion-skeleton-text>
+            </div>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>

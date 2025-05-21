@@ -1,0 +1,115 @@
+<app-header
+  [pageTitle]="isNewLog ? TranslateKeys.TITLE_CONFLICT_LOG_NEW : TranslateKeys.TITLE_CONFLICT_LOG_PROGRESS"
+  [defaultBackHref]="isNewLog ? '/' + PageRoutes.CONFLICT_LOG : '/' + PageRoutes.CONFLICT_LOG + '/' + logId"
+  [animeImage]="animeImage"
+  backgroundColor="linear-gradient(to bottom, #3b82f6, #1e40af)">
+</app-header>
+
+<ion-content [fullscreen]="true" class="font-comic-sans custom-page-bg-light">
+  <div class="px-4 py-2 h-full overflow-auto">
+    <!-- Loading skeleton -->
+    <div *ngIf="isLoading">
+      <ion-skeleton-text animated style="width: 60%; height: 25px; margin-bottom: 10px;"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 100%; height: 40px; margin-bottom: 15px;"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 100%; height: 100px; margin-bottom: 15px;"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 100%; height: 40px; margin-bottom: 15px;"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 100%; height: 40px; margin-bottom: 15px;"></ion-skeleton-text>
+    </div>
+
+    <!-- Form -->
+    <div *ngIf="!isLoading">
+      <form [formGroup]="logForm" (ngSubmit)="onSubmit()">
+        <!-- Title -->
+        <div class="mb-4" *ngIf="isNewLog">
+          <ion-item class="rounded-lg">
+            <ion-label position="stacked">{{ 'CONFLICT_LOG.title_label' | translate }} <ion-text color="danger">*</ion-text></ion-label>
+            <ion-input formControlName="title" placeholder="{{ 'CONFLICT_LOG.title_placeholder' | translate }}"></ion-input>
+          </ion-item>
+          <div *ngIf="logForm.get('title')?.invalid && logForm.get('title')?.touched" class="text-red-500 text-sm mt-1 ml-2">
+            <div *ngIf="logForm.get('title')?.errors?.['required']">{{ 'CONFLICT_LOG.title_required' | translate }}</div>
+            <div *ngIf="logForm.get('title')?.errors?.['minlength']">{{ 'CONFLICT_LOG.title_min_length' | translate }}</div>
+            <div *ngIf="logForm.get('title')?.errors?.['maxlength']">{{ 'CONFLICT_LOG.title_max_length' | translate }}</div>
+          </div>
+        </div>
+
+        <!-- Title (disabled for progress update) -->
+        <div class="mb-4" *ngIf="!isNewLog">
+          <ion-item class="rounded-lg">
+            <ion-label position="stacked">{{ 'CONFLICT_LOG.title_label' | translate }}</ion-label>
+            <ion-input formControlName="title" readonly></ion-input>
+          </ion-item>
+        </div>
+
+        <!-- Description -->
+        <div class="mb-4" *ngIf="isNewLog">
+          <ion-item class="rounded-lg">
+            <ion-label position="stacked">{{ 'CONFLICT_LOG.description_label' | translate }} <ion-text color="danger">*</ion-text></ion-label>
+            <ion-textarea formControlName="description" rows="4" placeholder="{{ 'CONFLICT_LOG.description_placeholder' | translate }}"></ion-textarea>
+          </ion-item>
+          <div *ngIf="logForm.get('description')?.invalid && logForm.get('description')?.touched" class="text-red-500 text-sm mt-1 ml-2">
+            <div *ngIf="logForm.get('description')?.errors?.['required']">{{ 'CONFLICT_LOG.description_required' | translate }}</div>
+            <div *ngIf="logForm.get('description')?.errors?.['minlength']">{{ 'CONFLICT_LOG.description_min_length' | translate }}</div>
+            <div *ngIf="logForm.get('description')?.errors?.['maxlength']">{{ 'CONFLICT_LOG.description_max_length' | translate }}</div>
+          </div>
+        </div>
+
+        <!-- Description (disabled for progress update) -->
+        <div class="mb-4" *ngIf="!isNewLog">
+          <ion-item class="rounded-lg">
+            <ion-label position="stacked">{{ 'CONFLICT_LOG.description_label' | translate }}</ion-label>
+            <ion-textarea formControlName="description" rows="4" readonly></ion-textarea>
+          </ion-item>
+        </div>
+
+        <!-- Solution -->
+        <div class="mb-4" *ngIf="isNewLog">
+          <ion-item class="rounded-lg">
+            <ion-label position="stacked">{{ 'CONFLICT_LOG.solution_label' | translate }}</ion-label>
+            <ion-textarea formControlName="solution" rows="4" placeholder="{{ 'CONFLICT_LOG.solution_placeholder' | translate }}"></ion-textarea>
+          </ion-item>
+        </div>
+
+        <!-- Progress (for update only) -->
+        <div class="mb-4" *ngIf="!isNewLog">
+          <ion-item class="rounded-lg">
+            <ion-label position="stacked">{{ 'CONFLICT_LOG.progress_label' | translate }} <ion-text color="danger">*</ion-text></ion-label>
+            <ion-range formControlName="progress" min="0" max="100" step="5" snaps="true" pin="true" ticks="true">
+              <ion-label slot="start">{{ 'CONFLICT_LOG.progress_min_value' | translate }}</ion-label>
+              <ion-label slot="end">{{ 'CONFLICT_LOG.progress_max_value' | translate }}</ion-label>
+            </ion-range>
+          </ion-item>
+          <div *ngIf="logForm.get('progress')?.invalid && logForm.get('progress')?.touched" class="text-red-500 text-sm mt-1 ml-2">
+            <div *ngIf="logForm.get('progress')?.errors?.['required']">{{ 'CONFLICT_LOG.progress_required' | translate }}</div>
+            <div *ngIf="logForm.get('progress')?.errors?.['min']">{{ 'CONFLICT_LOG.progress_min' | translate }}</div>
+            <div *ngIf="logForm.get('progress')?.errors?.['max']">{{ 'CONFLICT_LOG.progress_max' | translate }}</div>
+          </div>
+        </div>
+
+        <!-- Progress Description (for update only) -->
+        <div class="mb-4" *ngIf="!isNewLog">
+          <ion-item class="rounded-lg">
+            <ion-label position="stacked">{{ 'CONFLICT_LOG.progress_description_label' | translate }} <ion-text color="danger">*</ion-text></ion-label>
+            <ion-textarea formControlName="progressDescription" rows="4" placeholder="{{ 'CONFLICT_LOG.progress_description_placeholder' | translate }}"></ion-textarea>
+          </ion-item>
+          <div *ngIf="logForm.get('progressDescription')?.invalid && logForm.get('progressDescription')?.touched" class="text-red-500 text-sm mt-1 ml-2">
+            <div *ngIf="logForm.get('progressDescription')?.errors?.['required']">{{ 'CONFLICT_LOG.progress_description_required' | translate }}</div>
+            <div *ngIf="logForm.get('progressDescription')?.errors?.['minlength']">{{ 'CONFLICT_LOG.progress_description_min_length' | translate }}</div>
+            <div *ngIf="logForm.get('progressDescription')?.errors?.['maxlength']">{{ 'CONFLICT_LOG.progress_description_max_length' | translate }}</div>
+          </div>
+        </div>
+
+        <!-- Submit buttons -->
+        <div class="flex justify-between mt-6">
+          <ion-button type="button" fill="outline" (click)="navigateBack()">
+            <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
+            {{ 'CONFLICT_LOG.cancel_button' | translate }}
+          </ion-button>
+          <ion-button type="submit" [disabled]="isSubmitting">
+            <ion-icon name="save-outline" slot="start"></ion-icon>
+            {{ isNewLog ? ('CONFLICT_LOG.save_log_button' | translate) : ('CONFLICT_LOG.update_progress_button' | translate) }}
+          </ion-button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ion-content>
