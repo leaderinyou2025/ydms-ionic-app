@@ -80,13 +80,19 @@ const routes: Routes = [
     loadChildren: () => import('./pages/student/friends/friends.module').then(m => m.FriendsPageModule)
   },
   {
+    path: 'conflict-log',
+    loadChildren: () => import('./pages/student/conflict-log/conflict-log.module').then( m => m.ConflictLogPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'library',
     loadChildren: () => import('./pages/student/library/library.module').then(m => m.LibraryPageModule)
   },
   {
     path: 'family-actions',
     loadChildren: () => import('./pages/parent/family-actions/family-actions.module').then(m => m.FamilyActionsPageModule)
-  },  {
+  },
+  {
     path: 'expert-guide',
     loadChildren: () => import('./pages/teacher/expert-guide/expert-guide.module').then( m => m.ExpertGuidePageModule)
   },
