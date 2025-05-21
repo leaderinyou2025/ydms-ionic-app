@@ -4,24 +4,45 @@ import { IAssetsResource } from '../interfaces/settings/assets-resource';
 import { TextZoomSize } from '../enums/text-zoom-size';
 import { AssetResourceCategory } from '../enums/asset-resource-category';
 import { StatusItemType } from '../enums/home/status-item-type.enum';
-import { ICharacter, IStatusItem, ITask } from '../interfaces/home/home.interfaces';
+import {
+  ICharacter,
+  IStatusItem,
+  ITask,
+} from '../interfaces/home/home.interfaces';
 import { ILiyYdmsNotification } from '../interfaces/models/liy.ydms.notification';
 import { IFriend } from '../interfaces/friend/friend';
 import { IRankItem } from '../interfaces/rank/rank.interfaces';
 import { IAchievementCategory } from '../interfaces/rank/achievement.interfaces';
-import { IFamilyConflictSurveyHistory, IFamilyConflictSurveyQuestion } from '../interfaces/family-conflict-survey/family-conflict-survey.interfaces';
-import { IFamilyCommunicationQualitySurveyHistory, IFamilyCommunicationQualitySurveyQuestion } from '../interfaces/family-communication-quality-survey/family-communication-quality-survey.interfaces';
-import { ISelfDiscoverySurveyHistory, ISelfDiscoverySurveyQuestion } from '../interfaces/self-discovery-survey/self-discovery-survey.interfaces';
+import {
+  IFamilyConflictSurveyHistory,
+  IFamilyConflictSurveyQuestion,
+} from '../interfaces/family-conflict-survey/family-conflict-survey.interfaces';
+import {
+  IFamilyCommunicationQualitySurveyHistory,
+  IFamilyCommunicationQualitySurveyQuestion,
+} from '../interfaces/family-communication-quality-survey/family-communication-quality-survey.interfaces';
+import {
+  ISelfDiscoverySurveyHistory,
+  ISelfDiscoverySurveyQuestion,
+} from '../interfaces/self-discovery-survey/self-discovery-survey.interfaces';
 import { EmotionType } from '../enums/personal-diary/personal-diary.enum';
-import { IEmotionSuggestion, IPersonalDiaryEntry } from '../interfaces/personal-diary/personal-diary.interfaces';
+import {
+  IEmotionSuggestion,
+  IPersonalDiaryEntry,
+} from '../interfaces/personal-diary/personal-diary.interfaces';
 import { NotificationTypes } from '../enums/notification-type';
 import { IResource } from '../interfaces/resource/resource.interface';
 import { ResourceType } from '../enums/libary/resource-type.enum';
 import { ResourceTopic } from '../enums/libary/resource-topic.enum';
 import { IDailyEmotionJournal, IEmotionIcon, IEmotionStreakStatus, EmotionShareTargetType } from '../interfaces/daily-emotion-journal/daily-emotion-journal.interfaces';
+import {
+  IEmotionalSurveyHistory,
+  IEmotionalSurveyDetail,
+  IEmotionalSurveyQuestion,
+} from '../interfaces/emotional-survey/emotional-survey.interfaces';
+import { UserRoles } from '../enums/user-roles';
 
 export class ForceTestData {
-
   /**
    * Resource topic thumbnail mapping
    * Maps each resource topic to its default thumbnail image
@@ -33,7 +54,7 @@ export class ForceTestData {
     [ResourceTopic.TECHNOLOGY]: 'assets/images/resources/technology-1.jpg',
     [ResourceTopic.ARTS]: 'assets/images/resources/arts-1.jpg',
     [ResourceTopic.SPORTS]: 'assets/images/resources/sports-1.jpg',
-    [ResourceTopic.ALL]: 'assets/images/resources/default.jpg'
+    [ResourceTopic.ALL]: 'assets/images/resources/default.jpg',
   };
 
   /**
@@ -43,7 +64,7 @@ export class ForceTestData {
     LOW: 'low',
     MEDIUM: 'medium',
     HIGH: 'high',
-    SEVERE: 'severe'
+    SEVERE: 'severe',
   };
 
   /**
@@ -53,7 +74,7 @@ export class ForceTestData {
     [ForceTestData.ConflictLevels.LOW]: '🟢',
     [ForceTestData.ConflictLevels.MEDIUM]: '🟡',
     [ForceTestData.ConflictLevels.HIGH]: '🟠',
-    [ForceTestData.ConflictLevels.SEVERE]: '🔴'
+    [ForceTestData.ConflictLevels.SEVERE]: '🔴',
   };
 
   /**
@@ -74,85 +95,85 @@ export class ForceTestData {
       date: new Date(2024, 10, 29),
       result: 'Mức độ xung đột thấp',
       conflictLevel: ForceTestData.ConflictLevels.LOW,
-      score: 15
+      score: 15,
     },
     {
       id: 2,
       date: new Date(2024, 10, 22),
       result: 'Mức độ xung đột trung bình',
       conflictLevel: ForceTestData.ConflictLevels.MEDIUM,
-      score: 35
+      score: 35,
     },
     {
       id: 3,
       date: new Date(2024, 10, 15),
       result: 'Mức độ xung đột cao',
       conflictLevel: ForceTestData.ConflictLevels.HIGH,
-      score: 65
+      score: 65,
     },
     {
       id: 4,
       date: new Date(2024, 10, 8),
       result: 'Mức độ xung đột thấp',
       conflictLevel: ForceTestData.ConflictLevels.LOW,
-      score: 20
+      score: 20,
     },
     {
       id: 5,
       date: new Date(2024, 10, 1),
       result: 'Mức độ xung đột trung bình',
       conflictLevel: ForceTestData.ConflictLevels.MEDIUM,
-      score: 40
+      score: 40,
     },
     {
       id: 6,
       date: new Date(2024, 9, 24),
       result: 'Mức độ xung đột nghiêm trọng',
       conflictLevel: ForceTestData.ConflictLevels.SEVERE,
-      score: 85
+      score: 85,
     },
     {
       id: 7,
       date: new Date(2024, 9, 17),
       result: 'Mức độ xung đột cao',
       conflictLevel: ForceTestData.ConflictLevels.HIGH,
-      score: 70
+      score: 70,
     },
     {
       id: 8,
       date: new Date(2024, 9, 10),
       result: 'Mức độ xung đột thấp',
       conflictLevel: ForceTestData.ConflictLevels.LOW,
-      score: 25
+      score: 25,
     },
     {
       id: 9,
       date: new Date(2024, 9, 3),
       result: 'Mức độ xung đột trung bình',
       conflictLevel: ForceTestData.ConflictLevels.MEDIUM,
-      score: 45
+      score: 45,
     },
     {
       id: 10,
       date: new Date(2024, 8, 26),
       result: 'Mức độ xung đột cao',
       conflictLevel: ForceTestData.ConflictLevels.HIGH,
-      score: 60
+      score: 60,
     },
     {
       id: 11,
       date: new Date(2024, 8, 19),
       result: 'Mức độ xung đột nghiêm trọng',
       conflictLevel: ForceTestData.ConflictLevels.SEVERE,
-      score: 90
+      score: 90,
     },
     {
       id: 12,
       date: new Date(2024, 8, 12),
       result: 'Mức độ xung đột thấp',
       conflictLevel: ForceTestData.ConflictLevels.LOW,
-      score: 10
-    }
+      score: 10,
+    },
   ];
 
   /**
@@ -163,57 +184,57 @@ export class ForceTestData {
       id: 1,
       text: 'Trong tuần qua, bạn có thường xuyên cãi vã với các thành viên trong gia đình không?',
       options: [
-        {id: 1, text: 'Không bao giờ', selected: false, value: 0},
-        {id: 2, text: 'Hiếm khi', selected: false, value: 1},
-        {id: 3, text: 'Thỉnh thoảng', selected: false, value: 2},
-        {id: 4, text: 'Thường xuyên', selected: true, value: 3},
-        {id: 5, text: 'Rất thường xuyên', selected: false, value: 4}
-      ]
+        { id: 1, text: 'Không bao giờ', selected: false, value: 0 },
+        { id: 2, text: 'Hiếm khi', selected: false, value: 1 },
+        { id: 3, text: 'Thỉnh thoảng', selected: false, value: 2 },
+        { id: 4, text: 'Thường xuyên', selected: true, value: 3 },
+        { id: 5, text: 'Rất thường xuyên', selected: false, value: 4 },
+      ],
     },
     {
       id: 2,
       text: 'Bạn có cảm thấy gia đình hiểu và tôn trọng ý kiến của bạn không?',
       options: [
-        {id: 6, text: 'Không bao giờ', selected: false, value: 4},
-        {id: 7, text: 'Hiếm khi', selected: false, value: 3},
-        {id: 8, text: 'Thỉnh thoảng', selected: true, value: 2},
-        {id: 9, text: 'Thường xuyên', selected: false, value: 1},
-        {id: 10, text: 'Luôn luôn', selected: false, value: 0}
-      ]
+        { id: 6, text: 'Không bao giờ', selected: false, value: 4 },
+        { id: 7, text: 'Hiếm khi', selected: false, value: 3 },
+        { id: 8, text: 'Thỉnh thoảng', selected: true, value: 2 },
+        { id: 9, text: 'Thường xuyên', selected: false, value: 1 },
+        { id: 10, text: 'Luôn luôn', selected: false, value: 0 },
+      ],
     },
     {
       id: 3,
       text: 'Khi có mâu thuẫn, gia đình bạn có giải quyết một cách bình tĩnh và hiệu quả không?',
       options: [
-        {id: 11, text: 'Không bao giờ', selected: false, value: 4},
-        {id: 12, text: 'Hiếm khi', selected: true, value: 3},
-        {id: 13, text: 'Thỉnh thoảng', selected: false, value: 2},
-        {id: 14, text: 'Thường xuyên', selected: false, value: 1},
-        {id: 15, text: 'Luôn luôn', selected: false, value: 0}
-      ]
+        { id: 11, text: 'Không bao giờ', selected: false, value: 4 },
+        { id: 12, text: 'Hiếm khi', selected: true, value: 3 },
+        { id: 13, text: 'Thỉnh thoảng', selected: false, value: 2 },
+        { id: 14, text: 'Thường xuyên', selected: false, value: 1 },
+        { id: 15, text: 'Luôn luôn', selected: false, value: 0 },
+      ],
     },
     {
       id: 4,
       text: 'Bạn có cảm thấy căng thẳng khi ở nhà với gia đình không?',
       options: [
-        {id: 16, text: 'Không bao giờ', selected: false, value: 0},
-        {id: 17, text: 'Hiếm khi', selected: false, value: 1},
-        {id: 18, text: 'Thỉnh thoảng', selected: false, value: 2},
-        {id: 19, text: 'Thường xuyên', selected: true, value: 3},
-        {id: 20, text: 'Luôn luôn', selected: false, value: 4}
-      ]
+        { id: 16, text: 'Không bao giờ', selected: false, value: 0 },
+        { id: 17, text: 'Hiếm khi', selected: false, value: 1 },
+        { id: 18, text: 'Thỉnh thoảng', selected: false, value: 2 },
+        { id: 19, text: 'Thường xuyên', selected: true, value: 3 },
+        { id: 20, text: 'Luôn luôn', selected: false, value: 4 },
+      ],
     },
     {
       id: 5,
       text: 'Các thành viên trong gia đình có thường xuyên nói to, quát tháo hoặc la hét với nhau không?',
       options: [
-        {id: 21, text: 'Không bao giờ', selected: false, value: 0},
-        {id: 22, text: 'Hiếm khi', selected: false, value: 1},
-        {id: 23, text: 'Thỉnh thoảng', selected: false, value: 2},
-        {id: 24, text: 'Thường xuyên', selected: false, value: 3},
-        {id: 25, text: 'Luôn luôn', selected: true, value: 4}
-      ]
-    }
+        { id: 21, text: 'Không bao giờ', selected: false, value: 0 },
+        { id: 22, text: 'Hiếm khi', selected: false, value: 1 },
+        { id: 23, text: 'Thỉnh thoảng', selected: false, value: 2 },
+        { id: 24, text: 'Thường xuyên', selected: false, value: 3 },
+        { id: 25, text: 'Luôn luôn', selected: true, value: 4 },
+      ],
+    },
   ];
 
   /**
@@ -275,37 +296,96 @@ export class ForceTestData {
   // Original ForceTestData content starts here
 
   static background_images: Array<IAssetsResource> = [
-    {id: 1, resource_url: 'assets/images/background/pexels-eugene-golovesov-1810803-30980499.jpg', name: 'Nụ thường xuân'},
-    {id: 2, resource_url: 'assets/images/background/beach-5234306_1920.jpg', name: 'Biển Đông'},
-    {id: 3, resource_url: 'assets/images/background/bananas-7840213_1920.jpg', name: 'Chuối vườn nhà'},
-    {id: 4, resource_url: 'assets/images/background/santa-claus-6845491_1920.jpg', name: 'Ông già Noel'},
-    {id: 5, resource_url: 'assets/images/background/city-7629244_1920.jpg', name: 'Thành phố phồn hoa'},
-    {id: 6, resource_url: 'assets/images/background/pexels-rahulp9800-1212487.jpg', name: 'Cúc họa mi'},
+    {
+      id: 1,
+      resource_url:
+        'assets/images/background/pexels-eugene-golovesov-1810803-30980499.jpg',
+      name: 'Nụ thường xuân',
+    },
+    {
+      id: 2,
+      resource_url: 'assets/images/background/beach-5234306_1920.jpg',
+      name: 'Biển Đông',
+    },
+    {
+      id: 3,
+      resource_url: 'assets/images/background/bananas-7840213_1920.jpg',
+      name: 'Chuối vườn nhà',
+    },
+    {
+      id: 4,
+      resource_url: 'assets/images/background/santa-claus-6845491_1920.jpg',
+      name: 'Ông già Noel',
+    },
+    {
+      id: 5,
+      resource_url: 'assets/images/background/city-7629244_1920.jpg',
+      name: 'Thành phố phồn hoa',
+    },
+    {
+      id: 6,
+      resource_url: 'assets/images/background/pexels-rahulp9800-1212487.jpg',
+      name: 'Cúc họa mi',
+    },
   ];
   static avatar_images: Array<IAssetsResource> = [
-    {id: 1, resource_url: 'assets/images/avatar/conan.png', name: 'Thám tử Conan'},
-    {id: 2, resource_url: 'assets/images/avatar/Shiba-Inu-Dog-1.png', name: 'Shiba-Inu-Dog-1'},
-    {id: 3, resource_url: 'assets/images/avatar/Shiba-Inu-Dog-2.png', name: 'Shiba-Inu-Dog-2'},
-    {id: 4, resource_url: 'assets/images/avatar/Shiba-Inu-Dog-3.png', name: 'Shiba-Inu-Dog-3'},
-    {id: 5, resource_url: 'assets/images/avatar/Shiba-Inu-Dog-Showing-Muscles.png', name: 'Shiba-Inu-Dog-Showing-Muscles'},
-    {id: 6, resource_url: 'assets/images/avatar/Shiba-Inu-Dog.png', name: 'Shiba-Inu-Dog'},
+    {
+      id: 1,
+      resource_url: 'assets/images/avatar/conan.png',
+      name: 'Thám tử Conan',
+    },
+    {
+      id: 2,
+      resource_url: 'assets/images/avatar/Shiba-Inu-Dog-1.png',
+      name: 'Shiba-Inu-Dog-1',
+    },
+    {
+      id: 3,
+      resource_url: 'assets/images/avatar/Shiba-Inu-Dog-2.png',
+      name: 'Shiba-Inu-Dog-2',
+    },
+    {
+      id: 4,
+      resource_url: 'assets/images/avatar/Shiba-Inu-Dog-3.png',
+      name: 'Shiba-Inu-Dog-3',
+    },
+    {
+      id: 5,
+      resource_url: 'assets/images/avatar/Shiba-Inu-Dog-Showing-Muscles.png',
+      name: 'Shiba-Inu-Dog-Showing-Muscles',
+    },
+    {
+      id: 6,
+      resource_url: 'assets/images/avatar/Shiba-Inu-Dog.png',
+      name: 'Shiba-Inu-Dog',
+    },
   ];
   static background_sounds: Array<IAssetsResource> = [
-    {id: 1, resource_url: '/assets/sounds/cork-85200.mp3', name: 'cork-85200', category: AssetResourceCategory.EFFECT},
+    {
+      id: 1,
+      resource_url: '/assets/sounds/cork-85200.mp3',
+      name: 'cork-85200',
+      category: AssetResourceCategory.EFFECT,
+    },
     {
       id: 2,
       resource_url: '/assets/sounds/reload-124467.mp3',
       name: 'reload-124467',
-      category: AssetResourceCategory.EFFECT
+      category: AssetResourceCategory.EFFECT,
     },
     {
       id: 3,
       resource_url: '/assets/sounds/alert-234711.mp3',
       name: 'alert-234711',
-      category: AssetResourceCategory.EFFECT
+      category: AssetResourceCategory.EFFECT,
     },
-    {id: 4, resource_url: '/assets/sounds/background.mp3', name: 'Pikachu', category: AssetResourceCategory.BACKGROUND},
-  ]
+    {
+      id: 4,
+      resource_url: '/assets/sounds/background.mp3',
+      name: 'Pikachu',
+      category: AssetResourceCategory.BACKGROUND,
+    },
+  ];
 
   /**
    * Status bar items data
@@ -330,7 +410,7 @@ export class ForceTestData {
       type: StatusItemType.FRIENDLY,
       value: 186,
       label: 'Thân thiện',
-    }
+    },
   ];
 
   /**
@@ -347,22 +427,24 @@ export class ForceTestData {
   static tasks: ITask[] = [
     {
       id: 1,
-      description: 'Nếu cảm xúc của con là thời tiết, thì hôm nay là nắng, mưa hay nhiều mây?',
-      points: 5
+      description:
+        'Nếu cảm xúc của con là thời tiết, thì hôm nay là nắng, mưa hay nhiều mây?',
+      points: 5,
     },
     {
       id: 2,
       description: 'Tuần lễ cảm xúc tích cực',
-      points: 15
+      points: 15,
     },
     {
       id: 3,
-      description: 'Bạn thích sáng tạo? Hãy thử khóa học vẽ tranh sơ dành cho người mới bắt đầu.',
-      points: 10
+      description:
+        'Bạn thích sáng tạo? Hãy thử khóa học vẽ tranh sơ dành cho người mới bắt đầu.',
+      points: 10,
     },
   ];
 
-  static loginResult = {result: 1};
+  static loginResult = { result: 1 };
 
   static authData: IAuthData = {
     id: 1,
@@ -376,38 +458,38 @@ export class ForceTestData {
     email: 'viet220994@gmail.com',
     // birthday: '1994-09-22',
     user_settings: {
-      notification: {enabled: true},
+      notification: { enabled: true },
       sound: {
         touch: {
           enabled: true,
           volume: 0.7,
-          sound: this.background_sounds[0]
+          sound: this.background_sounds[0],
         },
         reload: {
           enabled: true,
           volume: 0.7,
-          sound: this.background_sounds[1]
+          sound: this.background_sounds[1],
         },
         notification: {
           enabled: true,
           volume: 0.7,
-          sound: this.background_sounds[2]
+          sound: this.background_sounds[2],
         },
         background: {
           enabled: true,
           volume: 0.5,
-          sound: this.background_sounds[3]
+          sound: this.background_sounds[3],
         },
       },
       theme: {
         theme_model: Theme.DARK,
         background: this.background_images[0],
         avatar: this.avatar_images[0],
-        text_size: TextZoomSize.MEDIUM
+        text_size: TextZoomSize.MEDIUM,
       },
       account_security: {},
-      privacy_rights: {}
-    }
+      privacy_rights: {},
+    },
   };
 
   /**
@@ -420,48 +502,101 @@ export class ForceTestData {
       {
         text: 'Tôi có thể thảo luận về niềm tin của mình với mẹ/cha mà không cảm thấy bị gò bó hay xấu hổ.',
         options: [
-          {text: 'Đúng', selected: true},
-          {text: 'Tôi thấy hơi xấu hổ', selected: false}
-        ]
+          { text: 'Đúng', selected: true },
+          { text: 'Tôi thấy hơi xấu hổ', selected: false },
+        ],
       },
       {
         text: 'Đôi khi tôi gặp khó khăn trong việc tin vào mọi điều mẹ/cha nói với tôi.',
         options: [
-          {text: 'Đúng', selected: false},
-          {text: 'Không đúng', selected: true},
-          {text: 'Tôi không rõ', selected: false}
-        ]
+          { text: 'Đúng', selected: false },
+          { text: 'Không đúng', selected: true },
+          { text: 'Tôi không rõ', selected: false },
+        ],
       },
       {
         text: 'Mẹ/cha tôi luôn là người biết lắng nghe.',
         options: [
-          {text: 'Đúng', selected: true},
-          {text: 'Không đúng', selected: false}
-        ]
+          { text: 'Đúng', selected: true },
+          { text: 'Không đúng', selected: false },
+        ],
       },
       {
         text: 'Mẹ/cha tôi luôn là người không biết lắng nghe.',
         options: [
-          {text: 'Đúng', selected: false},
-          {text: 'Không đúng', selected: false}
-        ]
-      }
-    ]
+          { text: 'Đúng', selected: false },
+          { text: 'Không đúng', selected: false },
+        ],
+      },
+    ],
   };
 
   static rankData: Array<IRankItem> = [
-    {userId: 1, position: 1, nickname: 'Zoro Đầu rêu', points: 250, avatar: null},
-    {userId: 2, position: 2, nickname: 'Bé thân thiện', points: 245, avatar: null},
-    {userId: 3, position: 3, nickname: 'Hoa tiêu Nami', points: 220, avatar: null},
-    {userId: 4, position: 4, nickname: 'Tứ hoàng Luffy', points: 186, avatar: null},
-    {userId: 5, position: 5, nickname: 'Mèo Tom', points: 180, avatar: null},
-    {userId: 6, position: 6, nickname: 'Vịt Donald', points: 168, avatar: null},
-    {userId: 7, position: 7, nickname: 'Chuột Micky', points: 160, avatar: null},
-    {userId: 8, position: 8, nickname: 'Chuột Micky1', points: 160, avatar: null},
-    {userId: 9, position: 9, nickname: 'Chuột Micky2', points: 160, avatar: null},
-    {userId: 10, position: 10, nickname: 'Chuột Micky3', points: 160, avatar: null},
+    {
+      userId: 1,
+      position: 1,
+      nickname: 'Zoro Đầu rêu',
+      points: 250,
+      avatar: null,
+    },
+    {
+      userId: 2,
+      position: 2,
+      nickname: 'Bé thân thiện',
+      points: 245,
+      avatar: null,
+    },
+    {
+      userId: 3,
+      position: 3,
+      nickname: 'Hoa tiêu Nami',
+      points: 220,
+      avatar: null,
+    },
+    {
+      userId: 4,
+      position: 4,
+      nickname: 'Tứ hoàng Luffy',
+      points: 186,
+      avatar: null,
+    },
+    { userId: 5, position: 5, nickname: 'Mèo Tom', points: 180, avatar: null },
+    {
+      userId: 6,
+      position: 6,
+      nickname: 'Vịt Donald',
+      points: 168,
+      avatar: null,
+    },
+    {
+      userId: 7,
+      position: 7,
+      nickname: 'Chuột Micky',
+      points: 160,
+      avatar: null,
+    },
+    {
+      userId: 8,
+      position: 8,
+      nickname: 'Chuột Micky1',
+      points: 160,
+      avatar: null,
+    },
+    {
+      userId: 9,
+      position: 9,
+      nickname: 'Chuột Micky2',
+      points: 160,
+      avatar: null,
+    },
+    {
+      userId: 10,
+      position: 10,
+      nickname: 'Chuột Micky3',
+      points: 160,
+      avatar: null,
+    },
   ];
-
 
   static currentUserRank: IRankItem = {
     userId: 999,
@@ -476,46 +611,194 @@ export class ForceTestData {
     {
       title: 'Cảm xúc',
       badges: [
-        {name: 'Hoa hậu thân thiện', desc: '', unlocked: true, isNew: true, image: 'https://64.media.tumblr.com/9c7a316de427182c4404dd7189a37047/843c0e4a552c60eb-e8/s540x810/06a658046765d7b0d7089655004a877f66d2b181.jpg'},
-        {name: 'Thiện xạ', desc: '3 trên 5', unlocked: true, isNew: true, image: 'https://preview.redd.it/tell-me-who-would-be-simping-for-these-characters-v0-n1p8f6n9e52e1.png?width=277&format=png&auto=webp&s=b3af047af94f561002f6af879cf84d8c4c161cc6'},
-        {name: 'Vị thần KN', desc: '3 trên 10', unlocked: true, isNew: true, image: 'https://i.redd.it/tell-me-who-would-be-simping-for-these-characters-v0-3booxv46e52e1.png?width=277&format=png&auto=webp&s=3bff9a7a4658f7d9b54ace423823bc89b1ecfa70'},
+        {
+          name: 'Hoa hậu thân thiện',
+          desc: '',
+          unlocked: true,
+          isNew: true,
+          image:
+            'https://64.media.tumblr.com/9c7a316de427182c4404dd7189a37047/843c0e4a552c60eb-e8/s540x810/06a658046765d7b0d7089655004a877f66d2b181.jpg',
+        },
+        {
+          name: 'Thiện xạ',
+          desc: '3 trên 5',
+          unlocked: true,
+          isNew: true,
+          image:
+            'https://preview.redd.it/tell-me-who-would-be-simping-for-these-characters-v0-n1p8f6n9e52e1.png?width=277&format=png&auto=webp&s=b3af047af94f561002f6af879cf84d8c4c161cc6',
+        },
+        {
+          name: 'Vị thần KN',
+          desc: '3 trên 10',
+          unlocked: true,
+          isNew: true,
+          image:
+            'https://i.redd.it/tell-me-who-would-be-simping-for-these-characters-v0-3booxv46e52e1.png?width=277&format=png&auto=webp&s=3bff9a7a4658f7d9b54ace423823bc89b1ecfa70',
+        },
       ],
     },
     {
       title: 'Giảm mâu thuẫn gia đình',
       badges: [
-        {name: 'Đại gia từ vựng', desc: '2 trên 10', unlocked: true, isNew: true, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMVSrt0AjNphqU5mPFHoFUpQ-kfgKXCuWsDQ&s'},
-        {name: 'Thợ săn nhiệm vụ', desc: '', unlocked: false, isNew: false, image: 'https://preview.redd.it/duolingo-be-looking-strangely-familiar-with-those-sunglasses-v0-mqv1u18vyomc1.jpeg?auto=webp&s=2b9336a9479bf4dac9acef4772244015cc97d7c0'},
-        {name: 'Thợ sửa lỗi sai', desc: '', unlocked: false, isNew: false, image: 'https://preview.redd.it/duolingo-be-looking-strangely-familiar-with-those-sunglasses-v0-mqv1u18vyomc1.jpeg?auto=webp&s=2b9336a9479bf4dac9acef4772244015cc97d7c0'},
+        {
+          name: 'Đại gia từ vựng',
+          desc: '2 trên 10',
+          unlocked: true,
+          isNew: true,
+          image:
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMVSrt0AjNphqU5mPFHoFUpQ-kfgKXCuWsDQ&s',
+        },
+        {
+          name: 'Thợ săn nhiệm vụ',
+          desc: '',
+          unlocked: false,
+          isNew: false,
+          image:
+            'https://preview.redd.it/duolingo-be-looking-strangely-familiar-with-those-sunglasses-v0-mqv1u18vyomc1.jpeg?auto=webp&s=2b9336a9479bf4dac9acef4772244015cc97d7c0',
+        },
+        {
+          name: 'Thợ sửa lỗi sai',
+          desc: '',
+          unlocked: false,
+          isNew: false,
+          image:
+            'https://preview.redd.it/duolingo-be-looking-strangely-familiar-with-those-sunglasses-v0-mqv1u18vyomc1.jpeg?auto=webp&s=2b9336a9479bf4dac9acef4772244015cc97d7c0',
+        },
       ],
     },
     {
       title: 'Cải thiện giao tiếp',
       badges: [
-        {name: 'Người tiếp lửa', desc: '', unlocked: false, isNew: false, image: 'https://preview.redd.it/duolingo-be-looking-strangely-familiar-with-those-sunglasses-v0-mqv1u18vyomc1.jpeg?auto=webp&s=2b9336a9479bf4dac9acef4772244015cc97d7c0'},
-        {name: 'Quán quân', desc: '', unlocked: false, isNew: false, image: 'https://preview.redd.it/duolingo-be-looking-strangely-familiar-with-those-sunglasses-v0-mqv1u18vyomc1.jpeg?auto=webp&s=2b9336a9479bf4dac9acef4772244015cc97d7c0'},
-        {name: 'Thợ săn đêm', desc: '', unlocked: false, isNew: false, image: 'https://preview.redd.it/duolingo-be-looking-strangely-familiar-with-those-sunglasses-v0-mqv1u18vyomc1.jpeg?auto=webp&s=2b9336a9479bf4dac9acef4772244015cc97d7c0'},
+        {
+          name: 'Người tiếp lửa',
+          desc: '',
+          unlocked: false,
+          isNew: false,
+          image:
+            'https://preview.redd.it/duolingo-be-looking-strangely-familiar-with-those-sunglasses-v0-mqv1u18vyomc1.jpeg?auto=webp&s=2b9336a9479bf4dac9acef4772244015cc97d7c0',
+        },
+        {
+          name: 'Quán quân',
+          desc: '',
+          unlocked: false,
+          isNew: false,
+          image:
+            'https://preview.redd.it/duolingo-be-looking-strangely-familiar-with-those-sunglasses-v0-mqv1u18vyomc1.jpeg?auto=webp&s=2b9336a9479bf4dac9acef4772244015cc97d7c0',
+        },
+        {
+          name: 'Thợ săn đêm',
+          desc: '',
+          unlocked: false,
+          isNew: false,
+          image:
+            'https://preview.redd.it/duolingo-be-looking-strangely-familiar-with-those-sunglasses-v0-mqv1u18vyomc1.jpeg?auto=webp&s=2b9336a9479bf4dac9acef4772244015cc97d7c0',
+        },
       ],
     },
     {
       title: 'Khám phá bản thân',
       badges: [
-        {name: 'Dậy sớm', desc: '', unlocked: false, isNew: false, image: 'https://preview.redd.it/duolingo-be-looking-strangely-familiar-with-those-sunglasses-v0-mqv1u18vyomc1.jpeg?auto=webp&s=2b9336a9479bf4dac9acef4772244015cc97d7c0'},
-        {name: 'Huyền thoại', desc: '', unlocked: false, isNew: false, image: 'https://preview.redd.it/duolingo-be-looking-strangely-familiar-with-those-sunglasses-v0-mqv1u18vyomc1.jpeg?auto=webp&s=2b9336a9479bf4dac9acef4772244015cc97d7c0'},
-        {name: 'Tay đua tốc độ', desc: '', unlocked: false, isNew: false, image: 'https://preview.redd.it/duolingo-be-looking-strangely-familiar-with-those-sunglasses-v0-mqv1u18vyomc1.jpeg?auto=webp&s=2b9336a9479bf4dac9acef4772244015cc97d7c0'},
+        {
+          name: 'Dậy sớm',
+          desc: '',
+          unlocked: false,
+          isNew: false,
+          image:
+            'https://preview.redd.it/duolingo-be-looking-strangely-familiar-with-those-sunglasses-v0-mqv1u18vyomc1.jpeg?auto=webp&s=2b9336a9479bf4dac9acef4772244015cc97d7c0',
+        },
+        {
+          name: 'Huyền thoại',
+          desc: '',
+          unlocked: false,
+          isNew: false,
+          image:
+            'https://preview.redd.it/duolingo-be-looking-strangely-familiar-with-those-sunglasses-v0-mqv1u18vyomc1.jpeg?auto=webp&s=2b9336a9479bf4dac9acef4772244015cc97d7c0',
+        },
+        {
+          name: 'Tay đua tốc độ',
+          desc: '',
+          unlocked: false,
+          isNew: false,
+          image:
+            'https://preview.redd.it/duolingo-be-looking-strangely-familiar-with-those-sunglasses-v0-mqv1u18vyomc1.jpeg?auto=webp&s=2b9336a9479bf4dac9acef4772244015cc97d7c0',
+        },
       ],
     },
   ];
 
   static friends: Array<IFriend> = [
-    {id: 1, name: 'Zoro Đầu rêu', avatar: 'assets/images/avatar/Shiba-Inu-Dog-1.png', likeCount: 100, rank: 5, achievements: 25, friendshipLevel: 120},
-    {id: 2, name: 'Bé thân thiện', avatar: 'assets/images/avatar/Shiba-Inu-Dog-2.png', likeCount: 80, rank: 8, achievements: 15, friendshipLevel: 90},
-    {id: 3, name: 'Hoa tiêu Nami', avatar: 'assets/images/avatar/Shiba-Inu-Dog-3.png', likeCount: 102, rank: 4, achievements: 30, friendshipLevel: 150},
-    {id: 4, name: 'Tứ hoàng Luffy', avatar: 'assets/images/avatar/Shiba-Inu-Dog.png', likeCount: 186, rank: 1, achievements: 38, friendshipLevel: 186},
-    {id: 5, name: 'Mèo Tom', avatar: 'assets/images/avatar/Shiba-Inu-Dog-Showing-Muscles.png', likeCount: 90, rank: 6, achievements: 20, friendshipLevel: 95},
-    {id: 6, name: 'Vịt Donald', avatar: 'assets/images/avatar/Shiba-Inu-Dog-1.png', likeCount: 50, rank: 10, achievements: 12, friendshipLevel: 60},
-    {id: 7, name: 'Chuột Micky', avatar: 'assets/images/avatar/Shiba-Inu-Dog-2.png', likeCount: 70, rank: 9, achievements: 18, friendshipLevel: 75},
-    {id: 8, name: 'Nhóc Conan', avatar: 'assets/images/avatar/Shiba-Inu-Dog-3.png', likeCount: 186, rank: 3, achievements: 38, friendshipLevel: 186},
+    {
+      id: 1,
+      name: 'Zoro Đầu rêu',
+      avatar: 'assets/images/avatar/Shiba-Inu-Dog-1.png',
+      likeCount: 100,
+      rank: 5,
+      achievements: 25,
+      friendshipLevel: 120,
+    },
+    {
+      id: 2,
+      name: 'Bé thân thiện',
+      avatar: 'assets/images/avatar/Shiba-Inu-Dog-2.png',
+      likeCount: 80,
+      rank: 8,
+      achievements: 15,
+      friendshipLevel: 90,
+    },
+    {
+      id: 3,
+      name: 'Hoa tiêu Nami',
+      avatar: 'assets/images/avatar/Shiba-Inu-Dog-3.png',
+      likeCount: 102,
+      rank: 4,
+      achievements: 30,
+      friendshipLevel: 150,
+    },
+    {
+      id: 4,
+      name: 'Tứ hoàng Luffy',
+      avatar: 'assets/images/avatar/Shiba-Inu-Dog.png',
+      likeCount: 186,
+      rank: 1,
+      achievements: 38,
+      friendshipLevel: 186,
+    },
+    {
+      id: 5,
+      name: 'Mèo Tom',
+      avatar: 'assets/images/avatar/Shiba-Inu-Dog-Showing-Muscles.png',
+      likeCount: 90,
+      rank: 6,
+      achievements: 20,
+      friendshipLevel: 95,
+    },
+    {
+      id: 6,
+      name: 'Vịt Donald',
+      avatar: 'assets/images/avatar/Shiba-Inu-Dog-1.png',
+      likeCount: 50,
+      rank: 10,
+      achievements: 12,
+      friendshipLevel: 60,
+    },
+    {
+      id: 7,
+      name: 'Chuột Micky',
+      avatar: 'assets/images/avatar/Shiba-Inu-Dog-2.png',
+      likeCount: 70,
+      rank: 9,
+      achievements: 18,
+      friendshipLevel: 75,
+    },
+    {
+      id: 8,
+      name: 'Nhóc Conan',
+      avatar: 'assets/images/avatar/Shiba-Inu-Dog-3.png',
+      likeCount: 186,
+      rank: 3,
+      achievements: 38,
+      friendshipLevel: 186,
+    },
   ];
 
   /**
@@ -529,7 +812,7 @@ export class ForceTestData {
     is_teenager: true,
     is_parent: false,
     is_teacher: false,
-    avatar_128: 'assets/icons/svg/avatar.svg'
+    avatar_128: 'assets/icons/svg/avatar.svg',
   };
 
   /**
@@ -549,20 +832,21 @@ export class ForceTestData {
         love: 3,
         happy: 2,
         sad: 0,
-        angry: 0
+        angry: 0,
       },
       userReactions: [
-        {userId: 2, reactionType: 'love'},
-        {userId: 3, reactionType: 'love'},
-        {userId: 4, reactionType: 'love'},
-        {userId: 5, reactionType: 'happy'},
-        {userId: 6, reactionType: 'happy'}
-      ]
+        { userId: 2, reactionType: 'love' },
+        { userId: 3, reactionType: 'love' },
+        { userId: 4, reactionType: 'love' },
+        { userId: 5, reactionType: 'happy' },
+        { userId: 6, reactionType: 'happy' },
+      ],
     },
     {
       id: 2,
       user: this.mockDiaryUser,
-      content: 'Mình đang lo lắng về bài kiểm tra ngày mai. Mình chưa ôn tập đủ.',
+      content:
+        'Mình đang lo lắng về bài kiểm tra ngày mai. Mình chưa ôn tập đủ.',
       emotionType: EmotionType.ANXIOUS,
       timestamp: new Date(Date.now() - 1000 * 60 * 60), // 1 hour ago
       isAnonymous: false,
@@ -572,13 +856,13 @@ export class ForceTestData {
         love: 1,
         happy: 0,
         sad: 2,
-        angry: 0
+        angry: 0,
       },
       userReactions: [
-        {userId: 1, reactionType: 'sad'},
-        {userId: 3, reactionType: 'sad'},
-        {userId: 5, reactionType: 'love'}
-      ]
+        { userId: 1, reactionType: 'sad' },
+        { userId: 3, reactionType: 'sad' },
+        { userId: 5, reactionType: 'love' },
+      ],
     },
     {
       id: 3,
@@ -588,12 +872,13 @@ export class ForceTestData {
       timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2), // 2 hours ago
       isAnonymous: false,
       isPublic: false,
-      likes: 0
+      likes: 0,
     },
     {
       id: 4,
       user: this.mockDiaryUser,
-      content: 'Mình rất tức giận vì bạn trong nhóm không hoàn thành phần việc của mình.',
+      content:
+        'Mình rất tức giận vì bạn trong nhóm không hoàn thành phần việc của mình.',
       emotionType: EmotionType.ANGRY,
       timestamp: new Date(Date.now() - 1000 * 60 * 60 * 3), // 3 hours ago
       isAnonymous: true,
@@ -603,17 +888,17 @@ export class ForceTestData {
         love: 2,
         happy: 0,
         sad: 1,
-        angry: 4
+        angry: 4,
       },
       userReactions: [
-        {userId: 1, reactionType: 'angry'},
-        {userId: 3, reactionType: 'angry'},
-        {userId: 5, reactionType: 'angry'},
-        {userId: 6, reactionType: 'angry'},
-        {userId: 7, reactionType: 'love'},
-        {userId: 8, reactionType: 'love'},
-        {userId: 9, reactionType: 'sad'}
-      ]
+        { userId: 1, reactionType: 'angry' },
+        { userId: 3, reactionType: 'angry' },
+        { userId: 5, reactionType: 'angry' },
+        { userId: 6, reactionType: 'angry' },
+        { userId: 7, reactionType: 'love' },
+        { userId: 8, reactionType: 'love' },
+        { userId: 9, reactionType: 'sad' },
+      ],
     },
     {
       id: 5,
@@ -623,8 +908,8 @@ export class ForceTestData {
       timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24), // 1 day ago
       isAnonymous: false,
       isPublic: true,
-      likes: 10
-    }
+      likes: 10,
+    },
   ];
 
   /**
@@ -761,8 +1046,8 @@ export class ForceTestData {
       suggestions: [
         'Chia sẻ niềm vui với bạn bè',
         'Viết nhật ký về những điều tích cực',
-        'Tận hưởng cảm xúc vui vẻ này'
-      ]
+        'Tận hưởng cảm xúc vui vẻ này',
+      ],
     },
     {
       id: 2,
@@ -771,8 +1056,8 @@ export class ForceTestData {
         'Nói chuyện với người thân hoặc bạn bè',
         'Nghe nhạc thư giãn',
         'Viết ra cảm xúc của bạn',
-        'Tập thể dục nhẹ nhàng'
-      ]
+        'Tập thể dục nhẹ nhàng',
+      ],
     },
     {
       id: 3,
@@ -781,8 +1066,8 @@ export class ForceTestData {
         'Hít thở sâu và đếm đến 10',
         'Viết ra điều khiến bạn tức giận',
         'Tập thể dục để giải tỏa năng lượng tiêu cực',
-        'Nói chuyện với người bạn tin tưởng'
-      ]
+        'Nói chuyện với người bạn tin tưởng',
+      ],
     },
     {
       id: 4,
@@ -791,8 +1076,8 @@ export class ForceTestData {
         'Thực hành các bài tập thở sâu',
         'Tập trung vào hiện tại',
         'Chia sẻ lo lắng với người lớn',
-        'Viết ra những điều bạn lo lắng'
-      ]
+        'Viết ra những điều bạn lo lắng',
+      ],
     },
     {
       id: 5,
@@ -800,8 +1085,8 @@ export class ForceTestData {
       suggestions: [
         'Chia sẻ niềm vui với bạn bè',
         'Lập kế hoạch cho những điều thú vị',
-        'Ghi lại cảm xúc trong nhật ký'
-      ]
+        'Ghi lại cảm xúc trong nhật ký',
+      ],
     },
     {
       id: 6,
@@ -810,8 +1095,8 @@ export class ForceTestData {
         'Nghỉ ngơi đầy đủ',
         'Uống nhiều nước',
         'Đi ngủ sớm hơn',
-        'Tập thể dục nhẹ nhàng'
-      ]
+        'Tập thể dục nhẹ nhàng',
+      ],
     },
     {
       id: 7,
@@ -819,8 +1104,8 @@ export class ForceTestData {
       suggestions: [
         'Thực hành thiền định',
         'Đọc sách yêu thích',
-        'Dành thời gian cho sở thích'
-      ]
+        'Dành thời gian cho sở thích',
+      ],
     },
     {
       id: 8,
@@ -828,9 +1113,9 @@ export class ForceTestData {
       suggestions: [
         'Viết ra những điều bạn đang băn khoăn',
         'Nói chuyện với giáo viên hoặc phụ huynh',
-        'Chia nhỏ vấn đề để giải quyết từng phần'
-      ]
-    }
+        'Chia nhỏ vấn đề để giải quyết từng phần',
+      ],
+    },
   ];
 
   /*
@@ -842,7 +1127,7 @@ export class ForceTestData {
     EXCELLENT: 'excellent',
     GOOD: 'good',
     AVERAGE: 'average',
-    POOR: 'poor'
+    POOR: 'poor',
   };
 
   // Communication level emojis
@@ -850,96 +1135,97 @@ export class ForceTestData {
     [ForceTestData.CommunicationLevels.EXCELLENT]: '🟢',
     [ForceTestData.CommunicationLevels.GOOD]: '🟡',
     [ForceTestData.CommunicationLevels.AVERAGE]: '🟠',
-    [ForceTestData.CommunicationLevels.POOR]: '🔴'
+    [ForceTestData.CommunicationLevels.POOR]: '🔴',
   };
 
   // Mock data for family communication quality survey history
-  static familyCommunicationQualitySurveyHistory: IFamilyCommunicationQualitySurveyHistory[] = [
-    {
-      id: 1,
-      date: new Date(2024, 10, 29),
-      result: 'Chất lượng giao tiếp tốt',
-      communicationLevel: ForceTestData.CommunicationLevels.GOOD,
-      score: 75
-    },
-    {
-      id: 2,
-      date: new Date(2024, 10, 22),
-      result: 'Chất lượng giao tiếp trung bình',
-      communicationLevel: ForceTestData.CommunicationLevels.AVERAGE,
-      score: 55
-    },
-    {
-      id: 3,
-      date: new Date(2024, 10, 15),
-      result: 'Chất lượng giao tiếp kém',
-      communicationLevel: ForceTestData.CommunicationLevels.POOR,
-      score: 35
-    },
-    {
-      id: 4,
-      date: new Date(2024, 10, 8),
-      result: 'Chất lượng giao tiếp xuất sắc',
-      communicationLevel: ForceTestData.CommunicationLevels.EXCELLENT,
-      score: 90
-    },
-    {
-      id: 5,
-      date: new Date(2024, 10, 1),
-      result: 'Chất lượng giao tiếp tốt',
-      communicationLevel: ForceTestData.CommunicationLevels.GOOD,
-      score: 70
-    },
-    {
-      id: 6,
-      date: new Date(2024, 9, 24),
-      result: 'Chất lượng giao tiếp kém',
-      communicationLevel: ForceTestData.CommunicationLevels.POOR,
-      score: 30
-    },
-    {
-      id: 7,
-      date: new Date(2024, 9, 17),
-      result: 'Chất lượng giao tiếp trung bình',
-      communicationLevel: ForceTestData.CommunicationLevels.AVERAGE,
-      score: 50
-    },
-    {
-      id: 8,
-      date: new Date(2024, 9, 10),
-      result: 'Chất lượng giao tiếp xuất sắc',
-      communicationLevel: ForceTestData.CommunicationLevels.EXCELLENT,
-      score: 85
-    },
-    {
-      id: 9,
-      date: new Date(2024, 9, 3),
-      result: 'Chất lượng giao tiếp tốt',
-      communicationLevel: ForceTestData.CommunicationLevels.GOOD,
-      score: 65
-    },
-    {
-      id: 10,
-      date: new Date(2024, 8, 26),
-      result: 'Chất lượng giao tiếp trung bình',
-      communicationLevel: ForceTestData.CommunicationLevels.AVERAGE,
-      score: 45
-    },
-    {
-      id: 11,
-      date: new Date(2024, 8, 19),
-      result: 'Chất lượng giao tiếp kém',
-      communicationLevel: ForceTestData.CommunicationLevels.POOR,
-      score: 25
-    },
-    {
-      id: 12,
-      date: new Date(2024, 8, 12),
-      result: 'Chất lượng giao tiếp xuất sắc',
-      communicationLevel: ForceTestData.CommunicationLevels.EXCELLENT,
-      score: 95
-    }
-  ];
+  static familyCommunicationQualitySurveyHistory: IFamilyCommunicationQualitySurveyHistory[] =
+    [
+      {
+        id: 1,
+        date: new Date(2024, 10, 29),
+        result: 'Chất lượng giao tiếp tốt',
+        communicationLevel: ForceTestData.CommunicationLevels.GOOD,
+        score: 75,
+      },
+      {
+        id: 2,
+        date: new Date(2024, 10, 22),
+        result: 'Chất lượng giao tiếp trung bình',
+        communicationLevel: ForceTestData.CommunicationLevels.AVERAGE,
+        score: 55,
+      },
+      {
+        id: 3,
+        date: new Date(2024, 10, 15),
+        result: 'Chất lượng giao tiếp kém',
+        communicationLevel: ForceTestData.CommunicationLevels.POOR,
+        score: 35,
+      },
+      {
+        id: 4,
+        date: new Date(2024, 10, 8),
+        result: 'Chất lượng giao tiếp xuất sắc',
+        communicationLevel: ForceTestData.CommunicationLevels.EXCELLENT,
+        score: 90,
+      },
+      {
+        id: 5,
+        date: new Date(2024, 10, 1),
+        result: 'Chất lượng giao tiếp tốt',
+        communicationLevel: ForceTestData.CommunicationLevels.GOOD,
+        score: 70,
+      },
+      {
+        id: 6,
+        date: new Date(2024, 9, 24),
+        result: 'Chất lượng giao tiếp kém',
+        communicationLevel: ForceTestData.CommunicationLevels.POOR,
+        score: 30,
+      },
+      {
+        id: 7,
+        date: new Date(2024, 9, 17),
+        result: 'Chất lượng giao tiếp trung bình',
+        communicationLevel: ForceTestData.CommunicationLevels.AVERAGE,
+        score: 50,
+      },
+      {
+        id: 8,
+        date: new Date(2024, 9, 10),
+        result: 'Chất lượng giao tiếp xuất sắc',
+        communicationLevel: ForceTestData.CommunicationLevels.EXCELLENT,
+        score: 85,
+      },
+      {
+        id: 9,
+        date: new Date(2024, 9, 3),
+        result: 'Chất lượng giao tiếp tốt',
+        communicationLevel: ForceTestData.CommunicationLevels.GOOD,
+        score: 65,
+      },
+      {
+        id: 10,
+        date: new Date(2024, 8, 26),
+        result: 'Chất lượng giao tiếp trung bình',
+        communicationLevel: ForceTestData.CommunicationLevels.AVERAGE,
+        score: 45,
+      },
+      {
+        id: 11,
+        date: new Date(2024, 8, 19),
+        result: 'Chất lượng giao tiếp kém',
+        communicationLevel: ForceTestData.CommunicationLevels.POOR,
+        score: 25,
+      },
+      {
+        id: 12,
+        date: new Date(2024, 8, 12),
+        result: 'Chất lượng giao tiếp xuất sắc',
+        communicationLevel: ForceTestData.CommunicationLevels.EXCELLENT,
+        score: 95,
+      },
+    ];
 
   // Helper functions for family communication quality survey
   static getCommunicationLevelEmoji(communicationLevel: string): string {
@@ -970,7 +1256,9 @@ export class ForceTestData {
     }
   }
 
-  static getResultTextFromCommunicationLevel(communicationLevel: string): string {
+  static getResultTextFromCommunicationLevel(
+    communicationLevel: string
+  ): string {
     switch (communicationLevel) {
       case ForceTestData.CommunicationLevels.EXCELLENT:
         return 'Chất lượng giao tiếp xuất sắc';
@@ -986,74 +1274,75 @@ export class ForceTestData {
   }
 
   // Mock data for family communication quality survey questions
-  static familyCommunicationQualitySurveyQuestions: IFamilyCommunicationQualitySurveyQuestion[] = [
-    {
-      id: 1,
-      text: 'Các thành viên trong gia đình có thường xuyên chia sẻ cảm xúc và suy nghĩ với nhau không?',
-      options: [
-        {id: 1, text: 'Không bao giờ', selected: false, value: 0},
-        {id: 2, text: 'Hiếm khi', selected: false, value: 1},
-        {id: 3, text: 'Thỉnh thoảng', selected: false, value: 2},
-        {id: 4, text: 'Thường xuyên', selected: true, value: 3},
-        {id: 5, text: 'Rất thường xuyên', selected: false, value: 4}
-      ]
-    },
-    {
-      id: 2,
-      text: 'Khi có vấn đề, các thành viên trong gia đình có cùng nhau thảo luận để tìm giải pháp không?',
-      options: [
-        {id: 6, text: 'Không bao giờ', selected: false, value: 0},
-        {id: 7, text: 'Hiếm khi', selected: false, value: 1},
-        {id: 8, text: 'Thỉnh thoảng', selected: true, value: 2},
-        {id: 9, text: 'Thường xuyên', selected: false, value: 3},
-        {id: 10, text: 'Rất thường xuyên', selected: false, value: 4}
-      ]
-    },
-    {
-      id: 3,
-      text: 'Bạn có cảm thấy được lắng nghe khi nói chuyện với các thành viên trong gia đình không?',
-      options: [
-        {id: 11, text: 'Không bao giờ', selected: false, value: 0},
-        {id: 12, text: 'Hiếm khi', selected: false, value: 1},
-        {id: 13, text: 'Thỉnh thoảng', selected: false, value: 2},
-        {id: 14, text: 'Thường xuyên', selected: true, value: 3},
-        {id: 15, text: 'Rất thường xuyên', selected: false, value: 4}
-      ]
-    },
-    {
-      id: 4,
-      text: 'Các thành viên trong gia đình có tôn trọng ý kiến của nhau không?',
-      options: [
-        {id: 16, text: 'Không bao giờ', selected: false, value: 0},
-        {id: 17, text: 'Hiếm khi', selected: false, value: 1},
-        {id: 18, text: 'Thỉnh thoảng', selected: true, value: 2},
-        {id: 19, text: 'Thường xuyên', selected: false, value: 3},
-        {id: 20, text: 'Rất thường xuyên', selected: false, value: 4}
-      ]
-    },
-    {
-      id: 5,
-      text: 'Gia đình bạn có dành thời gian để trò chuyện cùng nhau không?',
-      options: [
-        {id: 21, text: 'Không bao giờ', selected: false, value: 0},
-        {id: 22, text: 'Hiếm khi', selected: false, value: 1},
-        {id: 23, text: 'Thỉnh thoảng', selected: false, value: 2},
-        {id: 24, text: 'Thường xuyên', selected: false, value: 3},
-        {id: 25, text: 'Rất thường xuyên', selected: true, value: 4}
-      ]
-    }
-  ];
+  static familyCommunicationQualitySurveyQuestions: IFamilyCommunicationQualitySurveyQuestion[] =
+    [
+      {
+        id: 1,
+        text: 'Các thành viên trong gia đình có thường xuyên chia sẻ cảm xúc và suy nghĩ với nhau không?',
+        options: [
+          { id: 1, text: 'Không bao giờ', selected: false, value: 0 },
+          { id: 2, text: 'Hiếm khi', selected: false, value: 1 },
+          { id: 3, text: 'Thỉnh thoảng', selected: false, value: 2 },
+          { id: 4, text: 'Thường xuyên', selected: true, value: 3 },
+          { id: 5, text: 'Rất thường xuyên', selected: false, value: 4 },
+        ],
+      },
+      {
+        id: 2,
+        text: 'Khi có vấn đề, các thành viên trong gia đình có cùng nhau thảo luận để tìm giải pháp không?',
+        options: [
+          { id: 6, text: 'Không bao giờ', selected: false, value: 0 },
+          { id: 7, text: 'Hiếm khi', selected: false, value: 1 },
+          { id: 8, text: 'Thỉnh thoảng', selected: true, value: 2 },
+          { id: 9, text: 'Thường xuyên', selected: false, value: 3 },
+          { id: 10, text: 'Rất thường xuyên', selected: false, value: 4 },
+        ],
+      },
+      {
+        id: 3,
+        text: 'Bạn có cảm thấy được lắng nghe khi nói chuyện với các thành viên trong gia đình không?',
+        options: [
+          { id: 11, text: 'Không bao giờ', selected: false, value: 0 },
+          { id: 12, text: 'Hiếm khi', selected: false, value: 1 },
+          { id: 13, text: 'Thỉnh thoảng', selected: false, value: 2 },
+          { id: 14, text: 'Thường xuyên', selected: true, value: 3 },
+          { id: 15, text: 'Rất thường xuyên', selected: false, value: 4 },
+        ],
+      },
+      {
+        id: 4,
+        text: 'Các thành viên trong gia đình có tôn trọng ý kiến của nhau không?',
+        options: [
+          { id: 16, text: 'Không bao giờ', selected: false, value: 0 },
+          { id: 17, text: 'Hiếm khi', selected: false, value: 1 },
+          { id: 18, text: 'Thỉnh thoảng', selected: true, value: 2 },
+          { id: 19, text: 'Thường xuyên', selected: false, value: 3 },
+          { id: 20, text: 'Rất thường xuyên', selected: false, value: 4 },
+        ],
+      },
+      {
+        id: 5,
+        text: 'Gia đình bạn có dành thời gian để trò chuyện cùng nhau không?',
+        options: [
+          { id: 21, text: 'Không bao giờ', selected: false, value: 0 },
+          { id: 22, text: 'Hiếm khi', selected: false, value: 1 },
+          { id: 23, text: 'Thỉnh thoảng', selected: false, value: 2 },
+          { id: 24, text: 'Thường xuyên', selected: false, value: 3 },
+          { id: 25, text: 'Rất thường xuyên', selected: true, value: 4 },
+        ],
+      },
+    ];
 
   /**
    * Self Discovery Survey Data
    */
 
-    // Discovery level constants
+  // Discovery level constants
   static DiscoveryLevels = {
     EXCELLENT: 'excellent',
     GOOD: 'good',
     AVERAGE: 'average',
-    POOR: 'poor'
+    POOR: 'poor',
   };
 
   // Discovery level emojis
@@ -1061,7 +1350,7 @@ export class ForceTestData {
     [ForceTestData.DiscoveryLevels.EXCELLENT]: '🌟',
     [ForceTestData.DiscoveryLevels.GOOD]: '✨',
     [ForceTestData.DiscoveryLevels.AVERAGE]: '⭐',
-    [ForceTestData.DiscoveryLevels.POOR]: '💫'
+    [ForceTestData.DiscoveryLevels.POOR]: '💫',
   };
 
   // Mock data for self discovery survey history
@@ -1071,85 +1360,85 @@ export class ForceTestData {
       date: new Date(2024, 10, 29),
       result: 'Khám phá bản thân tốt',
       discoveryLevel: ForceTestData.DiscoveryLevels.GOOD,
-      score: 75
+      score: 75,
     },
     {
       id: 2,
       date: new Date(2024, 10, 22),
       result: 'Khám phá bản thân trung bình',
       discoveryLevel: ForceTestData.DiscoveryLevels.AVERAGE,
-      score: 55
+      score: 55,
     },
     {
       id: 3,
       date: new Date(2024, 10, 15),
       result: 'Khám phá bản thân kém',
       discoveryLevel: ForceTestData.DiscoveryLevels.POOR,
-      score: 35
+      score: 35,
     },
     {
       id: 4,
       date: new Date(2024, 10, 8),
       result: 'Khám phá bản thân xuất sắc',
       discoveryLevel: ForceTestData.DiscoveryLevels.EXCELLENT,
-      score: 90
+      score: 90,
     },
     {
       id: 5,
       date: new Date(2024, 10, 1),
       result: 'Khám phá bản thân tốt',
       discoveryLevel: ForceTestData.DiscoveryLevels.GOOD,
-      score: 70
+      score: 70,
     },
     {
       id: 6,
       date: new Date(2024, 9, 24),
       result: 'Khám phá bản thân kém',
       discoveryLevel: ForceTestData.DiscoveryLevels.POOR,
-      score: 30
+      score: 30,
     },
     {
       id: 7,
       date: new Date(2024, 9, 17),
       result: 'Khám phá bản thân trung bình',
       discoveryLevel: ForceTestData.DiscoveryLevels.AVERAGE,
-      score: 50
+      score: 50,
     },
     {
       id: 8,
       date: new Date(2024, 9, 10),
       result: 'Khám phá bản thân xuất sắc',
       discoveryLevel: ForceTestData.DiscoveryLevels.EXCELLENT,
-      score: 85
+      score: 85,
     },
     {
       id: 9,
       date: new Date(2024, 9, 3),
       result: 'Khám phá bản thân tốt',
       discoveryLevel: ForceTestData.DiscoveryLevels.GOOD,
-      score: 65
+      score: 65,
     },
     {
       id: 10,
       date: new Date(2024, 8, 26),
       result: 'Khám phá bản thân trung bình',
       discoveryLevel: ForceTestData.DiscoveryLevels.AVERAGE,
-      score: 45
+      score: 45,
     },
     {
       id: 11,
       date: new Date(2024, 8, 19),
       result: 'Khám phá bản thân kém',
       discoveryLevel: ForceTestData.DiscoveryLevels.POOR,
-      score: 25
+      score: 25,
     },
     {
       id: 12,
       date: new Date(2024, 8, 12),
       result: 'Khám phá bản thân xuất sắc',
       discoveryLevel: ForceTestData.DiscoveryLevels.EXCELLENT,
-      score: 95
-    }
+      score: 95,
+    },
   ];
 
   // Helper functions for self discovery survey
@@ -1202,57 +1491,62 @@ export class ForceTestData {
       id: 1,
       text: 'Bạn có thường xuyên suy ngẫm về các giá trị và niềm tin cốt lõi của bản thân không?',
       options: [
-        {id: 1, text: 'Không bao giờ', selected: false, value: 0},
-        {id: 2, text: 'Hiếm khi', selected: false, value: 1},
-        {id: 3, text: 'Thỉnh thoảng', selected: false, value: 2},
-        {id: 4, text: 'Thường xuyên', selected: true, value: 3},
-        {id: 5, text: 'Rất thường xuyên', selected: false, value: 4}
-      ]
+        { id: 1, text: 'Không bao giờ', selected: false, value: 0 },
+        { id: 2, text: 'Hiếm khi', selected: false, value: 1 },
+        { id: 3, text: 'Thỉnh thoảng', selected: false, value: 2 },
+        { id: 4, text: 'Thường xuyên', selected: true, value: 3 },
+        { id: 5, text: 'Rất thường xuyên', selected: false, value: 4 },
+      ],
     },
     {
       id: 2,
       text: 'Bạn có hiểu rõ về điểm mạnh và điểm yếu của bản thân không?',
       options: [
-        {id: 6, text: 'Không hiểu gì cả', selected: false, value: 0},
-        {id: 7, text: 'Hiểu rất ít', selected: false, value: 1},
-        {id: 8, text: 'Hiểu một phần', selected: true, value: 2},
-        {id: 9, text: 'Hiểu khá rõ', selected: false, value: 3},
-        {id: 10, text: 'Hiểu rất rõ', selected: false, value: 4}
-      ]
+        { id: 6, text: 'Không hiểu gì cả', selected: false, value: 0 },
+        { id: 7, text: 'Hiểu rất ít', selected: false, value: 1 },
+        { id: 8, text: 'Hiểu một phần', selected: true, value: 2 },
+        { id: 9, text: 'Hiểu khá rõ', selected: false, value: 3 },
+        { id: 10, text: 'Hiểu rất rõ', selected: false, value: 4 },
+      ],
     },
     {
       id: 3,
       text: 'Bạn có thể nhận biết và kiểm soát cảm xúc của mình tốt đến mức nào?',
       options: [
-        {id: 11, text: 'Rất kém', selected: false, value: 0},
-        {id: 12, text: 'Kém', selected: false, value: 1},
-        {id: 13, text: 'Trung bình', selected: false, value: 2},
-        {id: 14, text: 'Tốt', selected: true, value: 3},
-        {id: 15, text: 'Rất tốt', selected: false, value: 4}
-      ]
+        { id: 11, text: 'Rất kém', selected: false, value: 0 },
+        { id: 12, text: 'Kém', selected: false, value: 1 },
+        { id: 13, text: 'Trung bình', selected: false, value: 2 },
+        { id: 14, text: 'Tốt', selected: true, value: 3 },
+        { id: 15, text: 'Rất tốt', selected: false, value: 4 },
+      ],
     },
     {
       id: 4,
       text: 'Bạn có mục tiêu rõ ràng cho tương lai của mình không?',
       options: [
-        {id: 16, text: 'Không có mục tiêu nào', selected: false, value: 0},
-        {id: 17, text: 'Có vài ý tưởng mơ hồ', selected: false, value: 1},
-        {id: 18, text: 'Có một số mục tiêu cơ bản', selected: true, value: 2},
-        {id: 19, text: 'Có mục tiêu khá rõ ràng', selected: false, value: 3},
-        {id: 20, text: 'Có mục tiêu rất rõ ràng và chi tiết', selected: false, value: 4}
-      ]
+        { id: 16, text: 'Không có mục tiêu nào', selected: false, value: 0 },
+        { id: 17, text: 'Có vài ý tưởng mơ hồ', selected: false, value: 1 },
+        { id: 18, text: 'Có một số mục tiêu cơ bản', selected: true, value: 2 },
+        { id: 19, text: 'Có mục tiêu khá rõ ràng', selected: false, value: 3 },
+        {
+          id: 20,
+          text: 'Có mục tiêu rất rõ ràng và chi tiết',
+          selected: false,
+          value: 4,
+        },
+      ],
     },
     {
       id: 5,
       text: 'Bạn có thường xuyên tìm hiểu về những sở thích và đam mê mới không?',
       options: [
-        {id: 21, text: 'Không bao giờ', selected: false, value: 0},
-        {id: 22, text: 'Hiếm khi', selected: false, value: 1},
-        {id: 23, text: 'Thỉnh thoảng', selected: false, value: 2},
-        {id: 24, text: 'Thường xuyên', selected: false, value: 3},
-        {id: 25, text: 'Rất thường xuyên', selected: true, value: 4}
-      ]
-    }
+        { id: 21, text: 'Không bao giờ', selected: false, value: 0 },
+        { id: 22, text: 'Hiếm khi', selected: false, value: 1 },
+        { id: 23, text: 'Thỉnh thoảng', selected: false, value: 2 },
+        { id: 24, text: 'Thường xuyên', selected: false, value: 3 },
+        { id: 25, text: 'Rất thường xuyên', selected: true, value: 4 },
+      ],
+    },
   ];
 
   /**
@@ -1264,221 +1558,332 @@ export class ForceTestData {
       name: 'Cảm xúc mới',
       description: 'HH đã bày tỏ cảm xúc của mình!',
       body: 'HH đã bày tỏ cảm xúc của mình!',
-      sender_id: {id: 1, name: 'HH'},
+      sender_id: { id: 1, name: 'HH' },
       recipient_ids: [],
       state: false,
       create_date: '2025-05-19 9:41:32',
-      type: NotificationTypes.EMOTION_SHARED
+      type: NotificationTypes.EMOTION_SHARED,
     },
     {
       id: 2,
       name: 'Thông báo công việc',
       description: 'Bạn có một nhiệm vụ mới.',
       body: 'Hãy hoàn thành nhiệm vụ trước hạn.',
-      sender_id: {id: 2, name: 'Admin'},
+      sender_id: { id: 2, name: 'Admin' },
       recipient_ids: [],
       state: true,
       create_date: '2025-05-18 14:23:50',
-      type: NotificationTypes.PERSONAL_TASK
+      type: NotificationTypes.PERSONAL_TASK,
     },
     {
       id: 3,
       name: 'Tin nhắn hệ thống',
       description: 'Hệ thống sẽ bảo trì vào cuối tuần.',
       body: 'Vui lòng lưu công việc trước thời gian bảo trì.',
-      sender_id: {id: 3, name: 'System'},
+      sender_id: { id: 3, name: 'System' },
       recipient_ids: [],
       state: false,
       create_date: '2025-05-17 21:11:04',
-      type: NotificationTypes.OTHER
+      type: NotificationTypes.OTHER,
     },
     {
       id: 4,
       name: 'Nhiệm vụ cá nhân',
       description: 'Bạn có một nhiệm vụ chưa hoàn thành.',
       body: 'Đừng quên hoàn thành nhiệm vụ hôm nay.',
-      sender_id: {id: 4, name: 'PM'},
+      sender_id: { id: 4, name: 'PM' },
       recipient_ids: [],
       state: true,
       create_date: '2025-05-15 8:05:18',
-      type: NotificationTypes.PERSONAL_TASK
+      type: NotificationTypes.PERSONAL_TASK,
     },
     {
       id: 5,
       name: 'Cảm xúc mới',
       description: 'An đã bày tỏ cảm xúc của mình!',
       body: 'An đã bày tỏ cảm xúc của mình!',
-      sender_id: {id: 5, name: 'An'},
+      sender_id: { id: 5, name: 'An' },
       recipient_ids: [],
       state: false,
       create_date: '2025-05-14 17:00:00',
-      type: NotificationTypes.EMOTION_SHARED
+      type: NotificationTypes.EMOTION_SHARED,
     },
     {
       id: 6,
       name: 'Cập nhật hệ thống',
       description: 'Phiên bản mới đã được cài đặt.',
       body: 'Vui lòng khởi động lại ứng dụng để cập nhật.',
-      sender_id: {id: 6, name: 'System'},
+      sender_id: { id: 6, name: 'System' },
       recipient_ids: [],
       state: true,
       create_date: '2025-05-13 22:34:02',
-      type: NotificationTypes.OTHER
+      type: NotificationTypes.OTHER,
     },
     {
       id: 7,
       name: 'Thông báo công việc',
       description: 'Bạn được giao nhiệm vụ kiểm thử.',
       body: 'Hãy kiểm thử module mới trong hôm nay.',
-      sender_id: {id: 7, name: 'QA Lead'},
+      sender_id: { id: 7, name: 'QA Lead' },
       recipient_ids: [],
       state: false,
       create_date: '2025-05-12 10:12:15',
-      type: NotificationTypes.PERSONAL_TASK
+      type: NotificationTypes.PERSONAL_TASK,
     },
     {
       id: 8,
       name: 'Cảm xúc mới',
       description: 'Tú đã bày tỏ cảm xúc của mình!',
       body: 'Tú đã bày tỏ cảm xúc của mình!',
-      sender_id: {id: 8, name: 'Tú'},
+      sender_id: { id: 8, name: 'Tú' },
       recipient_ids: [],
       state: true,
       create_date: '2025-05-11 16:59:21',
-      type: NotificationTypes.EMOTION_SHARED
+      type: NotificationTypes.EMOTION_SHARED,
     },
     {
       id: 9,
       name: 'Thông báo hệ thống',
       description: 'Ứng dụng sẽ được nâng cấp vào 22h tối nay.',
       body: 'Thời gian downtime dự kiến là 30 phút.',
-      sender_id: {id: 9, name: 'System'},
+      sender_id: { id: 9, name: 'System' },
       recipient_ids: [],
       state: true,
       create_date: '2025-05-10 19:30:00',
-      type: NotificationTypes.OTHER
+      type: NotificationTypes.OTHER,
     },
     {
       id: 10,
       name: 'Nhắc nhở nhiệm vụ',
       description: 'Bạn chưa cập nhật tiến độ công việc.',
       body: 'Vui lòng cập nhật tiến độ trước 17h hôm nay.',
-      sender_id: {id: 10, name: 'Scrum Master'},
+      sender_id: { id: 10, name: 'Scrum Master' },
       recipient_ids: [],
       state: false,
       create_date: '2025-05-09 13:47:55',
-      type: NotificationTypes.PERSONAL_TASK
+      type: NotificationTypes.PERSONAL_TASK,
     },
     {
       id: 11,
       name: 'Cảm xúc mới',
       description: 'Minh đã bày tỏ cảm xúc của mình!',
       body: 'Minh đã bày tỏ cảm xúc của mình!',
-      sender_id: {id: 11, name: 'Minh'},
+      sender_id: { id: 11, name: 'Minh' },
       recipient_ids: [],
       state: false,
       create_date: '2025-05-08 11:22:45',
-      type: NotificationTypes.EMOTION_SHARED
+      type: NotificationTypes.EMOTION_SHARED,
     },
     {
       id: 12,
       name: 'Thông báo nội bộ',
       description: 'Công ty tổ chức họp toàn thể vào thứ Sáu.',
       body: 'Thời gian: 15h tại phòng họp chính.',
-      sender_id: {id: 12, name: 'HR'},
+      sender_id: { id: 12, name: 'HR' },
       recipient_ids: [],
       state: true,
       create_date: '2025-05-07 9:10:05',
-      type: NotificationTypes.OTHER
+      type: NotificationTypes.OTHER,
     },
     {
       id: 13,
       name: 'Nhiệm vụ mới',
       description: 'Bạn được phân công viết tài liệu.',
       body: 'Deadline là thứ Tư tuần sau.',
-      sender_id: {id: 13, name: 'Leader'},
+      sender_id: { id: 13, name: 'Leader' },
       recipient_ids: [],
       state: false,
       create_date: '2025-05-06 7:00:30',
-      type: NotificationTypes.PERSONAL_TASK
+      type: NotificationTypes.PERSONAL_TASK,
     },
     {
       id: 14,
       name: 'Cảm xúc mới',
       description: 'Linh đã bày tỏ cảm xúc của mình!',
       body: 'Linh đã bày tỏ cảm xúc của mình!',
-      sender_id: {id: 14, name: 'Linh'},
+      sender_id: { id: 14, name: 'Linh' },
       recipient_ids: [],
       state: true,
       create_date: '2025-05-05 18:00:00',
-      type: NotificationTypes.EMOTION_SHARED
+      type: NotificationTypes.EMOTION_SHARED,
     },
     {
       id: 15,
       name: 'Thông báo bảo trì',
       description: 'Server sẽ ngưng hoạt động lúc 23h.',
       body: 'Mong bạn thông cảm về sự bất tiện này.',
-      sender_id: {id: 15, name: 'IT'},
+      sender_id: { id: 15, name: 'IT' },
       recipient_ids: [],
       state: false,
       create_date: '2025-05-04 23:00:00',
-      type: NotificationTypes.OTHER
+      type: NotificationTypes.OTHER,
     },
     {
       id: 16,
       name: 'Cập nhật thông tin',
       description: 'Bạn cần cập nhật hồ sơ cá nhân.',
       body: 'Hãy vào phần cài đặt để cập nhật thông tin.',
-      sender_id: {id: 16, name: 'System'},
+      sender_id: { id: 16, name: 'System' },
       recipient_ids: [],
       state: true,
       create_date: '2025-05-03 15:11:42',
-      type: NotificationTypes.OTHER
+      type: NotificationTypes.OTHER,
     },
     {
       id: 17,
       name: 'Cảm xúc mới',
       description: 'Hà đã bày tỏ cảm xúc của mình!',
       body: 'Hà đã bày tỏ cảm xúc của mình!',
-      sender_id: {id: 17, name: 'Hà'},
+      sender_id: { id: 17, name: 'Hà' },
       recipient_ids: [],
       state: false,
       create_date: '2025-05-02 8:08:08',
-      type: NotificationTypes.EMOTION_SHARED
+      type: NotificationTypes.EMOTION_SHARED,
     },
     {
       id: 18,
       name: 'Nhiệm vụ cập nhật',
       description: 'Bạn cần kiểm tra bản thiết kế.',
       body: 'Vui lòng phản hồi trong hôm nay.',
-      sender_id: {id: 18, name: 'UX'},
+      sender_id: { id: 18, name: 'UX' },
       recipient_ids: [],
       state: true,
       create_date: '2025-05-01 14:25:25',
-      type: NotificationTypes.PERSONAL_TASK
+      type: NotificationTypes.PERSONAL_TASK,
     },
     {
       id: 19,
       name: 'Thông báo mới',
       description: 'Chính sách công ty được cập nhật.',
       body: 'Xem chi tiết trong mục Tài liệu.',
-      sender_id: {id: 19, name: 'HR'},
+      sender_id: { id: 19, name: 'HR' },
       recipient_ids: [],
       state: true,
       create_date: '2025-04-30 10:10:10',
-      type: NotificationTypes.OTHER
+      type: NotificationTypes.OTHER,
     },
     {
       id: 20,
       name: 'Cảm xúc mới',
       description: 'Lan đã bày tỏ cảm xúc của mình!',
       body: 'Lan đã bày tỏ cảm xúc của mình!',
-      sender_id: {id: 20, name: 'Lan'},
+      sender_id: { id: 20, name: 'Lan' },
       recipient_ids: [],
       state: false,
       create_date: '2025-04-29 20:45:00',
-      type: NotificationTypes.EMOTION_SHARED
-    }
+      type: NotificationTypes.EMOTION_SHARED,
+    },
+  ];
+
+  /**
+   * Mock data for emotional survey history
+   */
+  static mockEmotionalSurveyHistory: IEmotionalSurveyHistory[] = [
+    {
+      id: 1,
+      date: new Date(2024, 10, 29),
+      result: 'Tích cực',
+      emotionType: EmotionType.HAPPY,
+      score: 85,
+    },
+    {
+      id: 2,
+      date: new Date(2024, 10, 22),
+      result: 'Bình thường',
+      emotionType: EmotionType.CALM,
+      score: 65,
+    },
+    {
+      id: 3,
+      date: new Date(2024, 10, 15),
+      result: 'Tiêu cực',
+      emotionType: EmotionType.SAD,
+      score: 35,
+    },
+    {
+      id: 4,
+      date: new Date(2024, 10, 8),
+      result: 'Tích cực',
+      emotionType: EmotionType.EXCITED,
+      score: 90,
+    },
+    {
+      id: 5,
+      date: new Date(2024, 10, 1),
+      result: 'Bình thường',
+      emotionType: EmotionType.CONFUSED,
+      score: 60,
+    },
+    {
+      id: 6,
+      date: new Date(2024, 9, 24),
+      result: 'Lo lắng',
+      emotionType: EmotionType.ANXIOUS,
+      score: 40,
+    },
+    {
+      id: 7,
+      date: new Date(2024, 9, 17),
+      result: 'Mệt mỏi',
+      emotionType: EmotionType.TIRED,
+      score: 30,
+    },
+    {
+      id: 8,
+      date: new Date(2024, 9, 10),
+      result: 'Tích cực',
+      emotionType: EmotionType.HAPPY,
+      score: 80,
+    },
+    {
+      id: 9,
+      date: new Date(2024, 9, 3),
+      result: 'Phấn khích',
+      emotionType: EmotionType.EXCITED,
+      score: 95,
+    },
+    {
+      id: 10,
+      date: new Date(2024, 8, 26),
+      result: 'Bình tĩnh',
+      emotionType: EmotionType.CALM,
+      score: 70,
+    },
+    {
+      id: 11,
+      date: new Date(2024, 8, 19),
+      result: 'Tích cực',
+      emotionType: EmotionType.HAPPY,
+      score: 88,
+    },
+    {
+      id: 12,
+      date: new Date(2024, 8, 12),
+      result: 'Lo lắng',
+      emotionType: EmotionType.ANXIOUS,
+      score: 45,
+    },
+    {
+      id: 13,
+      date: new Date(2024, 8, 5),
+      result: 'Bối rối',
+      emotionType: EmotionType.CONFUSED,
+      score: 55,
+    },
+    {
+      id: 14,
+      date: new Date(2024, 7, 29),
+      result: 'Phấn khích',
+      emotionType: EmotionType.EXCITED,
+      score: 92,
+    },
+    {
+      id: 15,
+      date: new Date(2024, 7, 22),
+      result: 'Mệt mỏi',
+      emotionType: EmotionType.TIRED,
+      score: 25,
+    },
   ];
 
   /**
@@ -1488,7 +1893,8 @@ export class ForceTestData {
     {
       id: 1,
       title: 'A Whole New World',
-      description: 'Bài hát nổi tiếng từ phim hoạt hình Aladdin của Disney, thể hiện bởi ca sĩ Âu Mỹ.',
+      description:
+        'Bài hát nổi tiếng từ phim hoạt hình Aladdin của Disney, thể hiện bởi ca sĩ Âu Mỹ.',
       shortDescription: 'Bài hát nổi tiếng từ phim Aladdin',
       resourceUrl: 'https://www.youtube.com/embed/hZ1Rb9hC4JY',
       thumbnailUrl: 'https://img.youtube.com/vi/hZ1Rb9hC4JY/hqdefault.jpg',
@@ -1496,12 +1902,13 @@ export class ForceTestData {
       topic: ResourceTopic.MUSIC,
       isExternal: true,
       viewCount: 120,
-      createdDate: '2023-05-15'
+      createdDate: '2023-05-15',
     },
     {
       id: 2,
       title: 'Thích quá rùi nà',
-      description: 'Video cover bài hát "Thích quá rùi nà" được thể hiện bởi nhiều ca sĩ trẻ Việt Nam.',
+      description:
+        'Video cover bài hát "Thích quá rùi nà" được thể hiện bởi nhiều ca sĩ trẻ Việt Nam.',
       shortDescription: 'Cover bài hát "Thích quá rùi nà"',
       resourceUrl: 'https://www.youtube.com/embed/HZi4eJXWZU0',
       thumbnailUrl: 'https://img.youtube.com/vi/HZi4eJXWZU0/hqdefault.jpg',
@@ -1509,12 +1916,13 @@ export class ForceTestData {
       topic: ResourceTopic.MUSIC,
       isExternal: true,
       viewCount: 85,
-      createdDate: '2023-06-20'
+      createdDate: '2023-06-20',
     },
     {
       id: 3,
       title: 'Chuyện gì sẽ xảy ra nếu bạn không uống nước?',
-      description: 'Video giải thích khoa học về tầm quan trọng của nước đối với cơ thể con người và những hậu quả nếu không uống đủ nước.',
+      description:
+        'Video giải thích khoa học về tầm quan trọng của nước đối với cơ thể con người và những hậu quả nếu không uống đủ nước.',
       shortDescription: 'Tầm quan trọng của nước với cơ thể',
       resourceUrl: 'https://www.youtube.com/embed/9iMGFqMmUFs',
       thumbnailUrl: 'https://img.youtube.com/vi/9iMGFqMmUFs/hqdefault.jpg',
@@ -1522,12 +1930,13 @@ export class ForceTestData {
       topic: ResourceTopic.SCIENCE,
       isExternal: true,
       viewCount: 210,
-      createdDate: '2023-04-10'
+      createdDate: '2023-04-10',
     },
     {
       id: 4,
       title: 'Tại sao mèo lại hành xử kỳ lạ đến vậy?',
-      description: 'Video khám phá hành vi của loài mèo và giải thích khoa học đằng sau những hành động kỳ lạ của chúng.',
+      description:
+        'Video khám phá hành vi của loài mèo và giải thích khoa học đằng sau những hành động kỳ lạ của chúng.',
       shortDescription: 'Khám phá hành vi của loài mèo',
       resourceUrl: 'https://www.youtube.com/embed/Z-QsJGDR9nU',
       thumbnailUrl: 'https://img.youtube.com/vi/Z-QsJGDR9nU/hqdefault.jpg',
@@ -1535,12 +1944,13 @@ export class ForceTestData {
       topic: ResourceTopic.SCIENCE,
       isExternal: true,
       viewCount: 175,
-      createdDate: '2023-07-05'
+      createdDate: '2023-07-05',
     },
     {
       id: 5,
       title: 'Hướng dẫn học tập hiệu quả',
-      description: 'Tài liệu PDF cung cấp các phương pháp học tập hiệu quả, kỹ thuật ghi nhớ và quản lý thời gian cho học sinh.',
+      description:
+        'Tài liệu PDF cung cấp các phương pháp học tập hiệu quả, kỹ thuật ghi nhớ và quản lý thời gian cho học sinh.',
       shortDescription: 'Phương pháp học tập hiệu quả',
       resourceUrl: 'assets/documents/huong-dan-hoc-tap-hieu-qua.pdf',
       thumbnailUrl: 'https://img.youtube.com/vi/hZ1Rb9hC4JY/hqdefault.jpg',
@@ -1548,12 +1958,13 @@ export class ForceTestData {
       topic: ResourceTopic.EDUCATION,
       fileType: 'pdf',
       viewCount: 320,
-      createdDate: '2023-03-15'
+      createdDate: '2023-03-15',
     },
     {
       id: 6,
       title: 'Kỹ năng giao tiếp cơ bản',
-      description: 'Tài liệu hướng dẫn các kỹ năng giao tiếp cơ bản, cách thể hiện bản thân và xây dựng mối quan hệ tốt với mọi người.',
+      description:
+        'Tài liệu hướng dẫn các kỹ năng giao tiếp cơ bản, cách thể hiện bản thân và xây dựng mối quan hệ tốt với mọi người.',
       shortDescription: 'Hướng dẫn kỹ năng giao tiếp',
       resourceUrl: 'assets/documents/ky-nang-giao-tiep.pdf',
       thumbnailUrl: 'https://img.youtube.com/vi/hZ1Rb9hC4JY/hqdefault.jpg',
@@ -1561,12 +1972,13 @@ export class ForceTestData {
       topic: ResourceTopic.EDUCATION,
       fileType: 'pdf',
       viewCount: 280,
-      createdDate: '2023-02-28'
+      createdDate: '2023-02-28',
     },
     {
       id: 7,
       title: 'Giới thiệu về Trí tuệ nhân tạo',
-      description: 'Tài liệu giới thiệu cơ bản về trí tuệ nhân tạo, lịch sử phát triển và các ứng dụng trong cuộc sống hiện đại.',
+      description:
+        'Tài liệu giới thiệu cơ bản về trí tuệ nhân tạo, lịch sử phát triển và các ứng dụng trong cuộc sống hiện đại.',
       shortDescription: 'Giới thiệu về AI',
       resourceUrl: 'assets/documents/gioi-thieu-tri-tue-nhan-tao.pdf',
       thumbnailUrl: 'https://img.youtube.com/vi/hZ1Rb9hC4JY/hqdefault.jpg',
@@ -1574,12 +1986,13 @@ export class ForceTestData {
       topic: ResourceTopic.TECHNOLOGY,
       fileType: 'pdf',
       viewCount: 195,
-      createdDate: '2023-05-20'
+      createdDate: '2023-05-20',
     },
     {
       id: 8,
       title: 'Hướng dẫn vẽ tranh cơ bản',
-      description: 'Tài liệu hướng dẫn các kỹ thuật vẽ tranh cơ bản cho người mới bắt đầu, từ phác thảo đến tô màu.',
+      description:
+        'Tài liệu hướng dẫn các kỹ thuật vẽ tranh cơ bản cho người mới bắt đầu, từ phác thảo đến tô màu.',
       shortDescription: 'Kỹ thuật vẽ tranh cơ bản',
       resourceUrl: 'assets/documents/huong-dan-ve-tranh.pdf',
       thumbnailUrl: 'https://img.youtube.com/vi/hZ1Rb9hC4JY/hqdefault.jpg',
@@ -1587,12 +2000,13 @@ export class ForceTestData {
       topic: ResourceTopic.ARTS,
       fileType: 'pdf',
       viewCount: 150,
-      createdDate: '2023-06-10'
+      createdDate: '2023-06-10',
     },
     {
       id: 9,
       title: 'Các bài tập thể dục tại nhà',
-      description: 'Tài liệu hướng dẫn các bài tập thể dục đơn giản có thể thực hiện tại nhà mà không cần dụng cụ phức tạp.',
+      description:
+        'Tài liệu hướng dẫn các bài tập thể dục đơn giản có thể thực hiện tại nhà mà không cần dụng cụ phức tạp.',
       shortDescription: 'Bài tập thể dục tại nhà',
       resourceUrl: 'assets/documents/bai-tap-the-duc.pdf',
       thumbnailUrl: 'https://img.youtube.com/vi/hZ1Rb9hC4JY/hqdefault.jpg',
@@ -1600,12 +2014,13 @@ export class ForceTestData {
       topic: ResourceTopic.SPORTS,
       fileType: 'pdf',
       viewCount: 230,
-      createdDate: '2023-04-25'
+      createdDate: '2023-04-25',
     },
     {
       id: 10,
       title: 'Lập trình web cơ bản',
-      description: 'Video hướng dẫn lập trình web cơ bản với HTML, CSS và JavaScript cho người mới bắt đầu.',
+      description:
+        'Video hướng dẫn lập trình web cơ bản với HTML, CSS và JavaScript cho người mới bắt đầu.',
       shortDescription: 'Hướng dẫn lập trình web',
       resourceUrl: 'https://www.youtube.com/embed/zJSY8tbf_ys',
       thumbnailUrl: 'https://img.youtube.com/vi/zJSY8tbf_ys/hqdefault.jpg',
@@ -1613,7 +2028,105 @@ export class ForceTestData {
       topic: ResourceTopic.TECHNOLOGY,
       isExternal: true,
       viewCount: 310,
-      createdDate: '2023-03-30'
-    }
+      createdDate: '2023-03-30',
+    },
   ];
+  /**
+   * Mock data for emotional survey questions
+   */
+  static mockEmotionalSurveyQuestions: IEmotionalSurveyQuestion[] = [
+    {
+      id: 1,
+      text: 'Trong tuần qua, bạn cảm thấy vui vẻ và hạnh phúc bao nhiêu lần?',
+      options: [
+        { id: 1, text: 'Không bao giờ', selected: false, value: 0 },
+        { id: 2, text: 'Hiếm khi', selected: false, value: 1 },
+        { id: 3, text: 'Thỉnh thoảng', selected: false, value: 2 },
+        { id: 4, text: 'Thường xuyên', selected: true, value: 3 },
+        { id: 5, text: 'Luôn luôn', selected: false, value: 4 },
+      ],
+    },
+    {
+      id: 2,
+      text: 'Bạn có cảm thấy buồn bã hoặc chán nản không?',
+      options: [
+        { id: 6, text: 'Không bao giờ', selected: false, value: 4 },
+        { id: 7, text: 'Hiếm khi', selected: true, value: 3 },
+        { id: 8, text: 'Thỉnh thoảng', selected: false, value: 2 },
+        { id: 9, text: 'Thường xuyên', selected: false, value: 1 },
+        { id: 10, text: 'Luôn luôn', selected: false, value: 0 },
+      ],
+    },
+    {
+      id: 3,
+      text: 'Bạn có cảm thấy lo lắng hoặc căng thẳng không?',
+      options: [
+        { id: 11, text: 'Không bao giờ', selected: false, value: 4 },
+        { id: 12, text: 'Hiếm khi', selected: true, value: 3 },
+        { id: 13, text: 'Thỉnh thoảng', selected: false, value: 2 },
+        { id: 14, text: 'Thường xuyên', selected: false, value: 1 },
+        { id: 15, text: 'Luôn luôn', selected: false, value: 0 },
+      ],
+    },
+    {
+      id: 4,
+      text: 'Bạn có cảm thấy tự tin về bản thân không?',
+      options: [
+        { id: 16, text: 'Không bao giờ', selected: false, value: 0 },
+        { id: 17, text: 'Hiếm khi', selected: false, value: 1 },
+        { id: 18, text: 'Thỉnh thoảng', selected: false, value: 2 },
+        { id: 19, text: 'Thường xuyên', selected: true, value: 3 },
+        { id: 20, text: 'Luôn luôn', selected: false, value: 4 },
+      ],
+    },
+    {
+      id: 5,
+      text: 'Bạn có cảm thấy được yêu thương và được hỗ trợ không?',
+      options: [
+        { id: 21, text: 'Không bao giờ', selected: false, value: 0 },
+        { id: 22, text: 'Hiếm khi', selected: false, value: 1 },
+        { id: 23, text: 'Thỉnh thoảng', selected: false, value: 2 },
+        { id: 24, text: 'Thường xuyên', selected: false, value: 3 },
+        { id: 25, text: 'Luôn luôn', selected: true, value: 4 },
+      ],
+    },
+  ];
+
+  /**
+   * Get feedback based on score
+   * @param score Survey score
+   * @returns Feedback text
+   */
+  static getFeedbackForScore(score: number): string {
+    if (score >= 80) {
+      return 'Bạn đang có trạng thái cảm xúc tích cực. Hãy tiếp tục duy trì những hoạt động mang lại niềm vui và hạnh phúc cho bạn.';
+    } else if (score >= 60) {
+      return 'Bạn đang có trạng thái cảm xúc khá ổn định. Hãy tìm thêm các hoạt động giúp bạn cảm thấy vui vẻ và thoải mái hơn.';
+    } else if (score >= 40) {
+      return 'Bạn đang có một số dấu hiệu của cảm xúc tiêu cực. Hãy thử tham gia các hoạt động thư giãn và trò chuyện với người thân hoặc bạn bè.';
+    } else {
+      return 'Bạn đang có trạng thái cảm xúc tiêu cực. Hãy tìm kiếm sự hỗ trợ từ người thân, bạn bè hoặc chuyên gia tâm lý nếu cần thiết.';
+    }
+  }
+
+  /**
+   * Get mock survey detail by ID
+   * @param surveyId Survey ID
+   * @returns Mock survey detail
+   */
+  static getMockSurveyDetail(surveyId: number): IEmotionalSurveyDetail {
+    const surveyHistory = this.mockEmotionalSurveyHistory.find(
+      (survey) => survey.id === surveyId
+    );
+
+    return {
+      id: surveyId,
+      date: surveyHistory?.date || new Date(),
+      questions: this.mockEmotionalSurveyQuestions,
+      result: surveyHistory?.result || '',
+      emotionType: surveyHistory?.emotionType || EmotionType.HAPPY,
+      score: surveyHistory?.score || 0,
+      feedback: this.getFeedbackForScore(surveyHistory?.score || 0),
+    };
+  }
 }

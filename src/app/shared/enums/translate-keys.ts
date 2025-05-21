@@ -166,6 +166,11 @@ export enum TranslateKeys {
   TITLE_DISCOVERY_POINTS = 'TITLE.discovery_points',
   TITLE_NO_SELF_DISCOVERY_SURVEY_HISTORY = 'TITLE.no_self_discovery_survey_history',
 
+  // EMOTIONAL SURVEY
+  TITLE_EMOTIONAL_SURVEY = 'TITLE.emotional_survey',
+  TITLE_EMOTIONAL_SURVEY_HISTORY = 'TITLE.emotional_survey_history',
+  TITLE_EMOTIONAL_SURVEY_DETAIL = 'TITLE.emotional_survey_detail',
+
   // TITLE
   TITLE_PHONE = 'TITLE.phone',
   TITLE_ACCOUNT = 'TITLE.account',
