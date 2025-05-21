@@ -77,6 +77,9 @@ export class SoundService {
           return;
         }
 
+        // Stop if sound is playing
+        sound.stop();
+
         if (!this.audioUnlocked && Howler.ctx.state === 'suspended') {
           Howler.ctx.resume().then(() => {
             this.audioUnlocked = true;

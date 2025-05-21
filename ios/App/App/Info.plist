@@ -22,6 +22,12 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+  <string>Cho phép truy cập sử dụng camera để ghi lại hình ảnh hoạt động gia đình</string>
+  <key>NSPhotoLibraryAddUsageDescription</key>
+  <string>Cho phép truy cập thư viện hình anh để ghi lại ảnh hoạt động gia đình</string>
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>Cho phép truy cập thư viện hình anh để ghi lại ảnh hoạt động gia đình</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Cho phép truy cập nhận dạng sinh trắc học để xác thực người dùng</string>
 	<key>NSMicrophoneUsageDescription</key>

@@ -228,7 +228,7 @@
     "discovery_points": "Points",
     "no_self_discovery_survey_history": "No self discovery survey history yet",
     "name": "Name",
-    "gender":"Gender",
+    "gender": "Gender",
     "male": "Male",
     "female": "Female",
     "other": "Other",
@@ -236,7 +236,10 @@
     "district": "District",
     "precint": "Precint",
     "street": "Street",
-    "setup_nickname": "Setup your nickname"
+    "setup_nickname": "Setup your nickname",
+    "image": "Image",
+    "take_new_image": "Take an image",
+    "select_gallery": "Select from your gallery"
   },
   "VALIDATE": {
     "phone_required": "Please input your phone number.",
@@ -257,7 +260,8 @@
     "error_system_header": "System error",
     "access_permission_notification_alert": "Please allow the app to display notifications to receive the latest updates.",
     "confirm_logout_alert": "Are you sure you want to log out?",
-    "app_update_successful": "App update successful. You are now running the latest version."
+    "app_update_successful": "App update successful. You are now running the latest version.",
+    "access_permission_gallery_alert": "Please allow the app to access your photo library and use your camera."
   },
   "BUTTON_TITLES": {
     "confirm": "Confirm",

@@ -54,7 +54,7 @@
     </ion-list>
 
     <!--  Âm thanh, hình ảnh, thông báo, ngôn ngữ  -->
-    <ion-list class="mb-2">
+    <ion-list class="mb-2" *ngIf="authData.is_teenager">
       <ion-item [routerLink]="PageRoutes.THEME_AND_BACKGROUND" detail="false">
         <ion-icon name="color-palette" slot="start" color="primary" class="text-xl"></ion-icon>
         <ion-label class="py-2">{{ TranslateKeys.TITLE_THEME_AND_BACKGROUND | translate }}</ion-label>

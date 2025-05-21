@@ -231,6 +231,9 @@ export enum TranslateKeys {
   TITLE_PRECINT = 'TITLE.precint',
   TITLE_STREET = 'TITLE.street',
   TITLE_SETUP_NICKNAME = 'TITLE.setup_nickname',
+  TITLE_IMAGE = 'TITLE.image',
+  TITLE_TAKE_NEW_IMAGE = 'TITLE.take_new_image',
+  TITLE_SELECT_GALLERY = 'TITLE.select_gallery',
 
   // VALIDATE
   VALIDATE_PHONE_REQUIRED = 'VALIDATE.phone_required',
@@ -250,6 +253,7 @@ export enum TranslateKeys {
   ALERT_ERROR_HEADER = 'ALERT.error_header',
   ALERT_ERROR_SYSTEM_HEADER = 'ALERT.error_system_header',
   ALERT_ACCESS_PERMISSION_NOTIFICATION = 'ALERT.access_permission_notification_alert',
+  ALERT_ACCESS_PERMISSION_GALLERY = 'ALERT.access_permission_gallery_alert',
   ALERT_CONFIRM_LOGOUT = 'ALERT.confirm_logout_alert',
   ALERT_APP_UPDATE_SUCCESSFUL = 'ALERT.app_update_successful',
 

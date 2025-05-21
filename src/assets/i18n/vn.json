@@ -228,7 +228,7 @@
     "discovery_points": "Điểm",
     "no_self_discovery_survey_history": "Chưa có lịch sử khảo sát khám phá bản thân",
     "name": "Tên",
-    "gender":"Giới tính",
+    "gender": "Giới tính",
     "male": "Nam",
     "female": "Nữ",
     "other": "Khác",
@@ -236,7 +236,10 @@
     "district": "Quận/Huyện",
     "precint": "Phường/Xã",
     "street": "Địa chỉ nhà",
-    "setup_nickname": "Thiết lập nickname"
+    "setup_nickname": "Thiết lập nickname",
+    "image": "Hình ảnh",
+    "take_new_image": "Chụp ảnh mới",
+    "select_gallery": "Chọn từ thư viện"
   },
   "VALIDATE": {
     "phone_required": "Vui lòng nhập vào số điện thoại.",
@@ -257,7 +260,8 @@
     "error_system_header": "Lỗi hệ thống",
     "access_permission_notification_alert": "Vui lòng cho phép ứng dụng có quyền hiển thị thông báo để nhận được các thông tin cập nhật mới nhất. Xin cảm ơn!",
     "confirm_logout_alert": "Bạn có chắc chắn muốn đăng xuất?",
-    "app_update_successful": "Cập nhật ứng dụng thành công. Bạn đã sử dụng phiên bản mới nhất."
+    "app_update_successful": "Cập nhật ứng dụng thành công. Bạn đã sử dụng phiên bản mới nhất.",
+    "access_permission_gallery_alert": "Vui lòng cho phép ứng dụng truy cập thư viện ảnh và sử dụng máy ảnh của bạn."
   },
   "BUTTON_TITLES": {
     "confirm": "Xác nhận",

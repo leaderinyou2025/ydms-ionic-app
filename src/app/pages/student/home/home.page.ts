@@ -9,7 +9,6 @@ import { TranslateKeys } from '../../../shared/enums/translate-keys';
 import { StatusItemType } from '../../../shared/enums/home/status-item-type.enum';
 import { ForceTestData } from '../../../shared/classes/force-test-data';
 import { ICharacter, IProgress, IStatusItem, ITask, } from '../../../shared/interfaces/home/home.interfaces';
-import { OdooService } from '../../../services/odoo/odoo.service';
 import { IAuthData } from '../../../shared/interfaces/auth/auth-data';
 import { BtnRoles } from '../../../shared/enums/btn-roles';
 import { IonicIcons } from '../../../shared/enums/ionic-icons';
@@ -20,7 +19,6 @@ import { IonicColors } from '../../../shared/enums/ionic-colors';
 import { PageRoutes } from '../../../shared/enums/page-routes';
 import { LiyYdmsAvatarService } from '../../../services/models/iliy-ydms-avatar.service';
 import { CommonConstants } from '../../../shared/classes/common-constants';
-import { SoundService } from '../../../services/sound/sound.service';
 
 @Component({
   selector: 'app-home',
@@ -75,13 +73,11 @@ export class HomePage implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private odooService: OdooService,
     private toastController: ToastController,
     private alertController: AlertController,
     private translate: TranslateService,
     private router: Router,
     private liyYdmsAvatarService: LiyYdmsAvatarService,
-    private soundService: SoundService,
   ) {
   }
 

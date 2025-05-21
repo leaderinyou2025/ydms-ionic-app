@@ -13,16 +13,16 @@
       <ion-grid>
         <ion-row>
           <!--   Avatar for student   -->
-          <ion-col size="12" class="ion-text-center" *ngIf="avatar && avatar?.image_512">
+          <ion-col size="12" class="ion-text-center" *ngIf="avatar">
             <ion-img class="w-80 h-auto mx-auto"
                      (click)="onClickSettingAvatar()"
-                     src="{{CommonConstants.IMAGE_BASE64_PREFIX + avatar.image_512}}"></ion-img>
+                     src="{{avatar.image_url ?? CommonConstants.detectMimeType(avatar.image_512) + avatar.image_512}}"></ion-img>
           </ion-col>
 
           <!--   Avatar for parent / teacher    -->
           <ion-col size="12" class="ion-text-center" *ngIf="!avatar">
             <div class="mx-auto w-64 h-64 min-w-64 min-h-64 rounded-full overflow-hidden border">
-              <ion-img class="min-w-full min-h-full bg-gray-500" [src]="getUserAvatarImage()"></ion-img>
+              <ion-img class="min-w-full min-h-full bg-gray-500" (click)="onClickChangeUserImage()" [src]="userImage"></ion-img>
             </div>
           </ion-col>
 

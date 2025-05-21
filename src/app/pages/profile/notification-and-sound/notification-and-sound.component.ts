@@ -49,6 +49,7 @@ export class NotificationAndSoundComponent implements OnInit {
 
   async ionViewWillLeave() {
     await this.saveUserSettings();
+    this.soundService.playBackground();
   }
 
   /**

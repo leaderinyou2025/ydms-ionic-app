@@ -39,7 +39,7 @@
 
   <!--  Âm thanh nền  -->
   <ion-list class="my-2" *ngIf="soundSettings && soundSettings?.enabled">
-    <ion-item detail="false">
+    <ion-item detail="false" lines="{{soundSettings.background?.enabled ? '' : 'none'}}">
       <ion-icon name="headset" slot="start" color="primary" class="text-xl"></ion-icon>
       <ion-label class="py-2">
         {{ TranslateKeys.TITLE_BACKGROUND_SOUND | translate }}<br>
@@ -61,7 +61,7 @@
       <!--   Nhạc chuông   -->
       <ion-item lines="none" detail="false" (click)="onSwitchBackgroundMusic()">
         <ion-icon name="musical-notes" slot="start" color="primary" class="text-xl"></ion-icon>
-        <ion-label class="py-2 italic text-gray-800 dark:text-gray-50"> {{ soundSettings?.background?.sound?.name }}</ion-label>
+        <ion-label class="py-2 italic text-gray-800 dark:text-gray-50"> {{ soundSettings.background?.sound?.name }}</ion-label>
         <ion-icon name="chevron-forward" slot="end" class="text-base"></ion-icon>
       </ion-item>
     </ng-container>

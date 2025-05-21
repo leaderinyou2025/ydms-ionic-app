@@ -45,19 +45,33 @@ export class CommonConstants {
   ];
 
   /**
-   * Prefix to show base64 image
+   * Prefixes for base64 image formats
    */
-  public static IMAGE_BASE64_PREFIX = 'data:image/png;base64,';
+  public static IMAGE_PNG_BASE64_PREFIX = 'data:image/png;base64,';
+  public static IMAGE_JPEG_BASE64_PREFIX = 'data:image/jpeg;base64,';
+  public static IMAGE_GIF_BASE64_PREFIX = 'data:image/gif;base64,';
+  public static IMAGE_WEBP_BASE64_PREFIX = 'data:image/webp;base64,';
+  public static IMAGE_BMP_BASE64_PREFIX = 'data:image/bmp;base64,';
+  public static IMAGE_ICO_BASE64_PREFIX = 'data:image/x-icon;base64,';
+
   public static signaturesMineTypes: { [key: string]: string } = {
-    iVBORw0KGgo: CommonConstants.IMAGE_BASE64_PREFIX
+    iVBORw0KGgo: CommonConstants.IMAGE_PNG_BASE64_PREFIX, // PNG
+    '/9j/': CommonConstants.IMAGE_JPEG_BASE64_PREFIX, // JPEG
+    R0lGODlh: CommonConstants.IMAGE_GIF_BASE64_PREFIX, // GIF (GIF89a)
+    R0lGODdh: CommonConstants.IMAGE_GIF_BASE64_PREFIX, // GIF (GIF87a)
+    UklGR: CommonConstants.IMAGE_WEBP_BASE64_PREFIX, // WebP
+    Qk1: CommonConstants.IMAGE_BMP_BASE64_PREFIX, // BMP
+    AAAB: CommonConstants.IMAGE_ICO_BASE64_PREFIX // ICO
   };
 
   public static detectMimeType(b64: string): string | undefined {
     for (let key in CommonConstants.signaturesMineTypes) {
-      if (b64.indexOf(key) === 0) return CommonConstants.signaturesMineTypes[key];
+      if (b64.indexOf(key) === 0) {
+        return CommonConstants.signaturesMineTypes[key];
+      }
     }
     return undefined;
-  };
+  }
 
   /**
    * Load device identifier

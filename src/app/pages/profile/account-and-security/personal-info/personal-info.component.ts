@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { LoadingController, SelectCustomEvent, ToastButton, ToastController, ToastOptions } from '@ionic/angular';
+import { ActionSheetController, LoadingController, SelectCustomEvent, ToastButton, ToastController, ToastOptions } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { NavigationExtras, Router } from '@angular/router';
 
 import { IAuthData } from '../../../../shared/interfaces/auth/auth-data';
 import { AuthService } from '../../../../services/auth/auth.service';
+import { PhotoService } from '../../../../services/photo/photo.service';
+import { LiyYdmsAvatarService } from '../../../../services/models/iliy-ydms-avatar.service';
+import { AddressService } from '../../../../services/address/address.service';
 import { PageRoutes } from '../../../../shared/enums/page-routes';
 import { TranslateKeys } from '../../../../shared/enums/translate-keys';
-import { LiyYdmsAvatarService } from '../../../../services/models/iliy-ydms-avatar.service';
 import { ILiyYdmsAvatar } from '../../../../shared/interfaces/models/liy.ydms.avatar';
 import { CommonConstants } from '../../../../shared/classes/common-constants';
-import { AddressService } from '../../../../services/address/address.service';
 import { IResCountryState } from '../../../../shared/interfaces/models/res.country.state';
 import { ILiyYdmsDistrict } from '../../../../shared/interfaces/models/liy.ydms.district';
 import { ILiyYdmsPrecint } from '../../../../shared/interfaces/models/liy.ydms.precint';
@@ -33,6 +34,7 @@ export class PersonalInfoComponent implements OnInit {
   authData!: IAuthData | undefined;
   avatar?: ILiyYdmsAvatar;
   profileForm!: FormGroup;
+  userImage!: string;
 
   stateList!: Array<IResCountryState>;
   districtList!: Array<ILiyYdmsDistrict>;
@@ -51,6 +53,8 @@ export class PersonalInfoComponent implements OnInit {
     private toastController: ToastController,
     private translate: TranslateService,
     private router: Router,
+    private actionSheetController: ActionSheetController,
+    private photoService: PhotoService
   ) {
   }
 
@@ -59,6 +63,7 @@ export class PersonalInfoComponent implements OnInit {
       this.authData = authData;
       this.initProfileForm();
       this.loadAvatarImage();
+      this.userImage = this.getUserImage();
     });
     this.loadStateList();
   }
@@ -112,22 +117,45 @@ export class PersonalInfoComponent implements OnInit {
   }
 
   /**
-   * Get user avatar image
-   */
-  public getUserAvatarImage(): string | undefined {
-    if (!this.authData) return;
-    if (!this.authData.image_128) return '/assets/icons/svg/avatar.svg';
-    const prefix = CommonConstants.detectMimeType(this.authData.image_128);
-    if (!prefix) return '/assets/icons/svg/avatar.svg';
-    return prefix + this.authData.avatar_128;
-  }
-
-  /**
    * On click open setting avatar
    */
   public onClickSettingAvatar(): void {
     const navigationExtras: NavigationExtras = {state: {isBackground: false}};
     this.router.navigateByUrl(`${PageRoutes.PROFILE}/${PageRoutes.AVATAR_BACKGROUND}`, navigationExtras);
+  }
+
+  /**
+   * On click change user image
+   */
+  public onClickChangeUserImage(): void {
+    this.actionSheetController.create({
+      header: this.translate.instant(TranslateKeys.TITLE_IMAGE),
+      mode: NativePlatform.IOS,
+      buttons: [
+        {
+          text: this.translate.instant(TranslateKeys.TITLE_TAKE_NEW_IMAGE),
+          handler: () => {
+            this.photoService.pickImage(1, 0, false).then(() => {
+              const image = this.photoService.getImageResourceBase64();
+              if (image) this.updateUserImage(image);
+            });
+          }
+        },
+        {
+          text: this.translate.instant(TranslateKeys.TITLE_SELECT_GALLERY),
+          handler: () => {
+            this.photoService.pickImage(0, 0, false).then(() => {
+              const image = this.photoService.getImageResourceBase64();
+              if (image) this.updateUserImage(image);
+            });
+          }
+        },
+        {
+          text: this.translate.instant(TranslateKeys.BUTTON_CANCEL),
+          role: BtnRoles.CANCEL,
+        }
+      ]
+    }).then(actionSheet => actionSheet.present());
   }
 
   /**
@@ -169,8 +197,29 @@ export class PersonalInfoComponent implements OnInit {
    * @private
    */
   private loadAvatarImage(): void {
-    if (!this.authData?.avatar?.id) return;
+    if (!this.authData?.is_teenager) return;
+
+    if (!this.authData?.avatar?.id) {
+      this.avatar = {
+        id: -1,
+        name: this.translate.instant(TranslateKeys.TITLE_NOT_SET_NICKNAME),
+        image_url: '/assets/images/avatar/conan_no_set.png',
+        image_512: '',
+      };
+      return;
+    }
     this.liyYdmsAvatarService.getImageById(this.authData.avatar.id).then(avatar => this.avatar = avatar);
+  }
+
+  /**
+   * Get user avatar image
+   */
+  public getUserImage(imageBase64?: string): string {
+    if (!this.authData) return '/assets/icons/svg/avatar.svg';
+    if (!this.authData.image_128) return '/assets/icons/svg/avatar.svg';
+    const prefix = CommonConstants.detectMimeType(imageBase64 || this.authData.image_128);
+    if (!prefix) return '/assets/icons/svg/avatar.svg';
+    return `${prefix}${imageBase64 ?? this.authData.image_128}`;
   }
 
   /**
@@ -216,6 +265,18 @@ export class PersonalInfoComponent implements OnInit {
    */
   private loadStateList(): void {
     this.addressService.getStateList().then(stateList => this.stateList = stateList);
+  }
+
+  /**
+   * updateUserImage
+   * @param imageBase64
+   * @private
+   */
+  private updateUserImage(imageBase64: string): void {
+    if (!this.authData) return;
+    this.authData.image_128 = imageBase64;
+    this.userImage = this.getUserImage(imageBase64);
+    this.authService.setAuthData(this.authData).then(() => this.authService.saveUserImage());
   }
 
   /**

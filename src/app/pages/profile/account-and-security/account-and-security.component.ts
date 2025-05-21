@@ -49,10 +49,17 @@ export class AccountAndSecurityComponent implements OnInit {
    */
   public getUserAvatarImage(): string | undefined {
     if (!this.authData) return;
-    if (!this.authData.avatar_128) return '/assets/icons/svg/avatar.svg';
-    const prefix = CommonConstants.detectMimeType(this.authData.avatar_128);
-    if (!prefix) return '/assets/icons/svg/avatar.svg';
-    return prefix + this.authData.avatar_128;
+    if (this.authData.is_teenager) {
+      if (!this.authData.avatar_128) return '/assets/images/avatar/conan_no_set.png';
+      const prefix = CommonConstants.detectMimeType(this.authData.avatar_128);
+      if (!prefix) return '/assets/images/avatar/conan_no_set.png';
+      return prefix + this.authData.avatar_128;
+    } else {
+      if (!this.authData.image_128) return '/assets/icons/svg/avatar.svg';
+      const prefix = CommonConstants.detectMimeType(this.authData.image_128);
+      if (!prefix) return '/assets/icons/svg/avatar.svg';
+      return prefix + this.authData.image_128;
+    }
   }
 
   /**
