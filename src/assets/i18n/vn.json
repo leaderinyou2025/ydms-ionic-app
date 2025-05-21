@@ -10,7 +10,10 @@
     "yesterday": "Hôm qua"
   },
   "BUTTON": {
-    "remove": "Bỏ"
+    "remove": "Bỏ",
+    "cancel": "Hủy",
+    "save": "Lưu",
+    "select": "Chọn"
   },
   "LOADING": {
     "pull_to_refresh": "Kéo để làm mới",
@@ -86,7 +89,58 @@
     "total_reactions": "Tổng số cảm xúc",
     "no_entries": "Không có bài viết nào",
     "no_suggestions": "Không có gợi ý nào cho loại cảm xúc này",
-    "anonymous_user": "Bạn ẩn danh"
+    "anonymous_user": "Người dùng ẩn danh"
+  },
+  "DAILY_EMOTION_JOURNAL": {
+    "no_entries": "Không tìm thấy nhật ký cảm xúc nào",
+    "no_caption": "Không có chú thích",
+    "shared_with": "Đã chia sẻ với",
+    "date_has_entry": "Ngày này đã có nhật ký cảm xúc",
+    "entry_created": "Đã tạo nhật ký cảm xúc thành công",
+    "entry_creation_failed": "Không thể tạo nhật ký cảm xúc",
+    "add_entry": "Thêm Nhật Ký Cảm Xúc",
+    "select_emotion": "Hôm nay bạn cảm thấy thế nào?",
+    "add_caption": "Thêm ghi chú (tùy chọn)",
+    "caption_placeholder": "Viết gì đó về ngày hôm nay của bạn...",
+    "share_with": "Chia sẻ với (tùy chọn)",
+    "only_today_allowed": "Bạn chỉ có thể thêm nhật ký cảm xúc cho ngày hôm nay"
+  },
+  "EMOTION_STREAK": {
+    "current": "Chuỗi hiện tại",
+    "longest": "Chuỗi dài nhất",
+    "days_3": "Chuỗi 3 ngày",
+    "days_5": "Chuỗi 5 ngày",
+    "days_7": "Chuỗi 7 ngày",
+    "days_15": "Chuỗi 15 ngày",
+    "days_28": "Chuỗi 28 ngày"
+  },
+  "EMOTION_SHARE": {
+    "target_class": "Nhóm lớp",
+    "target_friends": "Bạn bè",
+    "target_teachers": "Giáo viên",
+    "target_family": "Gia đình"
+  },
+  "CALENDAR": {
+    "today": "Hôm nay",
+    "sunday_short": "CN",
+    "monday_short": "T2",
+    "tuesday_short": "T3",
+    "wednesday_short": "T4",
+    "thursday_short": "T5",
+    "friday_short": "T6",
+    "saturday_short": "T7",
+    "january": "Tháng 1",
+    "february": "Tháng 2",
+    "march": "Tháng 3",
+    "april": "Tháng 4",
+    "may": "Tháng 5",
+    "june": "Tháng 6",
+    "july": "Tháng 7",
+    "august": "Tháng 8",
+    "september": "Tháng 9",
+    "october": "Tháng 10",
+    "november": "Tháng 11",
+    "december": "Tháng 12"
   },
   "EMOTION": {
     "happy": "Vui vẻ",
@@ -137,6 +191,13 @@
     "friendly": "Thân thiện",
     "school": "Trường",
     "class": "Lớp",
+    "daily_emotion_journal": "Nhật ký cảm xúc hàng ngày",
+    "calendar": "Lịch",
+    "history": "Lịch sử",
+    "emotion_streak": "Chuỗi cảm xúc",
+    "emotion_caption": "Chú thích",
+    "emotion_share": "Chia sẻ cảm xúc",
+    "emotion_share_target": "Chia sẻ với",
     "theme_and_background": "Giao diện & hình nền",
     "notification_and_sound": "Âm thanh & thông báo",
     "language": "Ngôn ngữ",
@@ -227,6 +288,17 @@
     "self_discovery_survey_questions": "Câu hỏi khảo sát khám phá bản thân",
     "discovery_points": "Điểm",
     "no_self_discovery_survey_history": "Chưa có lịch sử khảo sát khám phá bản thân",
+    "emotional_survey": "Khảo sát cảm xúc",
+    "emotional_survey_history": "Lịch sử khảo sát cảm xúc",
+    "emotional_survey_detail": "Chi tiết khảo sát",
+    "family_dialogue_session": "Buổi đối thoại gia đình",
+    "family_dialogue_session_history": "Lịch sử đối thoại gia đình",
+    "family_dialogue_session_detail": "Chi tiết buổi đối thoại",
+    "family_dialogue_questions": "Câu hỏi đối thoại",
+    "suggested_questions": "Câu hỏi gợi ý",
+    "parent_questions": "Câu hỏi từ phụ huynh",
+    "no_family_dialogue_session_history": "Chưa có lịch sử buổi đối thoại gia đình",
+    "answer_questions": "Gửi câu trả lời",
     "name": "Tên",
     "gender": "Giới tính",
     "male": "Nam",
@@ -277,7 +349,9 @@
     "execute": "Thực hiện",
     "complete": "Hoàn thành",
     "create_new_survey": "Tạo khảo sát mới",
-    "create_first_survey": "Tạo khảo sát đầu tiên"
+    "create_first_survey": "Tạo khảo sát đầu tiên",
+    "select": "Chọn",
+    "share": "Chia sẻ"
   },
   "TOAST": {
     "error_header": "Lỗi",

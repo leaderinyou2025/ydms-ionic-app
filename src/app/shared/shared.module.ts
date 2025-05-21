@@ -17,6 +17,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { ResourceViewerComponent } from './components/resource-viewer/resource-viewer.component';
 import { EmotionDiaryModalComponent } from '../pages/student/personal-diary/emotion-diary-modal/emotion-diary-modal.component';
 import { ResourceListComponent } from './components/resource-list/resource-list.component';
+import { EmotionIconSelectorComponent } from './components/emotion-icon-selector/emotion-icon-selector.component';
+import { EmotionShareComponent } from './components/emotion-share/emotion-share.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { ResourceListComponent } from './components/resource-list/resource-list.
     RouterLink,
     RouterLinkActive,
     LottieComponent,
+    EmotionIconSelectorComponent,
+    EmotionShareComponent,
   ],
   exports: [
     SelectDatetimeComponent,
