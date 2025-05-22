@@ -1,6 +1,9 @@
 import { IBase } from '../base/base';
 import { IRelatedField } from '../base/related-field';
 
+/**
+ * Model: Người sử dụng
+ */
 export interface IResUser extends IBase {
   login: string;                  // Tên đăng nhập
   email?: string;

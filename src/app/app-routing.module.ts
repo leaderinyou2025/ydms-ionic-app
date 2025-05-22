@@ -86,11 +86,19 @@ const routes: Routes = [
   {
     path: 'family-actions',
     loadChildren: () => import('./pages/parent/family-actions/family-actions.module').then(m => m.FamilyActionsPageModule)
-  },  {
-    path: 'expert-guide',
-    loadChildren: () => import('./pages/teacher/expert-guide/expert-guide.module').then( m => m.ExpertGuidePageModule)
   },
-
+  {
+    path: 'expert-guide',
+    loadChildren: () => import('./pages/teacher/expert-guide/expert-guide.module').then(m => m.ExpertGuidePageModule)
+  },
+  {
+    path: 'task',
+    loadChildren: () => import('./pages/student/task/task.module').then(m => m.TaskPageModule)
+  },
+  {
+    path: 'daily-emotion-journal',
+    loadChildren: () => import('./pages/student/daily-emotion-journal/daily-emotion-journal.module').then(m => m.DailyEmotionJournalPageModule)
+  },
 ];
 
 @NgModule({

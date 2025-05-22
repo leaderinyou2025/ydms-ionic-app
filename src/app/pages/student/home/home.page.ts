@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { AlertButton, AlertController, AlertInput, ToastButton, ToastController, ToastOptions } from '@ionic/angular';
+import { AlertButton, AlertController, AlertInput, InfiniteScrollCustomEvent, ToastButton, ToastController, ToastOptions } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AnimationOptions } from 'ngx-lottie';
 
 import { AuthService } from '../../../services/auth/auth.service';
 import { TranslateKeys } from '../../../shared/enums/translate-keys';
-import { StatusItemType } from '../../../shared/enums/home/status-item-type.enum';
-import { ForceTestData } from '../../../shared/classes/force-test-data';
-import { ICharacter, IProgress, IStatusItem, ITask, } from '../../../shared/interfaces/home/home.interfaces';
 import { IAuthData } from '../../../shared/interfaces/auth/auth-data';
 import { BtnRoles } from '../../../shared/enums/btn-roles';
 import { IonicIcons } from '../../../shared/enums/ionic-icons';
@@ -19,6 +16,9 @@ import { IonicColors } from '../../../shared/enums/ionic-colors';
 import { PageRoutes } from '../../../shared/enums/page-routes';
 import { LiyYdmsAvatarService } from '../../../services/models/iliy-ydms-avatar.service';
 import { CommonConstants } from '../../../shared/classes/common-constants';
+import { TaskService } from '../../../services/task/task.service';
+import { TaskStatus } from '../../../shared/enums/task-status';
+import { ILiyYdmsTask } from '../../../shared/interfaces/models/liy.ydms.task';
 
 @Component({
   selector: 'app-home',
@@ -28,48 +28,37 @@ import { CommonConstants } from '../../../shared/classes/common-constants';
 })
 export class HomePage implements OnInit {
 
-  protected readonly TranslateKeys = TranslateKeys;
-  protected readonly PageRoutes = PageRoutes;
-
-  // Animation option
+  // User setting background and avatar
+  authData?: IAuthData;
+  background!: string;
+  avatar?: string;
+  // Animation option show in nickname
   options: AnimationOptions = {
     path: '/assets/animations/1747072943680.json',
     loop: true,
     autoplay: true,
   };
 
-  // User setting background and avatar
-  authData?: IAuthData;
-  background!: string;
-  avatar?: string;
+  // Toolbar total info
+  totalBadges!: number;
+  ranking!: number;
+  totalTask!: number;
+  totalFriendly!: number;
 
-  /**
-   * Character information
-   */
-  public character: ICharacter = {
-    name: '',
-    imagePath: '',
-    altText: ''
-  };
-
-  /**
-   * Status bar items
-   */
-  public statusItems: IStatusItem[] = [];
-
-  /**
-   * List of tasks to display
-   */
-  public tasks: ITask[] = [];
-
-  /**
-   * Progress information
-   */
-  public progress: IProgress = {
+  // Task list and progress
+  tasks!: Array<ILiyYdmsTask>;
+  progress = {
     completed: 0,
-    total: 0,
-    value: 0,
+    total: 0
   };
+  isLoading!: boolean;
+  isRefreshing!: boolean;
+  isLoadMore!: boolean;
+  private paged: number = 1;
+  private readonly limit: number = 20;
+
+  protected readonly TranslateKeys = TranslateKeys;
+  protected readonly PageRoutes = PageRoutes;
 
   constructor(
     private authService: AuthService,
@@ -78,10 +67,12 @@ export class HomePage implements OnInit {
     private translate: TranslateService,
     private router: Router,
     private liyYdmsAvatarService: LiyYdmsAvatarService,
+    private taskService: TaskService,
   ) {
   }
 
   async ngOnInit() {
+    // Reload user profile on server for first time
     await this.authService.loadUserProfile();
   }
 
@@ -137,71 +128,63 @@ export class HomePage implements OnInit {
   }
 
   /**
-   * Load all home screen data
-   */
-  private async loadHomeData(): Promise<void> {
-    try {
-      await Promise.all([this.loadUserProfileData(), this.loadTasksAndProgress()]);
-    } catch (error) {
-      console.error('Error loading home data:', error);
-    }
-  }
-
-  /**
-   * Load student profile data
-   */
-  private async loadUserProfileData(): Promise<void> {
-    this.authData = await this.authService.getAuthData();
-    if (!this.authData) return;
-
-    this.loadConfigAvatarAndBackground();
-    this.statusItems = ForceTestData.statusItems;
-  }
-
-  /**
-   * Load tasks and progress data
-   */
-  private async loadTasksAndProgress(): Promise<void> {
-    const authData = await this.authService.getAuthData();
-    if (!authData?.id) return;
-
-    // Force test data
-    this.progress = {completed: 1, total: 3, value: 0.33};
-    this.tasks = ForceTestData.tasks;
-  }
-
-  /**
-   * Get image path based on status item type
-   * @param type The status item type
-   * @returns The path to the image
-   */
-  public getImagePathByType(type: StatusItemType): string {
-    switch (type) {
-      case StatusItemType.BADGE:
-        return 'assets/icons/svg/ico_top_achievement.svg';
-      case StatusItemType.RANK:
-        return 'assets/icons/svg/ico_top_rank.svg';
-      case StatusItemType.MISSION:
-        return 'assets/icons/svg/ico_top_mission.svg';
-      case StatusItemType.FRIENDLY:
-        return 'assets/icons/svg/ico_top_friendly.svg';
-      default:
-        return '';
-    }
-  }
-
-  /**
    * Execute the selected task
    * @param task Data of the task to execute
    */
-  public executeTask(task: ITask): void {
+  public onClickExecuteTask(task: ILiyYdmsTask): void {
 
+  }
+
+  /**
+   * Load more tasks
+   * @param e
+   */
+  public loadMoreTask(e: InfiniteScrollCustomEvent): void {
+    if (this.isLoadMore) return;
+
+    if (this.isLoading) {
+      e.target.complete();
+      return;
+    }
+
+    this.isLoadMore = true;
+    this.paged += 1;
+    this.getTaskList().then(() => e.target.complete());
+  }
+
+  /**
+   * Initial task list data pagination
+   * @private
+   */
+  private initTaskDataPaging(): void {
+    this.paged = 1;
+    this.tasks = new Array<ILiyYdmsTask>();
+    this.progress = {completed: 0, total: 0}
+  }
+
+  /**
+   * Load all home screen data
+   */
+  private async loadHomeData(): Promise<void> {
+    this.authData = await this.authService.getAuthData();
+    if (!this.authData) return;
+
+    // Load setting avatar and background image
+    this.loadConfigAvatarAndBackground();
+
+    // Get task list and task progress
+    this.getProgressTasks();
+    this.initTaskDataPaging();
+    this.getTaskList();
+
+    // Get toolbar total data
+    this.getToolbarData();
   }
 
   /**
    * Load user setting background and avatar image
    */
-  public loadConfigAvatarAndBackground(): void {
+  private loadConfigAvatarAndBackground(): void {
     // Background image
     this.authService.getThemeSettings().then(themeSettings => {
       if (themeSettings?.background?.resource_url)
@@ -219,6 +202,45 @@ export class HomePage implements OnInit {
         });
       }
     });
+  }
+
+  /**
+   * Load toolbar data
+   * @private
+   */
+  private getToolbarData(): void {
+    // TODO: Get count user badges
+    // TODO: Get user rank
+    // Total task
+    this.taskService.getCountTask().then(results => this.totalTask = results);
+    // TODO: Get user total friendly
+  }
+
+  /**
+   * Load progress task
+   * @private
+   */
+  private getProgressTasks(): void {
+    Promise.all([
+      this.taskService.getCountActivatingTasks(),
+      this.taskService.getCountCompletedTasks()
+    ]).then(([totalTask, completedTask]) => {
+      this.progress = {total: totalTask, completed: completedTask};
+    });
+  }
+
+  /**
+   * Get task list
+   * @private
+   */
+  private async getTaskList(): Promise<void> {
+    if (this.isLoading) return;
+    this.isLoading = true;
+
+    const offset = (this.paged - 1) * this.limit;
+    const results = await this.taskService.getTaskListByStatus([TaskStatus.PENDING, TaskStatus.IN_PROGRESS], offset, this.limit);
+    this.tasks = CommonConstants.mergeArrayObjectById(this.tasks, results) || [];
+    this.isLoading = true;
   }
 
   /**

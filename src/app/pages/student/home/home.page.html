@@ -1,10 +1,38 @@
 <ion-toolbar class="home-toolbar">
   <div class="flex justify-between py-3 w-full h-auto ion-padding-start ion-padding-end">
-    <div class="flex items-center" *ngFor="let item of statusItems">
-      <ion-img [src]="getImagePathByType(item.type)" alt="icon" class="w-7 h-7 mr-1 object-contain"></ion-img>
+    <!--  Huy hiệu  -->
+    <div class="flex items-center" [routerLink]="['/' + PageRoutes.RANK]" [queryParams]="{ activeTab: 'rank' }">
+      <ion-img src="assets/icons/svg/ico_top_achievement.svg" alt="icon" class="w-7 h-7 mr-1 object-contain"></ion-img>
       <div class="flex flex-col justify-center">
-        <span class="text-xs text-green-500 font-bold">{{ item.value }}</span>
-        <span class="block text-center text-xs text-gray-600 dark:text-gray-400">{{ item.label }}</span>
+        <span class="text-xs text-green-500 font-bold">{{ totalBadges || 0 }}</span>
+        <span class="block text-center text-xs text-gray-600 dark:text-gray-400">{{ TranslateKeys.TITLE_BADGES | translate }}</span>
+      </div>
+    </div>
+
+    <!--  Xếp hạng  -->
+    <div class="flex items-center" [routerLink]="['/' + PageRoutes.RANK]" [queryParams]="{ activeTab: 'achievements' }">
+      <ion-img src="assets/icons/svg/ico_top_rank.svg" alt="icon" class="w-7 h-7 mr-1 object-contain"></ion-img>
+      <div class="flex flex-col justify-center">
+        <span class="text-xs text-green-500 font-bold">{{ ranking || 0 }}</span>
+        <span class="block text-center text-xs text-gray-600 dark:text-gray-400">{{ TranslateKeys.TITLE_RANK | translate }}</span>
+      </div>
+    </div>
+
+    <!-- Nhiệm vụ -->
+    <div class="flex items-center" routerLink="/{{PageRoutes.TASK}}">
+      <ion-img src="assets/icons/svg/ico_top_mission.svg" alt="icon" class="w-7 h-7 mr-1 object-contain intense-shake-zoom"></ion-img>
+      <div class="flex flex-col justify-center">
+        <span class="text-xs text-green-500 font-bold">{{ totalTask || 0 }}</span>
+        <span class="block text-center text-xs text-gray-600 dark:text-gray-400">{{ TranslateKeys.TITLE_MISSIONS | translate }}</span>
+      </div>
+    </div>
+
+    <!-- Thân thiện -->
+    <div class="flex items-center" routerLink="/{{PageRoutes.FRIENDS}}">
+      <ion-img src="assets/icons/svg/ico_top_friendly.svg" alt="icon" class="w-7 h-7 mr-1 object-contain"></ion-img>
+      <div class="flex flex-col justify-center">
+        <span class="text-xs text-green-500 font-bold">{{ totalFriendly || 0 }}</span>
+        <span class="block text-center text-xs text-gray-600 dark:text-gray-400">{{ TranslateKeys.TITLE_FRIENDLY | translate }}</span>
       </div>
     </div>
   </div>
@@ -19,8 +47,8 @@
   <!-- Main Character -->
   <div class="flex flex-col items-center my-5" *ngIf="authData">
     <div class="relative mb-8" (click)="onClickSettingAvatar()">
-      <ion-img *ngIf="avatar" [src]="avatar" alt="avatar"></ion-img>
-      <ion-img *ngIf="!avatar" src="/assets/images/avatar/conan_no_set.png" alt="avatar"></ion-img>
+      <ion-img *ngIf="avatar" [src]="avatar" alt="avatar" class="float-animation"></ion-img>
+      <ion-img *ngIf="!avatar" src="/assets/images/avatar/conan_no_set.png" alt="avatar" class="shake"></ion-img>
     </div>
     <div class="flex items-center">
       <div class="relative">
@@ -47,10 +75,10 @@
       <h3 class="text-base italic font-bold text-blue-400">{{ TranslateKeys.HOME_WELCOME_TITLE | translate }}</h3>
       <ion-icon name="checkmark-circle" class="mr-8 font-bold text-[#53ad0d] text-xl"></ion-icon>
     </div>
-    <p class="text-sm">{{ TranslateKeys.HOME_WELCOME_SUBTITLE | translate }}</p>
+    <p class="text-sm shadow-sm">{{ TranslateKeys.HOME_WELCOME_SUBTITLE | translate }}</p>
 
     <div class="flex gap-1 items-center">
-      <ion-progress-bar class="task-progress h-4" type="determinate" [value]="progress.value"></ion-progress-bar>
+      <ion-progress-bar class="task-progress h-4" type="determinate" [value]="progress.completed / progress.total"></ion-progress-bar>
       <div class="text-[#53ad0d]"><span class="completed text-sm">{{ progress.completed }}</span>/<span class="total text-base">{{ progress.total }}</span></div>
     </div>
   </div>
@@ -61,18 +89,23 @@
       <ion-item class="task-item mb-3" lines="none" *ngFor="let task of tasks">
         <div class="flex justify-between items-center w-full p-4 bg-[#cd83fe] text-white rounded-xl">
           <div class="flex-1">
-            <p class="text-sm mb-1">{{ task.description }}</p>
+            <p class="text-sm mb-1">{{ task.name }}</p>
             <div class="flex items-center text-sm">
               <ion-img src="assets/icons/svg/ico_top_mission.svg" alt="icon" class="w-5 h-5 object-contain"></ion-img>
-              <span>+{{ task.points }}</span>
+              <span>+{{ task.rank_point || 0 }}</span>
             </div>
           </div>
-          <ion-button class="task-button ml-2 h-9" fill="outline" (click)="executeTask(task)">
+          <ion-button class="task-button ml-2 h-9" fill="outline" (click)="onClickExecuteTask(task)">
             {{ TranslateKeys.BUTTON_EXECUTE | translate }}
           </ion-button>
         </div>
       </ion-item>
     </ion-list>
+
+    <!-- Infinite scroll -->
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreTask($event)">
+      <ion-infinite-scroll-content loadingSpinner="crescent"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   </div>
 </ion-content>
 

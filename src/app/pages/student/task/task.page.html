@@ -1,0 +1,108 @@
+<app-header
+  [pageTitle]="TranslateKeys.TITLE_TASK_ACTIVITY"
+  backgroundImageUrl="/assets/images/banner.svg"
+  [animeImage]="animeImage"
+  [caption]="TranslateKeys.HOME_WELCOME_SUBTITLE"
+  [animation]="animation">
+</app-header>
+
+<ion-content [fullscreen]="true" class="ion-padding-start ion-padding-end">
+  <ion-grid>
+    <!--  Checkin cảm xúc  -->
+    <ion-col size="12">
+      <h2 class="pb-2 text-2xl font-medium">{{ TranslateKeys.TITLE_CHECKIN_EMOTION_DAILY | translate }}</h2>
+      <div class="p-4 w-full rounded-2xl border-2 border-gray-300 mb-3">
+        <div class="flex items-center justify-between w-full">
+          <h3 class="text-lg text-sky-500 font-medium">Đạt chuỗi 10/30 ngày </h3>
+          <ion-icon name="checkmark-circle" color="success" class="text-2xl"></ion-icon>
+        </div>
+        <ion-range class="emotion-streak pt-3 pb-5" aria-label="Emotion streak" [value]="30" [max]="100" [pin]="true"></ion-range>
+        <ion-button expand="block" class="checkin-emotion-btn mb-3" routerLink="/{{PageRoutes.DAILY_EMOTION_JOURNAL}}">
+          Checkin cảm xúc
+        </ion-button>
+      </div>
+      <div class="p-4 w-full rounded-2xl border-2 border-gray-300">
+        <div class="flex items-center justify-between w-full">
+          <h3 class="text-lg text-sky-500 font-medium">
+            Cảm xúc hôm nay <br>
+            <span class="text-base italic text-green-500 font-light">Đang cảm thấy vui vẻ!</span>
+          </h3>
+          <ion-text class="text-4xl">😊</ion-text>
+        </div>
+      </div>
+    </ion-col>
+
+    <!--  Khảo sát định kỳ  -->
+    <ion-col size="12">
+      <h2 class="pt-3 pb-2 text-2xl font-medium">{{ 'Khảo sát định kỳ' }}</h2>
+      <div class="p-4 w-full rounded-2xl border-2 border-gray-300 mb-3">
+        <h3 class="pb-4 text-lg text-sky-500 font-medium">Còn 3 bài khảo sát cần thực hiện </h3>
+        <div class="flex flex-nowrap gap-4 items-stretch justify-start pb-5 w-full overflow-x-auto">
+          <div class="flex flex-col p-4 h-full">
+            <ion-icon name="checkmark-circle" color="success" class="text-3xl w-full pb-3"></ion-icon>
+            <ion-img src="/assets/icons/svg/review_emotion.svg" class="h-16 min-h-16"></ion-img>
+            <div class="flex items-center justify-center gap-3 w-full pt-5">
+              <p class="text-teal-500 text-sm uppercase text-center w-40 h-10">Điều tiết cảm xúc</p>
+            </div>
+          </div>
+
+          <div class="flex flex-col p-4 h-full">
+            <ion-icon name="warning" color="warning" class="text-3xl w-full pb-3"></ion-icon>
+            <ion-img src="/assets/icons/svg/review_check.svg" class="h-16"></ion-img>
+            <div class="flex items-center justify-center gap-3 w-full pt-5">
+              <p class="text-gray-400 text-sm uppercase text-center w-[9rem] h-10">Giảm mâu thuẫn gia đình</p>
+            </div>
+          </div>
+
+          <div class="flex flex-col p-4 h-full">
+            <ion-icon name="warning" color="warning" class="text-3xl w-full pb-3"></ion-icon>
+            <ion-img src="/assets/icons/svg/group-chat_1911059.svg" class="h-16"></ion-img>
+            <div class="flex items-center justify-center gap-3 w-full pt-5">
+              <p class="text-gray-400 text-sm uppercase text-center w-[9rem] h-10">Cải thiện giao tiếp gia đình</p>
+            </div>
+          </div>
+
+          <div class="flex flex-col p-4 h-full">
+            <ion-icon name="warning" color="warning" class="text-3xl w-full pb-3"></ion-icon>
+            <ion-img src="/assets/icons/svg/bar_chart.svg" class="h-16"></ion-img>
+            <div class="flex items-center justify-center gap-3 w-full pt-5">
+              <p class="text-gray-400 text-sm uppercase text-center w-40">Khám phá và phát triển bản thân</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ion-col>
+
+    <!--  Thử thách nhóm  -->
+    <ion-col size="12">
+      <h2 class="pt-3 pb-2 text-2xl font-medium">Thử thách nhóm</h2>
+      <div class="p-4 w-full rounded-2xl border-2 border-gray-300 mb-3">
+        <h3 class="pb-4 text-lg text-sky-500 font-medium">Còn 3 bài khảo sát cần thực hiện </h3>
+      </div>
+    </ion-col>
+
+    <!--  Hoạt động gia đình  -->
+    <ion-col size="12">
+      <h2 class="pt-3 pb-2 text-2xl font-medium">Hoạt động gia đình</h2>
+      <div class="p-4 w-full rounded-2xl border-2 border-gray-300 mb-3">
+        <h3 class="pb-4 text-lg text-sky-500 font-medium">Còn 3 bài khảo sát cần thực hiện </h3>
+      </div>
+    </ion-col>
+
+    <!--  Gợi ý, hướng dẫn  -->
+    <ion-col size="12">
+      <h2 class="pt-3 pb-2 text-2xl font-medium">Gợi ý, hướng dẫn</h2>
+      <div class="p-4 w-full rounded-2xl border-2 border-gray-300 mb-3">
+        <h3 class="pb-4 text-lg text-sky-500 font-medium">Còn 3 bài khảo sát cần thực hiện </h3>
+      </div>
+    </ion-col>
+
+    <!--  Gợi ý, hướng dẫn  -->
+    <ion-col size="12">
+      <h2 class="pt-3 pb-2 text-2xl font-medium">Hành trình phát triển bản thân</h2>
+      <div class="p-4 w-full rounded-2xl border-2 border-gray-300 mb-3">
+        <h3 class="pb-4 text-lg text-sky-500 font-medium">Còn 3 bài khảo sát cần thực hiện </h3>
+      </div>
+    </ion-col>
+  </ion-grid>
+</ion-content>
