@@ -311,7 +311,11 @@
     "setup_nickname": "Thiết lập nickname",
     "image": "Hình ảnh",
     "take_new_image": "Chụp ảnh mới",
-    "select_gallery": "Chọn từ thư viện"
+    "select_gallery": "Chọn từ thư viện",
+    "task_activity": "Nhiệm vụ & Hoạt động",
+    "task": "Nhiệm vụ",
+    "activity": "Hoạt động",
+    "checkin_emotion_daily": "Checkin cảm xúc hàng ngày"
   },
   "VALIDATE": {
     "phone_required": "Vui lòng nhập vào số điện thoại.",

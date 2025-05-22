@@ -310,7 +310,11 @@
     "setup_nickname": "Setup your nickname",
     "image": "Image",
     "take_new_image": "Take an image",
-    "select_gallery": "Select from your gallery"
+    "select_gallery": "Select from your gallery",
+    "task_activity": "Tasks & Activities",
+    "task": "Tasks",
+    "activity": "Activities",
+    "checkin_emotion_daily": "Daily Mood Check-in"
   },
   "VALIDATE": {
     "phone_required": "Please input your phone number.",
