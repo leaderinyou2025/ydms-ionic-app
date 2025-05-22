@@ -2,6 +2,9 @@ import { IRelatedField } from '../base/related-field';
 import { IBase } from '../base/base';
 import { NotificationTypes } from '../../enums/notification-type';
 
+/**
+ * Model: Thông báo
+ */
 export interface ILiyYdmsNotification extends IBase {
   description: string;
   body: string;

@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { SegmentValue } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 
 import { TranslateKeys } from '../../../shared/enums/translate-keys';
 import { RankService } from '../../../services/rank/rank.service';
@@ -19,7 +20,7 @@ export class RankPage implements OnInit, AfterViewInit, OnDestroy {
   userRank: ILeadership | undefined;
   achievements: IBadge[] = [];
 
-  activeTab: 'rank' | 'achievements' = 'rank';
+  activeTab!: 'rank' | 'achievements';
   segment!: IHeaderSegment;
   animeImage!: IHeaderAnimeImage;
   animation!: IHeaderAnimation;
@@ -30,12 +31,16 @@ export class RankPage implements OnInit, AfterViewInit, OnDestroy {
   protected readonly TranslateKeys = TranslateKeys;
 
   constructor(
-    private rankService: RankService
+    private rankService: RankService,
+    private route: ActivatedRoute
   ) {
   }
 
   ngOnInit() {
-    this.initHeader();
+    this.route.queryParams.subscribe(params => {
+      this.activeTab = params['activeTab'] || 'rank';
+      this.initHeader();
+    });
     this.loadRankData();
     this.loadAchievements();
   }

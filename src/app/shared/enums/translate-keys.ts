@@ -318,6 +318,10 @@ export enum TranslateKeys {
   TITLE_IMAGE = 'TITLE.image',
   TITLE_TAKE_NEW_IMAGE = 'TITLE.take_new_image',
   TITLE_SELECT_GALLERY = 'TITLE.select_gallery',
+  TITLE_TASK_ACTIVITY = 'TITLE.task_activity',
+  TITLE_TASK = 'TITLE.task',
+  TITLE_ACTIVITY = 'TITLE.activity',
+  TITLE_CHECKIN_EMOTION_DAILY = 'TITLE.checkin_emotion_daily',
 
   // VALIDATE
   VALIDATE_PHONE_REQUIRED = 'VALIDATE.phone_required',
