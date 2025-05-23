@@ -42,11 +42,38 @@ export class LiyYdmsAvatarService {
   }
 
   /**
+   * Get image by ids
+   * @param ids
+   */
+  public async getImageByIds(ids: Array<number>): Promise<Array<IAssetsResource>> {
+    const avatars = await this.odooService.read<ILiyYdmsAvatar>(ModelName.AVATAR, ids, this.liyYdmsAvatarFields);
+    if (!avatars?.length) return [];
+
+    const avatarAssets = new Array<IAssetsResource>();
+    for (const avatar of avatars) {
+      avatarAssets.push({
+        id: avatar.id,
+        name: avatar.name,
+        resource_url: `${CommonConstants.detectMimeType(avatar.image_512)}${avatar.image_512}`,
+        resource_string: avatar.image_512
+      });
+    }
+
+    return avatarAssets;
+  }
+
+  /**
    * Get avatar image by id
    * @param id
    */
-  public async getImageById(id: number): Promise<ILiyYdmsAvatar | undefined> {
+  public async getImageById(id: number): Promise<IAssetsResource | undefined> {
     const avatars = await this.odooService.read<ILiyYdmsAvatar>(ModelName.AVATAR, [id], this.liyYdmsAvatarFields);
-    return avatars?.[0];
+    if (!avatars?.length) return undefined;
+    return {
+      id: avatars[0].id,
+      name: avatars[0].name,
+      resource_url: `${CommonConstants.detectMimeType(avatars[0].image_512)}${avatars[0].image_512}`,
+      resource_string: avatars[0].image_512
+    };
   }
 }

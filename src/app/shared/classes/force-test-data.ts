@@ -599,7 +599,7 @@ export class ForceTestData {
     is_teenager: true,
     is_parent: false,
     is_teacher: false,
-    avatar_128: 'assets/icons/svg/avatar.svg',
+    avatar_512: 'assets/icons/svg/avatar.svg',
   };
 
   /**

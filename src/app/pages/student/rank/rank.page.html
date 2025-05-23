@@ -8,61 +8,68 @@
 </app-header>
 
 <ion-content [fullscreen]="true" class="font-comic-sans">
+  <ion-refresher slot="fixed" mode="md" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <!-- Loading spinner -->
   <ion-spinner *ngIf="isLoading" name="crescent"
                class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></ion-spinner>
 
   <!-- Rank content -->
-  <div class="pt-8 h-full" *ngIf="!isLoading && activeTab === 'rank'">
+  <div class="pt-8 h-full" *ngIf="!isLoading && activeTab === 'rank' && leadershipList">
     <!-- Top 3 ranks -->
-    <div class="flex justify-around items-end pt-8 px-2.5 relative" *ngIf="rankList.length > 0">
-      <div class="flex flex-col items-center text-center w-1/3" *ngIf="rankList.length > 1 && rankList[1]">
+    <div class="flex justify-around items-end pt-8 px-2.5 relative" *ngIf="leadershipList.length > 0">
+      <div class="flex flex-col items-center text-center w-1/3" *ngIf="leadershipList.length > 1 && leadershipList[1]">
         <div class="relative mb-2">
-          <img src="../../../../assets/images/rank/trophy_2.png" alt="Silver Medal" class="w-[100px] h-auto block mx-auto mb-1">
+          <ion-img src="/assets/images/rank/trophy_2.png" alt="Silver Medal" class="w-[100px] h-auto block mx-auto mb-1"></ion-img>
           <div class="absolute bottom-[18px] left-0 right-0 text-[#fcefed] font-bold text-[10px] text-center">
-            {{ rankList[1].total_points }} {{ TranslateKeys.RANK_POINTS | translate }}
+            {{ leadershipList[1].total_points }} {{ TranslateKeys.RANK_POINTS | translate }}
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <img [src]="rankList[1]['avatar']" onError="this.src='https://ionicframework.com/docs/img/demos/avatar.svg'"
-               alt="Avatar" class="w-[30px] h-[30px] rounded-full object-cover border border-blue-500 shadow-sm mb-1">
+          <ion-avatar class="w-8 h-8 border border-blue-500">
+            <ion-img [src]="leadershipList[1].avatar" alt="Avatar"></ion-img>
+          </ion-avatar>
           <div
             class="text-xs font-medium text-gray-800 dark:text-gray-200 whitespace-nowrap overflow-hidden text-ellipsis max-w-[90%]">
-            {{ rankList[1]?.nickname }}
+            {{ leadershipList[1].nickname }}
           </div>
         </div>
       </div>
 
-      <div class="flex flex-col items-center text-center w-1/3 transform -translate-y-12" *ngIf="rankList[0]">
+      <div class="flex flex-col items-center text-center w-1/3 transform -translate-y-12" *ngIf="leadershipList[0]">
         <div class="relative mb-2">
-          <img src="../../../../assets/images/rank/trophy_1.png" alt="Gold Trophy" class="w-[150px] h-auto block mx-auto mb-1">
+          <ion-img src="/assets/images/rank/trophy_1.png" alt="Gold Trophy" class="w-[150px] h-auto block mx-auto mb-1"></ion-img>
           <div class="absolute bottom-[25px] left-0 right-0 text-[#fcefed] font-bold text-[10px] text-center">
-            {{ rankList[0].total_points }} {{ TranslateKeys.RANK_POINTS | translate }}
+            {{ leadershipList[0].total_points }} {{ TranslateKeys.RANK_POINTS | translate }}
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <img [src]="rankList[0]['avatar']" onError="this.src='https://ionicframework.com/docs/img/demos/avatar.svg'"
-               alt="Avatar" class="w-[30px] h-[30px] rounded-full object-cover border border-blue-500 shadow-sm mb-1">
+          <ion-avatar class="w-8 h-8 border border-blue-500">
+            <ion-img [src]="leadershipList[0].avatar" alt="Avatar"></ion-img>
+          </ion-avatar>
           <div
             class="text-xs font-medium text-gray-800 dark:text-gray-200 whitespace-nowrap overflow-hidden text-ellipsis max-w-[90%]">
-            {{ rankList[0]?.nickname }}
+            {{ leadershipList[0].nickname }}
           </div>
         </div>
       </div>
 
-      <div class="flex flex-col items-center text-center w-1/3" *ngIf="rankList.length > 2 && rankList[2]">
+      <div class="flex flex-col items-center text-center w-1/3" *ngIf="leadershipList.length > 2 && leadershipList[2]">
         <div class="relative mb-2">
-          <img src="../../../../assets/images/rank/trophy_3.png" alt="Bronze Medal" class="w-[100px] h-auto block mx-auto mb-1">
+          <ion-img src="/assets/images/rank/trophy_3.png" alt="Bronze Medal" class="w-[100px] h-auto block mx-auto mb-1"></ion-img>
           <div class="absolute bottom-[18px] left-0 right-0 text-[#fcefed] font-bold text-[10px] text-center">
-            {{ rankList[2].total_points }} {{ TranslateKeys.RANK_POINTS | translate }}
+            {{ leadershipList[2].total_points }} {{ TranslateKeys.RANK_POINTS | translate }}
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <img [src]="rankList[2]['avatar']" onError="this.src='https://ionicframework.com/docs/img/demos/avatar.svg'"
-               alt="Avatar" class="w-[30px] h-[30px] rounded-full object-cover border border-blue-500 shadow-sm mb-1">
+          <ion-avatar class="w-8 h-8 border border-blue-500">
+            <ion-img [src]="leadershipList[2].avatar" alt="Avatar" class=""></ion-img>
+          </ion-avatar>
           <div
             class="text-xs font-medium text-gray-800 dark:text-gray-200 whitespace-nowrap overflow-hidden text-ellipsis max-w-[90%]">
-            {{ rankList[2]?.nickname }}
+            {{ leadershipList[2].nickname }}
           </div>
         </div>
       </div>
@@ -79,7 +86,7 @@
 
       <div class="flex-1 overflow-y-auto"
            #rankTableBody
-           [class]="shouldShowFixedUserRank() && this.userRank ? 'mb-[35px]' : 'mb-[45px]'"
+           [class]="shouldShowFixedUserLeadership() && userLeadership ? 'mb-[35px]' : 'mb-[45px]'"
            (scroll)="checkCurrentUserVisibility()">
         <!-- Start loop from the 4th item (index 3) -->
         <div class="flex items-center py-2 px-2.5 border-b border-gray-100 dark:border-gray-700 text-sm"
@@ -87,32 +94,36 @@
              [class.text-gray-800]="item['isCurrentUser']"
              [class.dark:text-gray-800]="item['isCurrentUser']"
              [class.current-user]="item['isCurrentUser']"
-             *ngFor="let item of rankList.slice(3)"
+             *ngFor="let item of leadershipList.slice(3)"
              [attr.data-user-id]="item?.teenager_id?.id ?? item?.id">
           <div class="w-[15%] text-center font-medium">{{ item.ranking }}</div>
           <div class="w-[60%] flex items-center text-left pl-1">
-            <img [src]="item['avatar']"
-                 onError="this.src='https://ionicframework.com/docs/img/demos/avatar.svg'"
-                 alt="Avatar"
-                 class="w-9 h-9 rounded-full object-cover mr-2.5 border border-blue-500">
+            <ion-avatar class="w-8 h-8 border border-blue-500 mr-1">
+              <ion-img [src]="item.avatar" alt="Avatar"></ion-img>
+            </ion-avatar>
             <span class="whitespace-nowrap overflow-hidden text-ellipsis">{{ item?.nickname }}</span>
           </div>
           <div class="w-[25%] text-right font-medium pr-1">{{ item.total_points }}</div>
         </div>
+
+        <!--    Load more rank data    -->
+        <ion-infinite-scroll (ionInfinite)="loadMoreRankData($event)">
+          <ion-infinite-scroll-content></ion-infinite-scroll-content>
+        </ion-infinite-scroll>
       </div>
 
       <!-- Fixed current user rank at bottom if ranking >= 10 and not yet scrolled to that row -->
       <div class="sticky bottom-0 left-0 right-0 z-10 bg-transparent p-0"
-           *ngIf="shouldShowFixedUserRank() && this.userRank">
+           *ngIf="shouldShowFixedUserLeadership() && userLeadership">
         <div class="flex items-center py-2 px-2.5 text-sm bg-blue-400 text-gray-800 my-1">
-          <div class="w-[15%] text-center font-medium">{{ this.userRank?.ranking }}</div>
+          <div class="w-[15%] text-center font-medium">{{ userLeadership.ranking }}</div>
           <div class="w-[60%] flex items-center pl-1">
-            <img [src]="this.userRank?.['avatar']"
-                 onError="this.src='https://ionicframework.com/docs/img/demos/avatar.svg'"
-                 alt="Avatar" class="w-9 h-9 rounded-full object-cover mr-2.5 border border-blue-500">
-            <span class="whitespace-nowrap overflow-hidden text-ellipsis">{{ this.userRank?.nickname }}</span>
+            <ion-avatar class="w-9 h-9 border border-blue-500">
+              <ion-img [src]="userLeadership.avatar" alt="Avatar"></ion-img>
+            </ion-avatar>
+            <span class="whitespace-nowrap overflow-hidden text-ellipsis">{{ userLeadership.nickname }}</span>
           </div>
-          <div class="w-[25%] text-right font-medium pr-1">{{ this.userRank?.total_points }}</div>
+          <div class="w-[25%] text-right font-medium pr-1">{{ userLeadership.total_points }}</div>
         </div>
       </div>
     </div>
@@ -124,7 +135,7 @@
       <ion-item-group *ngFor="let category of achievements">
         <ion-card class="mx-3 my-3 rounded-xl shadow-md overflow-hidden">
           <ion-card-header class="p-1">
-            <ion-card-title class="text-base font-bold p-1 text-gray-800 dark:text-gray-200">{{ category.title ? (category.title | translate) : '' }}
+            <ion-card-title class="text-base font-bold p-1 text-gray-800 dark:text-gray-200">{{ category.name ? (category.name | translate) : '' }}
             </ion-card-title>
           </ion-card-header>
 
@@ -140,9 +151,8 @@
                     class="relative text-center p-1 pt-2 rounded-lg bg-white dark:bg-gray-700 m-1 transition-transform hover:scale-105"
                     [class.opacity-40]="!badge.unlocked"
                     [class.filter-grayscale]="!badge.unlocked">
-                    <img [src]="badge.image || 'assets/images/badges/default-badge.png'"
-                         class="w-20 h-auto max-h-20 mx-auto block"
-                         [alt]="badge.name">
+                    <ion-img [src]="badge.image || 'assets/images/badges/default-badge.png'"
+                             class="w-20 h-auto max-h-20 mx-auto block" [alt]="badge.name"></ion-img>
                     <ion-badge *ngIf="badge.isNew"
                                class="absolute top-1 p-0.5 px-1 right-1.5 text-xs z-2 bg-red-500 border border-red-100 text-white rounded">
                       {{ TranslateKeys.BADGE_NEW | translate }}

@@ -1,19 +1,14 @@
-import { AreaOfExpertise } from "../../enums/area-of-expertise";
-import {IBase} from "../base/base";
+import { IBase } from '../base/base';
+import { AreaOfExpertise } from '../../enums/area-of-expertise';
+import { IRelatedField } from '../base/related-field';
 
 /**
- * Interface for liy.ydms.achievement model (Achievement/Badge Data)
+ * Model: Thành tích
  */
 export interface ILiyYdmsAchievement extends IBase {
   area_of_expertise?: AreaOfExpertise;
-  teenager_id?: {
-    id: number;
-    name: string;
-  };
-  nickname?: string | null;
-  badge_id?: {
-    id: number;
-    name: string;
-  };
+  teenager_id: IRelatedField;
+  nickname?: string;
+  badge_id?: IRelatedField;
   badge_image?: string;
 }

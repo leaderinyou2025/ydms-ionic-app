@@ -1,15 +1,16 @@
-import { AreaOfExpertise } from "../../enums/area-of-expertise";
-import {IBase} from "../base/base";
+import { AreaOfExpertise } from '../../enums/area-of-expertise';
+import { IBase } from '../base/base';
+import { BadgeCondition } from '../../enums/badge-condition';
 
 /**
- * Interface for liy.ydms.badge model (Achievement Category)
+ * Model: Danh mục huy hiệu
  */
 export interface ILiyYdmsBadge extends IBase {
-  title?: string;
-  active_image?: string;
-  area_of_expertise?: AreaOfExpertise;
-  condition?: string;
+  area_of_expertise: AreaOfExpertise;
+  condition?: BadgeCondition;
   condition_value?: number;
-  order_weight?: number;
-  review_image?: string;
+  desciption?: string;
+  active_image?: string;    // Hình ảnh khi đạt được
+  review_image?: string;    // Hình ảnh khi chưa đạt
+  order_weight: number;
 }

@@ -8,6 +8,7 @@ export enum ModelName {
   AVATAR = 'liy.ydms.avatar',
   NOTIFICATION = 'liy.ydms.notification',
   BADGE = 'liy.ydms.badge',
+  TASK = 'liy.ydms.task',
   LEADERSHIP = 'liy.ydms.leadership',
   ACHIEVEMENT = 'liy.ydms.achievement'
 }

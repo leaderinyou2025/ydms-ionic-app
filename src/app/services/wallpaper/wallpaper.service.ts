@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 import { AuthService } from '../auth/auth.service';
-import { LiyYdmsAvatarService } from '../models/iliy-ydms-avatar.service';
-import { ForceTestData } from '../../shared/classes/force-test-data';
+import { LiyYdmsAvatarService } from '../models/liy.ydms.avatar.service';
 import { IAssetsResource } from '../../shared/interfaces/settings/assets-resource';
 import { IRelatedField } from '../../shared/interfaces/base/related-field';
 import { CommonConstants } from '../../shared/classes/common-constants';
