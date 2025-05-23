@@ -6,7 +6,9 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { RankPageRoutingModule } from './rank-routing.module';
 import { RankPage } from './rank.page';
-import {SharedModule} from "../../../shared/shared.module";
+import { SharedModule } from '../../../shared/shared.module';
+import { IonInfiniteHorizontalDirective } from '../../../core/directive/ion-infinite-horizontal.directive';
+import { BadgeHorizontalListComponent } from './badge-horizontal-list/badge-horizontal-list.component';
 
 @NgModule({
   imports: [
@@ -15,8 +17,10 @@ import {SharedModule} from "../../../shared/shared.module";
     IonicModule,
     RankPageRoutingModule,
     TranslateModule,
-    SharedModule
+    SharedModule,
+    IonInfiniteHorizontalDirective
   ],
-  declarations: [RankPage]
+  declarations: [RankPage, BadgeHorizontalListComponent],
 })
-export class RankPageModule {}
+export class RankPageModule {
+}

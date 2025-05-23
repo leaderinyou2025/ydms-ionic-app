@@ -28,8 +28,8 @@ export class ChatbotPage implements OnInit {
 
   ngOnInit(): void {
     this.authService.getAuthData().then((authData) => {
-      this.userAvatarImg = authData?.avatar_128 && CommonConstants.detectMimeType(authData.avatar_128) ?
-        `${CommonConstants.detectMimeType(authData.avatar_128)}${authData?.avatar_128}`
+      this.userAvatarImg = authData?.avatar_512 && CommonConstants.detectMimeType(authData.avatar_512) ?
+        `${CommonConstants.detectMimeType(authData.avatar_512)}${authData?.avatar_512}`
         : '/assets/icons/svg/avatar.svg'
     });
     this.botAvatarImg = '/assets/images/chatbot/chatbot-avatar.png';

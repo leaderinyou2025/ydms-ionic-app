@@ -7,7 +7,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import { IAuthData } from '../../../../shared/interfaces/auth/auth-data';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { PhotoService } from '../../../../services/photo/photo.service';
-import { LiyYdmsAvatarService } from '../../../../services/models/iliy-ydms-avatar.service';
+import { LiyYdmsAvatarService } from '../../../../services/models/liy.ydms.avatar.service';
 import { AddressService } from '../../../../services/address/address.service';
 import { PageRoutes } from '../../../../shared/enums/page-routes';
 import { TranslateKeys } from '../../../../shared/enums/translate-keys';
@@ -22,6 +22,7 @@ import { Position } from '../../../../shared/enums/position';
 import { BtnRoles } from '../../../../shared/enums/btn-roles';
 import { StyleClass } from '../../../../shared/enums/style-class';
 import { IonicColors } from '../../../../shared/enums/ionic-colors';
+import { IAssetsResource } from '../../../../shared/interfaces/settings/assets-resource';
 
 @Component({
   selector: 'app-personal-info',
@@ -32,7 +33,7 @@ import { IonicColors } from '../../../../shared/enums/ionic-colors';
 export class PersonalInfoComponent implements OnInit {
 
   authData!: IAuthData | undefined;
-  avatar?: ILiyYdmsAvatar;
+  avatar?: IAssetsResource;
   profileForm!: FormGroup;
   userImage!: string;
 

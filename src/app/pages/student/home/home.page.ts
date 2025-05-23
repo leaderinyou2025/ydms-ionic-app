@@ -14,11 +14,11 @@ import { NativePlatform } from '../../../shared/enums/native-platform';
 import { StyleClass } from '../../../shared/enums/style-class';
 import { IonicColors } from '../../../shared/enums/ionic-colors';
 import { PageRoutes } from '../../../shared/enums/page-routes';
-import { LiyYdmsAvatarService } from '../../../services/models/iliy-ydms-avatar.service';
-import { CommonConstants } from '../../../shared/classes/common-constants';
+import { LiyYdmsAvatarService } from '../../../services/models/liy.ydms.avatar.service';
 import { TaskService } from '../../../services/task/task.service';
 import { TaskStatus } from '../../../shared/enums/task-status';
 import { ILiyYdmsTask } from '../../../shared/interfaces/models/liy.ydms.task';
+import { CommonConstants } from '../../../shared/classes/common-constants';
 
 @Component({
   selector: 'app-home',
@@ -195,9 +195,8 @@ export class HomePage implements OnInit {
     this.authService.getAuthData().then(authData => {
       if (authData?.avatar?.id) {
         this.liyYdmsAvatarService.getImageById(authData.avatar.id).then(imageData => {
-          const imgType = CommonConstants.detectMimeType(imageData?.image_512 || '');
-          this.avatar = imgType ? `${imgType + imageData?.image_512}` : undefined;
-          authData.avatar_128 = imageData?.image_512;
+          this.avatar = imageData?.resource_url;
+          authData.avatar_512 = imageData?.resource_url;
           this.authService.setAuthData(authData);
         });
       }

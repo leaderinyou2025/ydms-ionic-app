@@ -1,11 +1,23 @@
+import { ILiyYdmsAchievement } from '../models/liy.ydms.achievement';
+import { ILiyYdmsBadge } from '../models/liy.ydms.badge';
+import { ILiyYdmsLeaderboard } from '../models/liy.ydms.leaderboard';
+
 /**
- * Interface for rank item
+ * Extended interface for Achievement with client-side properties
  */
-export interface IRankItem {
-  userId: number;
-  avatar?: string | null
-  position: number;
-  nickname: string;
-  points: number;
-  isCurrentUser?: boolean;
+export interface IAchievement extends ILiyYdmsAchievement {
+}
+
+/**
+ * Extended interface for Badge with client-side properties
+ */
+export interface IBadge extends ILiyYdmsBadge {
+  unlocked?: boolean;
+}
+
+/**
+ * Extended interface for Leaderboard (Rank) with client-side properties
+ */
+export interface ILeaderboard extends ILiyYdmsLeaderboard {
+  avatar?: string;
 }

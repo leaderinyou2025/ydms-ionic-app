@@ -6,7 +6,7 @@ import { IUserSettings } from '../settings/user-settings';
 export interface IAuthData extends IResUser {
   nickname?: string;
   avatar?: IRelatedField;
-  avatar_128?: string;
+  avatar_512?: string;
   image_128?: string;
   code?: string;
   edu_id?: string;

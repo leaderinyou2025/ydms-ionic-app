@@ -416,5 +416,14 @@
   },
   "CAPTION": {
     "chatbot": "Hôm nay bạn cảm thấy thế nào? Chia sẻ với mình nhé!"
+  },
+  "AREA_OF_EXPERTISE": {
+    "emotion": "Cảm xúc",
+    "conflict": "Giảm mâu thuẫn gia đình",
+    "communication": "Cải thiện giao tiếp",
+    "discovery": "Khám phá bản thân"
+  },
+  "ACHIEVEMENT": {
+    "badge_no_achievements_yet": "Chưa có huy hiệu nào trong danh mục này"
   }
 }

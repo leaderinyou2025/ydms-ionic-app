@@ -39,7 +39,7 @@ export class AuthService {
   private userRoles!: UserRoles | undefined;
   private userFields = [
     'name', 'email', 'phone', 'street', 'precint_id', 'district_id', 'state_id', 'country_id', 'image_128', 'lang',
-    'nickname', 'avatar', 'code', 'edu_id', 'social_id', 'gender', 'dob',
+    'nickname', 'avatar', 'avatar_512', 'code', 'edu_id', 'social_id', 'gender', 'dob',
     'is_teenager', 'is_parent', 'is_teacher',
     'school_id', 'classroom_id', 'parent_id', 'partner_id', 'classroom_ids', 'child_ids',
     'app_settings'
@@ -396,6 +396,16 @@ export class AuthService {
     if (!authData || !authData?.image_128) return false;
     const params: any = {image_1920: authData.image_128};
     return await this.odooService.write<IAuthData>(ModelName.RES_USERS, [authData.id], params);
+  }
+
+  /**
+   * Return list user avatar
+   * @param teenagerIds
+   */
+  public async getAvatarByTeenagerIds(teenagerIds: Array<number>): Promise<Array<IAuthData>> {
+    if (!teenagerIds?.length) return [];
+    const results = await this.odooService.read<IAuthData>(ModelName.RES_USERS, teenagerIds, ['avatar']);
+    return CommonConstants.convertArr2ListItem(results);
   }
 
   /**

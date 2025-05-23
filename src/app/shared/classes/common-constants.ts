@@ -16,6 +16,12 @@ export class CommonConstants {
   public static deviceId: string = '';
 
   /**
+   * Default avatar image
+   */
+  public static defaultUserAvatarImage: string = '/assets/icons/svg/avatar.svg';
+  public static defaultBadgeImage: string = '/assets/images/badges/default-badge.png';
+
+  /**
    * Background image gallery
    */
   static background_images: Array<IAssetsResource> = [
