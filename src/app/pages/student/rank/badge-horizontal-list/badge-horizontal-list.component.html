@@ -1,0 +1,43 @@
+<ion-card class="mx-3 my-3 rounded-xl shadow-xl overflow-hidden">
+  <ion-card-header class="p-1">
+    <ion-card-title class="text-base font-bold p-1 text-gray-800 dark:text-gray-200">
+      <ng-container *ngIf="areaOfExpertise === AreaOfExpertise.EMOTION">{{ TranslateKeys.AREA_OF_EXPERTISE_EMOTION | translate }}</ng-container>
+      <ng-container *ngIf="areaOfExpertise === AreaOfExpertise.CONFLICT">{{ TranslateKeys.AREA_OF_EXPERTISE_CONFLICT | translate }}</ng-container>
+      <ng-container *ngIf="areaOfExpertise === AreaOfExpertise.COMMUNICATION">{{ TranslateKeys.AREA_OF_EXPERTISE_COMMUNICATION | translate }}</ng-container>
+      <ng-container *ngIf="areaOfExpertise === AreaOfExpertise.DISCOVERY">{{ TranslateKeys.AREA_OF_EXPERTISE_DISCOVERY| translate }}</ng-container>
+    </ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content class="p-0 pb-3">
+    <div class="flex items-stretch justify-start w-full overflow-x-auto"
+         appIonInfiniteHorizontal [threshold]="50" (ionInfinite)="loadMoreBadges($event)">
+
+      <!--   Huy chương mới trong tháng   -->
+      <ng-container *ngFor="let achievement of achievementsFiltered">
+        <div *ngIf="achievement.area_of_expertise === AreaOfExpertise.EMOTION"
+             class="relative text-center p-1 pt-2 min-w-28 max-w-28 rounded-lg bg-white dark:bg-gray-700 m-1 transition-transform hover:scale-105">
+          <ion-img [src]="getResourceImageUrl(achievement.badge_image)" [alt]="achievement.badge_id?.name"
+                   class="w-auto h-20 max-h-20 mx-auto block"></ion-img>
+          <ion-badge class="absolute top-1 p-0.5 px-1 right-1.5 text-xs z-2 bg-red-500 border border-red-100 text-white rounded">
+            {{ TranslateKeys.BADGE_NEW | translate }}
+          </ion-badge>
+          <div class="w-full font-medium mt-1 text-xs text-gray-700 dark:text-gray-300 font-comic-sans">
+            {{ achievement.badge_id?.name }}
+          </div>
+        </div>
+      </ng-container>
+
+      <!--   Huy chương khác   -->
+      <ng-container *ngFor="let badge of badges || []">
+        <div class="relative text-center p-1 pt-2 min-w-28 max-w-28  rounded-lg bg-white dark:bg-gray-700 m-1 transition-transform hover:scale-105"
+             [class.opacity-40]="!badge.unlocked" [class.filter-grayscale]="!badge.unlocked">
+          <ion-img *ngIf="badge.unlocked" [src]="getResourceImageUrl(badge.active_image)"
+                   [alt]="badge.name" class="w-auto h-20 max-h-20 mx-auto block"></ion-img>
+          <ion-img *ngIf="!badge.unlocked" [src]="getResourceImageUrl(badge.review_image)"
+                   [alt]="badge.name" class="w-auto h-20 max-h-20  mx-auto block"></ion-img>
+          <div class="font-medium mt-1 text-xs text-gray-700 dark:text-gray-300 font-comic-sans">{{ badge.name }}</div>
+        </div>
+      </ng-container>
+    </div>
+  </ion-card-content>
+</ion-card>

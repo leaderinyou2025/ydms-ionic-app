@@ -6,7 +6,7 @@ import { RankMonth } from '../../enums/rank-month';
 /**
  * Model: Xếp hạng
  */
-export interface ILiyYdmsLeadership extends IBase {
+export interface ILiyYdmsLeaderboard extends IBase {
   teenager_id: IRelatedField;
   area_of_expertise: AreaOfExpertise;
   parent_id?: IRelatedField;

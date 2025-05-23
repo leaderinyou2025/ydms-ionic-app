@@ -6,7 +6,6 @@ import { ILiyYdmsAchievement } from '../../shared/interfaces/models/liy.ydms.ach
 import { ModelName } from '../../shared/enums/model-name';
 import { CommonConstants } from '../../shared/classes/common-constants';
 import { OdooDomainOperator } from '../../shared/enums/odoo-domain-operator';
-import { AreaOfExpertise } from '../../shared/enums/area-of-expertise';
 
 @Injectable({
   providedIn: 'root'
@@ -44,22 +43,18 @@ export class LiyYdmsAchievementService {
   }
 
   /**
-   * Lấy danh sách huy hiệu đã đạt được của học sinh phân theo khía cạnh
+   * Lấy danh sách huy hiệu đã đạt được của học sinh dựa trên huy hiệu
    * @param teenagerId
-   * @param areaOfExpertise
-   * @param offset
-   * @param limit
+   * @param badgeIds
    */
-  public async getAchievementByTeenagerIdAndAreaOfExpertise(
+  public async getAchievementByTeenagerIdAndBadgeIds(
     teenagerId: number,
-    areaOfExpertise: AreaOfExpertise,
-    offset: number = 0,
-    limit: number = 20
+    badgeIds: Array<number>,
   ): Promise<Array<ILiyYdmsAchievement>> {
     const searchDomain: SearchDomain = [
       ['teenager_id', OdooDomainOperator.EQUAL, teenagerId],
-      ['area_of_expertise', OdooDomainOperator.EQUAL, areaOfExpertise],
+      ['badge_id', OdooDomainOperator.IN, badgeIds],
     ];
-    return this.getAchievementList(searchDomain, offset, limit, OrderBy.CREATE_AT_DESC);
+    return this.getAchievementList(searchDomain, 0, 0, OrderBy.CREATE_AT_DESC);
   }
 }

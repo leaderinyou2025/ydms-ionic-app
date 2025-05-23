@@ -1,4 +1,4 @@
-export const leadershipFields = [
+export const leaderboardFields = [
   'teenager_id',
   'name',
   'area_of_expertise',

@@ -19,6 +19,7 @@ export class CommonConstants {
    * Default avatar image
    */
   public static defaultUserAvatarImage: string = '/assets/icons/svg/avatar.svg';
+  public static defaultBadgeImage: string = '/assets/images/badges/default-badge.png';
 
   /**
    * Background image gallery

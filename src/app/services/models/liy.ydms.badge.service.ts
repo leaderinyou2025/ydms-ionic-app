@@ -45,22 +45,20 @@ export class LiyYdmsBadgeService {
   /**
    * Lấy danh sách huy hiệu chưa đạt được theo khia cạnh.
    * @param areaOfExpertise
-   * @param ignoreBadgeIds => active badge ids
+   * @param ignoreBadgeIds
    * @param offset
    * @param limit
    * @param order
    */
-  public async getPendingBadgesByExpertiseOfArea(
+  public async getBadgesByExpertiseOfArea(
     areaOfExpertise: AreaOfExpertise,
-    ignoreBadgeIds: Array<number>,
+    ignoreBadgeIds: Array<number> = [],
     offset: number = 0,
     limit: number = 20,
     order: OrderBy = OrderBy.ORDER_WEIGHT_ASC
   ): Promise<ILiyYdmsBadge[]> {
-    const searchDomain: SearchDomain = [
-      ['area_of_expertise', OdooDomainOperator.EQUAL, areaOfExpertise],
-      ['id', OdooDomainOperator.NOT_IN, ignoreBadgeIds]
-    ];
+    const searchDomain: SearchDomain = [['area_of_expertise', OdooDomainOperator.EQUAL, areaOfExpertise]];
+    if (ignoreBadgeIds.length > 0) searchDomain.push(['id', OdooDomainOperator.NOT_IN, ignoreBadgeIds]);
     return this.getBadgeList(searchDomain, offset, limit, order);
   }
 }

@@ -9,10 +9,6 @@ export enum ModelName {
   NOTIFICATION = 'liy.ydms.notification',
   BADGE = 'liy.ydms.badge',
   TASK = 'liy.ydms.task',
-  LEADERSHIP = 'liy.ydms.leadership',
-  GUIDE = 'liy.ydms.guide',
-  CATEGORY = 'liy.ydms.category',
-  ACHIEVEMENT_CATEGORY = 'liy.ydms.badge',
-  RANK = 'liy.ydms.leadership',
+  LEADERBOARD = 'liy.ydms.leaderboard',
   ACHIEVEMENT = 'liy.ydms.achievement'
 }
