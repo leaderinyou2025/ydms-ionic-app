@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonContent, IonInfiniteScroll, RefresherCustomEvent, ToastButton, ToastController } from '@ionic/angular';
+import { IonContent, IonInfiniteScroll, InfiniteScrollCustomEvent, RefresherCustomEvent, ToastButton, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { FamilyConflictSurveyService } from '../../../services/family-conflict-survey/family-conflict-survey.service';
-import { IFamilyConflictSurveyHistory } from '../../../shared/interfaces/family-conflict-survey/family-conflict-survey.interfaces';
+import { IFamilyConflictSurveyHistory, IFamilyConflictSurveyDetail } from '../../../shared/interfaces/family-conflict-survey/family-conflict-survey.interfaces';
+import { ILiyYdmsAssessmentResult } from '../../../shared/interfaces/models/liy.ydms.assessment.result';
 import { TranslateKeys } from '../../../shared/enums/translate-keys';
 import { PageRoutes } from '../../../shared/enums/page-routes';
-import { ForceTestData } from '../../../shared/classes/force-test-data';
+
 import { IonicColors } from '../../../shared/enums/ionic-colors';
 import { IonicIcons } from '../../../shared/enums/ionic-icons';
 import { BtnRoles } from '../../../shared/enums/btn-roles';
@@ -104,24 +105,27 @@ export class FamilyConflictSurveyPage implements OnInit {
    * Load more items when scrolling down
    * @param event Infinite scroll event
    */
-  public loadMore(event: any): void {
+  public loadMore(event: InfiniteScrollCustomEvent): void {
+    if (this.isLoading) {
+      event.target.complete();
+      return;
+    }
+
+    // Ngừng load thêm khi đã đến trang cuối cùng
     if (this.currentPage >= this.totalPages) {
       event.target.complete();
       this.hasMoreItems = false;
       return;
     }
 
-    // Simulate network request
-    setTimeout(() => {
-      this.currentPage++;
-      const newItems = this.getItemsForPage(this.currentPage);
-      this.displayedItems = [...this.displayedItems, ...newItems];
+    this.currentPage++;
+    const newItems = this.getItemsForPage(this.currentPage);
+    this.displayedItems = [...this.displayedItems, ...newItems];
 
-      event.target.complete();
+    // Check if there are more items to load
+    this.hasMoreItems = this.currentPage < this.totalPages;
 
-      // Check if there are more items to load
-      this.hasMoreItems = this.currentPage < this.totalPages;
-    }, 500);
+    event.target.complete();
   }
 
   /**
@@ -142,8 +146,10 @@ export class FamilyConflictSurveyPage implements OnInit {
    * View survey detail
    * @param surveyId Survey ID
    */
-  public viewSurveyDetail(surveyId: number): void {
-    this.router.navigate([`/${PageRoutes.FAMILY_CONFLICT_SURVEY}`, surveyId]);
+  public viewSurveyDetail(surveyId: number | undefined): void {
+    if (surveyId) {
+      this.router.navigate([`/${PageRoutes.FAMILY_CONFLICT_SURVEY}`, surveyId]);
+    }
   }
 
   /**
@@ -153,9 +159,7 @@ export class FamilyConflictSurveyPage implements OnInit {
     // This is just UI, no logic implementation as per requirements
     this.showToast('Tính năng đang được phát triển', IonicColors.PRIMARY);
   }
-
-
-
+  
   /**
    * Format date
    * @param date Date
@@ -166,14 +170,6 @@ export class FamilyConflictSurveyPage implements OnInit {
       month: '2-digit',
       year: 'numeric'
     });
-  }
-
-  /**
-   * Get conflict level emoji
-   * @param conflictLevel Conflict level
-   */
-  public getConflictLevelEmoji(conflictLevel: string): string {
-    return ForceTestData.getConflictLevelEmoji(conflictLevel);
   }
 
   /**

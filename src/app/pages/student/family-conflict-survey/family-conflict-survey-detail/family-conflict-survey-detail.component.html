@@ -45,18 +45,35 @@
     <div class="space-y-6">
       <div *ngFor="let question of surveyDetail.questions; let i = index" class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
         <div class="mb-3">
-          <h4 class="font-medium text-gray-800 dark:text-gray-200">{{ i + 1 }}. {{ question.text }}</h4>
+          <h4 class="font-medium text-gray-800 dark:text-gray-200">{{ i + 1 }}. {{ question.text || question.name }}</h4>
         </div>
 
-        <div class="flex flex-col gap-2.5">
-          <ion-radio-group [value]="getSelectedOptionValue(question)" disabled="true" class="w-full">
-            <ion-item *ngFor="let option of question.options" lines="none"
-                class="option-item mb-2 border border-gray-300 dark:border-gray-600 rounded-3xl cursor-default relative z-10 text-gray-700 dark:text-gray-300 py-1 px-4"
-                [ngClass]="{'selected-item bg-[#59cb01] text-white border-transparent': option.selected}">
-              <ion-radio slot="start" [value]="option.id" disabled="true" class="mr-2 pointer-events-none"></ion-radio>
-              <ion-label class="ml-2 pointer-events-none font-comic-sans" [ngClass]="{'font-medium': option.selected}">{{ option.text }}</ion-label>
-            </ion-item>
-          </ion-radio-group>
+        <!-- Different UI based on answer type -->
+        <div [ngSwitch]="question.answer_type">
+
+          <!-- SELECT_OPTION type -->
+          <div *ngSwitchCase="'option'" class="flex flex-col gap-2.5">
+            <ion-radio-group [value]="getSelectedOptionValue(question)" disabled="true" class="w-full">
+              <ion-item *ngFor="let option of question.options" lines="none"
+                  class="option-item mb-2 border border-gray-300 dark:border-gray-600 rounded-3xl cursor-default relative z-10 text-gray-700 dark:text-gray-300 py-1 px-4"
+                  [ngClass]="{'selected-item bg-[#59cb01] text-white border-transparent': option.selected}">
+                <ion-radio slot="start" [value]="option.id" disabled="true" class="mr-2 pointer-events-none"></ion-radio>
+                <ion-label class="ml-2 pointer-events-none font-comic-sans" [ngClass]="{'font-medium': option.selected}">{{ option.text || option.name }}</ion-label>
+              </ion-item>
+            </ion-radio-group>
+          </div>
+
+          <!-- INPUT_TEXT type -->
+          <div *ngSwitchCase="'input_text'" class="flex flex-col gap-2.5">
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 font-comic-sans leading-relaxed whitespace-pre-wrap break-words text-gray-800 dark:text-gray-200">
+              {{ question.answer_text }}
+            </div>
+          </div>
+
+          <!-- Default case (unknown type) -->
+          <div *ngSwitchDefault class="flex flex-col gap-2.5">
+            <p class="text-gray-500 dark:text-gray-400 italic">{{ TranslateKeys.TITLE_UNSUPPORTED_QUESTION_TYPE | translate }}</p>
+          </div>
         </div>
       </div>
     </div>
