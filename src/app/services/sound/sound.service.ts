@@ -8,6 +8,8 @@ import { CommonConstants } from '../../shared/classes/common-constants';
 import { ISoundResource } from '../../shared/interfaces/settings/assets-resource';
 import { AssetResourceCategory } from '../../shared/enums/asset-resource-category';
 import { NativePlatform } from '../../shared/enums/native-platform';
+import { StorageKey } from '../../shared/enums/storage-key';
+import { LocalStorageService } from '../local-storage/local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +18,11 @@ export class SoundService {
 
   public backgroundSoundGallery: Array<ISoundResource> = [];
   private soundsManager: Map<string, string> = new Map<string, string>();
-  private finishedPreload!: boolean;
 
   constructor(
     private authService: AuthService,
     private platform: Platform,
+    private localStorageService: LocalStorageService,
   ) {
   }
 
@@ -37,9 +39,9 @@ export class SoundService {
    * Preload sound music on user config
    */
   public async loadUserSounds(): Promise<void> {
-    if (!this.finishedPreload) {
-      for (const sound of CommonConstants.sound_gallery) {
-        const prefixUrl = `${!this.platform.is(NativePlatform.CAPACITOR) ? ''  : 'public/'}`;
+    for (const sound of CommonConstants.sound_gallery) {
+      const prefixUrl = `${!this.platform.is(NativePlatform.CAPACITOR) ? '' : 'public/'}`;
+      try {
         await NativeAudio.preload({
           assetId: sound.id.toString(),
           assetPath: prefixUrl + sound.resource_url,
@@ -47,8 +49,9 @@ export class SoundService {
           isUrl: false
         });
         if (sound['key']) this.soundsManager.set(sound['key'], sound.id.toString());
+      } catch (e: any) {
+        console.error(e.message);
       }
-      this.finishedPreload = true;
     }
 
     this.authService.getSoundSettings().then(settings => {
@@ -94,7 +97,8 @@ export class SoundService {
       soundId,
       name === SoundKeys.BACKGROUND ? (settings.background?.volume || 0.5) : 1,
       name === SoundKeys.BACKGROUND,
-      time
+      time,
+      name === SoundKeys.BACKGROUND
     );
   }
 
@@ -129,15 +133,19 @@ export class SoundService {
    * @param volume
    * @param loop
    * @param time
+   * @param stopAfterPlay
    */
   public async playSound(
     assetId: string,
     volume: number = 1,
     loop: boolean = false,
-    time?: number,
+    time: number = 0,
+    stopAfterPlay: boolean = true
   ): Promise<void> {
-    const isPlaying = await NativeAudio.isPlaying({assetId: assetId});
-    if (isPlaying) await this.stopSound(assetId);
+    if (stopAfterPlay) {
+      const isPlaying = await NativeAudio.isPlaying({assetId: assetId});
+      if (isPlaying) await this.stopSound(assetId);
+    }
     await NativeAudio.play({assetId: assetId, time: time});
     await NativeAudio.setVolume({assetId: assetId, volume: volume});
     if (loop) await NativeAudio.loop({assetId: assetId});
