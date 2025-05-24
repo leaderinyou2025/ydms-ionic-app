@@ -1,27 +1,40 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {AuthService} from '../auth/auth.service';
-import {OdooService, SearchDomain} from '../odoo/odoo.service';
-import {ModelName} from '../../shared/enums/model-name';
-import {OrderBy} from '../../shared/enums/order-by';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+
+import { AuthService } from '../auth/auth.service';
+import { LiyYdmsAssessmentResultService } from '../models/liy.ydms.assessment.result.service';
+import { LiyYdmsAssessmentService } from '../models/liy.ydms.assessment.service';
+import { LiyYdmsAssessmentQuestionService } from '../models/liy.ydms.assessment.question.service';
+import { LiyYdmsAssessmentAnswerOptionService } from '../models/liy.ydms.assessment.answer.option.service';
+import { LiyYdmsAssessmentAnswerResultService } from '../models/liy.ydms.assessment.answer.result.service';
 import {
-  IFamilyConflictSurveyHistory,
   IFamilyConflictSurveyDetail,
   IFamilyConflictSurveyQuestion,
   IFamilyConflictSurveyOption
 } from '../../shared/interfaces/family-conflict-survey/family-conflict-survey.interfaces';
-import {ForceTestData} from '../../shared/classes/force-test-data';
+import { ILiyYdmsAssessmentResult } from '../../shared/interfaces/models/liy.ydms.assessment.result';
+import { ConflictLevel } from '../../shared/enums/family-conflict-survey/conflict-level';
+import { TranslateService } from '@ngx-translate/core';
+import { TranslateKeys } from '../../shared/enums/translate-keys';
+import { AnswerType } from '../../shared/enums/answer-type';
+import {AreaOfExpertise} from "../../shared/enums/area-of-expertise";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FamilyConflictSurveyService {
-  private surveyHistory = new BehaviorSubject<IFamilyConflictSurveyHistory[]>([]);
+
+  private surveyHistory = new BehaviorSubject<ILiyYdmsAssessmentResult[]>([]);
   private currentSurvey = new BehaviorSubject<IFamilyConflictSurveyDetail | null>(null);
 
   constructor(
     private authService: AuthService,
-    private odooService: OdooService
+    private liyYdmsAssessmentResultService: LiyYdmsAssessmentResultService,
+    private liyYdmsAssessmentService: LiyYdmsAssessmentService,
+    private liyYdmsAssessmentQuestionService: LiyYdmsAssessmentQuestionService,
+    private liyYdmsAssessmentAnswerOptionService: LiyYdmsAssessmentAnswerOptionService,
+    private liyYdmsAssessmentAnswerResultService: LiyYdmsAssessmentAnswerResultService,
+    private translateService: TranslateService
   ) {
     this.loadSurveyHistory();
   }
@@ -29,7 +42,7 @@ export class FamilyConflictSurveyService {
   /**
    * Get survey history as observable
    */
-  public getSurveyHistory(): Observable<IFamilyConflictSurveyHistory[]> {
+  public getSurveyHistory(): Observable<ILiyYdmsAssessmentResult[]> {
     return this.surveyHistory.asObservable();
   }
 
@@ -41,186 +54,199 @@ export class FamilyConflictSurveyService {
   }
 
   /**
-   * Load survey history
+   * Tải lịch sử khảo sát xung đột gia đình
    */
   private async loadSurveyHistory(): Promise<void> {
     try {
-      // TODO: Implement Odoo API integration
-      // const authData = await this.authService.getAuthData();
-      // if (!authData?.id) return;
-      //
-      // const surveyHistoryResult = await this.odooService.searchRead<IFamilyConflictSurveyHistory>(
-      //   ModelName.FAMILY_CONFLICT_SURVEY_HISTORY,
-      //   [['user_id', '=', authData.id]],
-      //   ['id', 'date', 'result', 'conflictLevel', 'score'],
-      //   0,
-      //   0,
-      //   OrderBy.CREATE_AT_DESC
-      // );
-      //
-      // if (surveyHistoryResult?.length) {
-      //   this.surveyHistory.next(surveyHistoryResult);
-      // }
+      const authData = await this.authService.getAuthData();
+      if (!authData?.id) return;
 
-      // Use mock data
-      this.surveyHistory.next(ForceTestData.mockFamilyConflictSurveyHistory);
+      const surveyHistoryResult = await this.liyYdmsAssessmentResultService.loadAssessmentResult(AreaOfExpertise.CONFLICT);
+      if (surveyHistoryResult?.length) {
+        this.surveyHistory.next(surveyHistoryResult);
+      }
     } catch (error) {
       console.error('ERROR:', error);
     }
   }
 
   /**
-   * Get survey detail by ID
-   * @param surveyId Survey ID
+   * Lấy chi tiết khảo sát theo ID
+   * @param surveyId ID của khảo sát
    */
   public async getSurveyDetail(surveyId: number): Promise<IFamilyConflictSurveyDetail | null> {
     try {
-      // TODO: Implement Odoo API integration
-      // const surveyDetailResult = await this.odooService.read<IFamilyConflictSurveyDetail>(
-      //   ModelName.FAMILY_CONFLICT_SURVEY_DETAIL,
-      //   [surveyId],
-      //   ['id', 'date', 'questions', 'result', 'conflictLevel', 'score', 'feedback']
-      // );
-      //
-      // if (surveyDetailResult?.length) {
-      //   const surveyDetail = surveyDetailResult[0];
-      //   this.currentSurvey.next(surveyDetail);
-      //   return surveyDetail;
-      // }
+      const assessment = await this.liyYdmsAssessmentService.getAssessmentById(surveyId);
+      if (!assessment) return null;
 
-      // Use mock data
-      const historyItem = ForceTestData.mockFamilyConflictSurveyHistory.find(item => item.id === surveyId);
-      if (!historyItem) return null;
+      // Lấy danh sách câu hỏi
+      const questions = await this.liyYdmsAssessmentQuestionService.getAssessmentQuestions(surveyId);
 
-      const mockSurveyDetail: IFamilyConflictSurveyDetail = {
-        id: historyItem.id,
-        date: historyItem.date,
-        questions: JSON.parse(JSON.stringify(ForceTestData.mockFamilyConflictSurveyQuestions)), // Deep copy
-        result: historyItem.result,
-        conflictLevel: historyItem.conflictLevel,
-        score: historyItem.score,
-        feedback: ForceTestData.getFeedbackForConflictScore(historyItem.score)
-      };
+      // Lấy các lựa chọn trả lời cho từng câu hỏi
+      const questionsWithOptions: IFamilyConflictSurveyQuestion[] = [];
 
-      this.currentSurvey.next(mockSurveyDetail);
-      return mockSurveyDetail;
-    } catch (error) {
-      console.error('ERROR:', error);
-      return null;
-    }
-  }
+      for (const question of questions) {
+        const answerOptions = await this.liyYdmsAssessmentAnswerOptionService.getAnswerOptions(question.id);
 
-  /**
-   * Create a new survey
-   */
-  public async createNewSurvey(): Promise<IFamilyConflictSurveyDetail | null> {
-    try {
-      // TODO: Implement Odoo API integration
-      // const authData = await this.authService.getAuthData();
-      // if (!authData?.id) return null;
-      //
-      // const newSurveyResult = await this.odooService.callKw(
-      //   ModelName.FAMILY_CONFLICT_SURVEY,
-      //   'create_new_survey',
-      //   [{ user_id: authData.id }]
-      // );
-      //
-      // if (newSurveyResult?.id) {
-      //   return this.getSurveyDetail(newSurveyResult.id);
-      // }
+        // Sắp xếp các lựa chọn theo order_weight
+        const sortedAnswerOptions = [...answerOptions].sort((a, b) => a.order_weight - b.order_weight);
 
-      // Use mock data
-      const mockNewSurvey: IFamilyConflictSurveyDetail = {
-        id: 100, // New ID that doesn't exist in the history
-        date: new Date(),
-        questions: JSON.parse(JSON.stringify(ForceTestData.mockFamilyConflictSurveyQuestions)).map((q: IFamilyConflictSurveyQuestion) => ({
-          ...q,
-          options: q.options.map((o: IFamilyConflictSurveyOption) => ({...o, selected: false}))
-        })),
-        result: '',
-        conflictLevel: '',
-        score: 0,
-        feedback: ''
-      };
+        questionsWithOptions.push({
+          ...question,
+          text: question.name,
+          answer_type: question.answer_type,
+          answer_text: '',
+          options: sortedAnswerOptions.map(option => {
+            const mappedOption: IFamilyConflictSurveyOption = {
+              id: option.id,
+              selected: false,
+              text: option.name,
+              value: option.scores,
+              name: option.name,
+              scores: option.scores,
+              encourage: option.encourage,
+              order_weight: option.order_weight,
+              question_id: option.question_id
+            };
+            return mappedOption;
+          })
+        });
+      }
 
-      this.currentSurvey.next(mockNewSurvey);
-      return mockNewSurvey;
-    } catch (error) {
-      console.error('ERROR:', error);
-      return null;
-    }
-  }
+      // Lấy kết quả trả lời
+      const answerResults = await this.liyYdmsAssessmentAnswerResultService.getAssessmentAnswerResults(surveyId);
 
-  /**
-   * Submit survey answers
-   * @param surveyId Survey ID
-   * @param questions Survey questions with answers
-   */
-  public async submitSurvey(surveyId: number, questions: IFamilyConflictSurveyQuestion[]): Promise<boolean> {
-    try {
-      // TODO: Implement Odoo API integration
-      // const result = await this.odooService.callKw(
-      //   ModelName.FAMILY_CONFLICT_SURVEY,
-      //   'submit_survey',
-      //   [{
-      //     survey_id: surveyId,
-      //     answers: questions.map(q => ({
-      //       question_id: q.id,
-      //       selected_option_id: q.options.find(o => o.selected)?.id
-      //     }))
-      //   }]
-      // );
-      //
-      // if (result?.success) {
-      //   await this.loadSurveyHistory();
-      //   return true;
-      // }
+      if (answerResults?.length) {
+        // Khởi tạo tổng điểm
+        let totalScore = 0;
 
-      // Calculate score based on selected options
-      let totalScore = 0;
-      let answeredQuestions = 0;
-
-      questions.forEach(question => {
-        const selectedOption = question.options.find(o => o.selected);
-        if (selectedOption) {
-          totalScore += selectedOption.value;
-          answeredQuestions++;
+        for (const question of questionsWithOptions) {
+          const answer = answerResults.find(result => result?.question_id?.id === question.id);
+          if (answer) {
+            if (question.answer_type === AnswerType.SELECT_OPTION) {
+              const option = question.options.find(opt => opt.id === answer.answer_id?.id);
+              if (option) {
+                option.selected = true;
+                totalScore += option.value !== undefined ? option.value : (option.scores || 0);
+              }
+            } else if (question.answer_type === AnswerType.INPUT_TEXT) {
+              question.answer_text = answer.answer_text || '';
+              if (question.answer_text && question.answer_text.trim() !== '') {
+                totalScore += question.scores || 0;
+              }
+            }
+          }
         }
-      });
 
-      // Calculate average score and scale to 0-100
-      const averageScore = answeredQuestions > 0 ? (totalScore / answeredQuestions) : 0;
-      const scaledScore = Math.round((averageScore / 4) * 100); // Assuming max value is 4
+        // Tính toán mức độ xung đột dựa trên tỉ lệ điểm số
+        const maxPossibleScore = this.calculateMaxPossibleScore(questionsWithOptions);
+        const conflictLevel = this.calculateConflictLevel(totalScore, maxPossibleScore);
+        const resultText = this.getResultTextFromConflictLevel(conflictLevel);
+        const feedback = this.getFeedbackForConflictLevel(conflictLevel);
 
-      // Determine conflict level and result text
-      const conflictLevel = ForceTestData.getConflictLevelFromScore(scaledScore);
-      const resultText = ForceTestData.getResultTextFromConflictLevel(conflictLevel);
-
-      // Create new history item
-      const newHistoryItem: IFamilyConflictSurveyHistory = {
-        id: surveyId,
-        date: new Date(),
-        result: resultText,
-        conflictLevel: conflictLevel,
-        score: scaledScore
-      };
-
-      // Update history
-      const updatedHistory = [newHistoryItem, ...ForceTestData.mockFamilyConflictSurveyHistory];
-      this.surveyHistory.next(updatedHistory);
-
-      return true;
+        const surveyDetail: IFamilyConflictSurveyDetail = {
+          id: surveyId,
+          date: new Date(assessment.execution_date || new Date()),
+          questions: questionsWithOptions,
+          result: resultText,
+          conflictLevel: conflictLevel,
+          score: totalScore,
+          feedback: feedback,
+          assessment: assessment,
+          answerResults: answerResults
+        };
+        this.currentSurvey.next(surveyDetail);
+        return surveyDetail;
+      }
+      return null;
     } catch (error) {
       console.error('ERROR:', error);
-      return false;
+      return null;
     }
   }
 
   /**
-   * Check if all questions are answered
-   * @param questions Survey questions
+   * Tính toán điểm tối đa có thể đạt được cho tất cả câu hỏi
+   * @param questions Danh sách câu hỏi khảo sát với các lựa chọn
+   * @returns Điểm tối đa có thể đạt được
    */
-  public areAllQuestionsAnswered(questions: IFamilyConflictSurveyQuestion[]): boolean {
-    return questions.every(q => q.options.some(o => o.selected));
+  private calculateMaxPossibleScore(questions: IFamilyConflictSurveyQuestion[]): number {
+    let maxScore = 0;
+
+    questions.forEach(question => {
+      if (question.answer_type === AnswerType.SELECT_OPTION) {
+        if (question.options && question.options.length > 0) {
+          // Tìm điểm cao nhất trong tất cả các lựa chọn cho câu hỏi này
+          const maxOptionScore = Math.max(...question.options.map(option => {
+            if (option.value !== undefined) return option.value;
+            if (option.scores !== undefined) return option.scores;
+            return 0;
+          }));
+          maxScore += maxOptionScore;
+        }
+      } else if (question.answer_type === AnswerType.INPUT_TEXT) {
+        // Đối với INPUT_TEXT, sử dụng giá trị điểm của câu hỏi
+        maxScore += question.scores || 0;
+      }
+    });
+
+    return maxScore;
   }
-};
+
+  /**
+   * Tính toán mức độ xung đột dựa trên tỉ lệ điểm số
+   * @param userScore Tổng điểm của người dùng
+   * @param maxScore Điểm tối đa có thể đạt được
+   * @returns Mức độ xung đột: 'thấp', 'trung bình', 'cao'
+   */
+  private calculateConflictLevel(userScore: number, maxScore: number): ConflictLevel {
+    if (maxScore === 0) return ConflictLevel.Low;
+
+    const ratio = userScore / maxScore;
+
+    if (ratio <= 0.33) {
+      return ConflictLevel.High;
+    } else if (ratio <= 0.66) {
+      return ConflictLevel.Medium;
+    } else {
+      return ConflictLevel.Low;
+    }
+  }
+
+  /**
+   * Lấy văn bản kết quả từ mức độ xung đột
+   * @param conflictLevel Mức độ xung đột
+   * @returns Văn bản kết quả
+   */
+  private getResultTextFromConflictLevel(conflictLevel: ConflictLevel): string {
+    switch (conflictLevel) {
+      case ConflictLevel.Low:
+        return this.translateService.instant(TranslateKeys.CONFLICT_LEVEL_LOW);
+      case ConflictLevel.Medium:
+        return this.translateService.instant(TranslateKeys.CONFLICT_LEVEL_MEDIUM);
+      case ConflictLevel.High:
+        return this.translateService.instant(TranslateKeys.CONFLICT_LEVEL_HIGH);
+      default:
+        return this.translateService.instant(TranslateKeys.CONFLICT_LEVEL_UNKNOWN);
+    }
+  }
+
+  /**
+   * Lấy phản hồi cho mức độ xung đột
+   * @param conflictLevel Mức độ xung đột
+   * @returns Văn bản phản hồi
+   */
+  private getFeedbackForConflictLevel(conflictLevel: ConflictLevel): string {
+    switch (conflictLevel) {
+      case ConflictLevel.Low:
+        return this.translateService.instant(TranslateKeys.CONFLICT_FEEDBACK_LOW);
+      case ConflictLevel.Medium:
+        return this.translateService.instant(TranslateKeys.CONFLICT_FEEDBACK_MEDIUM);
+      case ConflictLevel.High:
+        return this.translateService.instant(TranslateKeys.CONFLICT_FEEDBACK_HIGH);
+      default:
+        return this.translateService.instant(TranslateKeys.CONFLICT_FEEDBACK_UNKNOWN);
+    }
+  }
+
+}

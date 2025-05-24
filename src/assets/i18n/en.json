@@ -298,6 +298,7 @@
     "parent_questions": "Questions from Parents",
     "no_family_dialogue_session_history": "No family dialogue session history available",
     "answer_questions": "Submit Answers",
+    "unsupported_question_type": "Unsupported question type",
     "name": "Name",
     "gender": "Gender",
     "male": "Male",
@@ -424,5 +425,17 @@
   },
   "ACHIEVEMENT": {
     "badge_no_achievements_yet": "Chưa có huy hiệu nào trong danh mục này"
+  },
+  "CONFLICT_LEVEL": {
+    "low": "Low conflict level",
+    "medium": "Medium conflict level",
+    "high": "High conflict level",
+    "unknown": "Unknown"
+  },
+  "CONFLICT_FEEDBACK": {
+    "low": "Your family has a low level of conflict. This is a positive sign for family relationships. Continue to maintain good communication and mutual respect.",
+    "medium": "Your family has a medium level of conflict. You may need to improve communication and conflict resolution within the family. Try to understand the causes and work together to find solutions.",
+    "high": "Your family has a high level of conflict. This may affect mental health and family relationships. Consider seeking support from a psychologist or participating in family communication skills courses.",
+    "unknown": "Not enough information to evaluate."
   }
 }

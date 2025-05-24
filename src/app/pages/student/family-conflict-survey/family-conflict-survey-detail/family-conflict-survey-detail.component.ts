@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IFamilyConflictSurveyDetail, IFamilyConflictSurveyQuestion } from '../../../../shared/interfaces/family-conflict-survey/family-conflict-survey.interfaces';
+import { IFamilyConflictSurveyDetail, IFamilyConflictSurveyQuestion, IFamilyConflictSurveyOption } from '../../../../shared/interfaces/family-conflict-survey/family-conflict-survey.interfaces';
 import { TranslateKeys } from '../../../../shared/enums/translate-keys';
-import { ForceTestData } from '../../../../shared/classes/force-test-data';
 import { PageRoutes } from "../../../../shared/enums/page-routes";
 import { FamilyConflictSurveyService } from '../../../../services/family-conflict-survey/family-conflict-survey.service';
+import { ConflictLevel } from '../../../../shared/enums/family-conflict-survey/conflict-level';
 
 @Component({
   selector: 'app-family-conflict-survey-detail',
@@ -48,8 +48,7 @@ export class FamilyConflictSurveyDetailComponent implements OnInit {
         throw new Error('Survey ID not provided');
       }
 
-      const surveyId = parseInt(id, 10);
-      const surveyDetail = await this.familyConflictSurveyService.getSurveyDetail(surveyId);
+      const surveyDetail = await this.familyConflictSurveyService.getSurveyDetail(Number(id));
 
       if (!surveyDetail) {
         throw new Error('Failed to load survey detail');
@@ -72,9 +71,7 @@ export class FamilyConflictSurveyDetailComponent implements OnInit {
     return new Date(date).toLocaleDateString('vi-VN', {
       day: '2-digit',
       month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+      year: 'numeric'
     });
   }
 
@@ -83,7 +80,16 @@ export class FamilyConflictSurveyDetailComponent implements OnInit {
    * @param conflictLevel Conflict level
    */
   public getConflictLevelEmoji(conflictLevel: string): string {
-    return ForceTestData.getConflictLevelEmoji(conflictLevel);
+    switch (conflictLevel) {
+      case ConflictLevel.Low:
+        return '😊'; // Happy face
+      case ConflictLevel.Medium:
+        return '😐'; // Neutral face
+      case ConflictLevel.High:
+        return '😟'; // Worried face
+      default:
+        return '🤔'; // Thinking face
+    }
   }
 
   /**
@@ -94,6 +100,5 @@ export class FamilyConflictSurveyDetailComponent implements OnInit {
     const selectedOption = question.options.find(o => o.selected);
     return selectedOption ? selectedOption.id : 0;
   }
-
 
 }
