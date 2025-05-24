@@ -30,6 +30,7 @@ export class AccountAndSecurityComponent implements OnInit {
   protected readonly TranslateKeys = TranslateKeys;
   protected readonly PageRoutes = PageRoutes;
   protected readonly Theme = Theme;
+  protected readonly DateFormat = DateFormat;
 
   constructor(
     public router: Router,
@@ -95,7 +96,4 @@ export class AccountAndSecurityComponent implements OnInit {
     this.biometricAvailable = this.biometricService.getAvailableResult();
     this.enableBiometric = this.biometricService.getBiometricSettingStatus();
   }
-
-
-  protected readonly DateFormat = DateFormat;
 }

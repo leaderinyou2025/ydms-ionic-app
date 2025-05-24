@@ -51,7 +51,7 @@
       <ion-img *ngIf="!avatar" src="/assets/images/avatar/conan_no_set.png" alt="avatar" class="shake"></ion-img>
     </div>
     <div class="flex items-center">
-      <div class="relative">
+      <div class="relative" [class.intense-shake-zoom]="!authData.nickname">
         <!--   Nickname and animation     -->
         <ng-container *ngIf="authData.nickname">
           <span class="text-2xl text-teal-500 italic z-10">{{ authData.nickname }}</span>
@@ -63,7 +63,6 @@
           <span class="text-2xl text-teal-500 italic z-10" (click)="onClickOpenSetNicknameDialog()">
             {{ TranslateKeys.TITLE_NOT_SET_NICKNAME | translate }}
           </span>
-          <ion-icon (click)="onClickOpenSetNicknameDialog()" class="absolute right-[-25px] bottom-2 text-base" color="primary" name="settings"></ion-icon>
         </ng-container>
       </div>
     </div>
