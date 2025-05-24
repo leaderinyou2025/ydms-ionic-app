@@ -417,7 +417,10 @@ export class AuthService {
       loading.present().finally(() => {
         this.clearStorageUserData()
           .then(() => this.navCtrl.navigateRoot(`/${PageRoutes.LOGIN}}`, {replaceUrl: true}))
-          .finally(() => this.router.navigateByUrl(PageRoutes.LOGIN).finally(() => loading.dismiss()));
+          .finally(() => this.router.navigateByUrl(PageRoutes.LOGIN).finally(() => {
+            loading.dismiss();
+            location.reload();
+          }));
       });
     });
   }

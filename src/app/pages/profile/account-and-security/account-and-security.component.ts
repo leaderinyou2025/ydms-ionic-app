@@ -12,6 +12,7 @@ import { Theme } from '../../../shared/enums/theme';
 import { IAuthData } from '../../../shared/interfaces/auth/auth-data';
 import { NativePlatform } from '../../../shared/enums/native-platform';
 import { CommonConstants } from '../../../shared/classes/common-constants';
+import { DateFormat } from '../../../shared/enums/date-format';
 
 @Component({
   selector: 'app-account-and-security',
@@ -96,4 +97,5 @@ export class AccountAndSecurityComponent implements OnInit {
   }
 
 
+  protected readonly DateFormat = DateFormat;
 }
